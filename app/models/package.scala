@@ -118,6 +118,9 @@ package object models {
         case ((n: KeyPathNode) :: Nil, value: JsObject) if !value.keys.contains(n.key) =>
           JsError("cannot find value at path")
         case ((n: IdxPathNode) :: Nil, value: JsArray)                                 => removeIndexNode(n, value)
+        case ((_: IdxPathNode) :: Nil, _)                                              => JsError(s"cannot remove a index on $jsValue")
+        case ((_: RecursiveSearch) :: _, _)                                            =>
+          JsError("recursive search not supported")
         case ((_: KeyPathNode) :: Nil, _)                                              => JsError(s"cannot remove a key on $jsValue")
         case (first :: second :: rest, oldValue)                                       =>
           Reads
