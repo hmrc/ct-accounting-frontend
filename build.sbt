@@ -40,6 +40,7 @@ lazy val microservice = (project in file("."))
     scalacOptions ++= Seq(
       "-feature",
       "-Wconf:src=routes/.*:s",
+      "-Xfatal-warnings",
       "-Wconf:src=.*template\\.scala:s",
       "-Wconf:msg=Flag.*repeatedly:s"),
     libraryDependencies ++= AppDependencies(),
