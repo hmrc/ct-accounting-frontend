@@ -16,21 +16,26 @@
 
 package controllers
 
-import controllers.actions.IdentifierAction
-import javax.inject.Inject
+import connectors.PenaltiesConnector
 import play.api.i18n.I18nSupport
+import play.api.libs.json.Json
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
-import views.html.IndexView
 
-class IndexController @Inject() (
-  val controllerComponents: MessagesControllerComponents,
-  identify: IdentifierAction,
-  view: IndexView
-) extends FrontendBaseController
-    with I18nSupport {
+import javax.inject.Inject
+import scala.concurrent.ExecutionContext
 
-  def onPageLoad(): Action[AnyContent] = identify { implicit request =>
-    Ok(view())
+class IndexController @Inject()(
+                                 val controllerComponents: MessagesControllerComponents,
+                                 val penaltiesConnector: PenaltiesConnector
+                               )(implicit ec: ExecutionContext) extends FrontendBaseController
+  with I18nSupport {
+
+  def onPageLoad(): Action[AnyContent] = Action.async { implicit request =>
+    // curl http://localhost:6992/rds-datacache-proxy/corporation-tax/penalty-transactions/8754000131/9
+    penaltiesConnector.getPenaltyTransactionList(taxRef = 8754000131L, accPeriod = 9L)
+      .map(res =>
+        Ok( Json.toJson(res).toString )
+      )
   }
 }
