@@ -33,7 +33,7 @@ class IndexController @Inject()(
 
   def onPageLoad(): Action[AnyContent] = Action.async { implicit request =>
     // curl http://localhost:6992/rds-datacache-proxy/corporation-tax/penalty-transactions/8754000131/9
-    penaltiesConnector.getPenaltyTransactionList(taxRef = 8754000131L, accPeriod = 9L)
+    penaltiesConnector.getPenaltyTransactionList(taxRef = 1L, accPeriod = 1L)
       .map(res =>
         Ok( Json.toJson(res).toString )
       )
