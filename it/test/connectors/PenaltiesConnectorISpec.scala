@@ -27,7 +27,7 @@ import play.api.http.Status.*
 import uk.gov.hmrc.http.HeaderCarrier
 
 class PenaltiesConnectorISpec
-  extends AnyWordSpec
+    extends AnyWordSpec
     with Matchers
     with ScalaFutures
     with IntegrationPatience
@@ -64,7 +64,6 @@ class PenaltiesConnectorISpec
       result.penaltyTransactions must contain allElementsOf penaltyItemsEmpty.penaltyTransactions
     }
 
-
     "return Penalties list (single item) from BE with status code OK" in {
       stubFor(
         get(urlPathEqualTo(url(1L, 5L)))
@@ -84,7 +83,6 @@ class PenaltiesConnectorISpec
       val result = connector.getPenaltyTransactionList(1L, 5L).futureValue
       result.penaltyTransactions must contain allElementsOf penaltySingleItem.penaltyTransactions
     }
-
 
     "return Penalties list (two items) from BE with status code OK" in {
       stubFor(
@@ -106,7 +104,6 @@ class PenaltiesConnectorISpec
       val result = connector.getPenaltyTransactionList(7L, 9L).futureValue
       result.penaltyTransactions must contain allElementsOf penaltyTwoItems.penaltyTransactions
     }
-
 
     "return INTERNAL_ERROR when service failed" in {
       stubFor(

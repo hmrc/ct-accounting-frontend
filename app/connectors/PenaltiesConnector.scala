@@ -28,13 +28,13 @@ import java.net.URL
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
-class PenaltiesConnector @Inject() (http: HttpClientV2,
-                                    config: ServicesConfig)(implicit ec: ExecutionContext)
-  extends Logging {
+class PenaltiesConnector @Inject() (http: HttpClientV2, config: ServicesConfig)(implicit ec: ExecutionContext)
+    extends Logging {
 
-  def getPenaltyTransactionList(taxRef: Long, accPeriod: Long)
-                               (implicit hc: HeaderCarrier): Future[PenaltiesResponse] = {
-    val baseUrl = config.baseUrl("corporation-tax")
+  def getPenaltyTransactionList(taxRef: Long, accPeriod: Long)(implicit
+    hc: HeaderCarrier
+  ): Future[PenaltiesResponse] = {
+    val baseUrl  = config.baseUrl("corporation-tax")
     val url: URL = url"$baseUrl/corporation-tax/penalty-transactions/$taxRef/$accPeriod"
     http
       .get(url)

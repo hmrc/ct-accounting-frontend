@@ -38,9 +38,8 @@ import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.libs.ws.WSClient
 import play.api.{Application, Environment, Mode}
 
-
 trait ApplicationWithWiremock
-  extends AnyWordSpec
+    extends AnyWordSpec
     with GuiceOneServerPerSuite
     with BeforeAndAfterAll
     with BeforeAndAfterEach {
@@ -49,8 +48,8 @@ trait ApplicationWithWiremock
 
   val extraConfig: Map[String, Any] =
     Map[String, Any](
-      "microservice.services.auth.host"                -> WireMockConstants.stubHost,
-      "microservice.services.auth.port"                -> WireMockConstants.stubPort,
+      "microservice.services.auth.host"            -> WireMockConstants.stubHost,
+      "microservice.services.auth.port"            -> WireMockConstants.stubPort,
       "microservice.services.corporation-tax.host" -> WireMockConstants.stubHost,
       "microservice.services.corporation-tax.port" -> WireMockConstants.stubPort
     )

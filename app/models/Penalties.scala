@@ -19,7 +19,6 @@ package models
 import play.api.libs.json.*
 import java.time.LocalDate
 
-
 enum PenaltyTransactionType:
   case FX, FT, TG, TR
 
@@ -40,10 +39,10 @@ implicit val penaltyTransactionType: Format[PenaltyTransactionType] = new Format
 }
 
 case class PenaltyTransactionItem(
-                                   penaltyDate: LocalDate,
-                                   `type`: PenaltyTransactionType,
-                                   postingAmount: BigDecimal
-                                 )
+  penaltyDate: LocalDate,
+  `type`: PenaltyTransactionType,
+  postingAmount: BigDecimal
+)
 
 object PenaltyTransactionItem {
   implicit val format: OFormat[PenaltyTransactionItem] = Json.format[PenaltyTransactionItem]

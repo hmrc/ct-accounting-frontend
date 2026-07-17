@@ -30,7 +30,7 @@ trait PenaltiesHelper {
   val penaltySingleItem =
     PenaltiesResponse(
       List(
-        PenaltyTransactionItem(penaltyDate = LocalDate.of(2025, 5, 1), `type` = FX, postingAmount = BigDecimal(100.13)),
+        PenaltyTransactionItem(penaltyDate = LocalDate.of(2025, 5, 1), `type` = FX, postingAmount = BigDecimal(100.13))
       )
     )
 
