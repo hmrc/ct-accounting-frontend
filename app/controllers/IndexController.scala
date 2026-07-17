@@ -16,26 +16,21 @@
 
 package controllers
 
-import connectors.PenaltiesConnector
+import controllers.actions.IdentifierAction
+import javax.inject.Inject
 import play.api.i18n.I18nSupport
-import play.api.libs.json.Json
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
+import views.html.IndexView
 
-import javax.inject.Inject
-import scala.concurrent.ExecutionContext
+class IndexController @Inject() (
+  val controllerComponents: MessagesControllerComponents,
+  identify: IdentifierAction,
+  view: IndexView
+) extends FrontendBaseController
+    with I18nSupport {
 
-class IndexController @Inject()(
-                                 val controllerComponents: MessagesControllerComponents,
-                                 val penaltiesConnector: PenaltiesConnector
-                               )(implicit ec: ExecutionContext) extends FrontendBaseController
-  with I18nSupport {
-
-  // TODO: revert this change
-  def onPageLoad(): Action[AnyContent] = Action.async { implicit request =>
-    penaltiesConnector.getPenaltyTransactionList(taxRef = 1L, accPeriod = 1L)
-      .map(res =>
-        Ok( Json.toJson(res).toString )
-      )
+  def onPageLoad(): Action[AnyContent] = identify { implicit request =>
+    Ok(view())
   }
 }
