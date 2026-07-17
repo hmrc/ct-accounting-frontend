@@ -107,7 +107,7 @@ class PenaltiesConnectorISpec
       result.penaltyTransactions must contain allElementsOf penaltyTwoItems.penaltyTransactions
     }
 
-    /*
+
     "return INTERNAL_ERROR when service failed" in {
       stubFor(
         get(urlPathEqualTo(url(1L, 5L)))
@@ -127,7 +127,6 @@ class PenaltiesConnectorISpec
       }
       ex.getMessage.toLowerCase must include("error")
     }
-    */
 
   }
 }
