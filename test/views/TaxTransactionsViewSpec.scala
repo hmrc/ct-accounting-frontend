@@ -30,6 +30,7 @@ class TaxTransactionsViewSpec extends SpecBase {
   def render(items: List[TaxTransactionsItem] = taxTransactions): Document =
     Jsoup.parse(view(items, accountPeriod)(request, messages(application)).toString)
 
+  //TODO: Extra tests covering all content
   "TaxTransactionsView" - {
 
     "render the correct page title" in {
@@ -52,15 +53,6 @@ class TaxTransactionsViewSpec extends SpecBase {
       val headers = doc.select("th.govuk-table__header").eachText()
       headers must contain allOf ("Date", "Description", "Amount")
     }
-
-//    "render a table row for each transaction with formatted date and amount" in {
-//      val doc = render()
-//      val firstRow = doc.select("tbody.govuk-table__body tr.govuk-table__row").first()
-//      val cells = firstRow.select("td, th").eachText()
-//
-//      cells must contain(ViewUtils.formatDate(taxTransactions.head.taxDate, messages(app).lang))
-//      cells must contain(ViewUtils.formatCurrency(taxTransactions.head.currentAmount))
-//    }
 
     "render one row per transaction when there are multiple" in {
       val twoTransactions = taxTransactions :+ TaxTransactionsItem(
