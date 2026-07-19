@@ -22,8 +22,8 @@ import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 object PageBreadcrumbs {
 
   def taxTransactionsPage: Breadcrumbs = Breadcrumbs(
-    //TODO: Change these to be from message file (are these page titles?)
-    //TODO: Add hrefs
+    // TODO: Change these to be from message file (are these page titles?)
+    // TODO: Add hrefs
     items = Seq(
       BreadcrumbsItem(content = Text("Corporation tax home"), href = Some("/")),
       BreadcrumbsItem(content = Text("Balance"), href = Some("/")),

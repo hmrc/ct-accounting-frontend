@@ -28,22 +28,22 @@ import views.html.TaxTransactionsView
 
 import java.time.LocalDate
 
-class TaxTransactionsController @Inject()(
-                                       override val messagesApi: MessagesApi,
-                                       identify: IdentifierAction,
-                                       val controllerComponents: MessagesControllerComponents,
-                                       view: TaxTransactionsView,
-                                       connector: TaxTransactionsConnector
-                                     ) extends FrontendBaseController with I18nSupport {
+class TaxTransactionsController @Inject() (
+  override val messagesApi: MessagesApi,
+  identify: IdentifierAction,
+  val controllerComponents: MessagesControllerComponents,
+  view: TaxTransactionsView,
+  connector: TaxTransactionsConnector
+) extends FrontendBaseController
+    with I18nSupport {
 
-  def onPageLoad: Action[AnyContent] = identify.async {
-    implicit request =>
+  def onPageLoad: Action[AnyContent] = identify.async { implicit request =>
 
-      val accountPeriod = LocalDate.of(2026,1,1) //TODO: This needs to comes from sessionDataRepository
+    val accountPeriod = LocalDate.of(2026, 1, 1) // TODO: This needs to comes from sessionDataRepository
 
-      //TODO: Get taxRef + accPeriod from sessionDataRepositry
-      connector.getTaxTransactions(1L,1L).map { taxTransactions =>
+    // TODO: Get taxRef + accPeriod from sessionDataRepositry
+    connector.getTaxTransactions(1L, 1L).map { taxTransactions =>
       Ok(view(taxTransactions.taxTransactions, accountPeriod))
-      }
+    }
   }
 }

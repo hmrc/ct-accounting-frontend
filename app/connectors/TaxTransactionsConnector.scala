@@ -29,7 +29,7 @@ import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
 class TaxTransactionsConnector @Inject() (http: HttpClientV2, config: ServicesConfig)(implicit ec: ExecutionContext)
-  extends Logging {
+    extends Logging {
 
   def getTaxTransactions(taxRef: Long, accPeriod: Long)(implicit hc: HeaderCarrier): Future[TaxTransactions] = {
     val url: URL = url"${config.baseUrl("corporation-tax")}/corporation-tax/tax-transactions/$taxRef/$accPeriod"
