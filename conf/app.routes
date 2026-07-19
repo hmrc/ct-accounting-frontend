@@ -24,3 +24,4 @@ GET         /unauthorised                                controllers.Unauthorise
 GET         /accounting-period-overview/taxes            controllers.TaxTransactionsController.onPageLoad()
 GET         /accounting-period-overview/penalties        controllers.PenaltiesAccountingPeriodController.onPageLoad()
 GET         /accounting-period-overview/adjustments      controllers.AdjustmentsAccountingPeriodController.onPageLoad()
+GET         /accounting-period-overview/payments         controllers.PaymentsController.onPageLoad()

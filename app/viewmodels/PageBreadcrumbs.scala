@@ -51,4 +51,14 @@ object PageBreadcrumbs {
     )
   )
 
+  def paymentsPage: Breadcrumbs = Breadcrumbs(
+    // TODO: Change these to be from message file (are these page titles?)
+    // TODO: Add hrefs
+    items = Seq(
+      BreadcrumbsItem(content = Text("Corporation tax home"), href = Some("/")),
+      BreadcrumbsItem(content = Text("Balance"), href = Some("/")),
+      BreadcrumbsItem(content = Text("Accounting period overview"), href = Some("/"))
+    )
+  )
+
 }
