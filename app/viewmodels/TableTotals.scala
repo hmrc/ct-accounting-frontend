@@ -22,11 +22,7 @@ import views.ViewUtils.formatCurrency
 
 object TableTotals {
   def totalRow(label: String, total: BigDecimal, blankCells: Int): Seq[TableRow] =
-    TableRow(
-      content = Text(label),
-      classes = "govuk-!-font-weight-bold") +: //TODO Should this be bold or a header?
+    TableRow(content = Text(label), classes = "govuk-!-font-weight-bold") +: // TODO Should this be bold or a header?
       Seq.fill(blankCells)(TableRow(content = Text(""))) :+
-      TableRow(
-        content = Text(formatCurrency(total)),
-        classes = "govuk-!-font-weight-bold")
+      TableRow(content = Text(formatCurrency(total)), classes = "govuk-!-font-weight-bold")
 }

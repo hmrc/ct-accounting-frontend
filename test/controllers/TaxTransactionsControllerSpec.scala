@@ -24,8 +24,8 @@ import play.api.inject.bind
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import views.html.TaxTransactionsView
-import models.TaxTransactions
-import org.mockito.ArgumentMatchers.{any, eq => eqTo}
+import models.{TaxTransactions, TaxTransactionsItem}
+import org.mockito.ArgumentMatchers.{any, eq as eqTo}
 import uk.gov.hmrc.http.HeaderCarrier
 
 import java.time.LocalDate
@@ -35,17 +35,41 @@ class TaxTransactionsControllerSpec extends SpecBase with MockitoSugar {
   implicit val hc: HeaderCarrier              = HeaderCarrier()
   val mockConnector: TaxTransactionsConnector = mock[TaxTransactionsConnector]
 
-  val emptyTaxTransactionsResponse = TaxTransactions(List.empty)
+  val taxTransactionsResponse: TaxTransactions =
+    TaxTransactions(
+      List(
+        TaxTransactionsItem(
+          currentAmount = BigDecimal(123.44),
+          assessmentType = "A",
+          taxDate = LocalDate.of(2026, 1, 1),
+          correctionClaimSignal = Some("0")
+        ),
+        TaxTransactionsItem(
+          currentAmount = BigDecimal(123.44),
+          assessmentType = "A",
+          taxDate = LocalDate.of(2026, 2, 1),
+          correctionClaimSignal = Some("2")
+        ),
+        TaxTransactionsItem(
+          currentAmount = BigDecimal(123.44),
+          assessmentType = "E",
+          taxDate = LocalDate.of(2026, 3, 1),
+          correctionClaimSignal = None
+        )
+      )
+    )
 
   // TODO: hardcoded value in the controller until it's wired up to session data
   val expectedAccountPeriod: LocalDate = LocalDate.of(2026, 1, 1)
+
+  val total: BigDecimal = taxTransactionsResponse.taxTransactions.map(_.currentAmount).sum
 
   "TaxTransactions Controller" - {
 
     "must return OK and the correct view for a GET" in {
 
       when(mockConnector.getTaxTransactions(eqTo(1L), eqTo(1L))(any[HeaderCarrier]))
-        .thenReturn(Future.successful(emptyTaxTransactionsResponse))
+        .thenReturn(Future.successful(taxTransactionsResponse))
 
       val application = applicationBuilder()
         .overrides(bind[TaxTransactionsConnector].toInstance(mockConnector))
@@ -58,7 +82,7 @@ class TaxTransactionsControllerSpec extends SpecBase with MockitoSugar {
 
         status(result) mustEqual OK
         contentAsString(result) mustEqual
-          view(emptyTaxTransactionsResponse.taxTransactions, expectedAccountPeriod)(
+          view(taxTransactionsResponse.taxTransactions, expectedAccountPeriod, total)(
             request,
             messages(application)
           ).toString

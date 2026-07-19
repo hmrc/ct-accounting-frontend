@@ -34,6 +34,8 @@ class TaxTransactionsViewSpec extends SpecBase {
 
   val accountPeriod: LocalDate = LocalDate.of(2026, 1, 1)
 
+  val total: BigDecimal = 10000.12
+
   val taxTransactions: List[TaxTransactionsItem] = List(
     TaxTransactionsItem(
       currentAmount = 1234.56,
@@ -44,7 +46,7 @@ class TaxTransactionsViewSpec extends SpecBase {
   )
 
   def render(items: List[TaxTransactionsItem] = taxTransactions): Document =
-    Jsoup.parse(view(items, accountPeriod)(request, messages(application)).toString)
+    Jsoup.parse(view(items, accountPeriod, total)(request, messages(application)).toString)
 
   // TODO: Extra tests covering all content
   "TaxTransactionsView" - {
@@ -78,12 +80,12 @@ class TaxTransactionsViewSpec extends SpecBase {
         correctionClaimSignal = Some("2")
       )
       val doc             = render(items = twoTransactions)
-      doc.select("tbody.govuk-table__body tr.govuk-table__row").size() mustBe 2
+      doc.select("tbody.govuk-table__body tr.govuk-table__row").size() mustBe 3
     }
 
     "render no data rows when there are no transactions" in {
       val doc = render(items = List.empty)
-      doc.select("tbody.govuk-table__body tr.govuk-table__row").size() mustBe 0
+      doc.select("tbody.govuk-table__body tr.govuk-table__row").size() mustBe 1
     }
 
     "render the breadcrumbs" in {
