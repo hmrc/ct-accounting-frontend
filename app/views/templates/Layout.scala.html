@@ -26,13 +26,13 @@
     hmrcTimeoutDialog: HmrcTimeoutDialog,
     hmrcReportTechnicalIssueHelper: HmrcReportTechnicalIssueHelper,
     alphaBanner: StandardAlphaBanner,
-    hmrcStandardPage: HmrcStandardPage
+    hmrcStandardPage: HmrcStandardPage,
+    govukBackLink: GovukBackLink,
+    govukBreadcrumbs: GovukBreadcrumbs,
+    govukPhaseBanner: GovukPhaseBanner
 )
-
-@(pageTitle: String, showBackLink: Boolean = true, timeout: Boolean = true, showSignOut: Boolean = true, showHmrcBanner: Boolean = false)(contentBlock: Html)(implicit rh: RequestHeader, messages: Messages)
-
+@(pageTitle: String, showBackLink: Boolean = false, showAlphaBanner: Boolean = false, timeout: Boolean = true, showSignOut: Boolean = true, showHmrcBanner: Boolean = false, breadcrumbs: Option[Breadcrumbs] = None)(contentBlock: Html)(implicit rh: RequestHeader, messages: Messages)
 @head = {
-
     @if(timeout) {
         @hmrcTimeoutDialog(TimeoutDialog(
             timeout             = Some(appConfig.timeout),
@@ -47,25 +47,33 @@
         ))
     }
 }
-
+@beforeContent = {
+    @if(showAlphaBanner) {
+        @govukPhaseBanner(alphaBanner(appConfig.feedbackUrl))
+    }
+    @breadcrumbs.map { crumbs =>
+        @govukBreadcrumbs(crumbs)
+    }
+    @if(showBackLink) {
+        @govukBackLink(BackLink.mimicsBrowserBackButtonViaJavaScript)
+    }
+}
 @content = {
     @contentBlock
     @hmrcReportTechnicalIssueHelper()
 }
-
 @hmrcStandardPage(HmrcStandardPageParams(
     pageTitle = Some(pageTitle),
     templateOverrides = TemplateOverrides(
-        additionalHeadBlock = Some(head)
+        additionalHeadBlock = Some(head),
+        beforeContentBlock = Some(beforeContent)
     ),
     serviceURLs = ServiceURLs(
         serviceUrl = Some(routes.IndexController.onPageLoad().url),
         signOutUrl = if(showSignOut) Some(controllers.auth.routes.AuthController.signOut().url) else None
     ),
     banners = Banners(
-        displayHmrcBanner = showHmrcBanner,
-        phaseBanner = Some(alphaBanner(appConfig.feedbackUrl))
+        displayHmrcBanner = showHmrcBanner
     ),
-    isWelshTranslationAvailable = appConfig.languageTranslationEnabled,
-    backLink = if (showBackLink) Some(BackLink.mimicsBrowserBackButtonViaJavaScript) else None
+    isWelshTranslationAvailable = appConfig.languageTranslationEnabled
 ))(content)
