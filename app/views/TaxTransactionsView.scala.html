@@ -23,7 +23,7 @@
         govukTable: GovukTable
 )
 
-@(taxTransactions: List[TaxTransactionsItem], accountPeriod: LocalDate)(implicit request: Request[_], messages: Messages)
+@(taxTransactions: List[TaxTransactionsItem], accountPeriod: LocalDate, total: BigDecimal)(implicit request: Request[_], messages: Messages)
 
 @layout(pageTitle = titleNoForm(messages("taxTransactions.title"), Some(messages("taxTransactions.section"))), breadcrumbs = Some(PageBreadcrumbs.taxTransactionsPage)) {
 
@@ -42,7 +42,11 @@
             content = Text(formatCurrency(transaction.currentAmount))
           )
         )
-      },
+      } :+ TableTotals.totalRow(
+        label = messages("taxTransactions.table.total"),
+        total = total,
+        blankCells = 1
+        ),
       head = Some(Seq(
         HeadCell(content = Text("Date")),
         HeadCell(content = Text("Description")),
@@ -50,6 +54,6 @@
       )),
     caption = Some(messages("taxTransactions.table.header", formatDate(accountPeriod, messages.lang))),
     captionClasses = "govuk-table__caption--m",
-    firstCellIsHeader = true
+    firstCellIsHeader = false
     ))
 }
