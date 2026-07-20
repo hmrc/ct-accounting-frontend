@@ -51,3 +51,4 @@ unauthorised.heading = You can’t access this service with this account
 penaltiesAccountingPeriod.heading        = Penalties
 penaltiesAccountingPeriod.caption        = Accounting period ending 30 Sep 2025
 penaltiesAccountingPeriod.total          = Total
+penaltiesAccountingPeriod.title          = Penalties – Accounting period overview

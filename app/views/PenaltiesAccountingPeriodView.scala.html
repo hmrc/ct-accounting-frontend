@@ -24,14 +24,12 @@
         h1: h1,
         h2: h2,
         p: Paragraph,
-        //caption: Caption
 )
 
 @(viewModel: PenaltiesAccountingPeriodViewModel)(implicit request: Request[_], messages: Messages)
 
-@layout(pageTitle = titleNoForm(messages("titleKey"))) {
+@layout(pageTitle = titleNoForm(messages("penaltiesAccountingPeriod.title"))) {
 
-@*//    @caption(messages("penaltiesAccountingPeriod.caption"))*@
     @h1(messages("penaltiesAccountingPeriod.heading"))
 
     @govukTable(
@@ -57,19 +55,5 @@
                 )
         )
  )
-
-
-@*//    @caption(messages("site.taxCalculation.caption"))*@
-@*//    @h1(messages("taxCalculation.calculation.heading"))*@
-@*//*@
-@*//    @p(messages("taxCalculation.calculation.intro"))*@
-@*//*@
-@*//    @h2(messages("taxCalculation.calculation.taxCalculation.heading"))*@
-@*//    @govukSummaryList(viewModel.penaltiesSummary)*@
-
-@*//    @h2(messages("taxCalculation.calculation.rateCard.heading"))*@
-@*//    @govukSummaryList(viewModel.penaltiesItems)*@
-
-@*//    @govukTable(viewModel.penaltiesTax)*@
 
 }
