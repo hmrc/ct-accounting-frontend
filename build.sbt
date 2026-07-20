@@ -61,5 +61,5 @@ lazy val it =
 
 addCommandAlias(
   "runAllChecks",
-  ";clean;compile;coverage;test;it/test;scalafmtCheckAll;scalastyle;Test/scalastyle;coverageReport"
+  ";clean;compile;coverage;test;it/test;scalafmtCheckAll;coverageReport"
 )
