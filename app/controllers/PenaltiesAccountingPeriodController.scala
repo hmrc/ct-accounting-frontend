@@ -44,6 +44,7 @@ class PenaltiesAccountingPeriodController @Inject() (
     for {
       viewModel <- service.getViewModel(taxRef, accPeriod)
     } yield Ok(view(viewModel))
+
   }
 
 

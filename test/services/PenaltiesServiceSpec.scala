@@ -19,7 +19,7 @@ package services
 import connectors.PenaltiesConnector
 import helpers.PenaltiesDataHelper
 import org.mockito.ArgumentMatchers.any
-import org.mockito.Mockito.{when, verify}
+import org.mockito.Mockito.{verify, when}
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
@@ -29,9 +29,9 @@ import play.api.test.Helpers
 import play.api.test.Helpers.stubMessages
 import uk.gov.hmrc.http.HeaderCarrier
 import viewmodels.{PenaltiesAccountingPeriodViewModel, PenaltiesAccountingPeriodViewModelRow}
-
-import java.time.LocalDate
+import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.{ExecutionContext, Future}
+
 
 class PenaltiesServiceSpec extends AnyWordSpec
   with PenaltiesDataHelper
@@ -42,7 +42,6 @@ class PenaltiesServiceSpec extends AnyWordSpec
     val mockPenaltiesConnector: PenaltiesConnector = mock[PenaltiesConnector]
 
     val cc                            = Helpers.stubControllerComponents()
-    implicit val ec: ExecutionContext = cc.executionContext
     implicit val messages: Messages = stubMessages()
     implicit val hc: HeaderCarrier    = HeaderCarrier()
 
@@ -56,18 +55,7 @@ class PenaltiesServiceSpec extends AnyWordSpec
 
     val viewModel: PenaltiesAccountingPeriodViewModel = service.getViewModel(1L, 1L).futureValue
 
-    viewModel.rows shouldBe List(
-      PenaltiesAccountingPeriodViewModelRow(
-        date =LocalDate.of(2025, 5, 1),
-        description = "Fixed rate penalty",
-        amount = BigDecimal(100.13)
-      ),
-      PenaltiesAccountingPeriodViewModelRow(
-        date =LocalDate.of(2021, 3, 7),
-        description = "Tax geared penalty",
-        amount = BigDecimal(27.19)
-      ),
-    )
+    viewModel.rows shouldBe penaltiesViewModelRows
 
     verify(mockPenaltiesConnector).getPenaltyTransactionList(1L, 1L)(hc)
   }
