@@ -17,7 +17,6 @@
 package controllers
 
 import base.SpecBase
-import connectors.TaxTransactionsConnector
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
 import play.api.inject.bind
@@ -26,14 +25,15 @@ import play.api.test.Helpers.*
 import views.html.TaxTransactionsView
 import models.{TaxTransactions, TaxTransactionsItem}
 import org.mockito.ArgumentMatchers.{any, eq as eqTo}
+import services.TaxTransactionsService
 import uk.gov.hmrc.http.HeaderCarrier
 
 import java.time.LocalDate
 import scala.concurrent.Future
 
 class TaxTransactionsControllerSpec extends SpecBase with MockitoSugar {
-  implicit val hc: HeaderCarrier              = HeaderCarrier()
-  val mockConnector: TaxTransactionsConnector = mock[TaxTransactionsConnector]
+  implicit val hc: HeaderCarrier          = HeaderCarrier()
+  val mockService: TaxTransactionsService = mock[TaxTransactionsService]
 
   val taxTransactionsResponse: TaxTransactions =
     TaxTransactions(
@@ -68,11 +68,11 @@ class TaxTransactionsControllerSpec extends SpecBase with MockitoSugar {
 
     "must return OK and the correct view for a GET" in {
 
-      when(mockConnector.getTaxTransactions(eqTo(1L), eqTo(1L))(any[HeaderCarrier]))
+      when(mockService.getTaxTransactions(eqTo(1L), eqTo(1L))(any[HeaderCarrier]))
         .thenReturn(Future.successful(taxTransactionsResponse))
 
       val application = applicationBuilder()
-        .overrides(bind[TaxTransactionsConnector].toInstance(mockConnector))
+        .overrides(bind[TaxTransactionsService].toInstance(mockService))
         .build()
 
       running(application) {
