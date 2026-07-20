@@ -48,3 +48,6 @@ signedOut.guidance = We did not save your answers.
 unauthorised.title = You can’t access this service with this account
 unauthorised.heading = You can’t access this service with this account
 
+penaltiesAccountingPeriod.heading        = Penalties
+penaltiesAccountingPeriod.caption        = Accounting period ending 30 Sep 2025
+penaltiesAccountingPeriod.total          = Total

@@ -24,30 +24,38 @@
         h1: h1,
         h2: h2,
         p: Paragraph,
-        caption: Caption
+        //caption: Caption
 )
 
 @(viewModel: PenaltiesAccountingPeriodViewModel)(implicit request: Request[_], messages: Messages)
 
 @layout(pageTitle = titleNoForm(messages("titleKey"))) {
 
+@*//    @caption(messages("penaltiesAccountingPeriod.caption"))*@
+    @h1(messages("penaltiesAccountingPeriod.heading"))
 
- @govukTable(
+    @govukTable(
 
-  Table(
-    head = Some(Seq(
-    HeadCell(content = Text("Date")),
-    HeadCell(content = Text("Description")),
-    HeadCell(content = Text("Amount"))
-    )),
-    rows = viewModel.rows.map { rows =>
-     Seq(
-      TableRow(content = Text("DATE")),
-      TableRow(content = Text("DUMMY VALUE")),
-      TableRow(content = Text("CURRENCY"))
-     )
-   }
-  )
+        Table(
+            caption = Some(messages("penaltiesAccountingPeriod.caption")),
+            captionClasses = "govuk-table__caption govuk-table__caption--m",
+            head = Some(Seq(
+            HeadCell(content = Text("Date")),
+            HeadCell(content = Text("Description")),
+            HeadCell(content = Text("Amount"))
+        )),
+        rows = viewModel.rows.map { row =>
+            Seq(
+                TableRow(content = Text( row.date.toString  )),
+                TableRow(content = Text( row.description )),
+                TableRow(content = Text( row.amount.toString() ))
+              )
+            } :+ viewModel.totalRow(
+                        label = messages("penaltiesAccountingPeriod.total"),
+                        total = viewModel.total,
+                        blankCells = 1
+                )
+        )
  )
 
 

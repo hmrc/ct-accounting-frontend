@@ -43,9 +43,15 @@ class PenaltiesAccountingPeriodController @Inject() (
       rows = List(
         PenaltiesAccountingPeriodViewModelRow(
           date = LocalDate.now,
-          description = "DESC",
+          description = "Fixed penalty",
           amount = BigDecimal("100")
+        ),
+        PenaltiesAccountingPeriodViewModelRow(
+          date = LocalDate.now,
+          description = "Not Fixed penalty",
+          amount = BigDecimal("45")
         )
+
       )
     )
   }
