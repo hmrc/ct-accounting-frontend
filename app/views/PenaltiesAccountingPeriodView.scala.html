@@ -17,6 +17,8 @@
 @import views.html.components.*
 @import viewmodels.PenaltiesAccountingPeriodViewModelRow
 @import viewmodels.PenaltiesAccountingPeriodViewModel
+@import views.ViewUtils._
+@import viewmodels._
 
 @this(
         layout: templates.Layout,
@@ -28,7 +30,8 @@
 
 @(viewModel: PenaltiesAccountingPeriodViewModel)(implicit request: Request[_], messages: Messages)
 
-@layout(pageTitle = titleNoForm(messages("penaltiesAccountingPeriod.title"))) {
+@layout(pageTitle = titleNoForm(messages("penaltiesAccountingPeriod.title"), Some(messages("penaltiesAccountingPeriod.section"))),
+    breadcrumbs = Some(PageBreadcrumbs.penaltiesAccountingPeriodPage)) {
 
     @h1(messages("penaltiesAccountingPeriod.heading"))
 
