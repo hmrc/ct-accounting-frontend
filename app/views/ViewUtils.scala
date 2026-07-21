@@ -17,7 +17,10 @@
 package views
 
 import play.api.data.Form
-import play.api.i18n.Messages
+import play.api.i18n.{Lang, Messages}
+import utils.DateTimeFormats
+
+import java.time.LocalDate
 
 object ViewUtils {
 
@@ -28,8 +31,16 @@ object ViewUtils {
     )
 
   def titleNoForm(title: String, section: Option[String] = None)(implicit messages: Messages): String =
-    s"${messages(title)} - ${section.fold("")(messages(_) + " - ")}${messages("service.name")} - ${messages("site.govuk")}"
+    s"${messages(title)} - ${section.fold("")(messages(_) + " - ")}${messages("site.govuk")}"
 
   def errorPrefix(form: Form[_])(implicit messages: Messages): String =
     if (form.hasErrors || form.hasGlobalErrors) messages("error.title.prefix") else ""
+
+  def formatDate(date: LocalDate, lang: Lang): String =
+    date.format(DateTimeFormats.dateTimeFormat()(lang))
+
+  def formatCurrency(amount: BigDecimal): String = {
+    val formatter = java.text.NumberFormat.getCurrencyInstance(java.util.Locale.UK)
+    if (amount.signum < 0) s"-${formatter.format(amount.abs)}" else formatter.format(amount)
+  }
 }

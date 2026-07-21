@@ -1,0 +1,59 @@
+@*
+ * Copyright 2026 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import views.ViewUtils._
+@import java.time.LocalDate
+@import viewmodels._
+
+@this(
+        layout: templates.Layout,
+        govukTable: GovukTable
+)
+
+@(taxTransactions: List[TaxTransactionsItem], accountPeriod: LocalDate, total: BigDecimal, taxDescription: String)(implicit request: Request[_], messages: Messages)
+
+@layout(pageTitle = titleNoForm(messages("taxTransactions.title"), Some(messages("taxTransactions.section"))), breadcrumbs = Some(PageBreadcrumbs.taxTransactionsPage)) {
+
+    <h1 class="govuk-heading-xl">@messages("taxTransactions.heading")</h1>
+
+    @govukTable(Table(
+      rows = taxTransactions.map { transaction =>
+        Seq(
+          TableRow(
+            content = Text(formatDate(transaction.taxDate, messages.lang))
+          ),
+          TableRow(
+            content = Text(taxDescription)
+          ),
+          TableRow(
+            content = Text(formatCurrency(transaction.currentAmount))
+          )
+        )
+      } :+ TableTotals.totalRow(
+        label = messages("taxTransactions.table.total"),
+        total = total,
+        blankCells = 1
+        ),
+      head = Some(Seq(
+        HeadCell(content = Text("Date")),
+        HeadCell(content = Text("Description")),
+        HeadCell(content = Text("Amount"))
+      )),
+    caption = Some(messages("taxTransactions.table.header", formatDate(accountPeriod, messages.lang))),
+    captionClasses = "govuk-table__caption--m",
+    firstCellIsHeader = false
+    ))
+}

@@ -1,4 +1,4 @@
-service.name = ct-accounting-frontend
+service.name = View corporation tax
 
 site.back = Back
 site.remove = Remove
@@ -47,6 +47,12 @@ signedOut.guidance = We did not save your answers.
 
 unauthorised.title = You can’t access this service with this account
 unauthorised.heading = You can’t access this service with this account
+
+taxTransactions.title = Taxes
+taxTransactions.section = Accounting period overview
+taxTransactions.heading = Taxes
+taxTransactions.table.header = Accounting Period ending {0}
+taxTransactions.table.total = Total
 
 penaltiesAccountingPeriod.heading        = Penalties
 penaltiesAccountingPeriod.caption        = Accounting period ending
