@@ -15,6 +15,7 @@
  *@
 
 @import views.html.components.*
+@import viewmodels._
 @import viewmodels.AdjustmentsAccountingPeriodViewModel
 
 @this(
@@ -25,7 +26,7 @@
 
 @(viewModel: AdjustmentsAccountingPeriodViewModel)(implicit request: Request[_], messages: Messages)
 
-@layout(pageTitle = titleNoForm(messages("adjustmentsAccountingPeriod.title"))) {
+@layout(pageTitle = titleNoForm(messages("adjustmentsAccountingPeriod.title"), Some(messages("adjustmentsAccountingPeriod.section"))), breadcrumbs = Some(PageBreadcrumbs.adjustmentsTransactionsAccountingPeriodPage)) {
 
     @h1(messages("adjustmentsAccountingPeriod.heading"))
 

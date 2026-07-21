@@ -61,6 +61,7 @@ penaltiesAccountingPeriod.title          = Penalties
 penaltiesAccountingPeriod.section        = Accounting period overview
 
 adjustmentsAccountingPeriod.title          = Adjustments – Accounting period overview
+adjustmentsAccountingPeriod.section        = Accounting period overview
 adjustmentsAccountingPeriod.heading        = Adjustments
 adjustmentsAccountingPeriod.caption        = Accounting period ending 30 Sep 2025
 adjustmentsAccountingPeriod.total          = Total
