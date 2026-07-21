@@ -20,10 +20,10 @@ import com.google.inject.{Inject, Singleton}
 import connectors.PenaltiesConnector
 import models.PenaltyTransactionType
 import play.api.Logging
-import play.api.i18n.{Messages}
+import play.api.i18n.Messages
 import uk.gov.hmrc.http.HeaderCarrier
 import viewmodels.{PenaltiesAccountingPeriodViewModel, PenaltiesAccountingPeriodViewModelRow}
-
+import java.time.LocalDate
 import scala.concurrent.{ExecutionContext, Future}
 import models.PenaltyTransactionType.*
 
@@ -33,18 +33,23 @@ class PenaltiesService @Inject() (
 )(implicit ec: ExecutionContext)
     extends Logging {
 
+  // TODO: extract accounting period / convert accPeriod:L to accPeriodLocalDate:
+
   def getViewModel(taxRef: Long, accPeriod: Long)(implicit
     messages: Messages,
     hc: HeaderCarrier
   ): Future[PenaltiesAccountingPeriodViewModel] =
     for {
       penalties <- connector.getPenaltyTransactionList(taxRef, accPeriod)
-    } yield PenaltiesAccountingPeriodViewModel(rows = penalties.penaltyTransactions.map { penalty =>
-      PenaltiesAccountingPeriodViewModelRow(
-        date = penalty.penaltyDate,
-        description = asString(penalty.`type`),
-        amount = penalty.postingAmount
-      )
-    })
+    } yield PenaltiesAccountingPeriodViewModel(
+      accountingPeriodEnd = LocalDate.now, // TODO: extract it from BE??
+      rows = penalties.penaltyTransactions.map { penalty =>
+        PenaltiesAccountingPeriodViewModelRow(
+          date = penalty.penaltyDate,
+          description = asString(penalty.`type`),
+          amount = penalty.postingAmount
+        )
+      }
+    )
 
 }

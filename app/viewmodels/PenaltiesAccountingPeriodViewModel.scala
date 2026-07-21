@@ -34,11 +34,20 @@ case class PenaltiesAccountingPeriodViewModelRow(date: LocalDate, description: S
     if (amount.signum < 0) s"-${formatter.format(amount.abs)}" else formatter.format(amount)
   }
 
-  val dateAsString : String = formatDate(date)
-  val amountAsString : String = formatCurrency(amount)
+  val dateAsString: String   = formatDate(date)
+  val amountAsString: String = formatCurrency(amount)
 }
 
-case class PenaltiesAccountingPeriodViewModel(rows: List[PenaltiesAccountingPeriodViewModelRow]) {
+case class PenaltiesAccountingPeriodViewModel(
+  accountingPeriodEnd: LocalDate,
+  rows: List[PenaltiesAccountingPeriodViewModelRow]
+) {
+
+  // Port from PR to be merged / re-wirte after
+  private def formatDate(date: LocalDate): String =
+    date.format(DateTimeFormats.dateTimeFormat()(Lang.defaultLang))
+
+  val accountingPeriodEndAsString: String = formatDate(accountingPeriodEnd)
 
   def total: BigDecimal = rows.map(_.amount).sum
 
