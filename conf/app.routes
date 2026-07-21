@@ -20,4 +20,6 @@ GET         /account/signed-out                          controllers.auth.Signed
 
 GET         /unauthorised                                controllers.UnauthorisedController.onPageLoad()
 
+# DOMAIN SPECIFIC ROUTES
 GET         /accounting-period-overview/taxes            controllers.TaxTransactionsController.onPageLoad()
+GET         /accounting-period-overview/penalties        controllers.PenaltiesAccountingPeriodController.onPageLoad()

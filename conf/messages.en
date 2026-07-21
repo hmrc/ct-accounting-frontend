@@ -53,3 +53,9 @@ taxTransactions.section = Accounting period overview
 taxTransactions.heading = Taxes
 taxTransactions.table.header = Accounting Period ending {0}
 taxTransactions.table.total = Total
+
+penaltiesAccountingPeriod.heading        = Penalties
+penaltiesAccountingPeriod.caption        = Accounting period ending
+penaltiesAccountingPeriod.total          = Total
+penaltiesAccountingPeriod.title          = Penalties
+penaltiesAccountingPeriod.section        = Accounting period overview
