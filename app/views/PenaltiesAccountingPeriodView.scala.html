@@ -44,9 +44,9 @@
         )),
         rows = viewModel.rows.map { row =>
             Seq(
-                TableRow(content = Text( row.date.toString  )),
+                TableRow(content = Text( row.dateAsString  )),
                 TableRow(content = Text( row.description )),
-                TableRow(content = Text( row.amount.toString() ))
+                TableRow(content = Text( row.amountAsString ))
               )
             } :+ viewModel.totalRow(
                         label = messages("penaltiesAccountingPeriod.total"),

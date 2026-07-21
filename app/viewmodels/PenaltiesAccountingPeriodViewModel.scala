@@ -16,12 +16,27 @@
 
 package viewmodels
 
+import play.api.i18n.Lang
 import uk.gov.hmrc.govukfrontend.views.Aliases.TableRow
 import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
+import utils.DateTimeFormats
 
 import java.time.LocalDate
 
-case class PenaltiesAccountingPeriodViewModelRow(date: LocalDate, description: String, amount: BigDecimal)
+case class PenaltiesAccountingPeriodViewModelRow(date: LocalDate, description: String, amount: BigDecimal) {
+
+  // Port from PR to be merged / re-wirte after
+  private def formatDate(date: LocalDate): String =
+    date.format(DateTimeFormats.dateTimeFormat()(Lang.defaultLang))
+
+  private def formatCurrency(amount: BigDecimal): String = {
+    val formatter = java.text.NumberFormat.getCurrencyInstance(java.util.Locale.UK)
+    if (amount.signum < 0) s"-${formatter.format(amount.abs)}" else formatter.format(amount)
+  }
+
+  val dateAsString : String = formatDate(date)
+  val amountAsString : String = formatCurrency(amount)
+}
 
 case class PenaltiesAccountingPeriodViewModel(rows: List[PenaltiesAccountingPeriodViewModelRow]) {
 

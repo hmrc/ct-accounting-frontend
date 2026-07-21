@@ -20,7 +20,7 @@ import com.google.inject.{Inject, Singleton}
 import connectors.PenaltiesConnector
 import models.PenaltyTransactionType
 import play.api.Logging
-import play.api.i18n.Messages
+import play.api.i18n.{Messages}
 import uk.gov.hmrc.http.HeaderCarrier
 import viewmodels.{PenaltiesAccountingPeriodViewModel, PenaltiesAccountingPeriodViewModelRow}
 
