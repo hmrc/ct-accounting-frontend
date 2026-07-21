@@ -16,18 +16,14 @@
 
 package viewmodels
 
-
 import uk.gov.hmrc.govukfrontend.views.Aliases.TableRow
 import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 
 import java.time.LocalDate
 
-case class PenaltiesAccountingPeriodViewModelRow(date: LocalDate,
-                                                 description: String,
-                                                 amount: BigDecimal)
+case class PenaltiesAccountingPeriodViewModelRow(date: LocalDate, description: String, amount: BigDecimal)
 
-case class PenaltiesAccountingPeriodViewModel(
-                                               rows: List[PenaltiesAccountingPeriodViewModelRow]) {
+case class PenaltiesAccountingPeriodViewModel(rows: List[PenaltiesAccountingPeriodViewModelRow]) {
 
   def total: BigDecimal = rows.map(_.amount).sum
 

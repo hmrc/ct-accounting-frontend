@@ -16,9 +16,8 @@
 
 package controllers
 
-
 import controllers.actions.IdentifierAction
-import play.api.i18n.{I18nSupport}
+import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import services.PenaltiesService
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
@@ -30,23 +29,21 @@ import scala.concurrent.ExecutionContext
 // TODO: - 1 :: integrate auth then its ready
 // TODO: - 2 :: read taxRef and accPeriod from the userSession
 class PenaltiesAccountingPeriodController @Inject() (
-                                  val controllerComponents: MessagesControllerComponents,
-                                  identify: IdentifierAction,
-                                  service: PenaltiesService,
-                                  view: PenaltiesAccountingPeriodView
-                                ) (implicit ec: ExecutionContext) extends FrontendBaseController
-  with I18nSupport {
-
+  val controllerComponents: MessagesControllerComponents,
+  identify: IdentifierAction,
+  service: PenaltiesService,
+  view: PenaltiesAccountingPeriodView
+)(implicit ec: ExecutionContext)
+    extends FrontendBaseController
+    with I18nSupport {
 
   def onPageLoad(): Action[AnyContent] = identify.async { implicit request =>
-    val taxRef: Long = 1L
+    val taxRef: Long    = 1L
     val accPeriod: Long = 1L
     for {
       viewModel <- service.getViewModel(taxRef, accPeriod)
     } yield Ok(view(viewModel))
 
   }
-
-
 
 }

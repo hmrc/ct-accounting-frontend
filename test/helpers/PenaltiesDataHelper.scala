@@ -31,18 +31,18 @@ trait PenaltiesDataHelper {
         PenaltyTransactionItem(penaltyDate = LocalDate.of(2021, 3, 7), `type` = TG, postingAmount = BigDecimal(27.19))
       )
     )
-    
+
   val penaltiesViewModelTwoRows: List[PenaltiesAccountingPeriodViewModelRow] = List(
     PenaltiesAccountingPeriodViewModelRow(
-      date =LocalDate.of(2025, 5, 1),
+      date = LocalDate.of(2025, 5, 1),
       description = "Fixed rate penalty",
       amount = BigDecimal(100.13)
     ),
     PenaltiesAccountingPeriodViewModelRow(
-      date =LocalDate.of(2021, 3, 7),
+      date = LocalDate.of(2021, 3, 7),
       description = "Tax geared penalty",
       amount = BigDecimal(27.19)
-    ),
+    )
   )
 
   val penaltiesViewModelSingleRow: List[PenaltiesAccountingPeriodViewModelRow] = List(
@@ -52,10 +52,13 @@ trait PenaltiesDataHelper {
       amount = BigDecimal(100.13)
     )
   )
-  
-  val viewModelWithTwoRows : PenaltiesAccountingPeriodViewModel = PenaltiesAccountingPeriodViewModel(penaltiesViewModelTwoRows)
-  val viewModelWithSingleRow : PenaltiesAccountingPeriodViewModel = PenaltiesAccountingPeriodViewModel(penaltiesViewModelSingleRow)
-  val viewModelWithNoRows : PenaltiesAccountingPeriodViewModel = PenaltiesAccountingPeriodViewModel( List.empty)
 
+  val viewModelWithTwoRows: PenaltiesAccountingPeriodViewModel   = PenaltiesAccountingPeriodViewModel(
+    penaltiesViewModelTwoRows
+  )
+  val viewModelWithSingleRow: PenaltiesAccountingPeriodViewModel = PenaltiesAccountingPeriodViewModel(
+    penaltiesViewModelSingleRow
+  )
+  val viewModelWithNoRows: PenaltiesAccountingPeriodViewModel    = PenaltiesAccountingPeriodViewModel(List.empty)
 
 }

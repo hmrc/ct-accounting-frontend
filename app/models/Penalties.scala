@@ -24,14 +24,13 @@ enum PenaltyTransactionType {
 }
 
 object PenaltyTransactionType {
-  def asString(tp: PenaltyTransactionType): String = {
+  def asString(tp: PenaltyTransactionType): String =
     tp match {
       case FX => "Fixed rate penalty"
       case FT => "Flat rate penalty"
       case TG => "Tax geared penalty"
       case TR => "Tax related penalty"
     }
-  }
 }
 
 implicit val penaltyTransactionType: Format[PenaltyTransactionType] = new Format[PenaltyTransactionType] {

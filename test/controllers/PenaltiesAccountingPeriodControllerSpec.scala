@@ -29,7 +29,6 @@ import views.html.PenaltiesAccountingPeriodView
 import scala.concurrent.Future
 import org.scalatestplus.mockito.MockitoSugar.mock
 
-
 class PenaltiesAccountingPeriodControllerSpec extends SpecBase with SummaryListFluency with PenaltiesDataHelper {
 
   private val mockPenaltiesService = mock[PenaltiesService]
@@ -42,7 +41,8 @@ class PenaltiesAccountingPeriodControllerSpec extends SpecBase with SummaryListF
         .overrides(bind[PenaltiesService].toInstance(mockPenaltiesService))
         .build()
 
-      when( mockPenaltiesService.getViewModel(any(), any() )(any(), any()) ).thenReturn(Future.successful(viewModelWithTwoRows))
+      when(mockPenaltiesService.getViewModel(any(), any())(any(), any()))
+        .thenReturn(Future.successful(viewModelWithTwoRows))
 
       running(application) {
         val request = FakeRequest(GET, routes.PenaltiesAccountingPeriodController.onPageLoad().url)
@@ -62,7 +62,8 @@ class PenaltiesAccountingPeriodControllerSpec extends SpecBase with SummaryListF
         .overrides(bind[PenaltiesService].toInstance(mockPenaltiesService))
         .build()
 
-      when(mockPenaltiesService.getViewModel(any(), any())(any(), any())).thenReturn(Future.successful(viewModelWithSingleRow))
+      when(mockPenaltiesService.getViewModel(any(), any())(any(), any()))
+        .thenReturn(Future.successful(viewModelWithSingleRow))
 
       running(application) {
         val request = FakeRequest(GET, routes.PenaltiesAccountingPeriodController.onPageLoad().url)
@@ -82,7 +83,8 @@ class PenaltiesAccountingPeriodControllerSpec extends SpecBase with SummaryListF
         .overrides(bind[PenaltiesService].toInstance(mockPenaltiesService))
         .build()
 
-      when(mockPenaltiesService.getViewModel(any(), any())(any(), any())).thenReturn(Future.successful(viewModelWithNoRows))
+      when(mockPenaltiesService.getViewModel(any(), any())(any(), any()))
+        .thenReturn(Future.successful(viewModelWithNoRows))
 
       running(application) {
         val request = FakeRequest(GET, routes.PenaltiesAccountingPeriodController.onPageLoad().url)

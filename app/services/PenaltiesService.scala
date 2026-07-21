@@ -28,25 +28,23 @@ import scala.concurrent.{ExecutionContext, Future}
 import models.PenaltyTransactionType.*
 
 @Singleton
-class PenaltiesService @Inject()(
-                                  connector: PenaltiesConnector
-                                )(implicit ec: ExecutionContext)
-  extends Logging {
+class PenaltiesService @Inject() (
+  connector: PenaltiesConnector
+)(implicit ec: ExecutionContext)
+    extends Logging {
 
-  def getViewModel(taxRef: Long, accPeriod: Long)
-                  (implicit messages: Messages, hc: HeaderCarrier): Future[PenaltiesAccountingPeriodViewModel] = {
+  def getViewModel(taxRef: Long, accPeriod: Long)(implicit
+    messages: Messages,
+    hc: HeaderCarrier
+  ): Future[PenaltiesAccountingPeriodViewModel] =
     for {
       penalties <- connector.getPenaltyTransactionList(taxRef, accPeriod)
-    } yield
-      PenaltiesAccountingPeriodViewModel( rows =
-        penalties.penaltyTransactions.map { penalty =>
-          PenaltiesAccountingPeriodViewModelRow(
-            date = penalty.penaltyDate,
-            description = asString(penalty.`type`),
-            amount = penalty.postingAmount
-          )
-        }
+    } yield PenaltiesAccountingPeriodViewModel(rows = penalties.penaltyTransactions.map { penalty =>
+      PenaltiesAccountingPeriodViewModelRow(
+        date = penalty.penaltyDate,
+        description = asString(penalty.`type`),
+        amount = penalty.postingAmount
       )
-  }
+    })
 
 }

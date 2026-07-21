@@ -24,7 +24,7 @@ import play.api.test.FakeRequest
 import viewmodels.PenaltiesAccountingPeriodViewModel
 import views.html.PenaltiesAccountingPeriodView
 
-class PenaltiesAccountingPeriodViewSpec extends SpecBase with PenaltiesDataHelper{
+class PenaltiesAccountingPeriodViewSpec extends SpecBase with PenaltiesDataHelper {
 
   val application = applicationBuilder().build()
 

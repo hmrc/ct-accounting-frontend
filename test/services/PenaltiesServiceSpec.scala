@@ -32,18 +32,14 @@ import viewmodels.{PenaltiesAccountingPeriodViewModel, PenaltiesAccountingPeriod
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.{ExecutionContext, Future}
 
-
-class PenaltiesServiceSpec extends AnyWordSpec
-  with PenaltiesDataHelper
-  with Matchers with ScalaFutures {
-
+class PenaltiesServiceSpec extends AnyWordSpec with PenaltiesDataHelper with Matchers with ScalaFutures {
 
   private trait Fixture {
     val mockPenaltiesConnector: PenaltiesConnector = mock[PenaltiesConnector]
 
-    val cc                            = Helpers.stubControllerComponents()
+    val cc                          = Helpers.stubControllerComponents()
     implicit val messages: Messages = stubMessages()
-    implicit val hc: HeaderCarrier    = HeaderCarrier()
+    implicit val hc: HeaderCarrier  = HeaderCarrier()
 
     val service = new PenaltiesService(mockPenaltiesConnector)
   }
@@ -60,6 +56,5 @@ class PenaltiesServiceSpec extends AnyWordSpec
     verify(mockPenaltiesConnector).getPenaltyTransactionList(1L, 1L)(hc)
   }
 
-  //TODO: add more tests scenarios
+  // TODO: add more tests scenarios
 }
-
