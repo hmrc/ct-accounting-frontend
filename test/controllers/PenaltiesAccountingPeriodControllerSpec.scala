@@ -62,7 +62,7 @@ class PenaltiesAccountingPeriodControllerSpec extends SpecBase with SummaryListF
         .overrides(bind[PenaltiesService].toInstance(mockPenaltiesService))
         .build()
 
-      when(mockPenaltiesService.getViewModel(any(), any())(any(), any())).thenReturn(Future.successful(viewModelWithTwoRows))
+      when(mockPenaltiesService.getViewModel(any(), any())(any(), any())).thenReturn(Future.successful(viewModelWithSingleRow))
 
       running(application) {
         val request = FakeRequest(GET, routes.PenaltiesAccountingPeriodController.onPageLoad().url)
@@ -82,7 +82,7 @@ class PenaltiesAccountingPeriodControllerSpec extends SpecBase with SummaryListF
         .overrides(bind[PenaltiesService].toInstance(mockPenaltiesService))
         .build()
 
-      when(mockPenaltiesService.getViewModel(any(), any())(any(), any())).thenReturn(Future.successful(viewModelWithTwoRows))
+      when(mockPenaltiesService.getViewModel(any(), any())(any(), any())).thenReturn(Future.successful(viewModelWithNoRows))
 
       running(application) {
         val request = FakeRequest(GET, routes.PenaltiesAccountingPeriodController.onPageLoad().url)
