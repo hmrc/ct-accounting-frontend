@@ -21,14 +21,14 @@ import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 import play.api.i18n.Messages
 import models.AdjustmentTransactionsList
 import models.AdjustmentTransactionType.*
-import utils.Formatters.*
+import views.ViewUtils.*
 
 case class AdjustmentsAccountingPeriodViewModelRow(
   description: String,
   amount: BigDecimal
 ) {
 
-  val amountAsString: String = toCurrency(amount)
+  val amountAsString: String = formatCurrency(amount)
 
 }
 
@@ -36,7 +36,7 @@ case class AdjustmentsAccountingPeriodViewModel(rows: List[AdjustmentsAccounting
 
   val total: BigDecimal = rows.map(_.amount).sum
 
-  val totalAsString: String = toCurrency(total)
+  val totalAsString: String = formatCurrency(total)
 
   def totalRow(total: String, label: String): Seq[TableRow] =
     Seq(
