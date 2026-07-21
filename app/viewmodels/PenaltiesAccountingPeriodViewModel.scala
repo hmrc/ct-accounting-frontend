@@ -23,16 +23,20 @@ import utils.DateTimeFormats
 
 import java.time.LocalDate
 
-case class PenaltiesAccountingPeriodViewModelRow(date: LocalDate, description: String, amount: BigDecimal) {
-
+// TODO: use generic Utils from PR to be merged
+object Formatters {
   // Port from PR to be merged / re-wirte after
-  private def formatDate(date: LocalDate): String =
+  def formatDate(date: LocalDate): String =
     date.format(DateTimeFormats.dateTimeFormat()(Lang.defaultLang))
 
-  private def formatCurrency(amount: BigDecimal): String = {
+  def formatCurrency(amount: BigDecimal): String = {
     val formatter = java.text.NumberFormat.getCurrencyInstance(java.util.Locale.UK)
     if (amount.signum < 0) s"-${formatter.format(amount.abs)}" else formatter.format(amount)
   }
+}
+
+case class PenaltiesAccountingPeriodViewModelRow(date: LocalDate, description: String, amount: BigDecimal) {
+  import Formatters.*
 
   val dateAsString: String   = formatDate(date)
   val amountAsString: String = formatCurrency(amount)
@@ -43,17 +47,17 @@ case class PenaltiesAccountingPeriodViewModel(
   rows: List[PenaltiesAccountingPeriodViewModelRow]
 ) {
 
-  // Port from PR to be merged / re-wirte after
-  private def formatDate(date: LocalDate): String =
-    date.format(DateTimeFormats.dateTimeFormat()(Lang.defaultLang))
+  import Formatters.*
 
   val accountingPeriodEndAsString: String = formatDate(accountingPeriodEnd)
 
-  def total: BigDecimal = rows.map(_.amount).sum
+  val total: BigDecimal = rows.map(_.amount).sum
 
-  def totalRow(label: String, total: BigDecimal, blankCells: Int): Seq[TableRow] =
+  val totalAsString: String = formatCurrency(total)
+
+  def totalRow(label: String, total: String, blankCells: Int): Seq[TableRow] =
     TableRow(content = Text(label), classes = "govuk-!-font-weight-bold") +:
       Seq.fill(blankCells)(TableRow(content = Text(""))) :+
-      TableRow(content = Text(total.toString()), classes = "govuk-!-font-weight-bold")
+      TableRow(content = Text(total), classes = "govuk-!-font-weight-bold")
 
 }
