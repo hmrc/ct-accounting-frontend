@@ -1,4 +1,4 @@
-@*
+/*
  * Copyright 2026 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,10 +12,14 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *@
+ */
 
-@this()
+package utils
 
-@(msg: String, classes: String = "govuk-heading-l")(implicit messages: Messages)
+object Formatters {
 
-<h1 class="@classes">@messages(msg)</h1>
+  def toCurrency(amount: BigDecimal): String = {
+    val formatter = java.text.NumberFormat.getCurrencyInstance(java.util.Locale.UK)
+    if (amount.signum < 0) s"-${formatter.format(amount.abs)}" else formatter.format(amount)
+  }
+}

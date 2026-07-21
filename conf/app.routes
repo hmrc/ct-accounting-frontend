@@ -23,3 +23,4 @@ GET         /unauthorised                                controllers.Unauthorise
 # DOMAIN SPECIFIC ROUTES
 GET         /accounting-period-overview/taxes            controllers.TaxTransactionsController.onPageLoad()
 GET         /accounting-period-overview/penalties        controllers.PenaltiesAccountingPeriodController.onPageLoad()
+GET         /accounting-period-overview/adjustments      controllers.AdjustmentsAccountingPeriodController.onPageLoad()
