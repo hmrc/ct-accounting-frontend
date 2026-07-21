@@ -27,7 +27,7 @@
 
 @layout(pageTitle = titleNoForm(messages("taxTransactions.title"), Some(messages("taxTransactions.section"))), breadcrumbs = Some(PageBreadcrumbs.taxTransactionsPage)) {
 
-    <h1 class="govuk-heading-xl">@messages("taxTransactions.heading")</h1>
+    <h1 class="govuk-heading-l">@messages("taxTransactions.heading")</h1>
 
     @govukTable(Table(
       rows = taxTransactions.map { transaction =>
