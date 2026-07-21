@@ -39,7 +39,7 @@ class PenaltiesAccountingPeriodController @Inject() (
 
   def onPageLoad(): Action[AnyContent] = identify.async { implicit request =>
     val taxRef: Long    = 1L
-    val accPeriod: Long = 1L
+    val accPeriod: Long = 1L // Also pass accountingPeriodAsLocalDate to construct model
     for {
       viewModel <- service.getViewModel(taxRef, accPeriod)
     } yield Ok(view(viewModel))

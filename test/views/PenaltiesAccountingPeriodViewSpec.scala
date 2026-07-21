@@ -39,42 +39,27 @@ class PenaltiesAccountingPeriodViewSpec extends SpecBase with PenaltiesDataHelpe
 
     "render the correct page title" in {
       val doc = render(viewModelWithTwoRows)
-      println(doc.title())
       doc.title() mustBe "Penalties – Accounting period overview - ct-accounting-frontend - GOV.UK"
     }
 
-//    "render the correct heading" in {
-//      val doc = render()
-//      doc.select("h1.govuk-heading-xl").text() mustBe "Taxes"
-//    }
-//
-//    "render the table caption with the formatted account period" in {
-//      val doc = render()
-//      doc.select(".govuk-table__caption").text() must include("Accounting Period ending")
-//    }
-//
-//    "render the correct table headers" in {
-//      val doc = render()
-//      val headers = doc.select("th.govuk-table__header").eachText()
-//      headers must contain allOf("Date", "Description", "Amount")
-//    }
-//
-//    "render one row per transaction when there are multiple" in {
-//      val twoTransactions = taxTransactions :+ TaxTransactionsItem(
-//        currentAmount = 99.99,
-//        assessmentType = "A",
-//        taxDate = LocalDate.of(2026, 2, 1),
-//        correctionClaimSignal = Some("2")
-//      )
-//      val doc = render(items = twoTransactions)
-//      doc.select("tbody.govuk-table__body tr.govuk-table__row").size() mustBe 3
-//    }
-//
-//    "render no data rows when there are no transactions" in {
-//      val doc = render(items = List.empty)
-//      doc.select("tbody.govuk-table__body tr.govuk-table__row").size() mustBe 1
-//    }
-//
+    "render the correct heading" in {
+      val doc = render(viewModelWithTwoRows)
+      doc.select("caption").text() mustBe "Accounting period ending 1 May 2025"
+    }
+
+    "render the table caption with the formatted account period" in {
+      val doc = render(viewModelWithTwoRows)
+      doc.select("tbody.govuk-table__body tr.govuk-table__row").size() mustBe 3
+      // doc.select(".govuk-table__caption").text() must include("Accounting Period ending")
+    }
+
+    "render the correct table headers" in {
+      val doc     = render(viewModelWithTwoRows)
+      val headers = doc.select("th.govuk-table__header").eachText()
+      headers must contain allOf ("Date", "Description", "Amount")
+    }
+
+// TODO: check breadcrumbs rendering when relevant PR merged
 //    "render the breadcrumbs" in {
 //      val doc = render()
 //      doc.select(".govuk-breadcrumbs__list-item").size() must be > 0
