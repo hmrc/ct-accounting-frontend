@@ -61,8 +61,8 @@ class TaxTransactionsControllerSpec extends SpecBase with MockitoSugar {
 
   // TODO: hardcoded value in the controller until it's wired up to session data
   val expectedAccountPeriod: LocalDate = LocalDate.of(2026, 1, 1)
-
-  val total: BigDecimal = taxTransactionsResponse.taxTransactions.map(_.currentAmount).sum
+  val taxDescriptions                  = "Dummy value"
+  val total: BigDecimal                = taxTransactionsResponse.taxTransactions.map(_.currentAmount).sum
 
   "TaxTransactions Controller" - {
 
@@ -82,7 +82,7 @@ class TaxTransactionsControllerSpec extends SpecBase with MockitoSugar {
 
         status(result) mustEqual OK
         contentAsString(result) mustEqual
-          view(taxTransactionsResponse.taxTransactions, expectedAccountPeriod, total)(
+          view(taxTransactionsResponse.taxTransactions, expectedAccountPeriod, total, taxDescriptions)(
             request,
             messages(application)
           ).toString

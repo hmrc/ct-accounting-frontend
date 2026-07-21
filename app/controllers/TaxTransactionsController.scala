@@ -41,10 +41,12 @@ class TaxTransactionsController @Inject() (
 
     val accountPeriod = LocalDate.of(2026, 1, 1) // TODO: This needs to comes from sessionDataRepository
 
+    val taxDescriptions = "Dummy value" // TODO: Refactor into a view model under BF20 - DTR-6797
+
     // TODO: Get taxRef + accPeriod from sessionDataRepositry
     connector.getTaxTransactions(1L, 1L).map { taxTransactionsResponse =>
       val total: BigDecimal = taxTransactionsResponse.taxTransactions.map(_.currentAmount).sum
-      Ok(view(taxTransactionsResponse.taxTransactions, accountPeriod, total))
+      Ok(view(taxTransactionsResponse.taxTransactions, accountPeriod, total, taxDescriptions))
     }
   }
 }
