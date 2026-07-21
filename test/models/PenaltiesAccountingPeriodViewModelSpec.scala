@@ -25,17 +25,26 @@ class PenaltiesAccountingPeriodViewModelSpec extends AnyFlatSpec with PenaltiesD
     assert(
       viewModelWithNoRows.total == BigDecimal(0)
     )
+    assert(
+      viewModelWithNoRows.totalAsString == "£0.00"
+    )
   }
 
   it should "calculate total for viewModel with 2 rows" in {
     assert(
       viewModelWithTwoRows.total == BigDecimal(127.32)
     )
+    assert(
+      viewModelWithTwoRows.totalAsString == "£127.32"
+    )
   }
 
   it should "calculate total for viewModel with single row" in {
     assert(
       viewModelWithSingleRow.total == BigDecimal(100.13)
+    )
+    assert(
+      viewModelWithSingleRow.totalAsString == "£100.13"
     )
   }
 }
