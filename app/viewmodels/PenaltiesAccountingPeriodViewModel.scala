@@ -34,7 +34,6 @@ case class PenaltiesAccountingPeriodViewModel(
   rows: List[PenaltiesAccountingPeriodViewModelRow]
 ) {
 
-
   val accountingPeriodEndAsString: String = formatDate(accountingPeriodEnd, Lang.defaultLang)
 
   val total: BigDecimal = rows.map(_.amount).sum
