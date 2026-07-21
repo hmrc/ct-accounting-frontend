@@ -1,0 +1,54 @@
+/*
+ * Copyright 2026 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package controllers
+
+import controllers.actions.IdentifierAction
+import play.api.Logging
+import play.api.i18n.I18nSupport
+import scala.concurrent.ExecutionContext
+import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
+import controllers.routes.JourneyRecoveryController
+import services.AdjustmentsAccountingPeriodService
+import views.html.AdjustmentsAccountingPeriodView
+import viewmodels.AdjustmentsAccountingPeriodViewModel
+
+import javax.inject.Inject
+
+class AdjustmentsAccountingPeriodController @Inject() (
+  val controllerComponents: MessagesControllerComponents,
+  identify: IdentifierAction,
+  adjustmentsAccountingPeriodService: AdjustmentsAccountingPeriodService,
+  view: AdjustmentsAccountingPeriodView
+)(implicit ec: ExecutionContext)
+    extends FrontendBaseController
+    with I18nSupport
+    with Logging {
+
+  def onPageLoad(): Action[AnyContent] = identify.async { implicit request =>
+    adjustmentsAccountingPeriodService.getAdjustmentTransactions(3060600983L, 4L).map { response =>
+      logger.info(
+        s"[AdjustmentsAccountingPeriodController][onPageLoad] - successfully retrieved AdjustmentTransactionsList"
+      )
+      val vm = AdjustmentsAccountingPeriodViewModel.convertToViewModel(response)
+      Ok(view(vm))
+    } recover { case ex =>
+      logger.error(s"[AdjustmentsAccountingPeriodController][onPageLoad] - Unexpected failure: ${ex.getMessage}")
+      Redirect(JourneyRecoveryController.onPageLoad())
+    }
+  }
+}
