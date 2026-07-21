@@ -57,5 +57,5 @@ taxTransactions.table.total = Total
 penaltiesAccountingPeriod.heading        = Penalties
 penaltiesAccountingPeriod.caption        = Accounting period ending
 penaltiesAccountingPeriod.total          = Total
-penaltiesAccountingPeriod.title          = Penalties – Accounting period overview
+penaltiesAccountingPeriod.title          = Penalties
 penaltiesAccountingPeriod.section        = Accounting period overview
