@@ -54,11 +54,14 @@ trait PenaltiesDataHelper {
   )
 
   val viewModelWithTwoRows: PenaltiesAccountingPeriodViewModel   = PenaltiesAccountingPeriodViewModel(
+    accountingPeriodEnd = LocalDate.of(2025, 5, 1),
     penaltiesViewModelTwoRows
   )
   val viewModelWithSingleRow: PenaltiesAccountingPeriodViewModel = PenaltiesAccountingPeriodViewModel(
+    accountingPeriodEnd = LocalDate.of(2025, 5, 1),
     penaltiesViewModelSingleRow
   )
-  val viewModelWithNoRows: PenaltiesAccountingPeriodViewModel    = PenaltiesAccountingPeriodViewModel(List.empty)
+  val viewModelWithNoRows: PenaltiesAccountingPeriodViewModel    =
+    PenaltiesAccountingPeriodViewModel(accountingPeriodEnd = LocalDate.of(2025, 5, 1), List.empty)
 
 }
