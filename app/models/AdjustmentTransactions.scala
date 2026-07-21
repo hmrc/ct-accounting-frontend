@@ -18,7 +18,6 @@ package models
 
 import play.api.libs.json.*
 
-
 case class AdjustmentTransactionsList(adjustmentTransactionsList: List[AdjustmentTransactions])
 
 object AdjustmentTransactionsList {
@@ -38,26 +37,26 @@ enum AdjustmentTransactionType {
   case N, O, P
 }
 
-  object AdjustmentTransactionType {
-    def asString(att: AdjustmentTransactionType): String =
-      att match {
-        case N => "Not currently being pursued"
-        case O => "Permanent overpayment"
-        case P => "Postponement"
-      }
-  }
-
-  implicit val adjustmentTransactionType: Format[AdjustmentTransactionType] = new Format[AdjustmentTransactionType] {
-    def reads(json: JsValue): JsResult[AdjustmentTransactionType] = json match {
-      case JsString(s) =>
-        s.toUpperCase() match {
-          case "N" => JsSuccess(AdjustmentTransactionType.N)
-          case "O" => JsSuccess(AdjustmentTransactionType.O)
-          case "P" => JsSuccess(AdjustmentTransactionType.P)
-          case _ => JsError("Invalid AdjustmentTransactionType")
-        }
-      case _ => JsError("AdjustmentTransactionType: Unexpected JsString")
+object AdjustmentTransactionType {
+  def asString(att: AdjustmentTransactionType): String =
+    att match {
+      case N => "Not currently being pursued"
+      case O => "Permanent overpayment"
+      case P => "Postponement"
     }
+}
 
-    def writes(adjustmentType: AdjustmentTransactionType): JsValue = JsString(adjustmentType.toString.toUpperCase())
+implicit val adjustmentTransactionType: Format[AdjustmentTransactionType] = new Format[AdjustmentTransactionType] {
+  def reads(json: JsValue): JsResult[AdjustmentTransactionType] = json match {
+    case JsString(s) =>
+      s.toUpperCase() match {
+        case "N" => JsSuccess(AdjustmentTransactionType.N)
+        case "O" => JsSuccess(AdjustmentTransactionType.O)
+        case "P" => JsSuccess(AdjustmentTransactionType.P)
+        case _   => JsError("Invalid AdjustmentTransactionType")
+      }
+    case _           => JsError("AdjustmentTransactionType: Unexpected JsString")
   }
+
+  def writes(adjustmentType: AdjustmentTransactionType): JsValue = JsString(adjustmentType.toString.toUpperCase())
+}

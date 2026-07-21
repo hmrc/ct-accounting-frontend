@@ -24,9 +24,9 @@ import models.AdjustmentTransactionType.*
 import utils.Formatters.*
 
 case class AdjustmentsAccountingPeriodViewModelRow(
-                                                    description: String,
-                                                    amount: BigDecimal
-                                                  ) {
+  description: String,
+  amount: BigDecimal
+) {
 
   val amountAsString: String = toCurrency(amount)
 
@@ -39,16 +39,17 @@ case class AdjustmentsAccountingPeriodViewModel(rows: List[AdjustmentsAccounting
   val totalAsString: String = toCurrency(total)
 
   def totalRow(total: String, label: String): Seq[TableRow] =
-    Seq(TableRow(content = Text(label), classes = "govuk-!-font-weight-bold"),
+    Seq(
+      TableRow(content = Text(label), classes = "govuk-!-font-weight-bold"),
       TableRow(content = Text(total), classes = "govuk-!-font-weight-bold govuk-table__cell govuk-table__cell--numeric")
-      )
+    )
 }
 
 object AdjustmentsAccountingPeriodViewModel {
 
   def convertToViewModel(
-                          adjustmentTransactions: AdjustmentTransactionsList
-                        )(implicit messages: Messages): AdjustmentsAccountingPeriodViewModel =
+    adjustmentTransactions: AdjustmentTransactionsList
+  )(implicit messages: Messages): AdjustmentsAccountingPeriodViewModel =
     AdjustmentsAccountingPeriodViewModel(
       rows = adjustmentTransactions.adjustmentTransactionsList.map { adjustment =>
         AdjustmentsAccountingPeriodViewModelRow(

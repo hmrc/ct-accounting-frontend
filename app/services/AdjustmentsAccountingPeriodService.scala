@@ -24,11 +24,12 @@ import uk.gov.hmrc.http.HeaderCarrier
 import javax.inject.Inject
 import scala.concurrent.Future
 
-class AdjustmentsAccountingPeriodService @Inject() (adjustmentsAccountingPeriodConnector: AdjustmentsAccountingPeriodConnector)
-  extends Logging {
+class AdjustmentsAccountingPeriodService @Inject() (
+  adjustmentsAccountingPeriodConnector: AdjustmentsAccountingPeriodConnector
+) extends Logging {
 
   def getAdjustmentTransactions(taxRef: Long, accPeriod: Long)(implicit
-                                                               hc: HeaderCarrier
+    hc: HeaderCarrier
   ): Future[AdjustmentTransactionsList] = {
     logger.info(s"Calling connector for taxRef: $taxRef and accPeriod: $accPeriod")
 

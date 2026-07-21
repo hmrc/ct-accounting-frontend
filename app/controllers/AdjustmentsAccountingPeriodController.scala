@@ -29,23 +29,26 @@ import viewmodels.AdjustmentsAccountingPeriodViewModel
 
 import javax.inject.Inject
 
-
-class AdjustmentsAccountingPeriodController @Inject()(
-                                                      val controllerComponents: MessagesControllerComponents,
-                                                      identify: IdentifierAction,
-                                                      adjustmentsAccountingPeriodService: AdjustmentsAccountingPeriodService,
-                                                      view: AdjustmentsAccountingPeriodView
-                                                    )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport with Logging {
+class AdjustmentsAccountingPeriodController @Inject() (
+  val controllerComponents: MessagesControllerComponents,
+  identify: IdentifierAction,
+  adjustmentsAccountingPeriodService: AdjustmentsAccountingPeriodService,
+  view: AdjustmentsAccountingPeriodView
+)(implicit ec: ExecutionContext)
+    extends FrontendBaseController
+    with I18nSupport
+    with Logging {
 
   def onPageLoad(): Action[AnyContent] = identify.async { implicit request =>
     adjustmentsAccountingPeriodService.getAdjustmentTransactions(3060600983L, 4L).map { response =>
-        logger.info(s"[AdjustmentsAccountingPeriodController][onPageLoad] - successfully retrieved AdjustmentTransactionsList")
-        val vm = AdjustmentsAccountingPeriodViewModel.convertToViewModel(response)
-        Ok(view(vm))
-    } recover {
-      case ex =>
-        logger.error(s"[AdjustmentsAccountingPeriodController][onPageLoad] - Unexpected failure: ${ex.getMessage}")
-        Redirect(JourneyRecoveryController.onPageLoad())
+      logger.info(
+        s"[AdjustmentsAccountingPeriodController][onPageLoad] - successfully retrieved AdjustmentTransactionsList"
+      )
+      val vm = AdjustmentsAccountingPeriodViewModel.convertToViewModel(response)
+      Ok(view(vm))
+    } recover { case ex =>
+      logger.error(s"[AdjustmentsAccountingPeriodController][onPageLoad] - Unexpected failure: ${ex.getMessage}")
+      Redirect(JourneyRecoveryController.onPageLoad())
     }
   }
 }
