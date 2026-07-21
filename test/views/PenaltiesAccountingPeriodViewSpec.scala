@@ -38,7 +38,7 @@ class PenaltiesAccountingPeriodViewSpec extends SpecBase with PenaltiesDataHelpe
   "PenaltiesAccountingPeriodView" - {
 
     "render the correct page title" in {
-      val doc = render(viewModel)
+      val doc = render(viewModelWithTwoRows)
       println(doc.title())
       doc.title() mustBe "Penalties – Accounting period overview - ct-accounting-frontend - GOV.UK"
     }

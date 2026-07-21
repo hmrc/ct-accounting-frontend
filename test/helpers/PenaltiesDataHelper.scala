@@ -32,7 +32,7 @@ trait PenaltiesDataHelper {
       )
     )
     
-  val penaltiesViewModelRows = List(
+  val penaltiesViewModelTwoRows: List[PenaltiesAccountingPeriodViewModelRow] = List(
     PenaltiesAccountingPeriodViewModelRow(
       date =LocalDate.of(2025, 5, 1),
       description = "Fixed rate penalty",
@@ -44,6 +44,18 @@ trait PenaltiesDataHelper {
       amount = BigDecimal(27.19)
     ),
   )
+
+  val penaltiesViewModelSingleRow: List[PenaltiesAccountingPeriodViewModelRow] = List(
+    PenaltiesAccountingPeriodViewModelRow(
+      date = LocalDate.of(2025, 5, 1),
+      description = "Fixed rate penalty",
+      amount = BigDecimal(100.13)
+    )
+  )
   
-  val viewModel : PenaltiesAccountingPeriodViewModel = PenaltiesAccountingPeriodViewModel(penaltiesViewModelRows)
+  val viewModelWithTwoRows : PenaltiesAccountingPeriodViewModel = PenaltiesAccountingPeriodViewModel(penaltiesViewModelTwoRows)
+  val viewModelWithSingleRow : PenaltiesAccountingPeriodViewModel = PenaltiesAccountingPeriodViewModel(penaltiesViewModelSingleRow)
+  val viewModelWithNoRows : PenaltiesAccountingPeriodViewModel = PenaltiesAccountingPeriodViewModel( List.empty)
+
+
 }

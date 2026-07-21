@@ -18,20 +18,31 @@ package controllers
 
 import base.SpecBase
 import helpers.PenaltiesDataHelper
+import org.mockito.ArgumentMatchers.any
+import org.mockito.Mockito.when
+import play.api.inject.bind
 import play.api.test.Helpers.*
 import play.api.test.{FakeRequest, Helpers}
+import services.PenaltiesService
 import viewmodels.govuk.SummaryListFluency
 import views.html.PenaltiesAccountingPeriodView
-
+import scala.concurrent.Future
+import org.scalatestplus.mockito.MockitoSugar.mock
 
 
 class PenaltiesAccountingPeriodControllerSpec extends SpecBase with SummaryListFluency with PenaltiesDataHelper {
 
+  private val mockPenaltiesService = mock[PenaltiesService]
+
   "Penalties Accounting Period Controller" - {
 
-    "must return OK and the correct view for a GET" in {
+    "must return OK and the correct view model with two rows for a GET" in {
 
-      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers))
+        .overrides(bind[PenaltiesService].toInstance(mockPenaltiesService))
+        .build()
+
+      when( mockPenaltiesService.getViewModel(any(), any() )(any(), any()) ).thenReturn(Future.successful(viewModelWithTwoRows))
 
       running(application) {
         val request = FakeRequest(GET, routes.PenaltiesAccountingPeriodController.onPageLoad().url)
@@ -41,9 +52,48 @@ class PenaltiesAccountingPeriodControllerSpec extends SpecBase with SummaryListF
         val view = application.injector.instanceOf[PenaltiesAccountingPeriodView]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(viewModel)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(viewModelWithTwoRows)(request, messages(application)).toString
       }
     }
 
+    "must return OK and the correct view model with single rows for a GET" in {
+
+      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers))
+        .overrides(bind[PenaltiesService].toInstance(mockPenaltiesService))
+        .build()
+
+      when(mockPenaltiesService.getViewModel(any(), any())(any(), any())).thenReturn(Future.successful(viewModelWithTwoRows))
+
+      running(application) {
+        val request = FakeRequest(GET, routes.PenaltiesAccountingPeriodController.onPageLoad().url)
+
+        val result = route(application, request).value
+
+        val view = application.injector.instanceOf[PenaltiesAccountingPeriodView]
+
+        status(result) mustEqual OK
+        contentAsString(result) mustEqual view(viewModelWithSingleRow)(request, messages(application)).toString
+      }
+    }
+
+    "must return OK and the correct emptry view model for a GET" in {
+
+      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers))
+        .overrides(bind[PenaltiesService].toInstance(mockPenaltiesService))
+        .build()
+
+      when(mockPenaltiesService.getViewModel(any(), any())(any(), any())).thenReturn(Future.successful(viewModelWithTwoRows))
+
+      running(application) {
+        val request = FakeRequest(GET, routes.PenaltiesAccountingPeriodController.onPageLoad().url)
+
+        val result = route(application, request).value
+
+        val view = application.injector.instanceOf[PenaltiesAccountingPeriodView]
+
+        status(result) mustEqual OK
+        contentAsString(result) mustEqual view(viewModelWithNoRows)(request, messages(application)).toString
+      }
+    }
   }
 }

@@ -48,14 +48,14 @@ class PenaltiesServiceSpec extends AnyWordSpec
     val service = new PenaltiesService(mockPenaltiesConnector)
   }
 
-  "getViewModel returns correct viewModel" in new Fixture {
+  "getViewModel returns correct viewModelWithTwoRows" in new Fixture {
 
     when(mockPenaltiesConnector.getPenaltyTransactionList(any[Long], any[Long])(any[HeaderCarrier]))
       .thenReturn(Future.successful(penaltyItems))
 
     val viewModel: PenaltiesAccountingPeriodViewModel = service.getViewModel(1L, 1L).futureValue
 
-    viewModel.rows shouldBe penaltiesViewModelRows
+    viewModel.rows shouldBe penaltiesViewModelTwoRows
 
     verify(mockPenaltiesConnector).getPenaltyTransactionList(1L, 1L)(hc)
   }
