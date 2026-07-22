@@ -39,7 +39,8 @@
             content = Text("DUMMY VALUE")
           ),
           TableRow(
-            content = Text(formatCurrency(transaction.amount))
+            content = Text(formatCurrency(transaction.amount)),
+            classes = "govuk-table__cell govuk-table__cell--numeric"
           )
         )
       } :+ TableTotals.totalRow(
@@ -50,7 +51,9 @@
       head = Some(Seq(
         HeadCell(content = Text("Date")),
         HeadCell(content = Text("Description")),
-        HeadCell(content = Text("Amount"))
+        HeadCell(content = Text("Amount"),
+                classes = "govuk-table__cell govuk-table__cell--numeric"
+    )
       )),
     caption = Some(messages("payments.table.header", formatDate(accountPeriod, messages.lang))),
     captionClasses = "govuk-table__caption--m",
