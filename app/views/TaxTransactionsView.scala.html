@@ -39,8 +39,7 @@
             content = Text(taxDescription)
           ),
           TableRow(
-            content = Text(formatCurrency(transaction.currentAmount)),
-            classes = "govuk-table__cell govuk-table__cell--numeric"
+            content = Text(formatCurrency(transaction.currentAmount))
           )
         )
       } :+ TableTotals.totalRow(
@@ -51,9 +50,7 @@
       head = Some(Seq(
         HeadCell(content = Text("Date")),
         HeadCell(content = Text("Description")),
-        HeadCell(content = Text("Amount"),
-                classes = "govuk-table__cell govuk-table__cell--numeric"
-        )
+        HeadCell(content = Text("Amount"))
       )),
     caption = Some(messages("taxTransactions.table.header", formatDate(accountPeriod, messages.lang))),
     captionClasses = "govuk-table__caption--m",
