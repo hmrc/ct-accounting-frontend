@@ -58,12 +58,12 @@ class TaxTransactionsViewSpec extends SpecBase {
 
     "render the correct heading" in {
       val doc = render()
-      doc.select("h1.govuk-heading-xl").text() mustBe "Taxes"
+      doc.select("h1.govuk-heading-l").text() mustBe "Taxes"
     }
 
     "render the table caption with the formatted account period" in {
       val doc = render()
-      doc.select(".govuk-table__caption").text() must include("Accounting Period ending")
+      doc.select(".govuk-table__caption").text() must include("Accounting period ending")
     }
 
     "render the correct table headers" in {

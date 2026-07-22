@@ -27,7 +27,7 @@
 
 @layout(pageTitle = titleNoForm(messages("taxTransactions.title"), Some(messages("taxTransactions.section"))), breadcrumbs = Some(PageBreadcrumbs.taxTransactionsPage)) {
 
-    <h1 class="govuk-heading-xl">@messages("taxTransactions.heading")</h1>
+    <h1 class="govuk-heading-l">@messages("taxTransactions.heading")</h1>
 
     @govukTable(Table(
       rows = taxTransactions.map { transaction =>
@@ -39,7 +39,8 @@
             content = Text(taxDescription)
           ),
           TableRow(
-            content = Text(formatCurrency(transaction.currentAmount))
+            content = Text(formatCurrency(transaction.currentAmount)),
+            classes = "govuk-table__cell govuk-table__cell--numeric"
           )
         )
       } :+ TableTotals.totalRow(
@@ -50,7 +51,9 @@
       head = Some(Seq(
         HeadCell(content = Text("Date")),
         HeadCell(content = Text("Description")),
-        HeadCell(content = Text("Amount"))
+        HeadCell(content = Text("Amount"),
+                classes = "govuk-table__cell govuk-table__cell--numeric"
+                )
       )),
     caption = Some(messages("taxTransactions.table.header", formatDate(accountPeriod, messages.lang))),
     captionClasses = "govuk-table__caption--m",

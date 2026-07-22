@@ -16,7 +16,7 @@
 
 package controllers
 
-import connectors.TaxTransactionsConnector
+import services.TaxTransactionsService
 import controllers.Execution.trampoline
 import controllers.actions.*
 
@@ -33,7 +33,7 @@ class TaxTransactionsController @Inject() (
   identify: IdentifierAction,
   val controllerComponents: MessagesControllerComponents,
   view: TaxTransactionsView,
-  connector: TaxTransactionsConnector
+  service: TaxTransactionsService
 ) extends FrontendBaseController
     with I18nSupport {
 
@@ -44,7 +44,7 @@ class TaxTransactionsController @Inject() (
     val taxDescriptions = "Dummy value" // TODO: Refactor into a view model under BF20 - DTR-6797
 
     // TODO: Get taxRef + accPeriod from sessionDataRepositry
-    connector.getTaxTransactions(1L, 1L).map { taxTransactionsResponse =>
+    service.getTaxTransactions(1L, 1L).map { taxTransactionsResponse =>
       val total: BigDecimal = taxTransactionsResponse.taxTransactions.map(_.currentAmount).sum
       Ok(view(taxTransactionsResponse.taxTransactions, accountPeriod, total, taxDescriptions))
     }
