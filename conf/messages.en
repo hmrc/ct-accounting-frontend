@@ -69,5 +69,5 @@ adjustmentsAccountingPeriod.total          = Total
 payments.title = Payments
 payments.section = Accounting period overview
 payments.heading = Payments
-payments.table.header = Accounting Period ending {0}
+payments.table.header = Accounting period ending {0}
 payments.table.total = Total

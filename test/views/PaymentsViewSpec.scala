@@ -62,7 +62,7 @@ class PaymentsViewSpec extends SpecBase {
 
     "render the table caption with the formatted account period" in {
       val doc = render()
-      doc.select(".govuk-table__caption").text() must include("Accounting Period ending")
+      doc.select(".govuk-table__caption").text() must include("Accounting period ending")
     }
 
     "render the correct table headers" in {
