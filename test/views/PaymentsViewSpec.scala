@@ -57,7 +57,7 @@ class PaymentsViewSpec extends SpecBase {
 
     "render the correct heading" in {
       val doc = render()
-      doc.select("h1.govuk-heading-xl").text() mustBe "Payments"
+      doc.select("h1.govuk-heading-l").text() mustBe "Payments"
     }
 
     "render the table caption with the formatted account period" in {
