@@ -65,3 +65,9 @@ adjustmentsAccountingPeriod.section        = Accounting period overview
 adjustmentsAccountingPeriod.heading        = Adjustments
 adjustmentsAccountingPeriod.caption        = Accounting period ending 30 Sep 2025
 adjustmentsAccountingPeriod.total          = Total
+
+payments.title = Payments
+payments.section = Accounting period overview
+payments.heading = Payments
+payments.table.header = Accounting period ending {0}
+payments.table.total = Total
