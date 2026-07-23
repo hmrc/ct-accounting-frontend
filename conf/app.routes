@@ -25,3 +25,4 @@ GET         /accounting-period-overview/taxes            controllers.TaxTransact
 GET         /accounting-period-overview/penalties        controllers.PenaltiesAccountingPeriodController.onPageLoad()
 GET         /accounting-period-overview/adjustments      controllers.AdjustmentsAccountingPeriodController.onPageLoad()
 GET         /accounting-period-overview/payments         controllers.PaymentsController.onPageLoad()
+GET         /accounting-period-overview/interest        controllers.InterestController.onPageLoad()
