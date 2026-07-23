@@ -54,4 +54,20 @@ class PageBreadcrumbsSpec extends AnyWordSpec with Matchers {
     }
 
   }
+
+  "PageBreadcrumbs.adjustmentsTransactionsAccountingPeriodPage" should {
+
+    "contain exactly three breadcrumb items" in {
+      PageBreadcrumbs.adjustmentsTransactionsAccountingPeriodPage.items.size shouldBe 3
+    }
+
+    "have the correct items in order" in {
+      PageBreadcrumbs.paymentsPage.items shouldBe Seq(
+        BreadcrumbsItem(content = Text("Corporation tax home"), href = Some("/")),
+        BreadcrumbsItem(content = Text("Balance"), href = Some("/")),
+        BreadcrumbsItem(content = Text("Accounting period overview"), href = Some("/"))
+      )
+    }
+
+  }
 }
