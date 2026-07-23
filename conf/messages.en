@@ -71,3 +71,13 @@ payments.section = Accounting period overview
 payments.heading = Payments
 payments.table.header = Accounting period ending {0}
 payments.table.total = Total
+
+interest.title                      = Interest
+interest.section                    = Accounting period overview
+interest.caption                    = Accounting period ending 30 Sep 2025
+interest.heading                    = Interest
+interest.table.latePayment          = Late payment interest(still accruing)
+interest.table.repaymentInterest    = Repayment interest
+interest.table.debitInterest        = Debit interest
+interest.table.creditInterest       = Credit Interest
+interest.table.total                = Total
