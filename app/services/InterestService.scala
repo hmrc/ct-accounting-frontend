@@ -22,6 +22,7 @@ import play.api.Logging
 import uk.gov.hmrc.http.HeaderCarrier
 
 import javax.inject.Inject
+import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
 class InterestService @Inject() (
@@ -34,7 +35,8 @@ class InterestService @Inject() (
     logger.info(
       s"[InterestService][getAccountingPeriodResponse]:Calling InterestCorporationTaxConnector for taxRef: $taxRef and accPeriod: $accPeriod"
     )
-
-    connector.getAccountingPeriodResponse(taxRef, accPeriod)
+    connector
+      .getAccountingPeriodResponse(taxRef, accPeriod)
+      .map(details => AccountingPeriodResponse(details))
   }
 }

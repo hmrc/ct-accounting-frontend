@@ -16,10 +16,9 @@
 
 package connectors
 
-import com.github.tomakehurst.wiremock.client.WireMock.{stubFor, urlPathEqualTo}
 import com.github.tomakehurst.wiremock.client.WireMock.*
 import itutils.ApplicationWithWiremock
-import models.{AccountingPeriodDetails, AccountingPeriodResponse}
+import models.AccountingPeriodDetails
 import org.scalatest.BeforeAndAfterEach
 import org.scalatest.concurrent.{IntegrationPatience, ScalaFutures}
 import org.scalatest.matchers.must.Matchers
@@ -46,9 +45,8 @@ class InterestCorporationTaxConnectorISpec
     def url(taxRef: Long, accPeriod: Long) =
       s"/corporation-tax/accounting-period-details/$taxRef/$accPeriod"
 
-    "return AccountingPeriodResponse with all fields populated from BE with status code OK" in {
-      val response = AccountingPeriodResponse(
-        AccountingPeriodDetails(
+    "return AccountingPeriodDetails with all fields populated from BE with status code OK" in {
+      val response = AccountingPeriodDetails(
           isApBalanced = false,
           lpiCalcFlag = false,
           crDbCalcFlag = true,
@@ -59,7 +57,6 @@ class InterestCorporationTaxConnectorISpec
           totalDerivedActualInterest = BigDecimal("41.25"),
           amountDueForAp = BigDecimal("2500.00")
         )
-      )
       stubFor(
         get(urlPathEqualTo(url(1L, 5L)))
           .willReturn(
@@ -68,7 +65,6 @@ class InterestCorporationTaxConnectorISpec
               .withBody(
                 s"""
                    |{
-                   |"accountingPeriodDetails": {
                    |"isApBalanced": false,
                    |"lpiCalcFlag": false,
                    |"crDbCalcFlag": true,
@@ -79,14 +75,13 @@ class InterestCorporationTaxConnectorISpec
                    |"totalDerivedActualInterest": 41.25,
                    |"amountDueForAp": 2500.00
                    |}
-                   |}
                    |""".stripMargin
               )
           )
       )
 
       val result = connector.getAccountingPeriodResponse(1L, 5L).futureValue
-      result.accountingPeriodDetails mustEqual response.accountingPeriodDetails
+      result mustEqual response
     }
 
     "return INTERNAL_ERROR when BE failed" in {

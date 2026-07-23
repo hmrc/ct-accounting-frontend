@@ -23,18 +23,19 @@ import viewmodels.{InterestRow, InterestViewModel}
 
 trait AccountingPeriodResponseHelper {
 
+  val accountingPeriodDetails: AccountingPeriodDetails   = AccountingPeriodDetails(
+    isApBalanced = false,
+    lpiCalcFlag = false,
+    crDbCalcFlag = true,
+    creditInterestAmount = BigDecimal("0.00"),
+    debitInterestAmount = BigDecimal("15.75"),
+    latePaymentInterestAmount = BigDecimal("25.50"),
+    repaymentInterestAmount = BigDecimal("0.00"),
+    totalDerivedActualInterest = BigDecimal("41.25"),
+    amountDueForAp = BigDecimal("2500.00")
+  )
   val accountingPeriodResponse: AccountingPeriodResponse = AccountingPeriodResponse(
-    AccountingPeriodDetails(
-      isApBalanced = false,
-      lpiCalcFlag = false,
-      crDbCalcFlag = true,
-      creditInterestAmount = BigDecimal("0.00"),
-      debitInterestAmount = BigDecimal("15.75"),
-      latePaymentInterestAmount = BigDecimal("25.50"),
-      repaymentInterestAmount = BigDecimal("0.00"),
-      totalDerivedActualInterest = BigDecimal("41.25"),
-      amountDueForAp = BigDecimal("2500.00")
-    )
+    accountingPeriodDetails = accountingPeriodDetails
   )
 
   val dummyCall: Call = Call(GET, "/")

@@ -55,7 +55,7 @@ class InterestServiceSpec
     "delegate to connector and successfully return AccountingPeriodResponse" in new BaseSetup {
 
       when(mockConnector.getAccountingPeriodResponse(eqTo(taxPayerReference), eqTo(accPeriod))(any[HeaderCarrier]))
-        .thenReturn(Future.successful(accountingPeriodResponse))
+        .thenReturn(Future.successful(accountingPeriodDetails))
 
       val result: AccountingPeriodResponse =
         service.getAccountingPeriodResponse(taxPayerReference, accPeriod).futureValue
