@@ -69,5 +69,4 @@ object PageBreadcrumbs {
       BreadcrumbsItem(content = Text("Accounting period overview"), href = Some("/"))
     )
   )
-
 }
