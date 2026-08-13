@@ -29,20 +29,28 @@ class DateTimeFormatsSpec extends AnyFreeSpec with Matchers {
 
     "must format dates in English" in {
       val formatter = dateTimeFormat()(Lang("en"))
-      val result    = LocalDate.of(2023, 1, 1).format(formatter)
-      result mustEqual "1 January 2023"
+      val date = LocalDate.of(2023, 1, 1)
+      val result = date.format(formatter)
+      result mustBe "01 Jan 2023"
     }
 
     "must format dates in Welsh" in {
       val formatter = dateTimeFormat()(Lang("cy"))
-      val result    = LocalDate.of(2023, 1, 1).format(formatter)
-      result mustEqual "1 Ionawr 2023"
+      val result = LocalDate.of(2023, 1, 1).format(formatter)
+      result mustEqual "01 Ion 2023"
     }
 
     "must default to English format" in {
       val formatter = dateTimeFormat()(Lang("de"))
-      val result    = LocalDate.of(2023, 1, 1).format(formatter)
-      result mustEqual "1 January 2023"
+      val result = LocalDate.of(2023, 1, 16).format(formatter)
+      result mustEqual "16 Jan 2023"
     }
+
+    "must format date March 2021 to English" in {
+      val formatter = dateTimeFormat()(Lang("de"))
+      val result = LocalDate.of(2021, 3, 1).format(formatter)
+      result mustEqual "01 Mar 2021"
+    }
+
   }
 }

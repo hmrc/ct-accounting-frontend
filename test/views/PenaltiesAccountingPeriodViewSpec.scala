@@ -44,13 +44,13 @@ class PenaltiesAccountingPeriodViewSpec extends SpecBase with PenaltiesDataHelpe
 
     "render the correct heading" in {
       val doc = render(viewModelWithTwoRows)
-      doc.select("caption").text() mustBe "Accounting period ending 1 May 2025"
+      doc.select("caption").text() mustBe "Accounting period ending 01 May 2025"
     }
 
     "render the table caption with the formatted account period" in {
       val doc = render(viewModelWithTwoRows)
       doc.select("tbody.govuk-table__body tr.govuk-table__row").size() mustBe 3
-      // doc.select(".govuk-table__caption").text() must include("Accounting Period ending")
+      doc.select(".govuk-table__caption").text() must include("Accounting period ending 01 May 2025")
     }
 
     "render the correct table headers" in {
