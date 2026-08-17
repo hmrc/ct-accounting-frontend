@@ -19,7 +19,7 @@ package services
 import connectors.InterestCorporationTaxConnector
 import helpers.AccountingPeriodResponseHelper
 import org.mockito.ArgumentMatchers.{any, eq as eqTo}
-import models.AccountingPeriodResponse
+import models.AccountingPeriodDetailsResponse
 import org.mockito.Mockito.{times, verify, when}
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.matchers.should.Matchers
@@ -52,12 +52,12 @@ class InterestServiceSpec
 
   "InterestService.getAccountingPeriodResponse" should {
 
-    "delegate to connector and successfully return AccountingPeriodResponse" in new BaseSetup {
+    "delegate to connector and successfully return AccountingPeriodDetailsResponse" in new BaseSetup {
 
       when(mockConnector.getAccountingPeriodResponse(eqTo(taxPayerReference), eqTo(accPeriod))(any[HeaderCarrier]))
-        .thenReturn(Future.successful(accountingPeriodDetails))
+        .thenReturn(Future.successful(accountingPeriodResponse))
 
-      val result: AccountingPeriodResponse =
+      val result: AccountingPeriodDetailsResponse =
         service.getAccountingPeriodResponse(taxPayerReference, accPeriod).futureValue
 
       result shouldBe accountingPeriodResponse

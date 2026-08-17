@@ -16,7 +16,7 @@
 
 package connectors
 
-import models.AccountingPeriodDetails
+import models.AccountingPeriodDetailsResponse
 import play.api.Logging
 import uk.gov.hmrc.http.HttpReads.Implicits.*
 import uk.gov.hmrc.http.client.HttpClientV2
@@ -34,13 +34,13 @@ class InterestCorporationTaxConnector @Inject() (http: HttpClientV2, config: Ser
 
   def getAccountingPeriodResponse(taxRef: Long, accPeriod: Long)(implicit
     hc: HeaderCarrier
-  ): Future[AccountingPeriodDetails] = {
+  ): Future[AccountingPeriodDetailsResponse] = {
     val baseUrl  = config.baseUrl("corporation-tax")
     val url: URL = url"$baseUrl/corporation-tax/accounting-period-details/$taxRef/$accPeriod"
 
     http
       .get(url)
-      .execute[AccountingPeriodDetails]
+      .execute[AccountingPeriodDetailsResponse]
       .recover {
         case u: UpstreamErrorResponse =>
           logger.error(

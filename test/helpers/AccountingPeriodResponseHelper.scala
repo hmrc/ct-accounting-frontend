@@ -16,7 +16,7 @@
 
 package helpers
 
-import models.{AccountingPeriodDetails, AccountingPeriodResponse}
+import models.{AccountingPeriodDetails, AccountingPeriodDetailsResponse}
 import play.api.mvc.Call
 import uk.gov.hmrc.http.HttpVerbs.GET
 import viewmodels.{InterestRow, InterestViewModel}
@@ -34,7 +34,7 @@ trait AccountingPeriodResponseHelper {
     totalDerivedActualInterest = BigDecimal("41.25"),
     amountDueForAp = BigDecimal("2500.00")
   )
-  val accountingPeriodResponse: AccountingPeriodResponse = AccountingPeriodResponse(
+  val accountingPeriodResponse: AccountingPeriodDetailsResponse = AccountingPeriodDetailsResponse(
     accountingPeriodDetails = accountingPeriodDetails
   )
 

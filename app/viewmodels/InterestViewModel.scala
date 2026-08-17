@@ -16,7 +16,7 @@
 
 package viewmodels
 
-import models.AccountingPeriodResponse
+import models.AccountingPeriodDetailsResponse
 import play.api.i18n.Messages
 import play.api.mvc.Call
 import uk.gov.hmrc.govukfrontend.views.Aliases.Text
@@ -44,7 +44,7 @@ object InterestViewModel {
   // TODO change the call to unique link for each of the rows
   val dummyCall: Call = Call(GET, "/")
   def toViewModel(
-    response: AccountingPeriodResponse
+    response: AccountingPeriodDetailsResponse
   )(implicit messages: Messages): InterestViewModel =
     val accDetails = response.accountingPeriodDetails
     InterestViewModel(
