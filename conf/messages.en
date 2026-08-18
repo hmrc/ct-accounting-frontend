@@ -48,14 +48,24 @@ signedOut.guidance = We did not save your answers.
 unauthorised.title = You can’t access this service with this account
 unauthorised.heading = You can’t access this service with this account
 
+breadcrumbs.home = Home
+breadcrumbs.accountingPeriods = Accounting periods
+breadcrumbs.accountingPeriodEnding = Accounting period ending
+
 taxTransactions.title = Taxes
 taxTransactions.section = Accounting period overview
 taxTransactions.heading = Taxes
 taxTransactions.table.header = Accounting period ending {0}
+taxTransactions.date = Date
+taxTransactions.description = Description
+taxTransactions.amount = Amount
 taxTransactions.table.total = Total
 
 penaltiesAccountingPeriod.heading        = Penalties
 penaltiesAccountingPeriod.caption        = Accounting period ending
+penaltiesAccountingPeriod.date           = Date
+penaltiesAccountingPeriod.description    = Description
+penaltiesAccountingPeriod.amount         = Amount
 penaltiesAccountingPeriod.total          = Total
 penaltiesAccountingPeriod.title          = Penalties
 penaltiesAccountingPeriod.section        = Accounting period overview
@@ -64,18 +74,25 @@ adjustmentsAccountingPeriod.title          = Adjustments – Accounting period o
 adjustmentsAccountingPeriod.section        = Accounting period overview
 adjustmentsAccountingPeriod.heading        = Adjustments
 adjustmentsAccountingPeriod.caption        = Accounting period ending 30 Sep 2025
+adjustmentsAccountingPeriod.description    = Description
+adjustmentsAccountingPeriod.amount         = Amount
 adjustmentsAccountingPeriod.total          = Total
 
 payments.title = Payments
 payments.section = Accounting period overview
 payments.heading = Payments
 payments.table.header = Accounting period ending {0}
+payments.date = Date
+payments.description = Description
+payments.amount = Amount
 payments.table.total = Total
 
 interest.title                      = Interest
 interest.section                    = Accounting period overview
 interest.caption                    = Accounting period ending 30 Sep 2025
 interest.heading                    = Interest
+interest.description                = Description
+interest.amount                     = Amount
 interest.table.latePayment          = Late payment interest(still accruing)
 interest.table.repaymentInterest    = Repayment interest
 interest.table.debitInterest        = Debit interest

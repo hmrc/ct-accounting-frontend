@@ -18,55 +18,51 @@ package viewmodels
 
 import uk.gov.hmrc.govukfrontend.views.viewmodels.breadcrumbs.{Breadcrumbs, BreadcrumbsItem}
 import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
+import play.api.i18n.Messages
 
 object PageBreadcrumbs {
 
-  def taxTransactionsPage: Breadcrumbs = Breadcrumbs(
-    // TODO: Change these to be from message file (are these page titles?)
+  def taxTransactionsPage(implicit messages: Messages): Breadcrumbs = Breadcrumbs(
     // TODO: Add hrefs
     items = Seq(
-      BreadcrumbsItem(content = Text("Corporation tax home"), href = Some("/")),
-      BreadcrumbsItem(content = Text("Balance"), href = Some("/")),
-      BreadcrumbsItem(content = Text("Accounting period overview"), href = Some("/"))
+      BreadcrumbsItem(content = Text(messages("breadcrumbs.home")), href = Some("/")),
+      BreadcrumbsItem(content = Text(messages("breadcrumbs.accountingPeriods")), href = Some("/")),
+      BreadcrumbsItem(content = Text(messages("breadcrumbs.accountingPeriodEnding")), href = Some("/"))
     )
   )
 
-  def penaltiesAccountingPeriodPage: Breadcrumbs = Breadcrumbs(
-    // TODO: Change these to be from message file (are these page titles?)
+  def penaltiesAccountingPeriodPage(implicit messages: Messages): Breadcrumbs = Breadcrumbs(
     // TODO: Add hrefs
     items = Seq(
-      BreadcrumbsItem(content = Text("Corporation tax home"), href = Some("/")),
-      BreadcrumbsItem(content = Text("Balance"), href = Some("/")),
-      BreadcrumbsItem(content = Text("Accounting period overview"), href = Some("/"))
+      BreadcrumbsItem(content = Text(messages("breadcrumbs.home")), href = Some("/")),
+      BreadcrumbsItem(content = Text(messages("breadcrumbs.accountingPeriods")), href = Some("/")),
+      BreadcrumbsItem(content = Text(messages("breadcrumbs.accountingPeriodEnding")), href = Some("/"))
     )
   )
 
-  def adjustmentsTransactionsAccountingPeriodPage: Breadcrumbs = Breadcrumbs(
-    // TODO: Change these to be from message file (are these page titles?)
+  def adjustmentsTransactionsAccountingPeriodPage(implicit messages: Messages): Breadcrumbs = Breadcrumbs(
     // TODO: Add hrefs
     items = Seq(
-      BreadcrumbsItem(content = Text("Corporation tax home"), href = Some("/")),
-      BreadcrumbsItem(content = Text("Balance"), href = Some("/")),
-      BreadcrumbsItem(content = Text("Accounting period overview"), href = Some("/"))
+      BreadcrumbsItem(content = Text(messages("breadcrumbs.home")), href = Some("/")),
+      BreadcrumbsItem(content = Text(messages("breadcrumbs.accountingPeriods")), href = Some("/")),
+      BreadcrumbsItem(content = Text(messages("breadcrumbs.accountingPeriodEnding")), href = Some("/"))
     )
   )
-  def interestPage: Breadcrumbs                                = Breadcrumbs(
-    // TODO: Change these to be from message file (are these page titles?)
+  def interestPage(implicit messages: Messages): Breadcrumbs = Breadcrumbs(
     // TODO: Add hrefs
     items = Seq(
-      BreadcrumbsItem(content = Text("Corporation tax home"), href = Some("/")),
-      BreadcrumbsItem(content = Text("Balance"), href = Some("/")),
-      BreadcrumbsItem(content = Text("Accounting period overview"), href = Some("/"))
+      BreadcrumbsItem(content = Text(messages("breadcrumbs.home")), href = Some("/")),
+      BreadcrumbsItem(content = Text(messages("breadcrumbs.accountingPeriods")), href = Some("/")),
+      BreadcrumbsItem(content = Text(messages("breadcrumbs.accountingPeriodEnding")), href = Some("/"))
     )
   )
 
-  def paymentsPage: Breadcrumbs = Breadcrumbs(
-    // TODO: Change these to be from message file (are these page titles?)
+  def paymentsPage(implicit messages: Messages): Breadcrumbs = Breadcrumbs(
     // TODO: Add hrefs
     items = Seq(
-      BreadcrumbsItem(content = Text("Corporation tax home"), href = Some("/")),
-      BreadcrumbsItem(content = Text("Balance"), href = Some("/")),
-      BreadcrumbsItem(content = Text("Accounting period overview"), href = Some("/"))
+      BreadcrumbsItem(content = Text(messages("breadcrumbs.home")), href = Some("/")),
+      BreadcrumbsItem(content = Text(messages("breadcrumbs.accountingPeriods")), href = Some("/")),
+      BreadcrumbsItem(content = Text(messages("breadcrumbs.accountingPeriodEnding")), href = Some("/"))
     )
   )
 }

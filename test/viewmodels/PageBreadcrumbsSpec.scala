@@ -20,8 +20,12 @@ import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 import uk.gov.hmrc.govukfrontend.views.viewmodels.breadcrumbs.BreadcrumbsItem
 import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
+import play.api.i18n.Messages
+import play.api.test.Helpers.stubMessages
 
 class PageBreadcrumbsSpec extends AnyWordSpec with Matchers {
+
+  implicit val messages: Messages = stubMessages()
 
   "PageBreadcrumbs.taxTransactionsPage" should {
 
@@ -31,9 +35,9 @@ class PageBreadcrumbsSpec extends AnyWordSpec with Matchers {
 
     "have the correct items in order" in {
       PageBreadcrumbs.taxTransactionsPage.items shouldBe Seq(
-        BreadcrumbsItem(content = Text("Corporation tax home"), href = Some("/")),
-        BreadcrumbsItem(content = Text("Balance"), href = Some("/")),
-        BreadcrumbsItem(content = Text("Accounting period overview"), href = Some("/"))
+        BreadcrumbsItem(content = Text(messages("breadcrumbs.home")), href = Some("/")),
+        BreadcrumbsItem(content = Text(messages("breadcrumbs.accountingPeriods")), href = Some("/")),
+        BreadcrumbsItem(content = Text(messages("breadcrumbs.accountingPeriodEnding")), href = Some("/"))
       )
     }
 
@@ -47,9 +51,9 @@ class PageBreadcrumbsSpec extends AnyWordSpec with Matchers {
 
     "have the correct items in order" in {
       PageBreadcrumbs.paymentsPage.items shouldBe Seq(
-        BreadcrumbsItem(content = Text("Corporation tax home"), href = Some("/")),
-        BreadcrumbsItem(content = Text("Balance"), href = Some("/")),
-        BreadcrumbsItem(content = Text("Accounting period overview"), href = Some("/"))
+        BreadcrumbsItem(content = Text(messages("breadcrumbs.home")), href = Some("/")),
+        BreadcrumbsItem(content = Text(messages("breadcrumbs.accountingPeriods")), href = Some("/")),
+        BreadcrumbsItem(content = Text(messages("breadcrumbs.accountingPeriodEnding")), href = Some("/"))
       )
     }
 
@@ -63,9 +67,9 @@ class PageBreadcrumbsSpec extends AnyWordSpec with Matchers {
 
     "have the correct items in order" in {
       PageBreadcrumbs.paymentsPage.items shouldBe Seq(
-        BreadcrumbsItem(content = Text("Corporation tax home"), href = Some("/")),
-        BreadcrumbsItem(content = Text("Balance"), href = Some("/")),
-        BreadcrumbsItem(content = Text("Accounting period overview"), href = Some("/"))
+        BreadcrumbsItem(content = Text(messages("breadcrumbs.home")), href = Some("/")),
+        BreadcrumbsItem(content = Text(messages("breadcrumbs.accountingPeriods")), href = Some("/")),
+        BreadcrumbsItem(content = Text(messages("breadcrumbs.accountingPeriodEnding")), href = Some("/"))
       )
     }
 

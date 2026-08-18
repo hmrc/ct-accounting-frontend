@@ -40,9 +40,9 @@
             caption = Some(messages("penaltiesAccountingPeriod.caption") + " " + viewModel.accountingPeriodEndAsString),
             captionClasses = "govuk-table__caption govuk-table__caption--m",
             head = Some(Seq(
-            HeadCell(content = Text("Date")),
-            HeadCell(content = Text("Description")),
-            HeadCell(content = Text("Amount"))
+            HeadCell(content = Text(messages("penaltiesAccountingPeriod.date"))),
+            HeadCell(content = Text(messages("penaltiesAccountingPeriod.description"))),
+            HeadCell(content = Text(messages("penaltiesAccountingPeriod.amount")))
         )),
         rows = viewModel.rows.map { row =>
             Seq(
