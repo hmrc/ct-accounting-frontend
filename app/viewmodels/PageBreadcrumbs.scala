@@ -48,7 +48,7 @@ object PageBreadcrumbs {
       BreadcrumbsItem(content = Text(messages("breadcrumbs.accountingPeriodEnding")), href = Some("/"))
     )
   )
-  def interestPage(implicit messages: Messages): Breadcrumbs = Breadcrumbs(
+  def interestPage(implicit messages: Messages): Breadcrumbs                                = Breadcrumbs(
     // TODO: Add hrefs
     items = Seq(
       BreadcrumbsItem(content = Text(messages("breadcrumbs.home")), href = Some("/")),
