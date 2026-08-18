@@ -22,11 +22,12 @@ import play.api.Logging
 import uk.gov.hmrc.http.HeaderCarrier
 
 import javax.inject.Inject
-import scala.concurrent.{Future, ExecutionContext}
+import scala.concurrent.{ExecutionContext, Future}
 
 class InterestService @Inject() (
   connector: InterestCorporationTaxConnector
-)(implicit ec: ExecutionContext) extends Logging {
+)(implicit ec: ExecutionContext)
+    extends Logging {
 
   def getAccountingPeriodResponse(taxRef: Long, accPeriod: Long)(implicit
     hc: HeaderCarrier
