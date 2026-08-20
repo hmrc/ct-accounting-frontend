@@ -41,7 +41,7 @@ class PenaltiesAccountingPeriodControllerSpec extends SpecBase with SummaryListF
         .overrides(bind[PenaltiesService].toInstance(mockPenaltiesService))
         .build()
 
-      when(mockPenaltiesService.getViewModel(any(), any())(any(), any()))
+      when(mockPenaltiesService.getViewModel(any(), any(), any())(any(), any()))
         .thenReturn(Future.successful(viewModelWithTwoRows))
 
       running(application) {
@@ -62,7 +62,7 @@ class PenaltiesAccountingPeriodControllerSpec extends SpecBase with SummaryListF
         .overrides(bind[PenaltiesService].toInstance(mockPenaltiesService))
         .build()
 
-      when(mockPenaltiesService.getViewModel(any(), any())(any(), any()))
+      when(mockPenaltiesService.getViewModel(any(), any(), any())(any(), any()))
         .thenReturn(Future.successful(viewModelWithSingleRow))
 
       running(application) {
@@ -83,7 +83,7 @@ class PenaltiesAccountingPeriodControllerSpec extends SpecBase with SummaryListF
         .overrides(bind[PenaltiesService].toInstance(mockPenaltiesService))
         .build()
 
-      when(mockPenaltiesService.getViewModel(any(), any())(any(), any()))
+      when(mockPenaltiesService.getViewModel(any(), any(), any())(any(), any()))
         .thenReturn(Future.successful(viewModelWithNoRows))
 
       running(application) {
@@ -97,5 +97,6 @@ class PenaltiesAccountingPeriodControllerSpec extends SpecBase with SummaryListF
         contentAsString(result) mustEqual view(viewModelWithNoRows)(request, messages(application)).toString
       }
     }
+
   }
 }

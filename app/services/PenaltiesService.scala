@@ -33,16 +33,14 @@ class PenaltiesService @Inject() (
 )(implicit ec: ExecutionContext)
     extends Logging {
 
-  // TODO: extract accounting period / convert accPeriod:L to accPeriodLocalDate:
-
-  def getViewModel(taxRef: Long, accPeriod: Long)(implicit
+  def getViewModel(taxRef: Long, accPeriod: Long, endDateMaybe: Option[LocalDate])(implicit
     messages: Messages,
     hc: HeaderCarrier
   ): Future[PenaltiesAccountingPeriodViewModel] =
     for {
-      penalties <- connector.getPenaltyTransactionList(taxRef, accPeriod)
+      penalties <- connector.getPenaltyTransactionList(taxRef, accPeriod, endDateMaybe)
     } yield PenaltiesAccountingPeriodViewModel(
-      accountingPeriodEnd = LocalDate.now, // TODO: extract it from BE??
+      accountingPeriodEnd = LocalDate.of(2026, 1, 1), // TODO: extract it from the SessionData
       rows = penalties.penaltyTransactions.map { penalty =>
         PenaltiesAccountingPeriodViewModelRow(
           date = penalty.penaltyDate,
