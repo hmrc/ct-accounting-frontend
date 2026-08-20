@@ -23,7 +23,6 @@ import services.PenaltiesService
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.PenaltiesAccountingPeriodView
 
-import java.time.LocalDate
 import javax.inject.Inject
 import scala.concurrent.ExecutionContext
 
@@ -42,7 +41,7 @@ class PenaltiesAccountingPeriodController @Inject() (
     // TODO: read below data from UserSession data
     val taxRef: Long         = 1L
     val accPeriod: Long      = 1L // Also pass accountingPeriodAsLocalDate to construct model
-    val accountPeriodEndDate = Some(LocalDate.of(2026, 1, 1))
+    val accountPeriodEndDate = None
     //////////////////////////////////////////////
     for {
       viewModel <- service.getViewModel(taxRef, accPeriod, accountPeriodEndDate)
