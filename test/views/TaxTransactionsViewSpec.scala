@@ -20,7 +20,9 @@ import base.SpecBase
 import models.TaxTransactionsItem
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
+import play.api.i18n.{Lang, Messages, MessagesApi, MessagesImpl}
 import play.api.test.FakeRequest
+import views.ViewUtils.formatDate
 import views.html.TaxTransactionsView
 
 import java.time.LocalDate
@@ -29,6 +31,9 @@ class TaxTransactionsViewSpec extends SpecBase {
   val application = applicationBuilder().build()
 
   val view: TaxTransactionsView = application.injector.instanceOf[TaxTransactionsView]
+
+  implicit val messagesApi: MessagesApi = application.injector.instanceOf[MessagesApi]
+  implicit val messages: Messages       = MessagesImpl(Lang.defaultLang, messagesApi)
 
   implicit val request: FakeRequest[_] = FakeRequest()
 
@@ -53,23 +58,30 @@ class TaxTransactionsViewSpec extends SpecBase {
 
     "render the correct page title" in {
       val doc = render()
-      doc.title() mustBe "Taxes - Accounting period overview - GOV.UK"
+      doc.title() must include(messages("taxTransactions.title"))
+      doc.title() must include(messages("taxTransactions.section"))
     }
 
     "render the correct heading" in {
       val doc = render()
-      doc.select("h1.govuk-heading-l").text() mustBe "Taxes"
+      doc.select("h1.govuk-heading-l").text() mustBe messages("taxTransactions.heading")
     }
 
     "render the table caption with the formatted account period" in {
       val doc = render()
-      doc.select(".govuk-table__caption").text() must include("Accounting period ending")
+      doc.select(".govuk-table__caption").text() must include(
+        messages("taxTransactions.table.header", formatDate(accountPeriod, messages.lang))
+      )
     }
 
     "render the correct table headers" in {
       val doc     = render()
       val headers = doc.select("th.govuk-table__header").eachText()
-      headers must contain allOf ("Date", "Description", "Amount")
+      headers must contain allOf (
+        messages("taxTransactions.date"),
+        messages("taxTransactions.description"),
+        messages("taxTransactions.amount")
+      )
     }
 
     "render one row per transaction when there are multiple" in {
@@ -88,9 +100,15 @@ class TaxTransactionsViewSpec extends SpecBase {
       doc.select("tbody.govuk-table__body tr.govuk-table__row").size() mustBe 1
     }
 
-    "render the breadcrumbs" in {
-      val doc = render()
-      doc.select(".govuk-breadcrumbs__list-item").size() must be > 0
+    "render the correct breadcrumbs" in {
+      val doc         = render()
+      val breadcrumbs = doc.select("li.govuk-breadcrumbs__list-item").eachText()
+      breadcrumbs must contain allOf (
+        messages("breadcrumbs.home"),
+        messages("breadcrumbs.accountingPeriods"),
+        messages("breadcrumbs.accountingPeriodEnding")
+      )
+      doc.select(".govuk-breadcrumbs__list-item").size() mustBe 3
     }
   }
 }

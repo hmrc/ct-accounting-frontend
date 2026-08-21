@@ -20,6 +20,7 @@ import base.SpecBase
 import helpers.PenaltiesDataHelper
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
+import play.api.i18n.{Lang, Messages, MessagesApi, MessagesImpl}
 import play.api.test.FakeRequest
 import viewmodels.PenaltiesAccountingPeriodViewModel
 import views.html.PenaltiesAccountingPeriodView
@@ -30,6 +31,9 @@ class PenaltiesAccountingPeriodViewSpec extends SpecBase with PenaltiesDataHelpe
 
   val view = application.injector.instanceOf[PenaltiesAccountingPeriodView]
 
+  implicit val messagesApi: MessagesApi = application.injector.instanceOf[MessagesApi]
+  implicit val messages: Messages       = MessagesImpl(Lang.defaultLang, messagesApi)
+
   implicit val request: FakeRequest[_] = FakeRequest()
 
   def render(viewModel: PenaltiesAccountingPeriodViewModel): Document =
@@ -39,31 +43,41 @@ class PenaltiesAccountingPeriodViewSpec extends SpecBase with PenaltiesDataHelpe
 
     "render the correct page title" in {
       val doc = render(viewModelWithTwoRows)
-      doc.title() mustBe "Penalties - Accounting period overview - GOV.UK"
+      doc.title() must include(messages("penaltiesAccountingPeriod.title"))
+      doc.title() must include(messages("penaltiesAccountingPeriod.section"))
     }
 
     "render the correct heading" in {
       val doc = render(viewModelWithTwoRows)
-      doc.select("caption").text() mustBe "Accounting period ending 01 May 2025"
+      doc.select("caption").text() must include(messages("penaltiesAccountingPeriod.caption"))
     }
 
     "render the table caption with the formatted account period" in {
       val doc = render(viewModelWithTwoRows)
       doc.select("tbody.govuk-table__body tr.govuk-table__row").size() mustBe 3
-      doc.select(".govuk-table__caption").text() must include("Accounting period ending 01 May 2025")
+      doc.select(".govuk-table__caption").text() must include(messages("penaltiesAccountingPeriod.caption"))
     }
 
     "render the correct table headers" in {
       val doc     = render(viewModelWithTwoRows)
       val headers = doc.select("th.govuk-table__header").eachText()
-      headers must contain allOf ("Date", "Description", "Amount")
+      headers must contain allOf (
+        messages("penaltiesAccountingPeriod.date"),
+        messages("penaltiesAccountingPeriod.description"),
+        messages("penaltiesAccountingPeriod.amount")
+      )
     }
 
-// TODO: check breadcrumbs rendering when relevant PR merged
-//    "render the breadcrumbs" in {
-//      val doc = render()
-//      doc.select(".govuk-breadcrumbs__list-item").size() must be > 0
-//    }
+    "render the correct breadcrumbs" in {
+      val doc         = render(viewModelWithTwoRows)
+      val breadcrumbs = doc.select("li.govuk-breadcrumbs__list-item").eachText()
+      breadcrumbs must contain allOf (
+        messages("breadcrumbs.home"),
+        messages("breadcrumbs.accountingPeriods"),
+        messages("breadcrumbs.accountingPeriodEnding")
+      )
+      doc.select(".govuk-breadcrumbs__list-item").size() mustBe 3
+    }
   }
 
 }

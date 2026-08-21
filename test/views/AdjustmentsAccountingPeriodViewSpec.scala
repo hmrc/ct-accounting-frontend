@@ -73,9 +73,9 @@ class AdjustmentsAccountingPeriodViewSpec
 
       breadcrumbs.size() mustBe 3
 
-      breadcrumbs.text() must include("Corporation tax home")
-      breadcrumbs.text() must include("Balance")
-      breadcrumbs.text() must include("Accounting period overview")
+      breadcrumbs.text() must include(messages("breadcrumbs.home"))
+      breadcrumbs.text() must include(messages("breadcrumbs.accountingPeriods"))
+      breadcrumbs.text() must include(messages("breadcrumbs.accountingPeriodEnding"))
     }
 
     "render the page with correct table headings" in new Setup {
@@ -86,8 +86,8 @@ class AdjustmentsAccountingPeriodViewSpec
 
       headers.size() mustBe 2
 
-      headers.text() must include("Description")
-      headers.text() must include("Amount")
+      headers.text() must include(messages("adjustmentsAccountingPeriod.description"))
+      headers.text() must include(messages("adjustmentsAccountingPeriod.amount"))
     }
 
     "render the page with correct table contents" in new Setup {
@@ -97,7 +97,7 @@ class AdjustmentsAccountingPeriodViewSpec
       val contents = doc.select("td.govuk-table__cell")
 
       contents.text() must include("Not currently being pursued")
-      contents.text() must include("Total")
+      contents.text() must include(messages("adjustmentsAccountingPeriod.total"))
       contents.text() must include("£50.00")
     }
 
