@@ -97,7 +97,7 @@ class AdjustmentsAccountingPeriodViewSpec
       val contents = doc.select("td.govuk-table__cell")
 
       contents.text() must include("Not currently being pursued")
-      contents.text() must include("Total")
+      contents.text() must include(messages("adjustmentsAccountingPeriod.total"))
       contents.text() must include("£50.00")
     }
 
