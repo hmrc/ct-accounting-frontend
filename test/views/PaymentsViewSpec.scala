@@ -33,7 +33,7 @@ class PaymentsViewSpec extends SpecBase {
   val view: PaymentsView = application.injector.instanceOf[PaymentsView]
 
   implicit val messagesApi: MessagesApi = application.injector.instanceOf[MessagesApi]
-  implicit val messages: Messages = MessagesImpl(Lang.defaultLang, messagesApi)
+  implicit val messages: Messages       = MessagesImpl(Lang.defaultLang, messagesApi)
 
   implicit val request: FakeRequest[_] = FakeRequest()
 
@@ -68,15 +68,17 @@ class PaymentsViewSpec extends SpecBase {
 
     "render the table caption with the formatted account period" in {
       val doc = render()
-      doc.select(".govuk-table__caption").text() must include(messages("payments.table.header", formatDate(accountPeriod, messages.lang)))
+      doc.select(".govuk-table__caption").text() must include(
+        messages("payments.table.header", formatDate(accountPeriod, messages.lang))
+      )
     }
 
     "render the correct table headers" in {
       val doc     = render()
       val headers = doc.select("th.govuk-table__header").eachText()
       headers must contain allOf (
-        messages("payments.date"), 
-        messages("payments.description"), 
+        messages("payments.date"),
+        messages("payments.description"),
         messages("payments.amount")
       )
     }
@@ -97,9 +99,9 @@ class PaymentsViewSpec extends SpecBase {
     }
 
     "render the correct breadcrumbs" in {
-      val doc = render()
+      val doc         = render()
       val breadcrumbs = doc.select("li.govuk-breadcrumbs__list-item").eachText()
-      breadcrumbs must contain allOf(
+      breadcrumbs must contain allOf (
         messages("breadcrumbs.home"),
         messages("breadcrumbs.accountingPeriods"),
         messages("breadcrumbs.accountingPeriodEnding")

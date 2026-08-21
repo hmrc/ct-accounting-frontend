@@ -33,7 +33,7 @@ class TaxTransactionsViewSpec extends SpecBase {
   val view: TaxTransactionsView = application.injector.instanceOf[TaxTransactionsView]
 
   implicit val messagesApi: MessagesApi = application.injector.instanceOf[MessagesApi]
-  implicit val messages: Messages = MessagesImpl(Lang.defaultLang, messagesApi)
+  implicit val messages: Messages       = MessagesImpl(Lang.defaultLang, messagesApi)
 
   implicit val request: FakeRequest[_] = FakeRequest()
 
@@ -69,7 +69,9 @@ class TaxTransactionsViewSpec extends SpecBase {
 
     "render the table caption with the formatted account period" in {
       val doc = render()
-      doc.select(".govuk-table__caption").text() must include(messages("taxTransactions.table.header", formatDate(accountPeriod, messages.lang)))
+      doc.select(".govuk-table__caption").text() must include(
+        messages("taxTransactions.table.header", formatDate(accountPeriod, messages.lang))
+      )
     }
 
     "render the correct table headers" in {
@@ -78,7 +80,8 @@ class TaxTransactionsViewSpec extends SpecBase {
       headers must contain allOf (
         messages("taxTransactions.date"),
         messages("taxTransactions.description"),
-        messages("taxTransactions.amount"))
+        messages("taxTransactions.amount")
+      )
     }
 
     "render one row per transaction when there are multiple" in {
@@ -98,9 +101,9 @@ class TaxTransactionsViewSpec extends SpecBase {
     }
 
     "render the correct breadcrumbs" in {
-      val doc = render()
+      val doc         = render()
       val breadcrumbs = doc.select("li.govuk-breadcrumbs__list-item").eachText()
-      breadcrumbs must contain allOf(
+      breadcrumbs must contain allOf (
         messages("breadcrumbs.home"),
         messages("breadcrumbs.accountingPeriods"),
         messages("breadcrumbs.accountingPeriodEnding")

@@ -31,8 +31,8 @@ class PenaltiesAccountingPeriodViewSpec extends SpecBase with PenaltiesDataHelpe
 
   val view = application.injector.instanceOf[PenaltiesAccountingPeriodView]
 
-  implicit val messagesApi: MessagesApi                     = application.injector.instanceOf[MessagesApi]
-  implicit val messages: Messages                           = MessagesImpl(Lang.defaultLang, messagesApi)
+  implicit val messagesApi: MessagesApi = application.injector.instanceOf[MessagesApi]
+  implicit val messages: Messages       = MessagesImpl(Lang.defaultLang, messagesApi)
 
   implicit val request: FakeRequest[_] = FakeRequest()
 
@@ -69,9 +69,9 @@ class PenaltiesAccountingPeriodViewSpec extends SpecBase with PenaltiesDataHelpe
     }
 
     "render the correct breadcrumbs" in {
-      val doc = render(viewModelWithTwoRows)
+      val doc         = render(viewModelWithTwoRows)
       val breadcrumbs = doc.select("li.govuk-breadcrumbs__list-item").eachText()
-      breadcrumbs must contain allOf(
+      breadcrumbs must contain allOf (
         messages("breadcrumbs.home"),
         messages("breadcrumbs.accountingPeriods"),
         messages("breadcrumbs.accountingPeriodEnding")

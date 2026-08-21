@@ -33,7 +33,7 @@ class InterestViewSpec extends SpecBase with AccountingPeriodResponseHelper {
   val view: InterestView       = application.injector.instanceOf[InterestView]
 
   implicit val messagesApi: MessagesApi = application.injector.instanceOf[MessagesApi]
-  implicit val messages: Messages = MessagesImpl(Lang.defaultLang, messagesApi)
+  implicit val messages: Messages       = MessagesImpl(Lang.defaultLang, messagesApi)
 
   implicit val request: FakeRequest[_] = FakeRequest()
 
@@ -109,9 +109,9 @@ class InterestViewSpec extends SpecBase with AccountingPeriodResponseHelper {
     }
 
     "render the correct breadcrumbs" in {
-      val doc = render(accountingResponseEquivalentViewModel)
+      val doc         = render(accountingResponseEquivalentViewModel)
       val breadcrumbs = doc.select("li.govuk-breadcrumbs__list-item").eachText()
-      breadcrumbs must contain allOf(
+      breadcrumbs must contain allOf (
         messages("breadcrumbs.home"),
         messages("breadcrumbs.accountingPeriods"),
         messages("breadcrumbs.accountingPeriodEnding")
