@@ -44,7 +44,7 @@
                     )),
                     rows = viewModel.rows.map { row =>
                         Seq(
-                            TableRow(content = HtmlContent(link(row.description, row.href.url))),
+                            TableRow(content = HtmlContent(link(row.description, row.href.url, row.isLink))),
                             TableRow(content = Text(row.amountAsString), classes = "govuk-table__cell govuk-table__cell--numeric")
                         )
                     } :+ viewModel.totalRow(

@@ -24,7 +24,7 @@ import uk.gov.hmrc.govukfrontend.views.viewmodels.table.*
 import uk.gov.hmrc.http.HttpVerbs.GET
 import views.ViewUtils.formatCurrency
 
-case class InterestRow(description: String, amount: BigDecimal, href: Call) {
+case class InterestRow(description: String, amount: BigDecimal, isLink:Boolean, href: Call) {
   val amountAsString: String = formatCurrency(amount)
 }
 
@@ -44,7 +44,8 @@ object InterestViewModel {
   // TODO change the call to unique link for each of the rows
   val dummyCall: Call = Call(GET, "/")
   def toViewModel(
-    response: AccountingPeriodDetailsResponse
+    response: AccountingPeriodDetailsResponse,
+    clericalCalculationFlag:Boolean
   )(implicit messages: Messages): InterestViewModel =
     val accDetails = response.accountingPeriodDetails
     InterestViewModel(
@@ -52,23 +53,39 @@ object InterestViewModel {
         InterestRow(
           description = messages("interest.table.latePayment"),
           amount = accDetails.latePaymentInterestAmount,
+          isLink = lateRepaymentHyperLinkCond(accDetails.latePaymentInterestAmount, accDetails.lpiCalcFlag),
           href = dummyCall
         ),
         InterestRow(
           description = messages("interest.table.repaymentInterest"),
           amount = accDetails.repaymentInterestAmount,
+          isLink = repaymentInterestHyperLinkCond(accDetails.repaymentInterestAmount,clericalCalculationFlag),
           href = dummyCall
         ),
         InterestRow(
           description = messages("interest.table.debitInterest"),
           amount = accDetails.debitInterestAmount,
+          isLink = debitInterestAndCreditInterestHyperLinkCond(accDetails.debitInterestAmount, accDetails.crDbCalcFlag),
           href = dummyCall
         ),
         InterestRow(
           description = messages("interest.table.creditInterest"),
           amount = accDetails.creditInterestAmount,
+          isLink = debitInterestAndCreditInterestHyperLinkCond(accDetails.creditInterestAmount, accDetails.crDbCalcFlag),
           href = dummyCall
         )
       )
     )
+
+  private def lateRepaymentHyperLinkCond(latePaymentInterestAmount:BigDecimal, lpiCalcFlag:Boolean):Boolean = {
+    latePaymentInterestAmount != BigDecimal(0.00) && !lpiCalcFlag
+  }
+
+  private def repaymentInterestHyperLinkCond(repaymentInterestAmount:BigDecimal,clericalCalculationFlag:Boolean):Boolean = {
+    repaymentInterestAmount != BigDecimal(0.00) && !clericalCalculationFlag
+  }
+
+  private def debitInterestAndCreditInterestHyperLinkCond(amount:BigDecimal, creditDebitCalcFlag:Boolean):Boolean = {
+    amount != BigDecimal(0.00) && !creditDebitCalcFlag
+  }
 }

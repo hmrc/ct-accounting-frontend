@@ -16,25 +16,20 @@
 
 package services
 
-import connectors.InterestCorporationTaxConnector
-import models.AccountingPeriodDetailsResponse
+import connectors.AccountingPeriodsConnector
+import models.AccountingPeriods
 import play.api.Logging
 import uk.gov.hmrc.http.HeaderCarrier
 
 import javax.inject.Inject
 import scala.concurrent.Future
 
-class InterestService @Inject() (
-  interestCorporationTaxConnector: InterestCorporationTaxConnector
-) extends Logging {
+class AccountingPeriodsService @Inject() (
+  accountingPeriodConnector: AccountingPeriodsConnector
+)(implicit hc: HeaderCarrier)
+    extends Logging {
 
-  def getAccountingPeriodResponse(taxRef: Long, accPeriod: Long)(implicit
-    hc: HeaderCarrier
-  ): Future[AccountingPeriodDetailsResponse] = {
-    logger.info(
-      s"[InterestService][getAccountingPeriodResponse]:Calling InterestCorporationTaxConnector for taxRef: $taxRef and accPeriod: $accPeriod"
-    )
-    interestCorporationTaxConnector
-      .getAccountingPeriodResponse(taxRef, accPeriod)
-  }
+  def getAccountingPeriods(taxRef: Long): Future[AccountingPeriods] =
+    accountingPeriodConnector.getAccountingPeriods(taxRef)
+
 }

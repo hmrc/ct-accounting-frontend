@@ -18,10 +18,11 @@ package controllers
 
 import controllers.actions.IdentifierAction
 import controllers.routes.JourneyRecoveryController
+import models.AccountingPeriodsRowResponse
 import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import services.InterestService
+import services.{AccountingPeriodsService, InterestService}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import viewmodels.InterestViewModel
 import views.html.InterestView
@@ -32,7 +33,8 @@ import scala.concurrent.ExecutionContext
 class InterestController @Inject() (
   val controllerComponents: MessagesControllerComponents,
   identify: IdentifierAction,
-  service: InterestService,
+  interestService: InterestService,
+  accountingPeriodService: AccountingPeriodsService,
   view: InterestView
 )(implicit ec: ExecutionContext)
     extends FrontendBaseController
@@ -41,17 +43,30 @@ class InterestController @Inject() (
 
   // TODO: - 1 :: integrate auth then its ready
   // TODO: - 2 :: read taxRef and accPeriod from the userSession
+  private val taxRefFromSession: Long           = 3100L
+  private val accountingPeriodFromSession: Long = 4L
 
   def onPageLoad(): Action[AnyContent] = identify.async { implicit request =>
-    service.getAccountingPeriodResponse(3100L, 4L).map { response =>
-      logger.info(
-        s"[InterestController][onPageLoad] - successfully retrieved AccountingPeriodResponse"
-      )
-      val vm = InterestViewModel.toViewModel(response)
+    (for {
+      accountingPeriodsDetails <- interestService.getAccountingPeriodResponse(taxRefFromSession, accountingPeriodFromSession)
+      accountingPeriod         <- accountingPeriodService.getAccountingPeriods(taxRefFromSession)
+    } yield {
+      val accPeriodsWithTheValue  = accountingPeriod.accountingPeriods
+        .find(_.accountingPeriod == accountingPeriodFromSession)
+        .getOrElse(
+          throw new Error(s"Couldn't find the accountingPeriods for accountingPeriod:$accountingPeriod")
+        )
+      val clericalCalculationFlag = findClericalFlag(accPeriodsWithTheValue)
+      val vm                      = InterestViewModel.toViewModel(accountingPeriodsDetails, clericalCalculationFlag)
       Ok(view(vm))
-    } recover { case ex =>
-      logger.error(s"[InterestController][onPageLoad] - Unexpected failure: ${ex.getMessage}")
-      Redirect(JourneyRecoveryController.onPageLoad())
-    }
+    })
+      .recover { case ex =>
+        logger.error(s"[InterestController][onPageLoad] - Unexpected failure: ${ex.getMessage}")
+        Redirect(JourneyRecoveryController.onPageLoad())
+      }
   }
+
+  private def findClericalFlag(accPeriodRowResponse: AccountingPeriodsRowResponse): Boolean =
+    accPeriodRowResponse.clericalIntSig || accPeriodRowResponse.creditDebitInterestInd
+
 }
