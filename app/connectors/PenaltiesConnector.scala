@@ -25,17 +25,22 @@ import uk.gov.hmrc.http.{HeaderCarrier, StringContextOps}
 import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
 
 import java.net.URL
+import java.time.LocalDate
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
 class PenaltiesConnector @Inject() (http: HttpClientV2, config: ServicesConfig)(implicit ec: ExecutionContext)
     extends Logging {
 
-  def getPenaltyTransactionList(taxRef: Long, accPeriod: Long)(implicit
+  def getPenaltyTransactionList(taxRef: Long, accPeriod: Long, endDateMaybe: Option[LocalDate])(implicit
     hc: HeaderCarrier
   ): Future[PenaltiesResponse] = {
     val baseUrl  = config.baseUrl("corporation-tax")
-    val url: URL = url"$baseUrl/corporation-tax/penalty-transactions/$taxRef/$accPeriod"
+    val url: URL = endDateMaybe
+      .map(ed => url"$baseUrl/corporation-tax/penalty-transactions/$taxRef/$accPeriod?endDate=${ed.toString}")
+      .getOrElse(
+        url"$baseUrl/corporation-tax/penalty-transactions/$taxRef/$accPeriod"
+      )
     http
       .get(url)
       .execute[PenaltiesResponse]

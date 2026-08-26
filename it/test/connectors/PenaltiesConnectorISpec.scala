@@ -26,6 +26,8 @@ import org.scalatest.wordspec.AnyWordSpec
 import play.api.http.Status.*
 import uk.gov.hmrc.http.HeaderCarrier
 
+import java.time.LocalDate
+
 class PenaltiesConnectorISpec
     extends AnyWordSpec
     with Matchers
@@ -60,7 +62,7 @@ class PenaltiesConnectorISpec
           )
       )
 
-      val result = connector.getPenaltyTransactionList(1L, 5L).futureValue
+      val result = connector.getPenaltyTransactionList(1L, 5L, None).futureValue
       result.penaltyTransactions must contain allElementsOf penaltyItemsEmpty.penaltyTransactions
     }
 
@@ -80,7 +82,7 @@ class PenaltiesConnectorISpec
           )
       )
 
-      val result = connector.getPenaltyTransactionList(1L, 5L).futureValue
+      val result = connector.getPenaltyTransactionList(1L, 5L, Some(LocalDate.of(2026, 1, 1))).futureValue
       result.penaltyTransactions must contain allElementsOf penaltySingleItem.penaltyTransactions
     }
 
@@ -101,7 +103,7 @@ class PenaltiesConnectorISpec
           )
       )
 
-      val result = connector.getPenaltyTransactionList(7L, 9L).futureValue
+      val result = connector.getPenaltyTransactionList(7L, 9L, Some(LocalDate.of(2026, 1, 1))).futureValue
       result.penaltyTransactions must contain allElementsOf penaltyTwoItems.penaltyTransactions
     }
 
@@ -120,7 +122,7 @@ class PenaltiesConnectorISpec
       )
 
       val ex = intercept[Exception] {
-        connector.getPenaltyTransactionList(1L, 5L).futureValue
+        connector.getPenaltyTransactionList(1L, 5L, None).futureValue
       }
       ex.getMessage.toLowerCase must include("error")
     }

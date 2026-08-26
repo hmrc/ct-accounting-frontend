@@ -29,6 +29,8 @@ import play.api.test.Helpers
 import play.api.test.Helpers.stubMessages
 import uk.gov.hmrc.http.HeaderCarrier
 import viewmodels.{PenaltiesAccountingPeriodViewModel, PenaltiesAccountingPeriodViewModelRow}
+
+import java.time.LocalDate
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -46,15 +48,16 @@ class PenaltiesServiceSpec extends AnyWordSpec with PenaltiesDataHelper with Mat
 
   "getViewModel returns correct viewModelWithTwoRows" in new Fixture {
 
-    when(mockPenaltiesConnector.getPenaltyTransactionList(any[Long], any[Long])(any[HeaderCarrier]))
+    when(
+      mockPenaltiesConnector.getPenaltyTransactionList(any[Long], any[Long], any[Option[LocalDate]])(any[HeaderCarrier])
+    )
       .thenReturn(Future.successful(penaltyItems))
 
-    val viewModel: PenaltiesAccountingPeriodViewModel = service.getViewModel(1L, 1L).futureValue
+    val viewModel: PenaltiesAccountingPeriodViewModel = service.getViewModel(1L, 1L, None).futureValue
 
     viewModel.rows shouldBe penaltiesViewModelTwoRows
 
-    verify(mockPenaltiesConnector).getPenaltyTransactionList(1L, 1L)(hc)
+    verify(mockPenaltiesConnector).getPenaltyTransactionList(1L, 1L, None)(hc)
   }
 
-  // TODO: add more tests scenarios
 }
