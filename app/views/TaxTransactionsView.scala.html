@@ -17,6 +17,7 @@
 @import views.ViewUtils._
 @import java.time.LocalDate
 @import viewmodels._
+@import utils.TaxDescriptionHelper
 
 @this(
         layout: templates.Layout,
@@ -36,7 +37,7 @@
             content = Text(formatDate(transaction.taxDate, messages.lang))
           ),
           TableRow(
-            content = Text(taxDescription)
+            content = Text(messages(TaxDescriptionHelper.getTaxDescription(transaction.assessmentType, transaction.correctionClaimSignal)))
           ),
           TableRow(
             content = Text(formatCurrency(transaction.currentAmount)),
