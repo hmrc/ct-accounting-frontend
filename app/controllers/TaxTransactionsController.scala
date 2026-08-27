@@ -44,7 +44,7 @@ class TaxTransactionsController @Inject() (
     // TODO: Get taxRef + accPeriod from sessionDataRepositry
     service.getTaxTransactions(1L, 1L).map { taxTransactionsResponse =>
       val total: BigDecimal = taxTransactionsResponse.taxTransactions.map(_.currentAmount).sum
-      Ok(view(taxTransactionsResponse.taxTransactions, accountPeriod, total, "taxDescriptions"))
+      Ok(view(taxTransactionsResponse.taxTransactions, accountPeriod, total))
     }
   }
 }

@@ -24,7 +24,7 @@
         govukTable: GovukTable
 )
 
-@(taxTransactions: List[TaxTransactionsItem], accountPeriod: LocalDate, total: BigDecimal, taxDescription: String)(implicit request: Request[_], messages: Messages)
+@(taxTransactions: List[TaxTransactionsItem], accountPeriod: LocalDate, total: BigDecimal)(implicit request: Request[_], messages: Messages)
 
 @layout(pageTitle = titleNoForm(messages("taxTransactions.title"), Some(messages("taxTransactions.section"))), breadcrumbs = Some(PageBreadcrumbs.taxTransactionsPage)) {
 
