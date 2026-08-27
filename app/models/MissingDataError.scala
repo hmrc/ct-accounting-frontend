@@ -1,4 +1,4 @@
-@*
+/*
  * Copyright 2026 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,24 +12,16 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *@
+ */
 
-@import utils.EmptyString.emptyString
+package models
 
-@this()
+sealed trait MissingDataError {
+  def message: String
+}
 
-@(
-        text: String,
-        href: String,
-        isLink: Boolean,
-        isNewTab: Boolean = false,
-        extraClasses: String = emptyString
-)
+sealed trait MissingFieldError extends MissingDataError
 
-@if(isLink) {
-    <a href="@href" class="govuk-link @extraClasses" @if(isNewTab) {
-        rel="noreferrer noopener" target="_blank"}>
-    @text</a>
-} else {
-    <span class="@extraClasses">@text</span>
+case class MissingAccountingPeriodError(value: String) extends MissingFieldError {
+  val message = s"Cannot find Accounting Period: $value"
 }

@@ -39,7 +39,7 @@ class InterestControllerSpec extends SpecBase with MockitoSugar with AccountingP
 
     "must return OK and correct view for GET" in {
       when(mockService.getAccountingPeriodResponse(eqTo(3100L), eqTo(4L))(any[HeaderCarrier]))
-        .thenReturn(Future.successful(accountingPeriodResponse))
+        .thenReturn(Future.successful(accountingPeriodDetailsResponse))
 
       val application = applicationBuilder()
         .overrides(bind[InterestService].toInstance(mockService))

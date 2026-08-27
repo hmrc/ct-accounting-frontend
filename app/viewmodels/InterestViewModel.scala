@@ -51,41 +51,38 @@ object InterestViewModel {
     InterestViewModel(
       rows = Seq(
         InterestRow(
-          description = messages("interest.table.latePayment"),
+          description = deriveDescription(messages("interest.table.latePayment"),accDetails.lpiCalcFlag),
           amount = accDetails.latePaymentInterestAmount,
-          isLink = lateRepaymentHyperLinkCond(accDetails.latePaymentInterestAmount, accDetails.lpiCalcFlag),
+          isLink = isHyperLink(accDetails.latePaymentInterestAmount, accDetails.lpiCalcFlag),
           href = dummyCall
         ),
         InterestRow(
           description = messages("interest.table.repaymentInterest"),
           amount = accDetails.repaymentInterestAmount,
-          isLink = repaymentInterestHyperLinkCond(accDetails.repaymentInterestAmount,clericalCalculationFlag),
+          isLink = isHyperLink(accDetails.repaymentInterestAmount,clericalCalculationFlag),
           href = dummyCall
         ),
         InterestRow(
-          description = messages("interest.table.debitInterest"),
+          deriveDescription(messages("interest.table.debitInterest"),accDetails.crDbCalcFlag),
           amount = accDetails.debitInterestAmount,
-          isLink = debitInterestAndCreditInterestHyperLinkCond(accDetails.debitInterestAmount, accDetails.crDbCalcFlag),
+          isLink = isHyperLink(accDetails.debitInterestAmount, accDetails.crDbCalcFlag),
           href = dummyCall
         ),
         InterestRow(
-          description = messages("interest.table.creditInterest"),
+          description = deriveDescription(messages("interest.table.creditInterest"),accDetails.crDbCalcFlag),
           amount = accDetails.creditInterestAmount,
-          isLink = debitInterestAndCreditInterestHyperLinkCond(accDetails.creditInterestAmount, accDetails.crDbCalcFlag),
+          isLink = isHyperLink(accDetails.creditInterestAmount, accDetails.crDbCalcFlag),
           href = dummyCall
         )
       )
     )
 
-  private def lateRepaymentHyperLinkCond(latePaymentInterestAmount:BigDecimal, lpiCalcFlag:Boolean):Boolean = {
-    latePaymentInterestAmount != BigDecimal(0.00) && !lpiCalcFlag
+  private def isHyperLink(amount:BigDecimal, flag:Boolean):Boolean = {
+    amount != BigDecimal(0.00) && !flag
   }
 
-  private def repaymentInterestHyperLinkCond(repaymentInterestAmount:BigDecimal,clericalCalculationFlag:Boolean):Boolean = {
-    repaymentInterestAmount != BigDecimal(0.00) && !clericalCalculationFlag
-  }
+  private def deriveDescription(key:String, accruing:Boolean)(implicit messages:Messages):String =
+    if(accruing) messages(s"$key.accruing") else messages(key)
 
-  private def debitInterestAndCreditInterestHyperLinkCond(amount:BigDecimal, creditDebitCalcFlag:Boolean):Boolean = {
-    amount != BigDecimal(0.00) && !creditDebitCalcFlag
-  }
+
 }
