@@ -16,16 +16,19 @@
 
 package utils
 
+import play.api.i18n.Messages
+
 object TaxDescriptionHelper {
 
-  def getTaxDescription(assessmentType: String, correctionClaim: Option[String]): String = {
+  def getTaxDescription(assessmentType: String, correctionClaim: Option[String])(implicit
+    messages: Messages
+  ): String = {
     val messageType = correctionClaim match {
-      case Some("0") => "standard"
-      case Some("2") => "claim"
-      case _         => "standard"
+      case Some("2") => "(claim)"
+      case _         => ""
     }
 
-    val result = s"taxDescription.assessment.${assessmentType.toLowerCase()}.$messageType";
+    val result = messages(s"taxDescription.assessment.${assessmentType.toLowerCase()}", messageType)
 
     result
   }
