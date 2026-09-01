@@ -16,73 +16,133 @@
 
 package services
 
-import connectors.InterestCorporationTaxConnector
-import helpers.AccountingPeriodResponseHelper
+import helpers.InterestViewModelHelper
+import models.{MissingAccountingPeriodError, MissingDataError}
 import org.mockito.ArgumentMatchers.{any, eq as eqTo}
-import models.AccountingPeriodDetailsResponse
-import org.mockito.Mockito.{times, verify, when}
+import org.mockito.Mockito.when
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
-import org.scalatestplus.mockito.MockitoSugar
+import org.scalatestplus.mockito.MockitoSugar.mock
+import play.api.i18n.Messages
 import play.api.mvc.ControllerComponents
-import play.api.test.Helpers.stubControllerComponents
+import play.api.test.Helpers
+import play.api.test.Helpers.stubMessages
 import uk.gov.hmrc.http.HeaderCarrier
+import viewmodels.InterestViewModel
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
+import scala.concurrent.ExecutionContext.Implicits.global
 
-class InterestServiceSpec
-    extends AnyWordSpec
-    with Matchers
-    with ScalaFutures
-    with MockitoSugar
-    with AccountingPeriodResponseHelper {
+class InterestServiceSpec extends AnyWordSpec with Matchers with ScalaFutures with InterestViewModelHelper {
 
-  private trait BaseSetup {
-    implicit val hc: HeaderCarrier = HeaderCarrier()
+  private trait Fixture {
+    val mockAccountingPeriodDetailsService: AccountingPeriodDetailsService =
+      mock[AccountingPeriodDetailsService]
+    val mockAccountingPeriodService: AccountingPeriodsService              = mock[AccountingPeriodsService]
 
-    private val cc: ControllerComponents = stubControllerComponents()
-    implicit val ec: ExecutionContext    = cc.executionContext
+    val taxRef: Long           = 12L
+    val accountingPeriod: Long = 345L
 
-    val mockConnector: InterestCorporationTaxConnector = mock[InterestCorporationTaxConnector]
-    val service                                        = new InterestService(mockConnector)
-    val taxPayerReference: Long                        = 12L
-    val accPeriod: Long                                = 2L
+    val cc: ControllerComponents    = Helpers.stubControllerComponents()
+    implicit val messages: Messages = stubMessages()
+    implicit val hc: HeaderCarrier  = HeaderCarrier()
+
+    val service = new InterestService(mockAccountingPeriodDetailsService, mockAccountingPeriodService)
   }
 
-  "InterestService.getAccountingPeriodResponse" should {
+  "getInterest should calculate clericalCalcFlag as false and return Right(InterestViewModel) when getClericalIntSig and creditDebitInterestInd are false " in new Fixture {
+    when(
+      mockAccountingPeriodDetailsService.getAccountingPeriodResponse(eqTo(taxRef), eqTo(accountingPeriod))(
+        any[HeaderCarrier]
+      )
+    ).thenReturn(Future.successful(accountingPeriodDetailsResponseForAccruing))
 
-    "delegate to connector and successfully return AccountingPeriodDetailsResponse" in new BaseSetup {
+    when(mockAccountingPeriodService.getAccountingPeriods(eqTo(taxRef))(any[HeaderCarrier]))
+      .thenReturn(Future.successful(accountingPeriodsWithFalseClericalIntSigAndCreditDebitInterest))
 
-      when(mockConnector.getAccountingPeriodResponse(eqTo(taxPayerReference), eqTo(accPeriod))(any[HeaderCarrier]))
-        .thenReturn(Future.successful(accountingPeriodDetailsResponse))
+    val result: Either[MissingDataError, InterestViewModel] = service.getInterest(taxRef, accountingPeriod).futureValue
 
-      val result: AccountingPeriodDetailsResponse =
-        service.getAccountingPeriodResponse(taxPayerReference, accPeriod).futureValue
+    result.isRight shouldBe true
+    result         shouldBe Right(interestViewModelForAccruing)
 
-      result shouldBe accountingPeriodDetailsResponse
+  }
+  "getInterest should calculate clericalCalcFlag as true and return Right(InterestViewModel) when getClericalIntSig is true " in new Fixture {
+    when(
+      mockAccountingPeriodDetailsService.getAccountingPeriodResponse(eqTo(taxRef), eqTo(accountingPeriod))(
+        any[HeaderCarrier]
+      )
+    ).thenReturn(Future.successful(accountingPeriodDetailsResponseForAccruing))
 
-      verify(mockConnector).getAccountingPeriodResponse(taxPayerReference, accPeriod)
+    when(mockAccountingPeriodService.getAccountingPeriods(eqTo(taxRef))(any[HeaderCarrier]))
+      .thenReturn(Future.successful(accountingPeriodsForTrueClericalIntSig))
 
-      verify(mockConnector, times(1)).getAccountingPeriodResponse(taxPayerReference, accPeriod)
+    val result: Either[MissingDataError, InterestViewModel] = service.getInterest(taxRef, accountingPeriod).futureValue
 
+    result.isRight shouldBe true
+    result         shouldBe Right(interestViewModelForAccruingWithRepaymentRowNotHyperLink)
+  }
+  "getInterest should calculate clericalCalcFlag as true and return Right(InterestViewModel) when creditDebitInterestInd is true " in new Fixture {
+    when(
+      mockAccountingPeriodDetailsService.getAccountingPeriodResponse(eqTo(taxRef), eqTo(accountingPeriod))(
+        any[HeaderCarrier]
+      )
+    ).thenReturn(Future.successful(accountingPeriodDetailsResponseForNotAccruing))
+
+    when(mockAccountingPeriodService.getAccountingPeriods(eqTo(taxRef))(any[HeaderCarrier]))
+      .thenReturn(Future.successful(accountingPeriodsForTrueCreditDebitInterestInd))
+
+    val result: Either[MissingDataError, InterestViewModel] = service.getInterest(taxRef, accountingPeriod).futureValue
+
+    result.isRight shouldBe true
+    result         shouldBe Right(interestViewModelForNotAccruingWithRepaymentRowNotHyperLink)
+  }
+  "getInterest should return Left(MissingAccountingPeriodError) when accountingPeriod in AccountingPeriodDetailsResponse is not present in AccountingPeriods" in new Fixture {
+
+    when(
+      mockAccountingPeriodDetailsService.getAccountingPeriodResponse(eqTo(taxRef), eqTo(accountingPeriod))(
+        any[HeaderCarrier]
+      )
+    ).thenReturn(Future.successful(accountingPeriodDetailsResponseForNotAccruing))
+
+    when(mockAccountingPeriodService.getAccountingPeriods(eqTo(taxRef))(any[HeaderCarrier]))
+      .thenReturn(Future.successful(accountingPeriodsWithNoMatchingAccountingPeriods))
+
+    val result: Either[MissingDataError, InterestViewModel] = service.getInterest(taxRef, accountingPeriod).futureValue
+
+    result.isLeft shouldBe true
+    result        shouldBe Left(MissingAccountingPeriodError(s"Cannot find the matching accounting period for taxRef:$taxRef"))
+  }
+  "getInterest should propagate errors from AccountingPeriodDetailsService" in new Fixture {
+    when(
+      mockAccountingPeriodDetailsService.getAccountingPeriodResponse(eqTo(taxRef), eqTo(accountingPeriod))(
+        any[HeaderCarrier]
+      )
+    ).thenReturn(Future.failed(new RuntimeException("Boom")))
+
+    when(mockAccountingPeriodService.getAccountingPeriods(eqTo(taxRef))(any[HeaderCarrier]))
+      .thenReturn(Future.successful(accountingPeriodsWithNoMatchingAccountingPeriods))
+    val ex: Exception = intercept[Exception] {
+      service.getInterest(taxRef, accountingPeriod).futureValue
     }
 
-    "propagate any errors or exceptions from connector" in new BaseSetup {
+    ex.getMessage should include("Boom")
+  }
+  "getInterest should propagate errors from AccountingPeriodsService" in new Fixture {
+    when(
+      mockAccountingPeriodDetailsService.getAccountingPeriodResponse(eqTo(taxRef), eqTo(accountingPeriod))(
+        any[HeaderCarrier]
+      )
+    ).thenReturn(Future.successful(accountingPeriodDetailsResponseForNotAccruing))
 
-      when(mockConnector.getAccountingPeriodResponse(eqTo(taxPayerReference), eqTo(accPeriod))(any[HeaderCarrier]))
-        .thenReturn(Future.failed(new RuntimeException("boom")))
+    when(mockAccountingPeriodService.getAccountingPeriods(eqTo(taxRef))(any[HeaderCarrier]))
+      .thenReturn(Future.failed(new RuntimeException("Boom")))
 
-      val ex: RuntimeException = intercept[RuntimeException] {
-        service.getAccountingPeriodResponse(taxPayerReference, accPeriod).futureValue
-      }
-
-      ex.getMessage should include("boom")
-
-      verify(mockConnector, times(1)).getAccountingPeriodResponse(taxPayerReference, accPeriod)
-
+    val ex: Exception = intercept[Exception] {
+      service.getInterest(taxRef, accountingPeriod).futureValue
     }
 
+    ex.getMessage should include("Boom")
   }
 
 }

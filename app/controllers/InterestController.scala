@@ -18,10 +18,10 @@ package controllers
 
 import controllers.actions.IdentifierAction
 import controllers.routes.JourneyRecoveryController
-import helpers.InterestViewModelHelper
 import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import services.InterestService
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import viewmodels.InterestViewModel
 import views.html.InterestView
@@ -32,7 +32,7 @@ import scala.concurrent.ExecutionContext
 class InterestController @Inject() (
   val controllerComponents: MessagesControllerComponents,
   identify: IdentifierAction,
-  viewModelHelper: InterestViewModelHelper,
+  service: InterestService,
   view: InterestView
 )(implicit ec: ExecutionContext)
     extends FrontendBaseController
@@ -45,8 +45,8 @@ class InterestController @Inject() (
   private val accountingPeriodFromSession: Long = 4L
 
   def onPageLoad(): Action[AnyContent] = identify.async { implicit request =>
-    viewModelHelper
-      .deriveInterestViewModel(taxRefFromSession, accountingPeriodFromSession)
+    service
+      .getInterest(taxRefFromSession, accountingPeriodFromSession)
       .map {
         case Right(vm)   => Ok(view(vm))
         case Left(error) =>

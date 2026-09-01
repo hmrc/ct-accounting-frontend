@@ -24,7 +24,7 @@ import uk.gov.hmrc.govukfrontend.views.viewmodels.table.*
 import uk.gov.hmrc.http.HttpVerbs.GET
 import views.ViewUtils.formatCurrency
 
-case class InterestRow(description: String, amount: BigDecimal, isLink:Boolean, href: Call) {
+case class InterestRow(description: String, amount: BigDecimal, isLink: Boolean, href: Call) {
   val amountAsString: String = formatCurrency(amount)
 }
 
@@ -45,13 +45,13 @@ object InterestViewModel {
   val dummyCall: Call = Call(GET, "/")
   def toViewModel(
     response: AccountingPeriodDetailsResponse,
-    clericalCalculationFlag:Boolean
+    clericalCalculationFlag: Boolean
   )(implicit messages: Messages): InterestViewModel =
     val accDetails = response.accountingPeriodDetails
     InterestViewModel(
       rows = Seq(
         InterestRow(
-          description = deriveDescription(messages("interest.table.latePayment"),accDetails.lpiCalcFlag),
+          description = deriveDescription("interest.table.latePayment", accDetails.lpiCalcFlag),
           amount = accDetails.latePaymentInterestAmount,
           isLink = isHyperLink(accDetails.latePaymentInterestAmount, accDetails.lpiCalcFlag),
           href = dummyCall
@@ -59,17 +59,17 @@ object InterestViewModel {
         InterestRow(
           description = messages("interest.table.repaymentInterest"),
           amount = accDetails.repaymentInterestAmount,
-          isLink = isHyperLink(accDetails.repaymentInterestAmount,clericalCalculationFlag),
+          isLink = isHyperLink(accDetails.repaymentInterestAmount, clericalCalculationFlag),
           href = dummyCall
         ),
         InterestRow(
-          deriveDescription(messages("interest.table.debitInterest"),accDetails.crDbCalcFlag),
+          description = deriveDescription("interest.table.debitInterest", accDetails.crDbCalcFlag),
           amount = accDetails.debitInterestAmount,
           isLink = isHyperLink(accDetails.debitInterestAmount, accDetails.crDbCalcFlag),
           href = dummyCall
         ),
         InterestRow(
-          description = deriveDescription(messages("interest.table.creditInterest"),accDetails.crDbCalcFlag),
+          description = deriveDescription("interest.table.creditInterest", accDetails.crDbCalcFlag),
           amount = accDetails.creditInterestAmount,
           isLink = isHyperLink(accDetails.creditInterestAmount, accDetails.crDbCalcFlag),
           href = dummyCall
@@ -77,12 +77,10 @@ object InterestViewModel {
       )
     )
 
-  private def isHyperLink(amount:BigDecimal, flag:Boolean):Boolean = {
+  private def isHyperLink(amount: BigDecimal, flag: Boolean): Boolean =
     amount != BigDecimal(0.00) && !flag
-  }
 
-  private def deriveDescription(key:String, accruing:Boolean)(implicit messages:Messages):String =
-    if(accruing) messages(s"$key.accruing") else messages(key)
-
+  private def deriveDescription(key: String, accruing: Boolean)(implicit messages: Messages): String =
+    if (accruing) messages(s"$key.accruing") else messages(key)
 
 }

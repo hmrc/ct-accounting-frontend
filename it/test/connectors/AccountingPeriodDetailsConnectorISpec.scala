@@ -26,7 +26,7 @@ import org.scalatest.wordspec.AnyWordSpec
 import play.api.http.Status.{BAD_REQUEST, INTERNAL_SERVER_ERROR, NOT_FOUND, OK}
 import uk.gov.hmrc.http.HeaderCarrier
 
-class InterestCorporationTaxConnectorISpec
+class AccountingPeriodDetailsConnectorISpec
     extends AnyWordSpec
     with Matchers
     with ScalaFutures
@@ -36,7 +36,7 @@ class InterestCorporationTaxConnectorISpec
 
   implicit val hc: HeaderCarrier = HeaderCarrier()
 
-  private val connector: InterestCorporationTaxConnector = app.injector.instanceOf[InterestCorporationTaxConnector]
+  private val connector: AccountingPeriodDetailsConnector = app.injector.instanceOf[AccountingPeriodDetailsConnector]
 
   // TODO: add auth stub logic and relevant cases
 

@@ -17,11 +17,14 @@
 package controllers
 
 import base.SpecBase
-import helpers.AccountingPeriodResponseHelper
+import helpers.InterestViewModelHelper
+import models.MissingAccountingPeriodError
 import org.mockito.ArgumentMatchers.{any, eq as eqTo}
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
 import org.scalatestplus.mockito.MockitoSugar.mock
+import play.api.Application
+import play.api.i18n.Messages
 import play.api.inject.bind
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
@@ -31,19 +34,27 @@ import views.html.InterestView
 
 import scala.concurrent.Future
 
-class InterestControllerSpec extends SpecBase with MockitoSugar with AccountingPeriodResponseHelper {
-  implicit val hc: HeaderCarrier = HeaderCarrier()
-  private val mockService        = mock[InterestService]
+class InterestControllerSpec extends SpecBase with MockitoSugar with InterestViewModelHelper {
+
+  private trait Fixture {
+    implicit val hc: HeaderCarrier   = HeaderCarrier()
+    val mockService: InterestService = mock[InterestService]
+    val application: Application     =
+      applicationBuilder()
+        .overrides(bind[InterestService].toInstance(mockService))
+        .build()
+
+    implicit val msgs: Messages = messages(application)
+
+    val taxRef: Long           = 3100L
+    val accountingPeriod: Long = 4L
+  }
 
   "InterestController" - {
 
-    "must return OK and correct view for GET" in {
-      when(mockService.getAccountingPeriodResponse(eqTo(3100L), eqTo(4L))(any[HeaderCarrier]))
-        .thenReturn(Future.successful(accountingPeriodDetailsResponse))
-
-      val application = applicationBuilder()
-        .overrides(bind[InterestService].toInstance(mockService))
-        .build()
+    "must return OK and correct view for GET" in new Fixture {
+      when(mockService.getInterest(eqTo(3100L), eqTo(4L))(any(), any(), any()))
+        .thenReturn(Future.successful(Right(interestViewModelForAccruing)))
 
       running(application) {
         val request = FakeRequest(GET, routes.InterestController.onPageLoad().url)
@@ -52,22 +63,30 @@ class InterestControllerSpec extends SpecBase with MockitoSugar with AccountingP
 
         status(result) mustEqual OK
         contentAsString(result) mustEqual
-          view(accountingResponseEquivalentViewModel)(
+          view(interestViewModelForAccruing)(
             request,
             messages(application)
           ).toString
       }
 
     }
+    "must redirect to JourneyRecoveryController when no matching accountingPeriod from session is found in AccountingPeriods " in new Fixture {
+      when(mockService.getInterest(eqTo(3100L), eqTo(4L))(any(), any(), any()))
+        .thenReturn(Future.successful(Left(MissingAccountingPeriodError("Missing accountingPeriod"))))
 
-    "must redirect to JourneyRecoveryController when exception occurs from BE " in {
+      running(application) {
+        val request = FakeRequest(GET, routes.InterestController.onPageLoad().url)
+        val result  = route(application, request).value
 
-      when(mockService.getAccountingPeriodResponse(eqTo(3100L), eqTo(4L))(any[HeaderCarrier]))
+        status(result) mustEqual SEE_OTHER
+        redirectLocation(result).value mustEqual routes.JourneyRecoveryController.onPageLoad().url
+      }
+
+    }
+
+    "must redirect to JourneyRecoveryController when exception occurs from BE " in new Fixture {
+      when(mockService.getInterest(eqTo(3100L), eqTo(4L))(any(), any(), any()))
         .thenReturn(Future.failed(new RuntimeException("Boom")))
-
-      val application = applicationBuilder()
-        .overrides(bind[InterestService].toInstance(mockService))
-        .build()
 
       running(application) {
         val request = FakeRequest(GET, routes.InterestController.onPageLoad().url)

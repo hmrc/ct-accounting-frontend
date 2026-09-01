@@ -28,7 +28,7 @@ import java.net.URL
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
-class InterestCorporationTaxConnector @Inject() (http: HttpClientV2, config: ServicesConfig)(implicit
+class AccountingPeriodDetailsConnector @Inject() (http: HttpClientV2, config: ServicesConfig)(implicit
   ec: ExecutionContext
 ) extends Logging {
 

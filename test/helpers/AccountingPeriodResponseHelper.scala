@@ -17,9 +17,6 @@
 package helpers
 
 import models.{AccountingPeriodDetails, AccountingPeriodDetailsResponse}
-import play.api.mvc.Call
-import uk.gov.hmrc.http.HttpVerbs.GET
-import viewmodels.{InterestRow, InterestViewModel}
 
 trait AccountingPeriodResponseHelper {
 
@@ -68,49 +65,19 @@ trait AccountingPeriodResponseHelper {
     amountDueForAp = BigDecimal("2500.00")
   )
 
-  val accountingPeriodResponseWithAllFlagsTrue: AccountingPeriodDetailsResponse  = AccountingPeriodDetailsResponse(
+  val accountingPeriodResponseWithAllFlagsTrue: AccountingPeriodDetailsResponse           = AccountingPeriodDetailsResponse(
     accountingPeriodDetails = accountingPeriodDetailsWithAllFlagsTrue
   )
-  val accountingPeriodResponseWithAllFlagsFalse: AccountingPeriodDetailsResponse = AccountingPeriodDetailsResponse(
+  val accountingPeriodResponseWithAllFlagsFalse: AccountingPeriodDetailsResponse          = AccountingPeriodDetailsResponse(
     accountingPeriodDetails = accountingPeriodDetailsWithAllFlagsFalse
   )
-  val accountingPeriodResponseWithAllFlagsTrueAmountZero: AccountingPeriodDetailsResponse = AccountingPeriodDetailsResponse(
-    accountingPeriodDetails = accountingPeriodDetailsWithAllAmountsZeroAndFlagAreTrue
-  )
+  val accountingPeriodResponseWithAllFlagsTrueAmountZero: AccountingPeriodDetailsResponse =
+    AccountingPeriodDetailsResponse(
+      accountingPeriodDetails = accountingPeriodDetailsWithAllAmountsZeroAndFlagAreTrue
+    )
 
   val accountingPeriodDetailsResponse: AccountingPeriodDetailsResponse = AccountingPeriodDetailsResponse(
     accountingPeriodDetails = accountingPeriodDetails
-  )
-
-  val dummyCall: Call = Call(GET, "/")
-
-  val accountingResponseEquivalentViewModel: InterestViewModel = InterestViewModel(
-    Seq(
-      InterestRow(
-        description = "Late payment interest",
-        amount = BigDecimal("25.50"),
-        isLink = false,
-        href = dummyCall
-      ),
-      InterestRow(
-        description = "Repayment interest",
-        amount = BigDecimal("0.00"),
-        isLink = false,
-        href = dummyCall
-      ),
-      InterestRow(
-        description = "Debit interest",
-        amount = BigDecimal("15.75"),
-        isLink = false,
-        href = dummyCall
-      ),
-      InterestRow(
-        description = "Credit Interest",
-        amount = BigDecimal("0.00"),
-        isLink = false,
-        href = dummyCall
-      )
-    )
   )
 
 }

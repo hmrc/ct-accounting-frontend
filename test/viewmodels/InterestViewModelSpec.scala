@@ -100,7 +100,8 @@ class InterestViewModelSpec extends AnyWordSpec with Matchers with AccountingPer
     }
     "create the expected rows and descriptions without hyperlink when LpiCalcFlag, creditDebitCalcFlag and clericalCalculationFlag are true all amounts are zero" in {
       val clericalCalculationFlag: Boolean = true
-      val viewModel                        = InterestViewModel.toViewModel(accountingPeriodResponseWithAllFlagsTrueAmountZero, clericalCalculationFlag)
+      val viewModel                        =
+        InterestViewModel.toViewModel(accountingPeriodResponseWithAllFlagsTrueAmountZero, clericalCalculationFlag)
       val dummyCall: Call                  = Call(GET, "/")
 
       viewModel.rows mustBe Seq(
