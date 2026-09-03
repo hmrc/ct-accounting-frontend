@@ -18,7 +18,7 @@ package connectors
 
 import com.github.tomakehurst.wiremock.client.WireMock.*
 import itutils.ApplicationWithWiremock
-import models.AccountingPeriodDetails
+import models.{AccountingPeriodDetails, AccountingPeriodDetailsResponse}
 import org.scalatest.BeforeAndAfterEach
 import org.scalatest.concurrent.{IntegrationPatience, ScalaFutures}
 import org.scalatest.matchers.must.Matchers
@@ -26,7 +26,7 @@ import org.scalatest.wordspec.AnyWordSpec
 import play.api.http.Status.{BAD_REQUEST, INTERNAL_SERVER_ERROR, NOT_FOUND, OK}
 import uk.gov.hmrc.http.HeaderCarrier
 
-class InterestCorporationTaxConnectorISpec
+class AccountingPeriodDetailsConnectorISpec
     extends AnyWordSpec
     with Matchers
     with ScalaFutures
@@ -36,7 +36,7 @@ class InterestCorporationTaxConnectorISpec
 
   implicit val hc: HeaderCarrier = HeaderCarrier()
 
-  private val connector: InterestCorporationTaxConnector = app.injector.instanceOf[InterestCorporationTaxConnector]
+  private val connector: AccountingPeriodDetailsConnector = app.injector.instanceOf[AccountingPeriodDetailsConnector]
 
   // TODO: add auth stub logic and relevant cases
 
@@ -46,7 +46,8 @@ class InterestCorporationTaxConnectorISpec
       s"/corporation-tax/accounting-period-details/$taxRef/$accPeriod"
 
     "return AccountingPeriodDetails with all fields populated from BE with status code OK" in {
-      val response = AccountingPeriodDetails(
+      val response = AccountingPeriodDetailsResponse(
+        accountingPeriodDetails = AccountingPeriodDetails(
           isApBalanced = false,
           lpiCalcFlag = false,
           crDbCalcFlag = true,
@@ -57,6 +58,8 @@ class InterestCorporationTaxConnectorISpec
           totalDerivedActualInterest = BigDecimal("41.25"),
           amountDueForAp = BigDecimal("2500.00")
         )
+      )
+
       stubFor(
         get(urlPathEqualTo(url(1L, 5L)))
           .willReturn(
@@ -65,6 +68,7 @@ class InterestCorporationTaxConnectorISpec
               .withBody(
                 s"""
                    |{
+                   |"accountingPeriodDetails":{
                    |"isApBalanced": false,
                    |"lpiCalcFlag": false,
                    |"crDbCalcFlag": true,
@@ -74,6 +78,7 @@ class InterestCorporationTaxConnectorISpec
                    |"repaymentInterestAmount": 0.00,
                    |"totalDerivedActualInterest": 41.25,
                    |"amountDueForAp": 2500.00
+                   |}
                    |}
                    |""".stripMargin
               )

@@ -16,15 +16,45 @@
 
 package helpers
 
-import models.{AccountingPeriodDetails, AccountingPeriodResponse}
-import play.api.mvc.Call
-import uk.gov.hmrc.http.HttpVerbs.GET
-import viewmodels.{InterestRow, InterestViewModel}
+import models.{AccountingPeriodDetails, AccountingPeriodDetailsResponse}
 
 trait AccountingPeriodResponseHelper {
 
-  val accountingPeriodDetails: AccountingPeriodDetails   = AccountingPeriodDetails(
+  val accountingPeriodDetailsWithAllFlagsFalse: AccountingPeriodDetails                = AccountingPeriodDetails(
     isApBalanced = false,
+    lpiCalcFlag = false,
+    crDbCalcFlag = false,
+    creditInterestAmount = BigDecimal("0.00"),
+    debitInterestAmount = BigDecimal("15.75"),
+    latePaymentInterestAmount = BigDecimal("25.50"),
+    repaymentInterestAmount = BigDecimal("16.00"),
+    totalDerivedActualInterest = BigDecimal("41.25"),
+    amountDueForAp = BigDecimal("2500.00")
+  )
+  val accountingPeriodDetailsWithAllAmountsZeroAndFlagAreTrue: AccountingPeriodDetails = AccountingPeriodDetails(
+    isApBalanced = true,
+    lpiCalcFlag = true,
+    crDbCalcFlag = true,
+    creditInterestAmount = BigDecimal("0.00"),
+    debitInterestAmount = BigDecimal("0.00"),
+    latePaymentInterestAmount = BigDecimal("0.00"),
+    repaymentInterestAmount = BigDecimal("0.00"),
+    totalDerivedActualInterest = BigDecimal("0.00"),
+    amountDueForAp = BigDecimal("0.00")
+  )
+  val accountingPeriodDetailsWithAllFlagsTrue: AccountingPeriodDetails                 = AccountingPeriodDetails(
+    isApBalanced = true,
+    lpiCalcFlag = true,
+    crDbCalcFlag = true,
+    creditInterestAmount = BigDecimal("0.00"),
+    debitInterestAmount = BigDecimal("15.75"),
+    latePaymentInterestAmount = BigDecimal("25.50"),
+    repaymentInterestAmount = BigDecimal("0.00"),
+    totalDerivedActualInterest = BigDecimal("41.25"),
+    amountDueForAp = BigDecimal("2500.00")
+  )
+  val accountingPeriodDetails: AccountingPeriodDetails                                 = AccountingPeriodDetails(
+    isApBalanced = true,
     lpiCalcFlag = false,
     crDbCalcFlag = true,
     creditInterestAmount = BigDecimal("0.00"),
@@ -34,35 +64,20 @@ trait AccountingPeriodResponseHelper {
     totalDerivedActualInterest = BigDecimal("41.25"),
     amountDueForAp = BigDecimal("2500.00")
   )
-  val accountingPeriodResponse: AccountingPeriodResponse = AccountingPeriodResponse(
-    accountingPeriodDetails = accountingPeriodDetails
+
+  val accountingPeriodResponseWithAllFlagsTrue: AccountingPeriodDetailsResponse           = AccountingPeriodDetailsResponse(
+    accountingPeriodDetails = accountingPeriodDetailsWithAllFlagsTrue
   )
-
-  val dummyCall: Call = Call(GET, "/")
-
-  val accountingResponseEquivalentViewModel: InterestViewModel = InterestViewModel(
-    Seq(
-      InterestRow(
-        description = "Late payment interest(still accruing)",
-        amount = BigDecimal("25.50"),
-        href = dummyCall
-      ),
-      InterestRow(
-        description = "Repayment interest",
-        amount = BigDecimal("0.00"),
-        href = dummyCall
-      ),
-      InterestRow(
-        description = "Debit interest",
-        amount = BigDecimal("15.75"),
-        href = dummyCall
-      ),
-      InterestRow(
-        description = "Credit Interest",
-        amount = BigDecimal("0.00"),
-        href = dummyCall
-      )
+  val accountingPeriodResponseWithAllFlagsFalse: AccountingPeriodDetailsResponse          = AccountingPeriodDetailsResponse(
+    accountingPeriodDetails = accountingPeriodDetailsWithAllFlagsFalse
+  )
+  val accountingPeriodResponseWithAllFlagsTrueAmountZero: AccountingPeriodDetailsResponse =
+    AccountingPeriodDetailsResponse(
+      accountingPeriodDetails = accountingPeriodDetailsWithAllAmountsZeroAndFlagAreTrue
     )
+
+  val accountingPeriodDetailsResponse: AccountingPeriodDetailsResponse = AccountingPeriodDetailsResponse(
+    accountingPeriodDetails = accountingPeriodDetails
   )
 
 }

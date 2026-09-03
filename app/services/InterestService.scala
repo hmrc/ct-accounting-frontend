@@ -16,27 +16,36 @@
 
 package services
 
-import connectors.InterestCorporationTaxConnector
-import models.AccountingPeriodResponse
-import play.api.Logging
+import models.{AccountingPeriodsRowResponse, MissingAccountingPeriodError, MissingDataError}
+import play.api.i18n.Messages
 import uk.gov.hmrc.http.HeaderCarrier
+import viewmodels.InterestViewModel
 
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
 class InterestService @Inject() (
-  connector: InterestCorporationTaxConnector
-)(implicit ec: ExecutionContext)
-    extends Logging {
+  accountingPeriodDetailsService: AccountingPeriodDetailsService,
+  accountingPeriodService: AccountingPeriodsService
+) {
 
-  def getAccountingPeriodResponse(taxRef: Long, accPeriod: Long)(implicit
-    hc: HeaderCarrier
-  ): Future[AccountingPeriodResponse] = {
-    logger.info(
-      s"[InterestService][getAccountingPeriodResponse]:Calling InterestCorporationTaxConnector for taxRef: $taxRef and accPeriod: $accPeriod"
-    )
-    connector
-      .getAccountingPeriodResponse(taxRef, accPeriod)
-      .map(details => AccountingPeriodResponse(details))
-  }
+  def getInterest(taxRef: Long, accPeriod: Long)(implicit
+    ec: ExecutionContext,
+    hc: HeaderCarrier,
+    messages: Messages
+  ): Future[Either[MissingDataError, InterestViewModel]] =
+    for {
+      accountingPeriodsDetails <- accountingPeriodDetailsService.getAccountingPeriodResponse(taxRef, accPeriod)
+      accountingPeriod         <- accountingPeriodService.getAccountingPeriods(taxRef)
+    } yield accountingPeriod.accountingPeriods
+      .find(_.accountingPeriod == BigDecimal(accPeriod))
+      .toRight(MissingAccountingPeriodError(s"Cannot find the matching accounting period for taxRef:$taxRef"))
+      .map { accPeriodWithValue =>
+        val clericalCalculationFlag = findClericalFlag(accPeriodWithValue)
+        InterestViewModel.toViewModel(accountingPeriodsDetails, clericalCalculationFlag)
+      }
+
+  private def findClericalFlag(accPeriodRowResponse: AccountingPeriodsRowResponse): Boolean =
+    accPeriodRowResponse.clericalIntSig || accPeriodRowResponse.creditDebitInterestInd
+
 }

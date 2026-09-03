@@ -17,7 +17,7 @@
 package views
 
 import base.SpecBase
-import helpers.AccountingPeriodResponseHelper
+import helpers.InterestViewModelHelper
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.scalatest.matchers.should.Matchers.should
@@ -27,7 +27,7 @@ import play.api.test.FakeRequest
 import viewmodels.InterestViewModel
 import views.html.InterestView
 
-class InterestViewSpec extends SpecBase with AccountingPeriodResponseHelper {
+class InterestViewSpec extends SpecBase with InterestViewModelHelper {
 
   val application: Application = applicationBuilder().build()
   val view: InterestView       = application.injector.instanceOf[InterestView]
@@ -43,23 +43,24 @@ class InterestViewSpec extends SpecBase with AccountingPeriodResponseHelper {
   "InterestView" - {
 
     "render the page title" in {
-      val doc = render(accountingResponseEquivalentViewModel)
+      val doc = render(interestViewModelForAccruing)
+
       doc.title() must include(messages("interest.title"))
       doc.title() must include(messages("interest.section"))
     }
 
     "render the heading" in {
-      val doc = render(accountingResponseEquivalentViewModel)
+      val doc = render(interestViewModelForAccruing)
       doc.select("h1").text() mustBe messages("interest.heading")
     }
 
     "render the table caption" in {
-      val doc = render(accountingResponseEquivalentViewModel)
+      val doc = render(interestViewModelForAccruing)
       doc.select("caption.govuk-table__caption").text() mustBe messages("interest.caption")
     }
 
     "render the table headers" in {
-      val doc     = render(accountingResponseEquivalentViewModel)
+      val doc     = render(interestViewModelForAccruing)
       val headers = doc.select("thead th")
       headers.size() mustBe 2
       headers.get(0).text() mustBe messages("interest.description")
@@ -67,56 +68,55 @@ class InterestViewSpec extends SpecBase with AccountingPeriodResponseHelper {
       headers.get(1).hasClass("govuk-table__cell--numeric") mustBe true
     }
 
-    "render all interest rows with description, link and formatted amount" in {
-      val doc  = render(accountingResponseEquivalentViewModel)
+    "render a row as a link when isLink is true" in {
+      val doc  = render(interestViewModelForAccruing)
       val rows = doc.select("tbody tr")
 
-      val expectedRows = Seq(
-        (messages("interest.table.latePayment"), "25.50"),
-        (messages("interest.table.repaymentInterest"), "0.00"),
-        (messages("interest.table.debitInterest"), "15.75"),
-        (messages("interest.table.creditInterest"), "0.00")
-      )
+      val linkRow = rows.get(1) // Repayment interest row has isLink = true
 
-      expectedRows.zipWithIndex.foreach { case ((description, amount), index) =>
-        val row = rows.get(index)
-        row.text() must include(description)
-        row.text() must include(amount)
+      val anchor = linkRow.select("a.govuk-link")
 
-        val link = row.select("a").first()
-        link.text() mustBe description
-        link.attr("href") mustBe "/"
-        link.hasClass("govuk-link") mustBe true
-      }
+      anchor.size mustEqual 1
+      anchor.text() mustEqual messages("interest.table.repaymentInterest")
+      anchor.attr("href") mustEqual "/"
     }
+    "render a row as a plain text when isLink is false" in {
+      val doc  = render(interestViewModelForAccruing)
+      val rows = doc.select("tbody tr")
 
-    "render numeric amount cells with the numeric class" in {
-      val doc         = render(accountingResponseEquivalentViewModel)
-      val amountCells = doc.select("tbody tr td.govuk-table__cell--numeric")
-      amountCells.size() must be >= 4
-    }
+      val plainRow = rows.get(0) // LatePayment row has isLink = false
 
-    "render the total row" in {
-      val doc      = render(accountingResponseEquivalentViewModel)
-      val totalRow = doc.select("tbody tr").last()
-      totalRow.text() must include(messages("interest.table.total"))
-      totalRow.text() must include("£41.25")
+      plainRow.select("a").size mustEqual 0
+      plainRow.select("span").text() mustEqual messages("interest.table.latePayment.accruing")
     }
+  }
 
-    "render exactly 4 links in the table body" in {
-      val doc = render(accountingResponseEquivalentViewModel)
-      doc.select("tbody a").size() mustBe 4
-    }
+  "render numeric amount cells with the numeric class" in {
+    val doc         = render(interestViewModelForAccruing)
+    val amountCells = doc.select("tbody tr td.govuk-table__cell--numeric")
+    amountCells.size() must be >= 4
+  }
 
-    "render the correct breadcrumbs" in {
-      val doc         = render(accountingResponseEquivalentViewModel)
-      val breadcrumbs = doc.select("li.govuk-breadcrumbs__list-item").eachText()
-      breadcrumbs must contain allOf (
-        messages("breadcrumbs.home"),
-        messages("breadcrumbs.accountingPeriods"),
-        messages("breadcrumbs.accountingPeriodEnding")
-      )
-      doc.select(".govuk-breadcrumbs__list-item").size() mustBe 3
-    }
+  "render the total row" in {
+    val doc      = render(interestViewModelForAccruing)
+    val totalRow = doc.select("tbody tr").last()
+    totalRow.text() must include(messages("interest.table.total"))
+    totalRow.text() must include("£51.25")
+  }
+
+  "render exactly 1 link in the table body" in {
+    val doc = render(interestViewModelForAccruing)
+    doc.select("tbody a").size() mustBe 1
+  }
+
+  "render the correct breadcrumbs" in {
+    val doc         = render(interestViewModelForAccruing)
+    val breadcrumbs = doc.select("li.govuk-breadcrumbs__list-item").eachText()
+    breadcrumbs must contain allOf (
+      messages("breadcrumbs.home"),
+      messages("breadcrumbs.accountingPeriods"),
+      messages("breadcrumbs.accountingPeriodEnding")
+    )
+    doc.select(".govuk-breadcrumbs__list-item").size() mustBe 3
   }
 }

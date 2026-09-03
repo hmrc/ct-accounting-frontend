@@ -1,4 +1,4 @@
-@*
+/*
  * Copyright 2026 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,24 +12,23 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *@
+ */
 
-@import utils.EmptyString.emptyString
+package services
 
-@this()
+import connectors.AccountingPeriodsConnector
+import models.AccountingPeriods
+import play.api.Logging
+import uk.gov.hmrc.http.HeaderCarrier
 
-@(
-        text: String,
-        href: String,
-        isLink: Boolean,
-        isNewTab: Boolean = false,
-        extraClasses: String = emptyString
-)
+import javax.inject.Inject
+import scala.concurrent.Future
 
-@if(isLink) {
-    <a href="@href" class="govuk-link @extraClasses" @if(isNewTab) {
-        rel="noreferrer noopener" target="_blank"}>
-    @text</a>
-} else {
-    <span class="@extraClasses">@text</span>
+class AccountingPeriodsService @Inject() (
+  accountingPeriodConnector: AccountingPeriodsConnector
+) extends Logging {
+
+  def getAccountingPeriods(taxRef: Long)(implicit hc: HeaderCarrier): Future[AccountingPeriods] =
+    accountingPeriodConnector.getAccountingPeriods(taxRef)
+
 }

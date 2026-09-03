@@ -3,7 +3,7 @@
 
 This is a placeholder README.md for a new repository
 
-To run all tests and coverage: `sbt clean compile coverage test it/test coverageOff coverageReport`
+To run all tests and coverage: `sbt scalafmtAll clean compile coverage test it/test coverageOff coverageReport`
 
 ### License
 

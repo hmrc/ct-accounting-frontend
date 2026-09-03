@@ -35,11 +35,11 @@ object AccountingPeriodDetails {
     Json.format[AccountingPeriodDetails]
 }
 
-case class AccountingPeriodResponse(
+case class AccountingPeriodDetailsResponse(
   accountingPeriodDetails: AccountingPeriodDetails
 )
 
-object AccountingPeriodResponse {
-  implicit val format: OFormat[AccountingPeriodResponse] =
-    Json.format[AccountingPeriodResponse]
+object AccountingPeriodDetailsResponse {
+  implicit val format: OFormat[AccountingPeriodDetailsResponse] =
+    Json.format[AccountingPeriodDetailsResponse]
 }

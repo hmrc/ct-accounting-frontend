@@ -41,17 +41,23 @@ class InterestController @Inject() (
 
   // TODO: - 1 :: integrate auth then its ready
   // TODO: - 2 :: read taxRef and accPeriod from the userSession
+  private val taxRefFromSession: Long           = 3100L
+  private val accountingPeriodFromSession: Long = 4L
 
   def onPageLoad(): Action[AnyContent] = identify.async { implicit request =>
-    service.getAccountingPeriodResponse(3100L, 4L).map { response =>
-      logger.info(
-        s"[InterestController][onPageLoad] - successfully retrieved AccountingPeriodResponse"
-      )
-      val vm = InterestViewModel.toViewModel(response)
-      Ok(view(vm))
-    } recover { case ex =>
-      logger.error(s"[InterestController][onPageLoad] - Unexpected failure: ${ex.getMessage}")
-      Redirect(JourneyRecoveryController.onPageLoad())
-    }
+    service
+      .getInterest(taxRefFromSession, accountingPeriodFromSession)
+      .map {
+        case Right(vm)   => Ok(view(vm))
+        case Left(error) =>
+          logger.error(s"Unexpected failure while retrieving interest: $error")
+          Redirect(JourneyRecoveryController.onPageLoad())
+      }
+      .recover { case ex =>
+        logger.error(s"Unexpected failure while retrieving interest: ${ex.getMessage}")
+        Redirect(JourneyRecoveryController.onPageLoad())
+      }
+
   }
+
 }

@@ -16,43 +16,35 @@
 
 package connectors
 
-import models.AccountingPeriodDetails
+import models.AccountingPeriods
 import play.api.Logging
-import uk.gov.hmrc.http.HttpReads.Implicits.*
 import uk.gov.hmrc.http.client.HttpClientV2
-import uk.gov.hmrc.http.{HeaderCarrier, StringContextOps, UpstreamErrorResponse}
+import uk.gov.hmrc.http.{HeaderCarrier, StringContextOps}
 import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
-import uk.gov.hmrc.{http as StringContextOps, *}
+import uk.gov.hmrc.http.HttpReads.Implicits.*
 
 import java.net.URL
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
-class InterestCorporationTaxConnector @Inject() (http: HttpClientV2, config: ServicesConfig)(implicit
+class AccountingPeriodsConnector @Inject() (http: HttpClientV2, config: ServicesConfig)(implicit
   ec: ExecutionContext
 ) extends Logging {
 
-  def getAccountingPeriodResponse(taxRef: Long, accPeriod: Long)(implicit
+  def getAccountingPeriods(taxRef: Long)(implicit
     hc: HeaderCarrier
-  ): Future[AccountingPeriodDetails] = {
+  ): Future[AccountingPeriods] = {
     val baseUrl  = config.baseUrl("corporation-tax")
-    val url: URL = url"$baseUrl/corporation-tax/accounting-period-details/$taxRef/$accPeriod"
+    val url: URL = url"$baseUrl/corporation-tax/accounting-periods/$taxRef"
 
     http
       .get(url)
-      .execute[AccountingPeriodDetails]
-      .recover {
-        case u: UpstreamErrorResponse =>
-          logger.error(
-            s"[InterestConnector][getInterest] Upstream error: $taxRef :: $accPeriod - ${u.getMessage}"
-          )
-          throw u
-        case ex: Throwable            =>
-          logger.error(
-            s"[InterestConnector][getInterest]: $taxRef :: $accPeriod - ${ex.getMessage}"
-          )
-          throw new RuntimeException(ex.getMessage)
+      .execute[AccountingPeriods]
+      .recover { case ex: Throwable =>
+        logger.error(
+          s"Retrieve accounting period : $taxRef :: - ${ex.getMessage}"
+        )
+        throw new RuntimeException(ex.getMessage)
       }
   }
-
 }
