@@ -101,3 +101,14 @@ interest.table.debitInterest.accruing   = Debit interest(still accruing)
 interest.table.creditInterest           = Credit Interest
 interest.table.creditInterest.accruing  = Credit Interest(still accruing)
 interest.table.total                    = Total
+
+taxDescription.assessment.a = Amended assessment {0}
+taxDescription.assessment.d = Discovery assessment {0}
+taxDescription.assessment.e = HMRC determination {0}
+taxDescription.assessment.f = Further assessment {0}
+taxDescription.assessment.j = HMRC amended self assessment {0}
+taxDescription.assessment.m = Main assessment {0}
+taxDescription.assessment.r = HMRC amended self assessment {0}
+taxDescription.assessment.s = Self assessment {0}
+taxDescription.assessment.t = Taxpayer amended self assessment {0}
+taxDescription.assessment.z = Return charge {0}

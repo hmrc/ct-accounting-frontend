@@ -40,7 +40,6 @@ class TaxTransactionsViewSpec extends SpecBase {
   val accountPeriod: LocalDate = LocalDate.of(2026, 1, 1)
 
   val total: BigDecimal                          = 10000.12
-  val taxDescriptions                            = "Dummy value"
   val taxTransactions: List[TaxTransactionsItem] = List(
     TaxTransactionsItem(
       currentAmount = 1234.56,
@@ -51,7 +50,7 @@ class TaxTransactionsViewSpec extends SpecBase {
   )
 
   def render(items: List[TaxTransactionsItem] = taxTransactions): Document =
-    Jsoup.parse(view(items, accountPeriod, total, taxDescriptions)(request, messages(application)).toString)
+    Jsoup.parse(view(items, accountPeriod, total)(request, messages(application)).toString)
 
   // TODO: Extra tests covering all content
   "TaxTransactionsView" - {
