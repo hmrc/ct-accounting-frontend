@@ -44,10 +44,18 @@ class PenaltiesService @Inject() (
       rows = penalties.penaltyTransactions.map { penalty =>
         PenaltiesAccountingPeriodViewModelRow(
           date = penalty.penaltyDate,
-          description = asString(penalty.`type`),
+          description = getTaxDescription(penalty.`type`),
           amount = penalty.postingAmount
         )
       }
     )
+
+  private def getTaxDescription(tp: PenaltyTransactionType)(implicit messages: Messages): String =
+    tp match {
+      case FX => messages("penaltiesAccountingPeriod.description.FX")
+      case FT => messages("penaltiesAccountingPeriod.description.FT")
+      case TG => messages("penaltiesAccountingPeriod.description.TG")
+      case TR => messages("penaltiesAccountingPeriod.description.TR")
+    }
 
 }

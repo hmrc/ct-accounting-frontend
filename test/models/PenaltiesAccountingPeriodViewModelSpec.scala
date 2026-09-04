@@ -18,10 +18,16 @@ package models
 
 import helpers.PenaltiesDataHelper
 import org.scalatest.flatspec.AnyFlatSpec
+import play.api.i18n.Messages
+import play.api.test.Helpers.stubMessages
 
 class PenaltiesAccountingPeriodViewModelSpec extends AnyFlatSpec with PenaltiesDataHelper {
 
-  it should "calculate total as Zero" in {
+  private trait Fixture {
+    implicit val messages: Messages = stubMessages()
+  }
+
+  it should "calculate total as Zero" in new Fixture {
     assert(
       viewModelWithNoRows.total == BigDecimal(0)
     )
@@ -30,7 +36,7 @@ class PenaltiesAccountingPeriodViewModelSpec extends AnyFlatSpec with PenaltiesD
     )
   }
 
-  it should "calculate total for viewModel with 2 rows" in {
+  it should "calculate total for viewModel with 2 rows" in new Fixture {
     assert(
       viewModelWithTwoRows.total == BigDecimal(127.32)
     )
@@ -39,7 +45,7 @@ class PenaltiesAccountingPeriodViewModelSpec extends AnyFlatSpec with PenaltiesD
     )
   }
 
-  it should "calculate total for viewModel with single row" in {
+  it should "calculate total for viewModel with single row" in new Fixture {
     assert(
       viewModelWithSingleRow.total == BigDecimal(100.13)
     )
