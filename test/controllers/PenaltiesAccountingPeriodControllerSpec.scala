@@ -26,21 +26,31 @@ import play.api.test.{FakeRequest, Helpers}
 import services.PenaltiesService
 import viewmodels.govuk.SummaryListFluency
 import views.html.PenaltiesAccountingPeriodView
+
 import scala.concurrent.Future
 import org.scalatestplus.mockito.MockitoSugar.mock
+import play.api.Application
+import play.api.i18n.Messages
+import uk.gov.hmrc.http.HeaderCarrier
 
 class PenaltiesAccountingPeriodControllerSpec extends SpecBase with SummaryListFluency with PenaltiesDataHelper {
 
-  private val mockPenaltiesService = mock[PenaltiesService]
+  private trait Fixture {
 
-  "Penalties Accounting Period Controller" - {
+    implicit val hc: HeaderCarrier             = HeaderCarrier()
+    val mockPenaltiesService: PenaltiesService = mock[PenaltiesService]
 
-    "must return OK and the correct view model with two rows for a GET" in {
-
-      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers))
+    val application: Application =
+      applicationBuilder()
         .overrides(bind[PenaltiesService].toInstance(mockPenaltiesService))
         .build()
 
+    implicit val msgs: Messages = messages(application)
+  }
+
+  "Penalties Accounting Period Controller" - {
+
+    "must return OK and the correct view model with two rows for a GET" in new Fixture {
       when(mockPenaltiesService.getViewModel(any(), any(), any())(any(), any()))
         .thenReturn(Future.successful(viewModelWithTwoRows))
 
@@ -56,11 +66,7 @@ class PenaltiesAccountingPeriodControllerSpec extends SpecBase with SummaryListF
       }
     }
 
-    "must return OK and the correct view model with single rows for a GET" in {
-
-      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers))
-        .overrides(bind[PenaltiesService].toInstance(mockPenaltiesService))
-        .build()
+    "must return OK and the correct view model with single rows for a GET" in new Fixture {
 
       when(mockPenaltiesService.getViewModel(any(), any(), any())(any(), any()))
         .thenReturn(Future.successful(viewModelWithSingleRow))
@@ -77,11 +83,7 @@ class PenaltiesAccountingPeriodControllerSpec extends SpecBase with SummaryListF
       }
     }
 
-    "must return OK and the correct emptry view model for a GET" in {
-
-      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers))
-        .overrides(bind[PenaltiesService].toInstance(mockPenaltiesService))
-        .build()
+    "must return OK and the correct empty view model for a GET" in new Fixture {
 
       when(mockPenaltiesService.getViewModel(any(), any(), any())(any(), any()))
         .thenReturn(Future.successful(viewModelWithNoRows))

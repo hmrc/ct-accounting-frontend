@@ -61,14 +61,18 @@ taxTransactions.description = Description
 taxTransactions.amount = Amount
 taxTransactions.table.total = Total
 
-penaltiesAccountingPeriod.heading        = Penalties
-penaltiesAccountingPeriod.caption        = Accounting period ending
-penaltiesAccountingPeriod.date           = Date
-penaltiesAccountingPeriod.description    = Description
-penaltiesAccountingPeriod.amount         = Amount
-penaltiesAccountingPeriod.total          = Total
-penaltiesAccountingPeriod.title          = Penalties
-penaltiesAccountingPeriod.section        = Accounting period overview
+penaltiesAccountingPeriod.heading           = Penalties
+penaltiesAccountingPeriod.caption           = Accounting period ending
+penaltiesAccountingPeriod.date              = Date
+penaltiesAccountingPeriod.description       = Description
+penaltiesAccountingPeriod.description.FX    = Fixed rate penalty
+penaltiesAccountingPeriod.description.FT    = Flat rate penalty
+penaltiesAccountingPeriod.description.TG    = Tax geared penalty
+penaltiesAccountingPeriod.description.TR    = Tax related penalty
+penaltiesAccountingPeriod.amount            = Amount
+penaltiesAccountingPeriod.total             = Total
+penaltiesAccountingPeriod.title             = Penalties
+penaltiesAccountingPeriod.section           = Accounting period overview
 
 adjustmentsAccountingPeriod.title          = Adjustments – Accounting period overview
 adjustmentsAccountingPeriod.section        = Accounting period overview

@@ -17,21 +17,14 @@
 package models
 
 import play.api.libs.json.*
+
 import java.time.LocalDate
 
 enum PenaltyTransactionType {
   case FX, FT, TG, TR
 }
 
-object PenaltyTransactionType {
-  def asString(tp: PenaltyTransactionType): String =
-    tp match {
-      case FX => "Fixed rate penalty"
-      case FT => "Flat rate penalty"
-      case TG => "Tax geared penalty"
-      case TR => "Tax related penalty"
-    }
-}
+object PenaltyTransactionType {}
 
 implicit val penaltyTransactionType: Format[PenaltyTransactionType] = new Format[PenaltyTransactionType] {
   def reads(json: JsValue): JsResult[PenaltyTransactionType] = json match {

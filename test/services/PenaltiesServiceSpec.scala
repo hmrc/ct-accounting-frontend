@@ -46,16 +46,55 @@ class PenaltiesServiceSpec extends AnyWordSpec with PenaltiesDataHelper with Mat
     val service = new PenaltiesService(mockPenaltiesConnector)
   }
 
-  "getViewModel returns correct viewModelWithTwoRows" in new Fixture {
+  "getViewModel returns correct viewModelWithTwoRows with correct description when the transactionType is FX " in new Fixture {
 
     when(
       mockPenaltiesConnector.getPenaltyTransactionList(any[Long], any[Long], any[Option[LocalDate]])(any[HeaderCarrier])
     )
-      .thenReturn(Future.successful(penaltyItems))
+      .thenReturn(Future.successful(penaltyItemsForTypeFX))
 
     val viewModel: PenaltiesAccountingPeriodViewModel = service.getViewModel(1L, 1L, None).futureValue
 
-    viewModel.rows shouldBe penaltiesViewModelTwoRows
+    viewModel.rows shouldBe penaltiesViewModelForFX
+
+    verify(mockPenaltiesConnector).getPenaltyTransactionList(1L, 1L, None)(hc)
+  }
+  "getViewModel returns correct viewModelWithTwoRows with correct description when the transactionType is FT " in new Fixture {
+
+    when(
+      mockPenaltiesConnector.getPenaltyTransactionList(any[Long], any[Long], any[Option[LocalDate]])(any[HeaderCarrier])
+    )
+      .thenReturn(Future.successful(penaltyItemsForTypeFT))
+
+    val viewModel: PenaltiesAccountingPeriodViewModel = service.getViewModel(1L, 1L, None).futureValue
+
+    viewModel.rows shouldBe penaltiesViewModelForFT
+
+    verify(mockPenaltiesConnector).getPenaltyTransactionList(1L, 1L, None)(hc)
+  }
+  "getViewModel returns correct viewModelWithTwoRows with correct description when the transactionType is TG " in new Fixture {
+
+    when(
+      mockPenaltiesConnector.getPenaltyTransactionList(any[Long], any[Long], any[Option[LocalDate]])(any[HeaderCarrier])
+    )
+      .thenReturn(Future.successful(penaltyItemsForTypeTG))
+
+    val viewModel: PenaltiesAccountingPeriodViewModel = service.getViewModel(1L, 1L, None).futureValue
+
+    viewModel.rows shouldBe penaltiesViewModelForTG
+
+    verify(mockPenaltiesConnector).getPenaltyTransactionList(1L, 1L, None)(hc)
+  }
+  "getViewModel returns correct viewModelWithTwoRows with correct description when the transactionType is TR " in new Fixture {
+
+    when(
+      mockPenaltiesConnector.getPenaltyTransactionList(any[Long], any[Long], any[Option[LocalDate]])(any[HeaderCarrier])
+    )
+      .thenReturn(Future.successful(penaltyItemsForTypeTR))
+
+    val viewModel: PenaltiesAccountingPeriodViewModel = service.getViewModel(1L, 1L, None).futureValue
+
+    viewModel.rows shouldBe penaltiesViewModelForTR
 
     verify(mockPenaltiesConnector).getPenaltyTransactionList(1L, 1L, None)(hc)
   }

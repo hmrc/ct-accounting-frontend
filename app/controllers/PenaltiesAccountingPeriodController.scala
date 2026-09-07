@@ -42,7 +42,6 @@ class PenaltiesAccountingPeriodController @Inject() (
     val taxRef: Long         = 1L
     val accPeriod: Long      = 1L // Also pass accountingPeriodAsLocalDate to construct model
     val accountPeriodEndDate = None
-    //////////////////////////////////////////////
     for {
       viewModel <- service.getViewModel(taxRef, accPeriod, accountPeriodEndDate)
     } yield Ok(view(viewModel))
