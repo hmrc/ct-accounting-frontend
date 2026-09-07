@@ -50,8 +50,8 @@ class PenaltiesService @Inject() (
       }
     )
 
-  private def getTaxDescription(tp: PenaltyTransactionType)(implicit messages: Messages): String =
-    tp match {
+  private def getTaxDescription(penaltyTransactionType: PenaltyTransactionType)(implicit messages: Messages): String =
+    penaltyTransactionType match {
       case FX => messages("penaltiesAccountingPeriod.description.FX")
       case FT => messages("penaltiesAccountingPeriod.description.FT")
       case TG => messages("penaltiesAccountingPeriod.description.TG")
