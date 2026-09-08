@@ -35,7 +35,8 @@ class PaymentsController @Inject() (
   view: PaymentsView,
   connector: PaymentsConnector
 ) extends FrontendBaseController
-    with PaymentsDescriptionHelper with I18nSupport {
+    with PaymentsDescriptionHelper
+    with I18nSupport {
 
   def onPageLoad: Action[AnyContent] = identify.async { implicit request =>
 
@@ -43,7 +44,7 @@ class PaymentsController @Inject() (
 
     // TODO: Get taxRef + accPeriod from sessionDataRepositry
     connector.getPayments(1L, 1L).map { paymentsResponse =>
-      val total: BigDecimal = paymentsResponse.paymentTransactions.map(_.amount).sum
+      val total: BigDecimal      = paymentsResponse.paymentTransactions.map(_.amount).sum
       val paymentTypeDescription = getPaymentsDescription(paymentsResponse.paymentTransactions)
       Ok(view(paymentsResponse.paymentTransactions, accountPeriod, total, paymentTypeDescription))
     }

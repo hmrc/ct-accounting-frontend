@@ -41,9 +41,10 @@ class PaymentsControllerSpec extends SpecBase with MockitoSugar {
     .build()
 
   implicit val messagesApi: MessagesApi = application.injector.instanceOf[MessagesApi]
-  implicit val messages: Messages = MessagesImpl(Lang.defaultLang, messagesApi)
-  
-  val paymentTypeDescription: List[String] = List(messages("payments.description.IRC"), messages("payments.description.CP"), messages("payments.description.EP"))
+  implicit val messages: Messages       = MessagesImpl(Lang.defaultLang, messagesApi)
+
+  val paymentTypeDescription: List[String] =
+    List(messages("payments.description.IRC"), messages("payments.description.CP"), messages("payments.description.EP"))
 
   val paymentsResponse: Payments =
     Payments(

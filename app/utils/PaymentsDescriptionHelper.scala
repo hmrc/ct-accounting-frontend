@@ -24,13 +24,13 @@ trait PaymentsDescriptionHelper {
   def getPaymentsDescription(paymentTransactions: List[PaymentTransaction])(implicit messages: Messages): List[String] =
     paymentTransactions.map { pay =>
       pay.paymentType match {
-        case "DSO" | "IRP" =>
-          messages("payments.description.IRC")  // HMRC Credit
+        case "DSO" | "IRP"                 =>
+          messages("payments.description.IRC") // HMRC Credit
         case "BLP" | "LOP" | "NGP" | "BGT" =>
-          messages("payments.description.CP")   // Cheque payment
-        case "BAC" | "BGP" | "CHP" =>
-          messages("payments.description.EP")   // Electronic payment
-        case _ =>
+          messages("payments.description.CP") // Cheque payment
+        case "BAC" | "BGP" | "CHP"         =>
+          messages("payments.description.EP") // Electronic payment
+        case _                             =>
           ""
       }
     }
