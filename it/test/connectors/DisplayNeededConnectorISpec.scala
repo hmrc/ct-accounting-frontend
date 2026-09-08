@@ -1,3 +1,19 @@
+/*
+ * Copyright 2026 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package connectors
 
 
@@ -10,6 +26,7 @@ import org.scalatest.matchers.must.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 import play.api.http.Status.{BAD_REQUEST, INTERNAL_SERVER_ERROR, NOT_FOUND, OK}
 import uk.gov.hmrc.http.HeaderCarrier
+import helpers.DisplayNeededHelper
 
 class DisplayNeededConnectorISpec
   extends AnyWordSpec
@@ -17,7 +34,9 @@ class DisplayNeededConnectorISpec
     with ScalaFutures
     with IntegrationPatience
     with ApplicationWithWiremock
-    with BeforeAndAfterEach {
+    with BeforeAndAfterEach
+    with DisplayNeededHelper
+    {
 
   implicit val hc: HeaderCarrier = HeaderCarrier()
 
@@ -31,12 +50,7 @@ class DisplayNeededConnectorISpec
       s"/corporation-tax/display-needed/$taxRef/$accPeriod"
 
     "return Display Needed with all flags set to false, populated from BE with status code OK" in {
-      val response = DisplayNeeded(
-        taxIsDisplayNeededFlag = false,
-        interestIsDisplayNeededFlag = false,
-        paymentIsDisplayNeededFlag = false,
-        repayReallocIsDisplayNeededFlag = false
-      )
+      val response = displayNeededAllFalse
 
       stubFor(
         get(urlPathEqualTo(url(10L, 1L)))
@@ -61,12 +75,7 @@ class DisplayNeededConnectorISpec
     }
 
     "return Display Needed with all flags set to true, populated from BE with status code OK" in {
-      val response = DisplayNeeded(
-        taxIsDisplayNeededFlag = true,
-        interestIsDisplayNeededFlag = true,
-        paymentIsDisplayNeededFlag = true,
-        repayReallocIsDisplayNeededFlag = true
-      )
+      val response = displayNeededAllTrue
 
       stubFor(
         get(urlPathEqualTo(url(20L, 1L)))
@@ -91,12 +100,7 @@ class DisplayNeededConnectorISpec
     }
 
     "return Display Needed with some flags set to false and true, populated from BE with status code OK" in {
-      val response = DisplayNeeded(
-        taxIsDisplayNeededFlag = true,
-        interestIsDisplayNeededFlag = false,
-        paymentIsDisplayNeededFlag = true,
-        repayReallocIsDisplayNeededFlag = false
-      )
+      val response = displayNeededMixed
 
       stubFor(
         get(urlPathEqualTo(url(30L, 1L)))
