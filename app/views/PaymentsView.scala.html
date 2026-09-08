@@ -23,20 +23,20 @@
         govukTable: GovukTable
 )
 
-@(paymentTransactions: List[PaymentTransaction], accountPeriod: LocalDate, total: BigDecimal)(implicit request: Request[_], messages: Messages)
+@(paymentTransactions: List[PaymentTransaction], accountPeriod: LocalDate, total: BigDecimal, paymentTypeDescription: List[String])(implicit request: Request[_], messages: Messages)
 
 @layout(pageTitle = titleNoForm(messages("payments.title"), Some(messages("payments.section"))), breadcrumbs = Some(PageBreadcrumbs.paymentsPage)) {
 
     <h1 class="govuk-heading-l">@messages("payments.heading")</h1>
 
     @govukTable(Table(
-      rows = paymentTransactions.map { transaction =>
+      rows = paymentTransactions.zip(paymentTypeDescription).map { case (transaction, description) =>
         Seq(
           TableRow(
             content = Text(formatDate(transaction.effectiveDateOfPayment, messages.lang))
           ),
           TableRow(
-            content = Text("DUMMY VALUE")
+            content = Text(description)
           ),
           TableRow(
             content = Text(formatCurrency(transaction.amount)),

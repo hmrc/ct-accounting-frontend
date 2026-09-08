@@ -22,6 +22,7 @@ import controllers.actions.*
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
+import utils.PaymentsDescriptionHelper
 import views.html.PaymentsView
 
 import java.time.LocalDate
@@ -34,7 +35,7 @@ class PaymentsController @Inject() (
   view: PaymentsView,
   connector: PaymentsConnector
 ) extends FrontendBaseController
-    with I18nSupport {
+    with PaymentsDescriptionHelper with I18nSupport {
 
   def onPageLoad: Action[AnyContent] = identify.async { implicit request =>
 
@@ -43,7 +44,8 @@ class PaymentsController @Inject() (
     // TODO: Get taxRef + accPeriod from sessionDataRepositry
     connector.getPayments(1L, 1L).map { paymentsResponse =>
       val total: BigDecimal = paymentsResponse.paymentTransactions.map(_.amount).sum
-      Ok(view(paymentsResponse.paymentTransactions, accountPeriod, total))
+      val paymentTypeDescription = getPaymentsDescription(paymentsResponse.paymentTransactions)
+      Ok(view(paymentsResponse.paymentTransactions, accountPeriod, total, paymentTypeDescription))
     }
   }
 }

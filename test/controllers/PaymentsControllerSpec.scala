@@ -22,6 +22,7 @@ import models.{PaymentTransaction, Payments}
 import org.mockito.ArgumentMatchers.{any, eq as eqTo}
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
+import play.api.i18n.{Lang, Messages, MessagesApi, MessagesImpl}
 import play.api.inject.bind
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
@@ -35,22 +36,31 @@ class PaymentsControllerSpec extends SpecBase with MockitoSugar {
   implicit val hc: HeaderCarrier       = HeaderCarrier()
   val mockConnector: PaymentsConnector = mock[PaymentsConnector]
 
+  val application = applicationBuilder()
+    .overrides(bind[PaymentsConnector].toInstance(mockConnector))
+    .build()
+
+  implicit val messagesApi: MessagesApi = application.injector.instanceOf[MessagesApi]
+  implicit val messages: Messages = MessagesImpl(Lang.defaultLang, messagesApi)
+  
+  val paymentTypeDescription: List[String] = List(messages("payments.description.IRC"), messages("payments.description.CP"), messages("payments.description.EP"))
+
   val paymentsResponse: Payments =
     Payments(
       List(
         PaymentTransaction(
           amount = BigDecimal(123.44),
-          paymentType = "CP",
+          paymentType = "DSO",
           effectiveDateOfPayment = LocalDate.of(2026, 1, 1)
         ),
         PaymentTransaction(
           amount = BigDecimal(123.44),
-          paymentType = "CP",
+          paymentType = "BLP",
           effectiveDateOfPayment = LocalDate.of(2026, 1, 1)
         ),
         PaymentTransaction(
           amount = BigDecimal(123.44),
-          paymentType = "CP",
+          paymentType = "BAC",
           effectiveDateOfPayment = LocalDate.of(2026, 1, 1)
         )
       )
@@ -68,10 +78,6 @@ class PaymentsControllerSpec extends SpecBase with MockitoSugar {
       when(mockConnector.getPayments(eqTo(1L), eqTo(1L))(any[HeaderCarrier]))
         .thenReturn(Future.successful(paymentsResponse))
 
-      val application = applicationBuilder()
-        .overrides(bind[PaymentsConnector].toInstance(mockConnector))
-        .build()
-
       running(application) {
         val request = FakeRequest(GET, routes.PaymentsController.onPageLoad().url)
         val result  = route(application, request).value
@@ -79,7 +85,7 @@ class PaymentsControllerSpec extends SpecBase with MockitoSugar {
 
         status(result) mustEqual OK
         contentAsString(result) mustEqual
-          view(paymentsResponse.paymentTransactions, expectedAccountPeriod, total)(
+          view(paymentsResponse.paymentTransactions, expectedAccountPeriod, total, paymentTypeDescription)(
             request,
             messages(application)
           ).toString

@@ -48,9 +48,10 @@ class PaymentsViewSpec extends SpecBase {
       effectiveDateOfPayment = LocalDate.of(2026, 1, 15)
     )
   )
+  val paymentTypeDescription: List[String] = List(messages("payments.description.IRC"), messages("payments.description.CP"), messages("payments.description.EP"))
 
   def render(items: List[PaymentTransaction] = paymentTransactions): Document =
-    Jsoup.parse(view(items, accountPeriod, total)(request, messages(application)).toString)
+    Jsoup.parse(view(items, accountPeriod, total, paymentTypeDescription)(request, messages(application)).toString)
 
   // TODO: Extra tests covering all content
   "PaymentsView" - {
@@ -81,6 +82,13 @@ class PaymentsViewSpec extends SpecBase {
         messages("payments.description"),
         messages("payments.amount")
       )
+    }
+
+    "render the correct table description" in {
+      val doc = render()
+      val description = doc.select("td.govuk-table__cell").text()
+      
+      description must include(messages("payments.description.IRC"))
     }
 
     "render one row per transaction when there are multiple" in {
