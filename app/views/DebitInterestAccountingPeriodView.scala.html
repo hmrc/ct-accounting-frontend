@@ -55,10 +55,9 @@
                     TableRow(content = Text( formatDate(row.fromDate, messages.lang) ) ),
                     TableRow(content = Text( formatDate(row.toDate, messages.lang) ) ),
 
-
-                    TableRow(content = Text(row.noOfDays.toString()) ),
+                    TableRow(content = Text(row.noOfDays.toString) ),
                     TableRow(content = Text( formatPercentage(row.rate)  ) ),
-                    TableRow(content = Text(row.interestAmount.toString()) ),
+                    TableRow(content = Text( formatCurrency(row.interestAmount) ) ),
                 )
             } :+ viewModel.totalRow(
                 label = messages("debitInterestAccountingPeriod.total"),
