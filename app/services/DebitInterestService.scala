@@ -28,6 +28,7 @@ class DebitInterestService @Inject()(
 
                                     ) extends Logging {
 
+
   def getAccountingPeriods(taxRef: Long, accPeriod: Long)
                           (implicit hc: HeaderCarrier): Future[DebitInterestViewModel] = {
     // TODO: acquire data from relevant sources and build viewModel :: clarify optionality
@@ -49,6 +50,14 @@ class DebitInterestService @Inject()(
           noOfDays = 11,
           rate = BigDecimal(4.5),
           interestAmount = BigDecimal(278.13)
+        ),
+        DebitInterestRow(
+          unpaidAmount = BigDecimal(87.01),
+          fromDate = LocalDate.of(2015, 2, 1),
+          toDate = LocalDate.of(2015, 2, 1),
+          noOfDays = 89,
+          rate = BigDecimal(14.5),
+          interestAmount = BigDecimal(798.83)
         )
       )
     )

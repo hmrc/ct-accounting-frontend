@@ -16,6 +16,10 @@
 
 package viewmodels
 
+import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
+import uk.gov.hmrc.govukfrontend.views.viewmodels.table.TableRow
+import views.ViewUtils.formatCurrency
+
 import java.time.LocalDate
 
 final case class OutstandingDebitInterest(
@@ -35,4 +39,19 @@ final case class DebitInterestRow(
 final case class DebitInterestViewModel(
                                          interest: Option[OutstandingDebitInterest],
                                          rows: List[DebitInterestRow]
-                                       )
+                                       ) {
+
+  val total: BigDecimal = rows.map(_.unpaidAmount).sum
+
+  val totalAsString: String = formatCurrency(total)
+
+  def totalRow(total: String, label: String): Seq[TableRow] =
+    Seq(
+      TableRow(content = Text(label), classes = "govuk-!-font-weight-bold"),
+      TableRow(content = Text(""), classes = "govuk-!-font-weight-bold"),
+      TableRow(content = Text(""), classes = "govuk-!-font-weight-bold"),
+      TableRow(content = Text(""), classes = "govuk-!-font-weight-bold"),
+      TableRow(content = Text(""), classes = "govuk-!-font-weight-bold"),
+      TableRow(content = Text(total), classes = "govuk-!-font-weight-bold govuk-table__cell govuk-table__cell--numeric")
+    )
+}

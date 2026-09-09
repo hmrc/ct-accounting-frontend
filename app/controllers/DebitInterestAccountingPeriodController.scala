@@ -23,6 +23,8 @@ import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import services.DebitInterestService
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import controllers.routes.JourneyRecoveryController
+import views.html.DebitInterestAccountingPeriodView
+
 import javax.inject.Inject
 import scala.concurrent.ExecutionContext
 
@@ -30,6 +32,7 @@ import scala.concurrent.ExecutionContext
 class DebitInterestAccountingPeriodController @Inject()(
                                                          val controllerComponents: MessagesControllerComponents,
                                                          service: DebitInterestService,
+                                                         view : DebitInterestAccountingPeriodView, 
                                                          identify: IdentifierAction,
                                                        )(implicit ec: ExecutionContext)
   extends FrontendBaseController
@@ -41,8 +44,8 @@ class DebitInterestAccountingPeriodController @Inject()(
     val accPeriod: Long = 4L
     service
       .getAccountingPeriods(taxRef, accPeriod)
-      .map(_ =>
-        Ok("OK")
+      .map(viewModel =>
+        Ok(view(viewModel))
       )
       .recover { case ex =>
         logger.error(s"[DebitInterestAccountingPeriodController][onPageLoad] - Unexpected failure: ${ex.getMessage}")

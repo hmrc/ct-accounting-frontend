@@ -51,6 +51,7 @@ unauthorised.heading = You can’t access this service with this account
 breadcrumbs.home = Home
 breadcrumbs.accountingPeriods = Accounting periods
 breadcrumbs.accountingPeriodEnding = Accounting period ending
+breadcrumbs.debitInterest   = Interest
 
 taxTransactions.title = Taxes
 taxTransactions.section = Accounting period overview
@@ -81,6 +82,13 @@ adjustmentsAccountingPeriod.caption        = Accounting period ending 30 Sep 202
 adjustmentsAccountingPeriod.description    = Description
 adjustmentsAccountingPeriod.amount         = Amount
 adjustmentsAccountingPeriod.total          = Total
+
+
+debitInterestAccountingPeriod.section      = Accounting period ending - 1
+debitInterestAccountingPeriod.title        = Accounting periods - Accounting period ending - Interest
+debitInterestAccountingPeriod.heading      = Debit interest
+
+debitInterestAccountingPeriod.total        = Total
 
 payments.title = Payments
 payments.section = Accounting period overview

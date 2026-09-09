@@ -15,8 +15,9 @@
  *@
 
 @import views.html.components.*
+@import views.ViewUtils._
+@import java.time.LocalDate
 @import viewmodels._
-@import viewmodels.AdjustmentsAccountingPeriodViewModel
 
 @this(
         layout: templates.Layout,
@@ -26,24 +27,43 @@
 
 @(viewModel: DebitInterestViewModel)(implicit request: Request[_], messages: Messages)
 
-@layout(pageTitle = titleNoForm(messages("adjustmentsAccountingPeriod.title"), Some(messages("adjustmentsAccountingPeriod.section"))), breadcrumbs = Some(PageBreadcrumbs.adjustmentsTransactionsAccountingPeriodPage)) {
+@layout(pageTitle = titleNoForm(messages("debitInterestAccountingPeriod.title"),
+    Some(messages("debitInterestAccountingPeriod.section"))),
+    breadcrumbs = Some(PageBreadcrumbs.debitInterestAccountingPeriodPage)) {
 
-    @h1(messages("adjustmentsAccountingPeriod.heading"))
+    @h1(messages("debitInterestAccountingPeriod.heading"))
 
     @govukTable(
         Table(
             caption = Some(messages("adjustmentsAccountingPeriod.caption")),
             captionClasses = "govuk-table__caption govuk-table__caption--m",
-            head = Some(Seq(
-                HeadCell(content = Text(messages("adjustmentsAccountingPeriod.description"))),
-                HeadCell(content = Text(messages("adjustmentsAccountingPeriod.amount")), classes = "govuk-table__cell govuk-table__cell--numeric")
-            )),
+            head = Some(
+                Seq(
+                    HeadCell(content = Text(messages("adjustmentsAccountingPeriod.description"))),
+                    HeadCell(content = Text(messages("adjustmentsAccountingPeriod.amount")), classes = "govuk-table__cell govuk-table__cell--numeric"),
+                    HeadCell(content = Text(messages("adjustmentsAccountingPeriod.description"))),
+
+                    HeadCell(content = Text(messages("adjustmentsAccountingPeriod.description"))),
+                    HeadCell(content = Text(messages("adjustmentsAccountingPeriod.description"))),
+                    HeadCell(content = Text(messages("adjustmentsAccountingPeriod.description")))
+
+                )
+            ),
             rows = viewModel.rows.map { row =>
                 Seq(
                     TableRow(content = Text(row.unpaidAmount.toString()) ),
-                    TableRow(content = Text(row.fromDate.toString), classes = "govuk-table__cell govuk-table__cell--numeric")
+                    TableRow(content = Text( formatDate(row.fromDate, messages.lang) ) ),
+                    TableRow(content = Text( formatDate(row.toDate, messages.lang) ) ),
+
+
+                    TableRow(content = Text(row.noOfDays.toString()) ),
+                    TableRow(content = Text(row.rate.toString()) ),
+                    TableRow(content = Text(row.interestAmount.toString()) ),
                 )
-            }
+            } :+ viewModel.totalRow(
+                label = messages("debitInterestAccountingPeriod.total"),
+                total = viewModel.totalAsString
+            )
         )
     )
 }
