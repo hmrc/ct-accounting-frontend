@@ -40,7 +40,7 @@ class DebitInterestService @Inject()(
           fromDate = LocalDate.of(2026, 1, 1),
           toDate = LocalDate.of(2026, 1, 1),
           noOfDays = 1,
-          rate = BigDecimal(1.5),
+          rate = BigDecimal(0.75),
           interestAmount = BigDecimal(99.11)
         ),
         DebitInterestRow(
@@ -48,7 +48,7 @@ class DebitInterestService @Inject()(
           fromDate = LocalDate.of(2025, 2, 1),
           toDate = LocalDate.of(2025, 2, 1),
           noOfDays = 11,
-          rate = BigDecimal(4.5),
+          rate = BigDecimal(0.15),
           interestAmount = BigDecimal(278.13)
         ),
         DebitInterestRow(

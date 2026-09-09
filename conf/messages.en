@@ -88,6 +88,13 @@ debitInterestAccountingPeriod.section      = Accounting period ending - 1
 debitInterestAccountingPeriod.title        = Accounting periods - Accounting period ending - Interest
 debitInterestAccountingPeriod.heading      = Debit interest
 
+debitInterestAccountingPeriod.tableHeader.interestAmount = Amount subject to interest
+debitInterestAccountingPeriod.tableHeader.fromDate = From date
+debitInterestAccountingPeriod.tableHeader.toDate = To date
+debitInterestAccountingPeriod.tableHeader.daysOvd = Days overduee
+debitInterestAccountingPeriod.tableHeader.aprc = Annual Percentage Rate
+debitInterestAccountingPeriod.tableHeader.interestAcc = Interest accrued
+
 debitInterestAccountingPeriod.total        = Total
 
 payments.title = Payments

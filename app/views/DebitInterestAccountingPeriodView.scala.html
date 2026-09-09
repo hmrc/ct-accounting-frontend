@@ -39,25 +39,25 @@
             captionClasses = "govuk-table__caption govuk-table__caption--m",
             head = Some(
                 Seq(
-                    HeadCell(content = Text(messages("adjustmentsAccountingPeriod.description"))),
-                    HeadCell(content = Text(messages("adjustmentsAccountingPeriod.amount")), classes = "govuk-table__cell govuk-table__cell--numeric"),
-                    HeadCell(content = Text(messages("adjustmentsAccountingPeriod.description"))),
+                    HeadCell(content = Text(messages("debitInterestAccountingPeriod.tableHeader.interestAmount"))),
+                    HeadCell(content = Text(messages("debitInterestAccountingPeriod.tableHeader.fromDate"))),
+                    HeadCell(content = Text(messages("debitInterestAccountingPeriod.tableHeader.toDate"))),
 
-                    HeadCell(content = Text(messages("adjustmentsAccountingPeriod.description"))),
-                    HeadCell(content = Text(messages("adjustmentsAccountingPeriod.description"))),
-                    HeadCell(content = Text(messages("adjustmentsAccountingPeriod.description")))
+                    HeadCell(content = Text(messages("debitInterestAccountingPeriod.tableHeader.daysOvd"))),
+                    HeadCell(content = Text(messages("debitInterestAccountingPeriod.tableHeader.aprc"))),
+                    HeadCell(content = Text(messages("debitInterestAccountingPeriod.tableHeader.interestAcc")))
 
                 )
             ),
             rows = viewModel.rows.map { row =>
                 Seq(
-                    TableRow(content = Text(row.unpaidAmount.toString()) ),
+                    TableRow(content = Text( formatCurrency(row.unpaidAmount) ) ),
                     TableRow(content = Text( formatDate(row.fromDate, messages.lang) ) ),
                     TableRow(content = Text( formatDate(row.toDate, messages.lang) ) ),
 
 
                     TableRow(content = Text(row.noOfDays.toString()) ),
-                    TableRow(content = Text(row.rate.toString()) ),
+                    TableRow(content = Text( formatPercentage(row.rate)  ) ),
                     TableRow(content = Text(row.interestAmount.toString()) ),
                 )
             } :+ viewModel.totalRow(
