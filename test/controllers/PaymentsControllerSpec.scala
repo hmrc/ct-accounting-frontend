@@ -86,7 +86,7 @@ class PaymentsControllerSpec extends SpecBase with MockitoSugar {
 
         status(result) mustEqual OK
         contentAsString(result) mustEqual
-          view(paymentsResponse.paymentTransactions, expectedAccountPeriod, total, paymentTypeDescription)(
+          view(paymentsResponse.paymentTransactions, expectedAccountPeriod, total)(
             request,
             messages(application)
           ).toString

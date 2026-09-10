@@ -16,22 +16,19 @@
 
 package utils
 
-import models.PaymentTransaction
 import play.api.i18n.Messages
 
-trait PaymentsDescriptionHelper {
+object PaymentsDescriptionHelper {
 
-  def getPaymentsDescription(paymentTransactions: List[PaymentTransaction])(implicit messages: Messages): List[String] =
-    paymentTransactions.map { pay =>
-      pay.paymentType match {
-        case "DSO" | "IRP"                 =>
-          messages("payments.description.IRC") // HMRC Credit
-        case "BLP" | "LOP" | "NGP" | "BGT" =>
-          messages("payments.description.CP") // Cheque payment
-        case "BAC" | "BGP" | "CHP"         =>
-          messages("payments.description.EP") // Electronic payment
-        case _                             =>
-          ""
-      }
+  def getPaymentsDescription(paymentTransactions: String)(implicit messages: Messages): String =
+    paymentTransactions match {
+      case "DSO" | "IRP"                 =>
+        messages("payments.description.IRC") // HMRC Credit
+      case "BLP" | "LOP" | "NGP" | "BGT" =>
+        messages("payments.description.CP") // Cheque payment
+      case "BAC" | "BGP" | "CHP"         =>
+        messages("payments.description.EP") // Electronic payment
+      case _                             =>
+        "TEST"
     }
 }

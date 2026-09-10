@@ -44,7 +44,7 @@ class PaymentsViewSpec extends SpecBase {
   val paymentTransactions: List[PaymentTransaction] = List(
     PaymentTransaction(
       amount = 1234.56,
-      paymentType = "CP",
+      paymentType = "DSO",
       effectiveDateOfPayment = LocalDate.of(2026, 1, 15)
     )
   )
@@ -52,7 +52,7 @@ class PaymentsViewSpec extends SpecBase {
     List(messages("payments.description.IRC"), messages("payments.description.CP"), messages("payments.description.EP"))
 
   def render(items: List[PaymentTransaction] = paymentTransactions): Document =
-    Jsoup.parse(view(items, accountPeriod, total, paymentTypeDescription)(request, messages(application)).toString)
+    Jsoup.parse(view(items, accountPeriod, total)(request, messages(application)).toString)
 
   // TODO: Extra tests covering all content
   "PaymentsView" - {
