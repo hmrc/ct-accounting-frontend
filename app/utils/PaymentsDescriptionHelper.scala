@@ -29,6 +29,6 @@ object PaymentsDescriptionHelper {
       case "BAC" | "BGP" | "CHP"         =>
         messages("payments.description.EP") // Electronic payment
       case _                             =>
-        "TEST"
+        ""
     }
 }
