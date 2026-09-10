@@ -25,16 +25,15 @@ import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
 class DebitInterestService @Inject(
-  connector: DebitInterestConnector
-) (implicit ec: ExecutionContext) extends Logging {
+                                    connector: DebitInterestConnector
+                                  )(implicit ec: ExecutionContext) extends Logging {
 
-  def getAccountingPeriods(taxRef: Long, accPeriod: Long, interestType: String)(implicit
-    hc: HeaderCarrier
-  ): Future[DebitInterestViewModel] = {
+
+  def getDebitInterest(taxRef: Long, accPeriod: Long, interestType: String)
+                      (implicit hc: HeaderCarrier): Future[DebitInterestViewModel] = {
     connector
       .getDebitInterest(taxRef = taxRef, accPeriod = accPeriod, interestType = interestType)
       .map(response =>
-
         DebitInterestViewModel(
           interest = None,
           rows =
@@ -42,7 +41,7 @@ class DebitInterestService @Inject(
               DebitInterestRow(
                 unpaidAmount = item.computationAmount,
                 fromDate = item.interestAccrualFromDate,
-                toDate = item.interestAccrualFromDate,
+                toDate = item.interestAccrualToDate,
                 noOfDays = 0, // TODO: computed by backend
                 rate = item.interestRate,
                 interestAmount = item.interestAmount

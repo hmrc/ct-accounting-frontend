@@ -44,7 +44,7 @@ class DebitInterestAccountingPeriodController @Inject() (
     val interestType: String = "IDB" // TODO: to be confirmed from Java::guys
 
     service
-      .getAccountingPeriods(taxRef, accPeriod, interestType)
+      .getDebitInterest(taxRef, accPeriod, interestType)
       .map(viewModel => Ok(view(viewModel)))
       .recover { case ex =>
         logger.error(s"[DebitInterestAccountingPeriodController][onPageLoad] - Unexpected failure: ${ex.getMessage}")

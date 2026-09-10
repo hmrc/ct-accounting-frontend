@@ -16,40 +16,45 @@
 
 package helpers
 
+import models.{InterestAccrual, InterestAccrualList}
 import viewmodels.{DebitInterestRow, DebitInterestViewModel}
 
 import java.time.LocalDate
 
+/*
+DebitInterestViewModel(None, List(DebitInterestRow(17.01, 2026-01-01, 2026-12-12, 0, 0.75, 5.8)))
+DebitInterestViewModel(None, List(DebitInterestRow(17.01, 2026-01-01, 2026-12-12, 1, 0.75, 99.11)))
+ */
+
 trait DebitInterestHelper {
+
+  val defaultDebitInterestList: List[DebitInterestRow] = List(
+    DebitInterestRow(
+      unpaidAmount = BigDecimal(17.01),
+      fromDate = LocalDate.of(2026, 1, 1),
+      toDate = LocalDate.of(2026, 12, 12),
+      noOfDays = 0,
+      rate = BigDecimal(0.75),
+      interestAmount = BigDecimal(99.11)
+    )
+  )
+
+  val defaultRecord = InterestAccrualList(
+    interestAccruals = List(
+      InterestAccrual(
+        computationAmount =  BigDecimal(17.01),
+        interestAccrualFromDate = LocalDate.of(2026, 1, 1),
+        interestAccrualToDate = LocalDate.of(2026, 12, 12),
+        interestRate = BigDecimal(0.75),
+        interestAmount = BigDecimal(99.11),
+        apEndDate = LocalDate.of(2026, 12, 31)
+      )
+    )
+  )
 
   val defaultViewModel: DebitInterestViewModel = DebitInterestViewModel(
     interest = None,
-    rows = List(
-      DebitInterestRow(
-        unpaidAmount = BigDecimal(17.01),
-        fromDate = LocalDate.of(2026, 1, 1),
-        toDate = LocalDate.of(2026, 1, 1),
-        noOfDays = 1,
-        rate = BigDecimal(0.75),
-        interestAmount = BigDecimal(99.11)
-      ),
-      DebitInterestRow(
-        unpaidAmount = BigDecimal(7.01),
-        fromDate = LocalDate.of(2025, 2, 1),
-        toDate = LocalDate.of(2025, 2, 1),
-        noOfDays = 11,
-        rate = BigDecimal(0.15),
-        interestAmount = BigDecimal(278.13)
-      ),
-      DebitInterestRow(
-        unpaidAmount = BigDecimal(87.01),
-        fromDate = LocalDate.of(2015, 2, 1),
-        toDate = LocalDate.of(2015, 2, 1),
-        noOfDays = 89,
-        rate = BigDecimal(14.5),
-        interestAmount = BigDecimal(798.83)
-      )
-    )
+    rows = defaultDebitInterestList
   )
 
 }
