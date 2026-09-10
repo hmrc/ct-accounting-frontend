@@ -19,7 +19,6 @@ package connectors
 import com.github.tomakehurst.wiremock.client.WireMock.*
 import helpers.DebitInterestHelper
 import itutils.ApplicationWithWiremock
-import models.{AccountingPeriodDetails, AccountingPeriodDetailsResponse}
 import org.scalatest.BeforeAndAfterEach
 import org.scalatest.concurrent.{IntegrationPatience, ScalaFutures}
 import org.scalatest.matchers.must.Matchers
