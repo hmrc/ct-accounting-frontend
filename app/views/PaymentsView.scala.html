@@ -17,27 +17,28 @@
 @import views.ViewUtils._
 @import java.time.LocalDate
 @import viewmodels._
+@import utils.PaymentsDescriptionHelper
 
 @this(
         layout: templates.Layout,
         govukTable: GovukTable
 )
 
-@(paymentTransactions: List[PaymentTransaction], accountPeriod: LocalDate, total: BigDecimal, paymentTypeDescription: List[String])(implicit request: Request[_], messages: Messages)
+@(paymentTransactions: List[PaymentTransaction], accountPeriod: LocalDate, total: BigDecimal)(implicit request: Request[_], messages: Messages)
 
 @layout(pageTitle = titleNoForm(messages("payments.title"), Some(messages("payments.section"))), breadcrumbs = Some(PageBreadcrumbs.paymentsPage)) {
 
     <h1 class="govuk-heading-l">@messages("payments.heading")</h1>
 
     @govukTable(Table(
-      rows = paymentTransactions.zip(paymentTypeDescription).map { case (transaction, description) =>
+      rows = paymentTransactions.map { transaction =>
         Seq(
           TableRow(
             content = Text(formatDate(transaction.effectiveDateOfPayment, messages.lang))
           ),
           TableRow(
-            content = Text(description)
-          ),
+            content = Text(messages(PaymentsDescriptionHelper.getPaymentsDescription(transaction.paymentType)))
+            ),
           TableRow(
             content = Text(formatCurrency(transaction.amount)),
             classes = "govuk-table__cell govuk-table__cell--numeric"
