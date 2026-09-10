@@ -19,7 +19,7 @@ package services
 import connectors.DebitInterestConnector
 import helpers.DebitInterestHelper
 import org.mockito.ArgumentMatchers.any
-import org.mockito.Mockito.{when, verify}
+import org.mockito.Mockito.{verify, when}
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
@@ -31,17 +31,14 @@ import uk.gov.hmrc.http.HeaderCarrier
 import viewmodels.DebitInterestViewModel
 import scala.concurrent.{ExecutionContext, Future}
 
-
-
-class DebitInterestServiceSpec extends AnyWordSpec
-  with DebitInterestHelper with Matchers with ScalaFutures {
+class DebitInterestServiceSpec extends AnyWordSpec with DebitInterestHelper with Matchers with ScalaFutures {
 
   private trait Fixture {
     val mockDebitInterestConnector: DebitInterestConnector = mock[DebitInterestConnector]
 
-    val cc                          = Helpers.stubControllerComponents()
-    implicit val messages: Messages = stubMessages()
-    implicit val hc: HeaderCarrier  = HeaderCarrier()
+    val cc                            = Helpers.stubControllerComponents()
+    implicit val messages: Messages   = stubMessages()
+    implicit val hc: HeaderCarrier    = HeaderCarrier()
     implicit val ec: ExecutionContext = cc.executionContext
 
     val service = new DebitInterestService(mockDebitInterestConnector)
@@ -74,6 +71,6 @@ class DebitInterestServiceSpec extends AnyWordSpec
 
     verify(mockAccountingConnector).getAccountingPeriods(1L)(hc)
   }
-  */
+   */
 
 }

@@ -27,16 +27,13 @@ import java.net.URL
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
-class DebitInterestConnector @Inject()(http: HttpClientV2,
-                                       config: ServicesConfig)(implicit
-                                                               ec: ExecutionContext
-                                      ) extends Logging {
+class DebitInterestConnector @Inject() (http: HttpClientV2, config: ServicesConfig)(implicit
+  ec: ExecutionContext
+) extends Logging {
 
-  def getDebitInterest(taxRef: Long,
-                       accPeriod: Long,
-                       interestType: String)(implicit
-                                             hc: HeaderCarrier
-                      ): Future[InterestAccrualList] = {
+  def getDebitInterest(taxRef: Long, accPeriod: Long, interestType: String)(implicit
+    hc: HeaderCarrier
+  ): Future[InterestAccrualList] = {
     val baseUrl = config.baseUrl("corporation-tax")
 
     val url: URL = url"$baseUrl/corporation-tax/interest-accrual-list/$taxRef/$accPeriod/$interestType"
@@ -50,7 +47,7 @@ class DebitInterestConnector @Inject()(http: HttpClientV2,
             s"[DebitInterestConnector][getInterest] Upstream error: $taxRef :: $accPeriod - ${u.getMessage}"
           )
           throw u
-        case ex: Throwable =>
+        case ex: Throwable            =>
           logger.error(
             s"[DebitInterestConnector][getInterest]: $taxRef :: $accPeriod - ${ex.getMessage}"
           )

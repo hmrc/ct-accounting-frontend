@@ -37,7 +37,7 @@ trait DebitInterestHelper {
   val defaultRecord = InterestAccrualList(
     interestAccruals = List(
       InterestAccrual(
-        computationAmount =  BigDecimal(17.01),
+        computationAmount = BigDecimal(17.01),
         interestAccrualFromDate = LocalDate.of(2026, 1, 1),
         interestAccrualToDate = LocalDate.of(2026, 12, 12),
         interestRate = BigDecimal(0.75),

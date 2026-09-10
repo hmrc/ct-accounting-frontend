@@ -27,13 +27,13 @@ object InterestAccrualList {
 }
 
 case class InterestAccrual(
-                            computationAmount: BigDecimal,
-                            interestAccrualFromDate: LocalDate,
-                            interestAccrualToDate: LocalDate,
-                            interestRate: BigDecimal,
-                            interestAmount: BigDecimal,
-                            apEndDate: LocalDate
-                          )
+  computationAmount: BigDecimal,
+  interestAccrualFromDate: LocalDate,
+  interestAccrualToDate: LocalDate,
+  interestRate: BigDecimal,
+  interestAmount: BigDecimal,
+  apEndDate: LocalDate
+)
 object InterestAccrual {
   implicit val format: OFormat[InterestAccrual] = Json.format[InterestAccrual]
 }

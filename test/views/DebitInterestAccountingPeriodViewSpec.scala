@@ -30,7 +30,6 @@ import play.api.test.FakeRequest
 import play.twirl.api.Html
 import views.html.DebitInterestAccountingPeriodView
 
-
 class DebitInterestAccountingPeriodViewSpec
     extends SpecBase
     with GuiceOneAppPerSuite

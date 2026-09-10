@@ -39,8 +39,8 @@ class DebitInterestAccountingPeriodController @Inject() (
     with Logging {
 
   def onPageLoad(): Action[AnyContent] = identify.async { implicit request =>
-    val taxRef: Long    = 2L
-    val accPeriod: Long = 4L
+    val taxRef: Long         = 2L
+    val accPeriod: Long      = 4L
     val interestType: String = "IDB" // TODO: to be confirmed from Java::guys
 
     service
