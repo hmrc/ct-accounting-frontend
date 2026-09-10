@@ -84,7 +84,9 @@ adjustmentsAccountingPeriod.amount         = Amount
 adjustmentsAccountingPeriod.total          = Total
 
 
-debitInterestAccountingPeriod.section      = Accounting period ending - 1
+
+debitInterestAccountingPeriod.caption      = Accounting period ending
+debitInterestAccountingPeriod.section      = Accounting period ending
 debitInterestAccountingPeriod.title        = Accounting periods - Accounting period ending - Interest
 debitInterestAccountingPeriod.heading      = Debit interest
 

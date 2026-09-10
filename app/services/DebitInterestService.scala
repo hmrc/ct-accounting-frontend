@@ -21,6 +21,7 @@ import play.api.Logging
 import uk.gov.hmrc.http.HeaderCarrier
 import viewmodels.{DebitInterestRow, DebitInterestViewModel}
 
+import java.time.LocalDate
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -29,13 +30,17 @@ class DebitInterestService @Inject (
 )(implicit ec: ExecutionContext)
     extends Logging {
 
-  def getDebitInterest(taxRef: Long, accPeriod: Long, interestType: String)(implicit
+  def getDebitInterest(taxRef: Long,
+                       accPeriod: Long,
+                       interestType: String,
+                       accPeriodEndDate: LocalDate)(implicit
     hc: HeaderCarrier
   ): Future[DebitInterestViewModel] =
     connector
       .getDebitInterest(taxRef = taxRef, accPeriod = accPeriod, interestType = interestType)
       .map(response =>
         DebitInterestViewModel(
+          accPeriodEndDate = accPeriodEndDate,
           interest = None,
           rows = response.interestAccruals.map(item =>
             DebitInterestRow(

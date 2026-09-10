@@ -25,6 +25,7 @@ import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import controllers.routes.JourneyRecoveryController
 import views.html.DebitInterestAccountingPeriodView
 
+import java.time.LocalDate
 import javax.inject.Inject
 import scala.concurrent.ExecutionContext
 
@@ -41,10 +42,11 @@ class DebitInterestAccountingPeriodController @Inject() (
   def onPageLoad(): Action[AnyContent] = identify.async { implicit request =>
     val taxRef: Long         = 2L
     val accPeriod: Long      = 4L
+    val accPeriodEndDate = LocalDate.of(2026, 9, 30)
     val interestType: String = "IDB" // TODO: to be confirmed from Java::guys
 
     service
-      .getDebitInterest(taxRef, accPeriod, interestType)
+      .getDebitInterest(taxRef, accPeriod, interestType, accPeriodEndDate)
       .map(viewModel => Ok(view(viewModel)))
       .recover { case ex =>
         logger.error(s"[DebitInterestAccountingPeriodController][onPageLoad] - Unexpected failure: ${ex.getMessage}")
