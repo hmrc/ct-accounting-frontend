@@ -28,10 +28,8 @@ import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.mvc.AnyContentAsEmpty
 import play.api.test.FakeRequest
 import play.twirl.api.Html
-import viewmodels.{DebitInterestRow, DebitInterestViewModel}
 import views.html.DebitInterestAccountingPeriodView
 
-import java.time.LocalDate
 
 class DebitInterestAccountingPeriodViewSpec
     extends SpecBase
