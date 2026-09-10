@@ -24,13 +24,12 @@ import java.time.LocalDate
 import javax.inject.Inject
 import scala.concurrent.Future
 
-class DebitInterestService @Inject()(
+class DebitInterestService @Inject() (
+) extends Logging {
 
-                                    ) extends Logging {
-
-
-  def getAccountingPeriods(taxRef: Long, accPeriod: Long)
-                          (implicit hc: HeaderCarrier): Future[DebitInterestViewModel] = {
+  def getAccountingPeriods(taxRef: Long, accPeriod: Long)(implicit
+    hc: HeaderCarrier
+  ): Future[DebitInterestViewModel] = {
     // TODO: acquire data from relevant sources and build viewModel :: clarify optionality
     val viewModel = DebitInterestViewModel(
       interest = None,
@@ -61,7 +60,7 @@ class DebitInterestService @Inject()(
         )
       )
     )
-    Future.successful( viewModel )
+    Future.successful(viewModel)
   }
 
 }

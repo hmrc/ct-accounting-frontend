@@ -23,23 +23,23 @@ import views.ViewUtils.formatCurrency
 import java.time.LocalDate
 
 final case class OutstandingDebitInterest(
-                                           interestType: String,
-                                           totalAmount: BigDecimal
-                                         )
+  interestType: String,
+  totalAmount: BigDecimal
+)
 
 final case class DebitInterestRow(
-                                   unpaidAmount: BigDecimal,
-                                   fromDate: LocalDate,
-                                   toDate: LocalDate,
-                                   noOfDays: Int,
-                                   rate: BigDecimal,
-                                   interestAmount: BigDecimal
-                                 )
+  unpaidAmount: BigDecimal,
+  fromDate: LocalDate,
+  toDate: LocalDate,
+  noOfDays: Int,
+  rate: BigDecimal,
+  interestAmount: BigDecimal
+)
 
 final case class DebitInterestViewModel(
-                                         interest: Option[OutstandingDebitInterest],
-                                         rows: List[DebitInterestRow]
-                                       ) {
+  interest: Option[OutstandingDebitInterest],
+  rows: List[DebitInterestRow]
+) {
 
   val total: BigDecimal = rows.map(_.unpaidAmount).sum
 

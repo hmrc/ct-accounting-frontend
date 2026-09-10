@@ -17,6 +17,7 @@
 package views
 
 import base.SpecBase
+import helpers.DebitInterestHelper
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.scalatestplus.mockito.MockitoSugar
@@ -35,7 +36,8 @@ import java.time.LocalDate
 class DebitInterestAccountingPeriodViewSpec
     extends SpecBase
     with GuiceOneAppPerSuite
-    with MockitoSugar {
+    with MockitoSugar
+    with DebitInterestHelper {
 
   private trait Setup {
 
@@ -45,36 +47,6 @@ class DebitInterestAccountingPeriodViewSpec
     implicit val messagesApi: MessagesApi                     = app.injector.instanceOf[MessagesApi]
     implicit val messages: Messages                           = MessagesImpl(Lang.defaultLang, messagesApi)
 
-    val viewModel = DebitInterestViewModel(
-      interest = None,
-      rows = List(
-        DebitInterestRow(
-          unpaidAmount = BigDecimal(17.01),
-          fromDate = LocalDate.of(2026, 1, 1),
-          toDate = LocalDate.of(2026, 1, 1),
-          noOfDays = 1,
-          rate = BigDecimal(0.75),
-          interestAmount = BigDecimal(99.11)
-        ),
-        DebitInterestRow(
-          unpaidAmount = BigDecimal(7.01),
-          fromDate = LocalDate.of(2025, 2, 1),
-          toDate = LocalDate.of(2025, 2, 1),
-          noOfDays = 11,
-          rate = BigDecimal(0.15),
-          interestAmount = BigDecimal(278.13)
-        ),
-        DebitInterestRow(
-          unpaidAmount = BigDecimal(87.01),
-          fromDate = LocalDate.of(2015, 2, 1),
-          toDate = LocalDate.of(2015, 2, 1),
-          noOfDays = 89,
-          rate = BigDecimal(14.5),
-          interestAmount = BigDecimal(798.83)
-        )
-      )
-    )
-
     val view: DebitInterestAccountingPeriodView = app.injector.instanceOf[DebitInterestAccountingPeriodView]
 
     def htmlDoc(html: Html): Document = Jsoup.parse(html.toString)
@@ -83,20 +55,20 @@ class DebitInterestAccountingPeriodViewSpec
   "DebitInterestAccountingPeriodView" - {
 
     "render the page with correct title and heading and caption" in new Setup {
-      val html = view(viewModel)
+      val html = view(defaultViewModel)
       val doc  = htmlDoc(html)
 
       val heading = doc.select("h1.govuk-heading-l")
       val caption = doc.select("caption.govuk-table__caption")
 
       heading.size() mustBe 1
-      //heading.text() mustBe messages("adjustmentsAccountingPeriod.heading")
+      // heading.text() mustBe messages("adjustmentsAccountingPeriod.heading")
 
-      //caption.text() mustBe messages("adjustmentsAccountingPeriod.caption")
-      //doc.title() must include(messages("adjustmentsAccountingPeriod.title"))
+      // caption.text() mustBe messages("adjustmentsAccountingPeriod.caption")
+      // doc.title() must include(messages("adjustmentsAccountingPeriod.title"))
     }
 
-/*
+    /*
     "render the page with correct page breadcrumbs" in new Setup {
       val html = view(adjustmentsViewModelWithOneItem)
       val doc  = htmlDoc(html)
@@ -153,7 +125,7 @@ class DebitInterestAccountingPeriodViewSpec
 
       banner.text() mustBe messages("service.name")
     }
-*/
+     */
 
   }
 }

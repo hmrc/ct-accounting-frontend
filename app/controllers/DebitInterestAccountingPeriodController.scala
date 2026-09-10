@@ -28,25 +28,22 @@ import views.html.DebitInterestAccountingPeriodView
 import javax.inject.Inject
 import scala.concurrent.ExecutionContext
 
-
-class DebitInterestAccountingPeriodController @Inject()(
-                                                         val controllerComponents: MessagesControllerComponents,
-                                                         service: DebitInterestService,
-                                                         view : DebitInterestAccountingPeriodView, 
-                                                         identify: IdentifierAction,
-                                                       )(implicit ec: ExecutionContext)
-  extends FrontendBaseController
+class DebitInterestAccountingPeriodController @Inject() (
+  val controllerComponents: MessagesControllerComponents,
+  service: DebitInterestService,
+  view: DebitInterestAccountingPeriodView,
+  identify: IdentifierAction
+)(implicit ec: ExecutionContext)
+    extends FrontendBaseController
     with I18nSupport
     with Logging {
 
   def onPageLoad(): Action[AnyContent] = identify.async { implicit request =>
-    val taxRef: Long = 3060600983L
+    val taxRef: Long    = 3060600983L
     val accPeriod: Long = 4L
     service
       .getAccountingPeriods(taxRef, accPeriod)
-      .map(viewModel =>
-        Ok(view(viewModel))
-      )
+      .map(viewModel => Ok(view(viewModel)))
       .recover { case ex =>
         logger.error(s"[DebitInterestAccountingPeriodController][onPageLoad] - Unexpected failure: ${ex.getMessage}")
         Redirect(JourneyRecoveryController.onPageLoad())

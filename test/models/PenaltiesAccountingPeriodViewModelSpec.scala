@@ -36,7 +36,7 @@ class PenaltiesAccountingPeriodViewModelSpec extends AnyFlatSpec with PenaltiesD
     )
   }
 
-  it should "calculate total for viewModel with 2 rows" in new Fixture {
+  it should "calculate total for defaultViewModel with 2 rows" in new Fixture {
     assert(
       viewModelWithTwoRows.total == BigDecimal(127.32)
     )
@@ -45,7 +45,7 @@ class PenaltiesAccountingPeriodViewModelSpec extends AnyFlatSpec with PenaltiesD
     )
   }
 
-  it should "calculate total for viewModel with single row" in new Fixture {
+  it should "calculate total for defaultViewModel with single row" in new Fixture {
     assert(
       viewModelWithSingleRow.total == BigDecimal(100.13)
     )
