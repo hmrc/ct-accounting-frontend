@@ -21,6 +21,7 @@ import play.api.libs.json.{Json, OFormat}
 import java.time.LocalDate
 
 case class InterestAccrualList(interestAccruals: List[InterestAccrual])
+
 object InterestAccrualList {
   implicit val format: OFormat[InterestAccrualList] = Json.format[InterestAccrualList]
 }

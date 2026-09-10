@@ -21,11 +21,6 @@ import viewmodels.{DebitInterestRow, DebitInterestViewModel}
 
 import java.time.LocalDate
 
-/*
-DebitInterestViewModel(None, List(DebitInterestRow(17.01, 2026-01-01, 2026-12-12, 0, 0.75, 5.8)))
-DebitInterestViewModel(None, List(DebitInterestRow(17.01, 2026-01-01, 2026-12-12, 1, 0.75, 99.11)))
- */
-
 trait DebitInterestHelper {
 
   val defaultDebitInterestList: List[DebitInterestRow] = List(
