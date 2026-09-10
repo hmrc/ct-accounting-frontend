@@ -49,7 +49,7 @@ class DebitInterestConnectorISpec
     def url(taxRef: Long, accPeriod: Long, interestType: String) =
       s"/corporation-tax/interest-accrual-list/$taxRef/$accPeriod/$interestType"
 
-    "return DebitInterest with status code OK" in {
+    "return DebitInterest simple record with status code OK" in {
 
       stubFor(
         get(urlPathEqualTo(url(taxRef, accPeriod, interestType)))
@@ -76,10 +76,9 @@ class DebitInterestConnectorISpec
       result mustEqual defaultRecord
     }
 
-    /*
     "return INTERNAL_ERROR when BE failed" in {
       stubFor(
-        get(urlPathEqualTo(url(1L, 5L)))
+        get(urlPathEqualTo(url(taxRef, accPeriod, interestType)))
           .willReturn(
             aResponse()
               .withStatus(INTERNAL_SERVER_ERROR)
@@ -88,14 +87,15 @@ class DebitInterestConnectorISpec
       )
 
       val ex = intercept[Exception] {
-        connector.getAccountingPeriodResponse(1L, 5L).futureValue
+        connector.getDebitInterest(taxRef, accPeriod, interestType).futureValue
       }
       ex.getMessage.toLowerCase must include("boom")
     }
 
+
     "return 400 when BE returns BAD_REQUEST " in {
       stubFor(
-        get(urlPathEqualTo(url(1L, 5L)))
+        get(urlPathEqualTo(url(taxRef, accPeriod, interestType)))
           .willReturn(
             aResponse()
               .withStatus(BAD_REQUEST)
@@ -104,14 +104,14 @@ class DebitInterestConnectorISpec
       )
 
       val ex = intercept[Exception] {
-        connector.getAccountingPeriodResponse(1L, 5L).futureValue
+        connector.getDebitInterest(taxRef, accPeriod, interestType).futureValue
       }
       ex.getMessage must include("Invalid Request")
     }
 
     "return 404 when BE returns NOT_FOUND " in {
       stubFor(
-        get(urlPathEqualTo(url(1L, 5L)))
+        get(urlPathEqualTo(url(taxRef, accPeriod, interestType)))
           .willReturn(
             aResponse()
               .withStatus(NOT_FOUND)
@@ -120,11 +120,11 @@ class DebitInterestConnectorISpec
       )
 
       val ex = intercept[Exception] {
-        connector.getAccountingPeriodResponse(1L, 5L).futureValue
+        connector.getDebitInterest(taxRef, accPeriod, interestType).futureValue
       }
       ex.getMessage must include("Not found")
     }
-     */
+
   }
 
 }
