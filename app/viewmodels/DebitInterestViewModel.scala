@@ -41,7 +41,7 @@ final case class DebitInterestViewModel(
   rows: List[DebitInterestRow]
 ) {
 
-  val total: BigDecimal = rows.map(_.unpaidAmount).sum
+  val total: BigDecimal = rows.map(_.interestAmount).sum
 
   val totalAsString: String = formatCurrency(total)
 

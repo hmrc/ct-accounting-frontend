@@ -16,51 +16,41 @@
 
 package services
 
+import connectors.DebitInterestConnector
 import play.api.Logging
 import uk.gov.hmrc.http.HeaderCarrier
 import viewmodels.{DebitInterestRow, DebitInterestViewModel}
 
-import java.time.LocalDate
 import javax.inject.Inject
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
-class DebitInterestService @Inject() (
-) extends Logging {
+class DebitInterestService @Inject(
+  connector: DebitInterestConnector
+) (implicit ec: ExecutionContext) extends Logging {
 
-  def getAccountingPeriods(taxRef: Long, accPeriod: Long)(implicit
+  def getAccountingPeriods(taxRef: Long, accPeriod: Long, interestType: String)(implicit
     hc: HeaderCarrier
   ): Future[DebitInterestViewModel] = {
-    // TODO: acquire data from relevant sources and build viewModel :: clarify optionality
-    val viewModel = DebitInterestViewModel(
-      interest = None,
-      rows = List(
-        DebitInterestRow(
-          unpaidAmount = BigDecimal(17.01),
-          fromDate = LocalDate.of(2026, 1, 1),
-          toDate = LocalDate.of(2026, 1, 1),
-          noOfDays = 1,
-          rate = BigDecimal(0.75),
-          interestAmount = BigDecimal(99.11)
-        ),
-        DebitInterestRow(
-          unpaidAmount = BigDecimal(7.01),
-          fromDate = LocalDate.of(2025, 2, 1),
-          toDate = LocalDate.of(2025, 2, 1),
-          noOfDays = 11,
-          rate = BigDecimal(0.15),
-          interestAmount = BigDecimal(278.13)
-        ),
-        DebitInterestRow(
-          unpaidAmount = BigDecimal(87.01),
-          fromDate = LocalDate.of(2015, 2, 1),
-          toDate = LocalDate.of(2015, 2, 1),
-          noOfDays = 89,
-          rate = BigDecimal(14.5),
-          interestAmount = BigDecimal(798.83)
+    connector
+      .getDebitInterest(taxRef = taxRef, accPeriod = accPeriod, interestType = interestType)
+      .map(response =>
+
+        DebitInterestViewModel(
+          interest = None,
+          rows =
+            response.interestAccruals.map(item =>
+              DebitInterestRow(
+                unpaidAmount = item.computationAmount,
+                fromDate = item.interestAccrualFromDate,
+                toDate = item.interestAccrualFromDate,
+                noOfDays = 0, // TODO: computed by backend
+                rate = item.interestRate,
+                interestAmount = item.interestAmount
+              )
+            )
         )
+
       )
-    )
-    Future.successful(viewModel)
   }
 
 }
