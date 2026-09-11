@@ -57,7 +57,6 @@ trait DebitInterestHelper {
     accPeriodEndDate = LocalDate.of(2026, 1, 1),
     interest = None,
     rows = List.empty
-    )
   )
 
 }
