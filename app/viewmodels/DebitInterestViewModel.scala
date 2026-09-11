@@ -37,7 +37,7 @@ final case class DebitInterestRow(
 )
 
 final case class DebitInterestViewModel(
-  accPeriodEndDate: LocalDate,                                       
+  accPeriodEndDate: LocalDate,
   interest: Option[OutstandingDebitInterest],
   rows: List[DebitInterestRow]
 ) {

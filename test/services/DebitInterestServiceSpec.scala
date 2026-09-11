@@ -29,6 +29,8 @@ import play.api.test.Helpers
 import play.api.test.Helpers.stubMessages
 import uk.gov.hmrc.http.HeaderCarrier
 import viewmodels.DebitInterestViewModel
+
+import java.time.LocalDate
 import scala.concurrent.{ExecutionContext, Future}
 
 class DebitInterestServiceSpec extends AnyWordSpec with DebitInterestHelper with Matchers with ScalaFutures {
@@ -41,7 +43,10 @@ class DebitInterestServiceSpec extends AnyWordSpec with DebitInterestHelper with
     implicit val hc: HeaderCarrier    = HeaderCarrier()
     implicit val ec: ExecutionContext = cc.executionContext
 
-    val service = new DebitInterestService(mockDebitInterestConnector)
+    val service          = new DebitInterestService(mockDebitInterestConnector)
+    val accPeriodEndDate = LocalDate.of(2026, 1, 1)
+    val taxRef: Long     = 1L
+    val accPeriod: Long  = 1L
   }
 
   "getDebitInterest returns default list of records" in new Fixture {
@@ -49,11 +54,12 @@ class DebitInterestServiceSpec extends AnyWordSpec with DebitInterestHelper with
       mockDebitInterestConnector.getDebitInterest(any[Long], any[Long], any[String])(any[HeaderCarrier])
     ).thenReturn(Future.successful(defaultRecord))
 
-    val result: DebitInterestViewModel = service.getDebitInterest(1L, 1L, "DBI").futureValue
+    val result: DebitInterestViewModel =
+      service.getDebitInterest(taxRef, accPeriod, "DBI", accPeriodEndDate).futureValue
 
     result shouldBe defaultViewModel
 
-    verify(mockDebitInterestConnector).getDebitInterest(1L, 1L, "DBI")(hc)
+    verify(mockDebitInterestConnector).getDebitInterest(taxRef, accPeriod, "DBI")(hc)
   }
 
   /*

@@ -48,6 +48,7 @@ trait DebitInterestHelper {
   )
 
   val defaultViewModel: DebitInterestViewModel = DebitInterestViewModel(
+    accPeriodEndDate = LocalDate.of(2026, 1, 1),
     interest = None,
     rows = defaultDebitInterestList
   )
