@@ -31,7 +31,7 @@ import play.twirl.api.Html
 import views.html.DebitInterestAccountingPeriodView
 
 class DebitInterestAccountingPeriodViewSpec
-    extends SpecBase
+  extends SpecBase
     with GuiceOneAppPerSuite
     with MockitoSugar
     with DebitInterestHelper {
@@ -41,8 +41,8 @@ class DebitInterestAccountingPeriodViewSpec
     lazy val app: Application = new GuiceApplicationBuilder().build()
 
     implicit val request: FakeRequest[AnyContentAsEmpty.type] = FakeRequest()
-    implicit val messagesApi: MessagesApi                     = app.injector.instanceOf[MessagesApi]
-    implicit val messages: Messages                           = MessagesImpl(Lang.defaultLang, messagesApi)
+    implicit val messagesApi: MessagesApi = app.injector.instanceOf[MessagesApi]
+    implicit val messages: Messages = MessagesImpl(Lang.defaultLang, messagesApi)
 
     val view: DebitInterestAccountingPeriodView = app.injector.instanceOf[DebitInterestAccountingPeriodView]
 
@@ -53,7 +53,7 @@ class DebitInterestAccountingPeriodViewSpec
 
     "render the page with correct title and heading and caption" in new Setup {
       val html = view(defaultViewModel)
-      val doc  = htmlDoc(html)
+      val doc = htmlDoc(html)
 
       val heading = doc.select("h1.govuk-heading-l")
       val caption = doc.select("caption.govuk-table__caption")
@@ -62,12 +62,12 @@ class DebitInterestAccountingPeriodViewSpec
       heading.text() mustBe messages("debitInterestAccountingPeriod.heading")
 
       caption.text() must startWith(messages("debitInterestAccountingPeriod.caption"))
-      doc.title()    must startWith(messages("debitInterestAccountingPeriod.title"))
+      doc.title() must startWith(messages("debitInterestAccountingPeriod.title"))
     }
 
     "render the page with correct page breadcrumbs" in new Setup {
       val html = view(defaultViewModel)
-      val doc  = htmlDoc(html)
+      val doc = htmlDoc(html)
 
       val breadcrumbs = doc.select("li.govuk-breadcrumbs__list-item")
 
@@ -81,7 +81,7 @@ class DebitInterestAccountingPeriodViewSpec
 
     "render the page with correct table headings" in new Setup {
       val html = view(defaultViewModel)
-      val doc  = htmlDoc(html)
+      val doc = htmlDoc(html)
 
       val headers = doc.select("th.govuk-table__header")
 
@@ -96,21 +96,21 @@ class DebitInterestAccountingPeriodViewSpec
       headers.text() must include(messages("debitInterestAccountingPeriod.tableHeader.interestAcc"))
     }
 
-    /*
+
     "render the page with correct table contents" in new Setup {
-      val html = view(adjustmentsViewModelWithOneItem)
-      val doc  = htmlDoc(html)
+      val html = view(defaultViewModel)
+      val doc = htmlDoc(html)
 
       val contents = doc.select("td.govuk-table__cell")
 
-      contents.text() must include("Not currently being pursued")
-      contents.text() must include(messages("adjustmentsAccountingPeriod.total"))
-      contents.text() must include("£50.00")
+      contents.text() must include(messages("debitInterestAccountingPeriod.total"))
+      contents.text() must include("£17.01")
     }
 
+
     "render the page with welsh toggle translation" in new Setup {
-      val html = view(adjustmentsViewModelWithOneItem)
-      val doc  = htmlDoc(html)
+      val html = view(defaultViewModel)
+      val doc = htmlDoc(html)
 
       val translation = doc.select("li.hmrc-service-navigation-language-select__list-item")
 
@@ -120,15 +120,15 @@ class DebitInterestAccountingPeriodViewSpec
       translation.text() must include("CYM")
     }
 
+
     "render the page with View Corporation Tax service name" in new Setup {
-      val html = view(adjustmentsViewModelWithOneItem)
-      val doc  = htmlDoc(html)
+      val html = view(defaultViewModel)
+      val doc = htmlDoc(html)
 
       val banner = doc.select("div.govuk-service-navigation__container")
 
       banner.text() mustBe messages("service.name")
     }
-     */
 
   }
 }
