@@ -30,11 +30,11 @@ class DebitInterestService @Inject (
 )(implicit ec: ExecutionContext)
     extends Logging {
 
-  def getDebitInterest(taxRef: Long, accPeriod: Long, interestType: String, accPeriodEndDate: LocalDate)(implicit
+  def getDebitInterest(taxRef: Long, accPeriod: Long, accPeriodEndDate: LocalDate)(implicit
     hc: HeaderCarrier
   ): Future[DebitInterestViewModel] =
     connector
-      .getDebitInterest(taxRef = taxRef, accPeriod = accPeriod, interestType = interestType)
+      .getDebitInterest(taxRef = taxRef, accPeriod = accPeriod)
       .map(response =>
         DebitInterestViewModel(
           accPeriodEndDate = accPeriodEndDate,

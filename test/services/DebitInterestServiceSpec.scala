@@ -51,29 +51,29 @@ class DebitInterestServiceSpec extends AnyWordSpec with DebitInterestHelper with
 
   "getDebitInterest returns default list of records" in new Fixture {
     when(
-      mockDebitInterestConnector.getDebitInterest(any[Long], any[Long], any[String])(any[HeaderCarrier])
+      mockDebitInterestConnector.getDebitInterest(any[Long], any[Long])(any[HeaderCarrier])
     ).thenReturn(Future.successful(defaultRecord))
 
     val result: DebitInterestViewModel =
-      service.getDebitInterest(taxRef, accPeriod, "DBI", accPeriodEndDate).futureValue
+      service.getDebitInterest(taxRef, accPeriod, accPeriodEndDate).futureValue
 
     result shouldBe defaultViewModel
 
-    verify(mockDebitInterestConnector).getDebitInterest(taxRef, accPeriod, "DBI")(hc)
+    verify(mockDebitInterestConnector).getDebitInterest(taxRef, accPeriod)(hc)
   }
 
   "getDebitInterest propagate any errors from connector" in new Fixture {
     when(
-      mockDebitInterestConnector.getDebitInterest(any[Long], any[Long], any[String])(any[HeaderCarrier])
+      mockDebitInterestConnector.getDebitInterest(any[Long], any[Long])(any[HeaderCarrier])
     ).thenReturn(Future.failed(new RuntimeException("Boom")))
 
     val ex: Exception = intercept[Exception] {
-      service.getDebitInterest(taxRef, accPeriod, "DBI", accPeriodEndDate).futureValue
+      service.getDebitInterest(taxRef, accPeriod, accPeriodEndDate).futureValue
     }
 
     ex.getMessage should include("Boom")
 
-    verify(mockDebitInterestConnector).getDebitInterest(taxRef, accPeriod, "DBI")(hc)
+    verify(mockDebitInterestConnector).getDebitInterest(taxRef, accPeriod)(hc)
   }
 
 }

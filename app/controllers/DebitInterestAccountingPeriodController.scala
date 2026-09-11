@@ -40,13 +40,12 @@ class DebitInterestAccountingPeriodController @Inject() (
     with Logging {
 
   def onPageLoad(): Action[AnyContent] = identify.async { implicit request =>
-    val taxRef: Long         = 2L
-    val accPeriod: Long      = 4L
-    val accPeriodEndDate     = LocalDate.of(2026, 9, 30)
-    val interestType: String = "IDB" // TODO: to be confirmed from Java::guys
+    val taxRef: Long     = 2L
+    val accPeriod: Long  = 4L
+    val accPeriodEndDate = LocalDate.of(2026, 9, 30)
 
     service
-      .getDebitInterest(taxRef, accPeriod, interestType, accPeriodEndDate)
+      .getDebitInterest(taxRef, accPeriod, accPeriodEndDate)
       .map(viewModel => Ok(view(viewModel)))
       .recover { case ex =>
         logger.error(s"[DebitInterestAccountingPeriodController][onPageLoad] - Unexpected failure: ${ex.getMessage}")

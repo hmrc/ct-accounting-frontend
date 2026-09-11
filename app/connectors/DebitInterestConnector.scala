@@ -31,12 +31,17 @@ class DebitInterestConnector @Inject() (http: HttpClientV2, config: ServicesConf
   ec: ExecutionContext
 ) extends Logging {
 
-  def getDebitInterest(taxRef: Long, accPeriod: Long, interestType: String)(implicit
+  // TODO: below to be confirmed
+  // INTEREST_BREAKDOWN_DEBIT_DATABASE = "IDB"
+  // https://github.com/hmrc/ct-core/blob/55cfafad551cbf548e2eb7a1969f58555b417419/ct-core-business/src/main/java/uk/gov/hmrc/portal/ct/business/CTBusinessConstants.java#L4
+  private val interestDebitType: String = "IDB"
+
+  def getDebitInterest(taxRef: Long, accPeriod: Long)(implicit
     hc: HeaderCarrier
   ): Future[InterestAccrualList] = {
     val baseUrl = config.baseUrl("corporation-tax")
 
-    val url: URL = url"$baseUrl/corporation-tax/interest-accrual-list/$taxRef/$accPeriod/$interestType"
+    val url: URL = url"$baseUrl/corporation-tax/interest-accrual-list/$taxRef/$accPeriod/$interestDebitType"
 
     http
       .get(url)
