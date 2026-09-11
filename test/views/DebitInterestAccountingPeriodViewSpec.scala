@@ -59,38 +59,46 @@ class DebitInterestAccountingPeriodViewSpec
       val caption = doc.select("caption.govuk-table__caption")
 
       heading.size() mustBe 1
-      // heading.text() mustBe messages("adjustmentsAccountingPeriod.heading")
+      heading.text() mustBe messages("debitInterestAccountingPeriod.heading")
 
-      // caption.text() mustBe messages("adjustmentsAccountingPeriod.caption")
-      // doc.title() must include(messages("adjustmentsAccountingPeriod.title"))
+      caption.text() must startWith( messages("debitInterestAccountingPeriod.caption") )
+      doc.title() must startWith(messages("debitInterestAccountingPeriod.title"))
     }
 
-    /*
+
     "render the page with correct page breadcrumbs" in new Setup {
-      val html = view(adjustmentsViewModelWithOneItem)
+      val html = view(defaultViewModel)
       val doc  = htmlDoc(html)
 
       val breadcrumbs = doc.select("li.govuk-breadcrumbs__list-item")
 
-      breadcrumbs.size() mustBe 3
+      breadcrumbs.size() mustBe 4
 
       breadcrumbs.text() must include(messages("breadcrumbs.home"))
       breadcrumbs.text() must include(messages("breadcrumbs.accountingPeriods"))
       breadcrumbs.text() must include(messages("breadcrumbs.accountingPeriodEnding"))
+      breadcrumbs.text() must include(messages("breadcrumbs.debitInterest"))
     }
 
+
     "render the page with correct table headings" in new Setup {
-      val html = view(adjustmentsViewModelWithOneItem)
+      val html = view(defaultViewModel)
       val doc  = htmlDoc(html)
 
       val headers = doc.select("th.govuk-table__header")
 
-      headers.size() mustBe 2
+      headers.size() mustBe 6
 
-      headers.text() must include(messages("adjustmentsAccountingPeriod.description"))
-      headers.text() must include(messages("adjustmentsAccountingPeriod.amount"))
+      headers.text() must include(messages("debitInterestAccountingPeriod.tableHeader.interestAmount"))
+      headers.text() must include(messages("debitInterestAccountingPeriod.tableHeader.fromDate"))
+      headers.text() must include(messages("debitInterestAccountingPeriod.tableHeader.toDate"))
+
+      headers.text() must include(messages("debitInterestAccountingPeriod.tableHeader.daysOvd"))
+      headers.text() must include(messages("debitInterestAccountingPeriod.tableHeader.aprc"))
+      headers.text() must include(messages("debitInterestAccountingPeriod.tableHeader.interestAcc"))
     }
 
+    /*
     "render the page with correct table contents" in new Setup {
       val html = view(adjustmentsViewModelWithOneItem)
       val doc  = htmlDoc(html)
