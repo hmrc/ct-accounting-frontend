@@ -62,7 +62,6 @@ class DebitInterestServiceSpec extends AnyWordSpec with DebitInterestHelper with
     verify(mockDebitInterestConnector).getDebitInterest(taxRef, accPeriod, "DBI")(hc)
   }
 
-
   "getDebitInterest propagate any errors from connector" in new Fixture {
     when(
       mockDebitInterestConnector.getDebitInterest(any[Long], any[Long], any[String])(any[HeaderCarrier])
