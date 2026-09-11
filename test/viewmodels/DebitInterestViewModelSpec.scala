@@ -30,7 +30,6 @@ class DebitInterestViewModelSpec extends AnyFlatSpec with DebitInterestHelper {
     )
   }
 
-
   it should "calculate total as zero" in {
     assert(
       viewModelWithZeroTotal.total == BigDecimal(0)
