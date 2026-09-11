@@ -61,10 +61,9 @@ class DebitInterestAccountingPeriodViewSpec
       heading.size() mustBe 1
       heading.text() mustBe messages("debitInterestAccountingPeriod.heading")
 
-      caption.text() must startWith( messages("debitInterestAccountingPeriod.caption") )
-      doc.title() must startWith(messages("debitInterestAccountingPeriod.title"))
+      caption.text() must startWith(messages("debitInterestAccountingPeriod.caption"))
+      doc.title()    must startWith(messages("debitInterestAccountingPeriod.title"))
     }
-
 
     "render the page with correct page breadcrumbs" in new Setup {
       val html = view(defaultViewModel)
@@ -79,7 +78,6 @@ class DebitInterestAccountingPeriodViewSpec
       breadcrumbs.text() must include(messages("breadcrumbs.accountingPeriodEnding"))
       breadcrumbs.text() must include(messages("breadcrumbs.debitInterest"))
     }
-
 
     "render the page with correct table headings" in new Setup {
       val html = view(defaultViewModel)
