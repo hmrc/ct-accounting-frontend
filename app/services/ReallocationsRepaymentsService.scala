@@ -24,15 +24,14 @@ class ReallocationsRepaymentsService @Inject() (
     logger.info(
       s"[ReallocationsRepaymentsService][getAccountingPeriodResponse]:Calling reallocations and repayments connectors for taxRef: $taxRef and accPeriod: $accPeriod"
     )
-    val reallocations = reallocationsConnector.getByAccountingPeriod(taxRef, accPeriod)
-    val repayments = repaymentsConnector.getRepayments(taxRef, accPeriod)
+    val reallocationsList = reallocationsConnector.getByAccountingPeriod(taxRef, accPeriod).map { response => {
+      
+    }}
+    val repaymentsList = repaymentsConnector.getRepayments(taxRef, accPeriod).map { response => {
+
+    }}
     
-    val vm: ReallocationRepaymentsViewModel = ReallocationRepaymentsViewModel(reallocations, repayments)
+    val vm: ReallocationRepaymentsViewModel = ReallocationRepaymentsViewModel(reallocationsList, repaymentsList)
   }
   
-  def createTableRows(reallocations: List[Reallocations], repayments: List[Repayments]): List[ReallocationRepaymentsViewModelRow] = {
-    val list: List[ReallocationRepaymentsViewModelRow]
-    
-    list
-  }
 }

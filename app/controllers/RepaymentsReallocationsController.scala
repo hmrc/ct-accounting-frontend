@@ -19,9 +19,9 @@ package controllers
 import connectors.{ReallocationsConnector, RepaymentsConnector}
 import controllers.Execution.trampoline
 import controllers.actions.*
-import services.ReallocationsRepaymentsService
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import services.ReallocationsRepaymentsService
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.RepaymentsReallocationsView
 
@@ -34,7 +34,8 @@ class RepaymentsReallocationsController @Inject()(
   val controllerComponents: MessagesControllerComponents,
   service: ReallocationsRepaymentsService,
   view: RepaymentsReallocationsView,
-
+  repaymentsConnector: RepaymentsConnector,
+  reallocationsConnector: ReallocationsConnector
 ) extends FrontendBaseController
     with I18nSupport {
 
@@ -42,7 +43,10 @@ class RepaymentsReallocationsController @Inject()(
    
     val taxRef: Long = 1L
     val accPeriod: Long = 1L
-
-    val viewModel = service.getReallocationsRepayments(taxRef, accPeriod).value
+    
+    service.getReallocationsRepayments(taxRef, accPeriod).map { response => {
+        Ok(view(response))
+      }
+    }
   }
 }

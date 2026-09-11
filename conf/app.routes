@@ -26,3 +26,5 @@ GET         /accounting-period-overview/penalties        controllers.PenaltiesAc
 GET         /accounting-period-overview/adjustments      controllers.AdjustmentsAccountingPeriodController.onPageLoad()
 GET         /accounting-period-overview/payments         controllers.PaymentsController.onPageLoad()
 GET         /accounting-period-overview/interest        controllers.InterestController.onPageLoad()
+GET         accounting-period-overview/repayments-and-reallocations        controllers.InterestController.onPageLoad()
+

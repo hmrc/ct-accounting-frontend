@@ -23,23 +23,23 @@
         govukTable: GovukTable
 )
 
-@(list: R)(implicit request: Request[_], messages: Messages)
+@(viewModel: ReallocationRepaymentsViewModel)(implicit request: Request[_], messages: Messages)
 
-@layout(pageTitle = titleNoForm(messages("payments.title"), Some(messages("payments.section"))), breadcrumbs = Some(PageBreadcrumbs.paymentsPage)) {
+@layout(pageTitle = titleNoForm(messages("payments.title")), breadcrumbs = Some(PageBreadcrumbs.repaymentsreallocationsPage)) {
 
-    <h1 class="govuk-heading-l">@messages("payments.heading")</h1>
+    <h1 class="govuk-heading-l">@messages("repaymentsreallocations.heading")</h1>
 
     @govukTable(Table(
-      rows = paymentTransactions.map { transaction =>
+      rows = viewModel.rows.map { row =>
         Seq(
           TableRow(
-            content = Text(formatDate(transaction.effectiveDateOfPayment, messages.lang))
+            content = Text(formatDate(row.date, messages.lang))
           ),
           TableRow(
-            content = Text("DUMMY VALUE")
+            content = Text(row.description)
           ),
           TableRow(
-            content = Text(formatCurrency(transaction.amount)),
+            content = Text(formatCurrency(row.amount)),
             classes = "govuk-table__cell govuk-table__cell--numeric"
           )
         )
