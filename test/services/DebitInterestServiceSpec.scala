@@ -62,21 +62,19 @@ class DebitInterestServiceSpec extends AnyWordSpec with DebitInterestHelper with
     verify(mockDebitInterestConnector).getDebitInterest(taxRef, accPeriod, "DBI")(hc)
   }
 
-  /*
-  "getAccountingPeriods propagate any errors from connector" in new Fixture {
+
+  "getDebitInterest propagate any errors from connector" in new Fixture {
     when(
-      mockAccountingConnector.getAccountingPeriods(any[Long])(any[HeaderCarrier])
-    )
-      .thenReturn(Future.failed(new RuntimeException("Boom")))
+      mockDebitInterestConnector.getDebitInterest(any[Long], any[Long], any[String])(any[HeaderCarrier])
+    ).thenReturn(Future.failed(new RuntimeException("Boom")))
 
     val ex: Exception = intercept[Exception] {
-      service.getAccountingPeriods(1L).futureValue
+      service.getDebitInterest(taxRef, accPeriod, "DBI", accPeriodEndDate).futureValue
     }
 
     ex.getMessage should include("Boom")
 
-    verify(mockAccountingConnector).getAccountingPeriods(1L)(hc)
+    verify(mockDebitInterestConnector).getDebitInterest(taxRef, accPeriod, "DBI")(hc)
   }
-   */
 
 }
