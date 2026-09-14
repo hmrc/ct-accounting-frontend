@@ -66,9 +66,6 @@ object PageBreadcrumbs {
     )
   )
 
-  /*
-  Home > Accounting periods > Accounting period ending > Interest
-   */
   def debitInterestAccountingPeriodPage(implicit messages: Messages): Breadcrumbs = Breadcrumbs(
     // TODO: Add hrefs
     items = Seq(

@@ -31,7 +31,6 @@ class DebitInterestConnector @Inject() (http: HttpClientV2, config: ServicesConf
   ec: ExecutionContext
 ) extends Logging {
 
-  // TODO: below to be confirmed
   // INTEREST_BREAKDOWN_DEBIT_DATABASE = "IDB"
   // https://github.com/hmrc/ct-core/blob/55cfafad551cbf548e2eb7a1969f58555b417419/ct-core-business/src/main/java/uk/gov/hmrc/portal/ct/business/CTBusinessConstants.java#L4
   private val interestDebitType: String = "IDB"
