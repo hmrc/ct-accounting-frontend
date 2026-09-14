@@ -1,0 +1,64 @@
+@*
+ * Copyright 2026 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import views.html.components.*
+@import viewmodels._
+@import viewmodels.InterestViewModel
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
+
+@this(
+        layout: templates.Layout,
+        govukTable: GovukTable,
+        h1: h1
+)
+
+
+@(viewModel: LatePaymentInterestViewModel)(implicit request: Request[_], messages: Messages)
+
+    @layout(pageTitle = titleNoForm(messages("latePaymentInterest.stillAccruing.title"), Some(messages("latePaymentInterest.stillAccruing.section"))),
+        breadcrumbs = Some(PageBreadcrumbs.interestStillAccruingPage)) {
+
+        @h1(messages("latePaymentInterest.stillAccruing.heading"))
+
+        @govukTable(
+            Table(
+                caption = Some(messages("latePaymentInterest.stillAccruing.caption")),
+                captionClasses = "govuk-table__caption govuk-table__caption--m",
+                head = Some(Seq(
+                    HeadCell(content = Text(messages("latePaymentInterest.stillAccruing.amountSubjectToInterest"))),
+                    HeadCell(content = Text(messages("latePaymentInterest.stillAccruing.toDate")), classes = "govuk-table__cell govuk-table__cell--numeric"),
+                    HeadCell(content = Text(messages("latePaymentInterest.stillAccruing.fromDate")), classes = "govuk-table__cell govuk-table__cell--numeric"),
+                    HeadCell(content = Text(messages("latePaymentInterest.stillAccruing.daysOverdue")), classes = "govuk-table__cell govuk-table__cell--numeric"),
+                    HeadCell(content = Text(messages("latePaymentInterest.stillAccruing.annualPercentageRate")), classes = "govuk-table__cell govuk-table__cell--numeric"),
+                    HeadCell(content = Text(messages("latePaymentInterest.stillAccruing.interestAccrued")), classes = "govuk-table__cell govuk-table__cell--numeric"),
+                    )),
+                    rows = viewModel.rows.map { row =>
+                        Seq(
+                            TableRow(content = Text(row.amountUnpaid), classes = "govuk-table__cell govuk-table__cell--numeric"),
+                            TableRow(content = Text(row.fromDate), classes = "govuk-table__cell govuk-table__cell--numeric"),
+                            TableRow(content = Text(row.toDate), classes = "govuk-table__cell govuk-table__cell--numeric"),
+                            TableRow(content = Text(row.daysOverdue), classes = "govuk-table__cell govuk-table__cell--numeric"),
+                            TableRow(content = Text(row.rate), classes = "govuk-table__cell govuk-table__cell--numeric"),
+                            TableRow(content = Text(row.interest), classes = "govuk-table__cell govuk-table__cell--numeric")
+                        )
+                    } :+ viewModel.totalRow(
+                        label = messages("latePaymentInterest.stillAccruing.total"),
+                        total = viewModel.totalAsString
+                    )
+                )
+            )
+
+    }
