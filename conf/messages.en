@@ -91,6 +91,10 @@ payments.description = Description
 payments.amount = Amount
 payments.table.total = Total
 
+payments.description.IRC = HMRC Credit
+payments.description.CP = Cheque payment
+payments.description.EP = Electronic payment
+
 interest.title                          = Interest
 interest.section                        = Accounting period overview
 interest.caption                        = Accounting period ending 30 Sep 2025

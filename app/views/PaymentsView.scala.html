@@ -17,6 +17,7 @@
 @import views.ViewUtils._
 @import java.time.LocalDate
 @import viewmodels._
+@import utils.PaymentsDescriptionHelper
 
 @this(
         layout: templates.Layout,
@@ -36,7 +37,7 @@
             content = Text(formatDate(transaction.effectiveDateOfPayment, messages.lang))
           ),
           TableRow(
-            content = Text("DUMMY VALUE")
+            content = Text(messages(PaymentsDescriptionHelper.getPaymentsDescription(transaction.paymentType)))
           ),
           TableRow(
             content = Text(formatCurrency(transaction.amount)),
