@@ -16,7 +16,8 @@
 
 package connectors
 
-import models.InterestAccrualListWithInterestAccruedDays
+import models.InterestType.asString
+import models.{InterestAccrualListWithInterestAccruedDays, InterestType}
 import play.api.Logging
 import uk.gov.hmrc.http.HttpReads.Implicits.*
 import uk.gov.hmrc.http.client.HttpClientV2
@@ -31,16 +32,13 @@ class DebitInterestConnector @Inject() (http: HttpClientV2, config: ServicesConf
   ec: ExecutionContext
 ) extends Logging {
 
-  // INTEREST_BREAKDOWN_DEBIT_DATABASE = "IDB"
-  // https://github.com/hmrc/ct-core/blob/55cfafad551cbf548e2eb7a1969f58555b417419/ct-core-business/src/main/java/uk/gov/hmrc/portal/ct/business/CTBusinessConstants.java#L4
-  private val interestDebitType: String = "IDB"
 
-  def getDebitInterest(taxRef: Long, accPeriod: Long)(implicit
+  def getDebitInterest(taxRef: Long, accPeriod: Long, interestType: InterestType)(implicit
     hc: HeaderCarrier
   ): Future[InterestAccrualListWithInterestAccruedDays] = {
     val baseUrl = config.baseUrl("corporation-tax")
 
-    val url: URL = url"$baseUrl/corporation-tax/interest-accrual-list/$taxRef/$accPeriod/$interestDebitType"
+    val url: URL = url"$baseUrl/corporation-tax/interest-accrual-list/$taxRef/$accPeriod/${asString(interestType)}"
 
     http
       .get(url)

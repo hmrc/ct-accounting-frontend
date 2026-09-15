@@ -41,3 +41,16 @@ object InterestAccrualWithInterestAccruedDays {
   implicit val format: OFormat[InterestAccrualWithInterestAccruedDays] =
     Json.format[InterestAccrualWithInterestAccruedDays]
 }
+
+
+// https://github.com/hmrc/ct-core/blob/55cfafad551cbf548e2eb7a1969f58555b417419/ct-core-business/src/main/java/uk/gov/hmrc/portal/ct/business/CTBusinessConstants.java#L4
+enum InterestType(val v: String):
+  case InterestDebit extends InterestType("IDB")
+  case InterestCredit extends InterestType("ICR")
+
+object InterestType {
+  def asString(interestType: InterestType): String = interestType match {
+    case InterestDebit => "IDB"
+    case InterestCredit => "ICR"
+  }
+}

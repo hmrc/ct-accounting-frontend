@@ -40,7 +40,8 @@ class DebitInterestAccountingPeriodController @Inject() (
     with Logging {
 
   def onPageLoad(): Action[AnyContent] = identify.async { implicit request =>
-    val taxRef: Long     = 2L
+    // TODO: re-wire next values to the actual in the UserSession
+    val taxRef: Long     = 3L
     val accPeriod: Long  = 4L
     val accPeriodEndDate = LocalDate.of(2026, 9, 30)
 

@@ -17,6 +17,7 @@
 package services
 
 import connectors.DebitInterestConnector
+import models.InterestType.InterestDebit
 import play.api.Logging
 import uk.gov.hmrc.http.HeaderCarrier
 import viewmodels.{DebitInterestRow, DebitInterestViewModel}
@@ -34,8 +35,9 @@ class DebitInterestService @Inject (
     hc: HeaderCarrier
   ): Future[DebitInterestViewModel] =
     connector
-      .getDebitInterest(taxRef = taxRef, accPeriod = accPeriod)
+      .getDebitInterest(taxRef = taxRef, accPeriod = accPeriod, interestType = InterestDebit)
       .map(response =>
+        println(s"HERE IS DATA: $response")
         DebitInterestViewModel(
           accPeriodEndDate = accPeriodEndDate,
           interest = None,
