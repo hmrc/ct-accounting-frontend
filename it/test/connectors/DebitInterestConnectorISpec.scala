@@ -62,7 +62,8 @@ class DebitInterestConnectorISpec
                    |  "interestAccrualToDate": "2026-12-12",
                    |  "interestRate": 0.75,
                    |  "interestAmount":99.11,
-                   |  "apEndDate": "2026-12-31"
+                   |  "apEndDate": "2026-12-31",
+                   |  "noOfDays": 5
                    |  }
                    |  ]
                    | }""".stripMargin

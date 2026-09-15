@@ -16,7 +16,7 @@
 
 package helpers
 
-import models.{InterestAccrual, InterestAccrualList}
+import models.{InterestAccrualListWithInterestAccruedDays, InterestAccrualWithInterestAccruedDays}
 import viewmodels.{DebitInterestRow, DebitInterestViewModel}
 
 import java.time.LocalDate
@@ -28,21 +28,22 @@ trait DebitInterestHelper {
       unpaidAmount = BigDecimal(17.01),
       fromDate = LocalDate.of(2026, 1, 1),
       toDate = LocalDate.of(2026, 12, 12),
-      noOfDays = 0,
+      noOfDays = 5,
       rate = BigDecimal(0.75),
       interestAmount = BigDecimal(99.11)
     )
   )
 
-  val defaultRecord = InterestAccrualList(
+  val defaultRecord = InterestAccrualListWithInterestAccruedDays(
     interestAccruals = List(
-      InterestAccrual(
+      InterestAccrualWithInterestAccruedDays(
         computationAmount = BigDecimal(17.01),
         interestAccrualFromDate = LocalDate.of(2026, 1, 1),
         interestAccrualToDate = LocalDate.of(2026, 12, 12),
         interestRate = BigDecimal(0.75),
         interestAmount = BigDecimal(99.11),
-        apEndDate = LocalDate.of(2026, 12, 31)
+        apEndDate = LocalDate.of(2026, 12, 31),
+        noOfDays = 5
       )
     )
   )
