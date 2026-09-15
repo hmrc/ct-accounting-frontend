@@ -37,7 +37,6 @@ class DebitInterestService @Inject (
     connector
       .getDebitInterest(taxRef = taxRef, accPeriod = accPeriod, interestType = InterestDebit)
       .map(response =>
-        println(s"HERE IS DATA: $response")
         DebitInterestViewModel(
           accPeriodEndDate = accPeriodEndDate,
           interest = None,
