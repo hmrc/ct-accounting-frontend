@@ -23,11 +23,11 @@ import views.ViewUtils.formatCurrency
 import java.time.LocalDate
 
 case class LatePaymentInterestRow(
-  amountUnpaid: BigDecimal,
-  fromDate: String,
-  toDate: String,
+  amountSubjectToInterest: BigDecimal,
+  fromDate: LocalDate,
+  toDate: LocalDate,
   daysOverdue: Int,
-  rate: BigDecimal,
+  annualPercentageRate: BigDecimal,
   interestAccrued: BigDecimal
 )
 
@@ -36,9 +36,13 @@ case class LatePaymentInterestViewModel(rows: Seq[LatePaymentInterestRow]) {
 
   val totalAsString: String = formatCurrency(total)
 
-  def totalRow(total: String, label: String): Seq[TableRow] =
+  def totalRow(label: String, total: String): Seq[TableRow] =
     Seq(
       TableRow(content = Text(label), classes = "govuk-!-font-weight-bold"),
+      TableRow(content = Text(""), classes = "govuk-!-font-weight-bold"),
+      TableRow(content = Text(""), classes = "govuk-!-font-weight-bold"),
+      TableRow(content = Text(""), classes = "govuk-!-font-weight-bold"),
+      TableRow(content = Text(""), classes = "govuk-!-font-weight-bold"),
       TableRow(content = Text(total), classes = "govuk-!-font-weight-bold govuk-table__cell govuk-table__cell--numeric")
     )
 }
@@ -48,11 +52,11 @@ object LatePaymentInterestRow {
     LatePaymentInterestViewModel(
       interestAccrualList.interestAccruals.map { value =>
         LatePaymentInterestRow(
-          amountUnpaid = value.computationAmount,
-          fromDate = value.interestAccrualFromDate.toString,
-          toDate = value.interestAccrualToDate.toString,
+          amountSubjectToInterest = value.computationAmount,
+          fromDate = value.interestAccrualFromDate,
+          toDate = value.interestAccrualToDate,
           daysOverdue = value.noOfDays,
-          rate = value.interestRate,
+          annualPercentageRate = value.interestRate,
           interestAccrued = value.interestAmount
         )
       }

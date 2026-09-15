@@ -24,11 +24,11 @@ import uk.gov.hmrc.http.HeaderCarrier
 import javax.inject.Inject
 import scala.concurrent.Future
 
-class LatePaymentInterestService @Inject()(
+class LatePaymentInterestService @Inject() (
   interestAccrualListConnector: InterestAccrualListConnector
 ) extends Logging {
 
-  def getInterestAccrualList(taxRef: Long, accPeriod: Long, interestType:String)(implicit
+  def getInterestAccrualList(taxRef: Long, accPeriod: Long, interestType: String)(implicit
     hc: HeaderCarrier
   ): Future[InterestAccrualListWithInterestAccruedDays] = {
     logger.info(s"Calling connector for taxRef: $taxRef and accPeriod: $accPeriod")
