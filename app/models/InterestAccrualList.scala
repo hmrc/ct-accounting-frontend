@@ -28,16 +28,15 @@ object InterestAccrualListWithInterestAccruedDays {
 }
 
 case class InterestAccrualWithInterestAccruedDays(
-                                                   computationAmount: BigDecimal,
-                                                   interestAccrualFromDate: LocalDate,
-                                                   interestAccrualToDate: LocalDate,
-                                                   interestRate: BigDecimal,
-                                                   interestAmount: BigDecimal,
-                                                   apEndDate: LocalDate,
-                                                   noOfDays: Int
-                                                 )
+  computationAmount: BigDecimal,
+  interestAccrualFromDate: LocalDate,
+  interestAccrualToDate: LocalDate,
+  interestRate: BigDecimal,
+  interestAmount: BigDecimal,
+  apEndDate: LocalDate,
+  noOfDays: Int
+)
 object InterestAccrualWithInterestAccruedDays {
   implicit val format: OFormat[InterestAccrualWithInterestAccruedDays] =
     Json.format[InterestAccrualWithInterestAccruedDays]
 }
-

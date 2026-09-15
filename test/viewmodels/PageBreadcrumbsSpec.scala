@@ -74,4 +74,20 @@ class PageBreadcrumbsSpec extends AnyWordSpec with Matchers {
     }
 
   }
+  "PageBreadcrumbs.interestStillAccruingPage" should {
+
+    "contain exactly four breadcrumb items" in {
+      PageBreadcrumbs.interestStillAccruingPage.items.size shouldBe 4
+    }
+
+    "have the correct items in order" in {
+      PageBreadcrumbs.interestStillAccruingPage.items shouldBe Seq(
+        BreadcrumbsItem(content = Text(messages("breadcrumbs.home")), href = Some("/")),
+        BreadcrumbsItem(content = Text(messages("breadcrumbs.accountingPeriods")), href = Some("/")),
+        BreadcrumbsItem(content = Text(messages("breadcrumbs.accountingPeriodEnding")), href = Some("/")),
+        BreadcrumbsItem(content = Text(messages("latePaymentInterest.stillAccruing.title")), href = Some("/"))
+      )
+    }
+
+  }
 }

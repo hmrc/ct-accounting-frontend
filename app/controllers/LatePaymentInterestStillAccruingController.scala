@@ -24,8 +24,8 @@ import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import services.LatePaymentInterestService
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
-import viewmodels.{LatePaymentInterestRow, LatePaymentInterestViewModel}
-import views.html.{LatePaymentInterestStillAccruingView, PaymentsView}
+import viewmodels.LatePaymentInterestRow
+import views.html.LatePaymentInterestStillAccruingView
 
 import javax.inject.Inject
 
@@ -36,13 +36,14 @@ class LatePaymentInterestStillAccruingController @Inject() (
   view: LatePaymentInterestStillAccruingView,
   service: LatePaymentInterestService
 ) extends FrontendBaseController
-    with I18nSupport with Logging {
+    with I18nSupport
+    with Logging {
 
   // TODO: - 1 :: integrate auth then its ready
   // TODO: - 2 :: read taxRef and accPeriod and interestType from the userSession
-  private val taxRefFromSession: Long           = 3100L
-  private val accountingPeriodFromSession: Long = 4L
-  private val interestType: String              = "IDB"
+  private val taxRefFromSession: Long           = 1L
+  private val accountingPeriodFromSession: Long = 1L
+  private val interestType: String              = "IDE"
 
   def onPageLoad: Action[AnyContent] = identify.async { implicit request =>
     service
