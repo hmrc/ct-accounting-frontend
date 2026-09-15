@@ -32,7 +32,6 @@ class DebitInterestConnector @Inject() (http: HttpClientV2, config: ServicesConf
   ec: ExecutionContext
 ) extends Logging {
 
-
   def getDebitInterest(taxRef: Long, accPeriod: Long, interestType: InterestType)(implicit
     hc: HeaderCarrier
   ): Future[InterestAccrualListWithInterestAccruedDays] = {
