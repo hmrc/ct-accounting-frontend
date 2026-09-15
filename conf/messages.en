@@ -51,7 +51,7 @@ unauthorised.heading = You can’t access this service with this account
 breadcrumbs.home = Home
 breadcrumbs.accountingPeriods = Accounting periods
 breadcrumbs.accountingPeriodEnding = Accounting period ending
-breadcrumbs.debitInterest   = Interest
+breadcrumbs.interest   = Interest
 
 taxTransactions.title = Taxes
 taxTransactions.section = Accounting period overview
@@ -117,7 +117,7 @@ interest.amount                         = Amount
 interest.table.latePayment              = Late payment interest
 interest.table.latePayment.accruing     = Late payment interest(still accruing)
 interest.table.repaymentInterest        = Repayment interest
-interest.table.interest                 = Debit interest
+interest.table.debitInterest            = Debit interest
 interest.table.debitInterest.accruing   = Debit interest(still accruing)
 interest.table.creditInterest           = Credit Interest
 interest.table.creditInterest.accruing  = Credit Interest(still accruing)
