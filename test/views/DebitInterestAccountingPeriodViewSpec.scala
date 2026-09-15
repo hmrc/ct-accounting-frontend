@@ -76,7 +76,7 @@ class DebitInterestAccountingPeriodViewSpec
       breadcrumbs.text() must include(messages("breadcrumbs.home"))
       breadcrumbs.text() must include(messages("breadcrumbs.accountingPeriods"))
       breadcrumbs.text() must include(messages("breadcrumbs.accountingPeriodEnding"))
-      breadcrumbs.text() must include(messages("breadcrumbs.debitInterest"))
+      breadcrumbs.text() must include(messages("breadcrumbs.interest"))
     }
 
     "render the page with correct table headings" in new Setup {
