@@ -25,7 +25,7 @@
 
 @(interestAccruals: List[InterestAccrualWithInterestAccruedDays], accountPeriod: LocalDate, total: BigDecimal)(implicit request: Request[_], messages: Messages)
 
-@layout(pageTitle = titleNoForm(messages("repaymentInterest.title"), Some(messages("repaymentInterest.section"))), breadcrumbs = Some(PageBreadcrumbs.taxTransactionsPage)) {
+@layout(pageTitle = titleNoForm(messages("repaymentInterest.title"), Some(messages("repaymentInterest.section"))), breadcrumbs = Some(PageBreadcrumbs.repaymentInterestPage)) {
 
     <h1 class="govuk-heading-l">@messages("repaymentInterest.heading")</h1>
 
