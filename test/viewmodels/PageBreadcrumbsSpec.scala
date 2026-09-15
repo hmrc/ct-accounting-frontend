@@ -77,7 +77,7 @@ class PageBreadcrumbsSpec extends AnyWordSpec with Matchers {
 
   "PageBreadcrumbs.debitInterestAccountingPeriodPage" should {
 
-    "contain exactly three breadcrumb items" in {
+    "contain exactly four breadcrumb items" in {
       PageBreadcrumbs.debitInterestAccountingPeriodPage.items.size shouldBe 4
     }
 
