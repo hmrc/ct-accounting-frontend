@@ -51,7 +51,7 @@ unauthorised.heading = You can’t access this service with this account
 breadcrumbs.home = Home
 breadcrumbs.accountingPeriods = Accounting periods
 breadcrumbs.accountingPeriodEnding = Accounting period ending
-breadcrumbs.interest   = Interest
+breadcrumbs.interest = Interest
 
 taxTransactions.title = Taxes
 taxTransactions.section = Accounting period overview

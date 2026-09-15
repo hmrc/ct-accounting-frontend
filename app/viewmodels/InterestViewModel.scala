@@ -61,7 +61,7 @@ object InterestViewModel {
           description = messages("interest.table.repaymentInterest"),
           amount = accDetails.repaymentInterestAmount,
           isLink = isHyperLink(accDetails.repaymentInterestAmount, clericalCalculationFlag),
-          href = dummyCall
+          href = routes.RepaymentInterestController.onPageLoad()
         ),
         InterestRow(
           description = deriveDescription("interest.table.debitInterest", accDetails.crDbCalcFlag),
