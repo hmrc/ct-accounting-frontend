@@ -23,19 +23,21 @@ import java.time.LocalDate
 case class InterestAccrualListWithInterestAccruedDays(interestAccruals: List[InterestAccrualWithInterestAccruedDays])
 
 object InterestAccrualListWithInterestAccruedDays {
-  implicit val format: OFormat[InterestAccrualListWithInterestAccruedDays] = Json.format[InterestAccrualListWithInterestAccruedDays]
+  implicit val format: OFormat[InterestAccrualListWithInterestAccruedDays] =
+    Json.format[InterestAccrualListWithInterestAccruedDays]
 }
 
 case class InterestAccrualWithInterestAccruedDays(
-                                                   computationAmount: BigDecimal,
-                                                   interestAccrualFromDate: LocalDate,
-                                                   interestAccrualToDate: LocalDate,
-                                                   interestRate: BigDecimal,
-                                                   interestAmount: BigDecimal,
-                                                   apEndDate: LocalDate,
-                                                   noOfDays: Int
-                                                 )
+  computationAmount: BigDecimal,
+  interestAccrualFromDate: LocalDate,
+  interestAccrualToDate: LocalDate,
+  interestRate: BigDecimal,
+  interestAmount: BigDecimal,
+  apEndDate: LocalDate,
+  noOfDays: Int
+)
 
 object InterestAccrualWithInterestAccruedDays {
-  implicit val format: OFormat[InterestAccrualWithInterestAccruedDays] = Json.format[InterestAccrualWithInterestAccruedDays]
+  implicit val format: OFormat[InterestAccrualWithInterestAccruedDays] =
+    Json.format[InterestAccrualWithInterestAccruedDays]
 }
