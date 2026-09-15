@@ -19,6 +19,7 @@ package connectors
 import com.github.tomakehurst.wiremock.client.WireMock.*
 import helpers.DebitInterestHelper
 import itutils.ApplicationWithWiremock
+import models.InterestType.InterestDebit
 import org.scalatest.BeforeAndAfterEach
 import org.scalatest.concurrent.{IntegrationPatience, ScalaFutures}
 import org.scalatest.matchers.must.Matchers
@@ -71,7 +72,7 @@ class DebitInterestConnectorISpec
           )
       )
 
-      val result = connector.getDebitInterest(taxRef, accPeriod).futureValue
+      val result = connector.getDebitInterest(taxRef, accPeriod, InterestDebit).futureValue
       result mustEqual defaultRecord
     }
 
@@ -86,7 +87,7 @@ class DebitInterestConnectorISpec
       )
 
       val ex = intercept[Exception] {
-        connector.getDebitInterest(taxRef, accPeriod).futureValue
+        connector.getDebitInterest(taxRef, accPeriod, InterestDebit).futureValue
       }
       ex.getMessage.toLowerCase must include("boom")
     }
@@ -103,7 +104,7 @@ class DebitInterestConnectorISpec
       )
 
       val ex = intercept[Exception] {
-        connector.getDebitInterest(taxRef, accPeriod).futureValue
+        connector.getDebitInterest(taxRef, accPeriod, InterestDebit).futureValue
       }
       ex.getMessage must include("Invalid Request")
     }
@@ -119,7 +120,7 @@ class DebitInterestConnectorISpec
       )
 
       val ex = intercept[Exception] {
-        connector.getDebitInterest(taxRef, accPeriod).futureValue
+        connector.getDebitInterest(taxRef, accPeriod, InterestDebit).futureValue
       }
       ex.getMessage must include("Not found")
     }
