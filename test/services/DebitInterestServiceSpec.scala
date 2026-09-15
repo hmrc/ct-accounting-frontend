@@ -18,6 +18,8 @@ package services
 
 import connectors.DebitInterestConnector
 import helpers.DebitInterestHelper
+import models.InterestType
+import models.InterestType.InterestDebit
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.{verify, when}
 import org.scalatest.concurrent.ScalaFutures
@@ -51,7 +53,7 @@ class DebitInterestServiceSpec extends AnyWordSpec with DebitInterestHelper with
 
   "getDebitInterest returns default list of records" in new Fixture {
     when(
-      mockDebitInterestConnector.getDebitInterest(any[Long], any[Long])(any[HeaderCarrier])
+      mockDebitInterestConnector.getDebitInterest(any[Long], any[Long], any[InterestType])(any[HeaderCarrier])
     ).thenReturn(Future.successful(defaultRecord))
 
     val result: DebitInterestViewModel =
@@ -59,12 +61,12 @@ class DebitInterestServiceSpec extends AnyWordSpec with DebitInterestHelper with
 
     result shouldBe defaultViewModel
 
-    verify(mockDebitInterestConnector).getDebitInterest(taxRef, accPeriod)(hc)
+    verify(mockDebitInterestConnector).getDebitInterest(taxRef, accPeriod, InterestDebit)(hc)
   }
 
   "getDebitInterest propagate any errors from connector" in new Fixture {
     when(
-      mockDebitInterestConnector.getDebitInterest(any[Long], any[Long])(any[HeaderCarrier])
+      mockDebitInterestConnector.getDebitInterest(any[Long], any[Long], any[InterestType])(any[HeaderCarrier])
     ).thenReturn(Future.failed(new RuntimeException("Boom")))
 
     val ex: Exception = intercept[Exception] {
@@ -73,7 +75,7 @@ class DebitInterestServiceSpec extends AnyWordSpec with DebitInterestHelper with
 
     ex.getMessage should include("Boom")
 
-    verify(mockDebitInterestConnector).getDebitInterest(taxRef, accPeriod)(hc)
+    verify(mockDebitInterestConnector).getDebitInterest(taxRef, accPeriod, InterestDebit)(hc)
   }
 
 }
