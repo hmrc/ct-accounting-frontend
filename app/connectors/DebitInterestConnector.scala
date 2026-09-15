@@ -16,7 +16,7 @@
 
 package connectors
 
-import models.InterestAccrualList
+import models.InterestAccrualListWithInterestAccruedDays
 import play.api.Logging
 import uk.gov.hmrc.http.HttpReads.Implicits.*
 import uk.gov.hmrc.http.client.HttpClientV2
@@ -37,14 +37,14 @@ class DebitInterestConnector @Inject() (http: HttpClientV2, config: ServicesConf
 
   def getDebitInterest(taxRef: Long, accPeriod: Long)(implicit
     hc: HeaderCarrier
-  ): Future[InterestAccrualList] = {
+  ): Future[InterestAccrualListWithInterestAccruedDays] = {
     val baseUrl = config.baseUrl("corporation-tax")
 
     val url: URL = url"$baseUrl/corporation-tax/interest-accrual-list/$taxRef/$accPeriod/$interestDebitType"
 
     http
       .get(url)
-      .execute[InterestAccrualList]
+      .execute[InterestAccrualListWithInterestAccruedDays]
       .recover {
         case u: UpstreamErrorResponse =>
           logger.error(

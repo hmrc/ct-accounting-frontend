@@ -20,20 +20,22 @@ import play.api.libs.json.{Json, OFormat}
 
 import java.time.LocalDate
 
-case class InterestAccrualList(interestAccruals: List[InterestAccrual])
+case class InterestAccrualListWithInterestAccruedDays(interestAccruals: List[InterestAccrualWithInterestAccruedDays])
 
-object InterestAccrualList {
-  implicit val format: OFormat[InterestAccrualList] = Json.format[InterestAccrualList]
+object InterestAccrualListWithInterestAccruedDays {
+  implicit val format: OFormat[InterestAccrualListWithInterestAccruedDays] = Json.format[InterestAccrualListWithInterestAccruedDays]
 }
 
-case class InterestAccrual(
-  computationAmount: BigDecimal,
-  interestAccrualFromDate: LocalDate,
-  interestAccrualToDate: LocalDate,
-  interestRate: BigDecimal,
-  interestAmount: BigDecimal,
-  apEndDate: LocalDate
-)
-object InterestAccrual {
-  implicit val format: OFormat[InterestAccrual] = Json.format[InterestAccrual]
+case class InterestAccrualWithInterestAccruedDays(
+                                                   computationAmount: BigDecimal,
+                                                   interestAccrualFromDate: LocalDate,
+                                                   interestAccrualToDate: LocalDate,
+                                                   interestRate: BigDecimal,
+                                                   interestAmount: BigDecimal,
+                                                   apEndDate: LocalDate,
+                                                   noOfDays: Int
+                                                 )
+
+object InterestAccrualWithInterestAccruedDays {
+  implicit val format: OFormat[InterestAccrualWithInterestAccruedDays] = Json.format[InterestAccrualWithInterestAccruedDays]
 }

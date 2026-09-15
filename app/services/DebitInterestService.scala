@@ -44,7 +44,7 @@ class DebitInterestService @Inject (
               unpaidAmount = item.computationAmount,
               fromDate = item.interestAccrualFromDate,
               toDate = item.interestAccrualToDate,
-              noOfDays = 0, // TODO: computed by backend
+              noOfDays = item.noOfDays,
               rate = item.interestRate,
               interestAmount = item.interestAmount
             )
