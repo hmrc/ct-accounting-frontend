@@ -53,7 +53,7 @@
                     TableRow(content = Text(formatDate(row.toDate, messages.lang))),
                     TableRow(content = Text(formatDate(row.fromDate, messages.lang))),
                     TableRow(content = Text(row.daysOverdue.toString)),
-                    TableRow(content = Text(row.annualPercentageRate.toString())),
+                    TableRow(content = Text(formatPercentage(row.annualPercentageRate))),
                     TableRow(content = Text(formatCurrency(row.interestAccrued)))
                 )
 

@@ -45,7 +45,10 @@ object ViewUtils {
   }
 
   def formatPercentage(value: BigDecimal): String = {
-    val formatter = java.text.NumberFormat.getPercentInstance(java.util.Locale.UK)
-    if (value.signum < 0) s"-${formatter.format(value.abs)}" else formatter.format(value)
+    val valueAsDecimal = value / 100
+    val formatter      = java.text.NumberFormat.getPercentInstance(java.util.Locale.UK)
+    formatter.setMinimumFractionDigits(2)
+    formatter.format(valueAsDecimal)
   }
+
 }
