@@ -20,6 +20,7 @@ import controllers.routes
 import uk.gov.hmrc.govukfrontend.views.viewmodels.breadcrumbs.{Breadcrumbs, BreadcrumbsItem}
 import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 import play.api.i18n.Messages
+import controllers.routes
 
 object PageBreadcrumbs {
 
@@ -95,6 +96,19 @@ object PageBreadcrumbs {
   )
 
   def repaymentInterestPage(implicit messages: Messages): Breadcrumbs = Breadcrumbs(
+    // TODO: Add hrefs
+    items = Seq(
+      BreadcrumbsItem(content = Text(messages("breadcrumbs.home")), href = Some("/")),
+      BreadcrumbsItem(content = Text(messages("breadcrumbs.accountingPeriods")), href = Some("/")),
+      BreadcrumbsItem(content = Text(messages("breadcrumbs.accountingPeriodEnding")), href = Some("/")),
+      BreadcrumbsItem(
+        content = Text(messages("breadcrumbs.interest")),
+        href = Some(routes.InterestController.onPageLoad().url)
+      )
+    )
+  )
+
+  def creditInterestPage(implicit messages: Messages): Breadcrumbs = Breadcrumbs(
     // TODO: Add hrefs
     items = Seq(
       BreadcrumbsItem(content = Text(messages("breadcrumbs.home")), href = Some("/")),

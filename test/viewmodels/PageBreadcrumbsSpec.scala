@@ -23,6 +23,7 @@ import uk.gov.hmrc.govukfrontend.views.viewmodels.breadcrumbs.BreadcrumbsItem
 import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 import play.api.i18n.Messages
 import play.api.test.Helpers.stubMessages
+import controllers.routes
 
 class PageBreadcrumbsSpec extends AnyWordSpec with Matchers {
 
@@ -123,6 +124,26 @@ class PageBreadcrumbsSpec extends AnyWordSpec with Matchers {
 
     "have the correct items in order" in {
       PageBreadcrumbs.interestStillAccruingPage.items shouldBe Seq(
+        BreadcrumbsItem(content = Text(messages("breadcrumbs.home")), href = Some("/")),
+        BreadcrumbsItem(content = Text(messages("breadcrumbs.accountingPeriods")), href = Some("/")),
+        BreadcrumbsItem(content = Text(messages("breadcrumbs.accountingPeriodEnding")), href = Some("/")),
+        BreadcrumbsItem(
+          content = Text(messages("breadcrumbs.interest")),
+          href = Some(routes.InterestController.onPageLoad().url)
+        )
+      )
+    }
+
+  }
+
+  "PageBreadcrumbs.creditInterestPage" should {
+
+    "contain exactly four breadcrumb items" in {
+      PageBreadcrumbs.creditInterestPage.items.size shouldBe 4
+    }
+
+    "have the correct items in order" in {
+      PageBreadcrumbs.creditInterestPage.items shouldBe Seq(
         BreadcrumbsItem(content = Text(messages("breadcrumbs.home")), href = Some("/")),
         BreadcrumbsItem(content = Text(messages("breadcrumbs.accountingPeriods")), href = Some("/")),
         BreadcrumbsItem(content = Text(messages("breadcrumbs.accountingPeriodEnding")), href = Some("/")),
