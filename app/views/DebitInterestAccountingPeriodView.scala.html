@@ -27,8 +27,7 @@
 
 @(viewModel: DebitInterestViewModel)(implicit request: Request[_], messages: Messages)
 
-@layout(pageTitle = titleNoForm(messages("debitInterestAccountingPeriod.title"),
-    Some(messages("debitInterestAccountingPeriod.section"))),
+@layout(pageTitle = titleNoForm(messages("debitInterestAccountingPeriod.title"), None),
     breadcrumbs = Some(PageBreadcrumbs.debitInterestAccountingPeriodPage)) {
 
     @h1(messages("debitInterestAccountingPeriod.heading"))
