@@ -86,8 +86,9 @@ class PageBreadcrumbsSpec extends AnyWordSpec with Matchers {
         BreadcrumbsItem(content = Text(messages("breadcrumbs.home")), href = Some("/")),
         BreadcrumbsItem(content = Text(messages("breadcrumbs.accountingPeriods")), href = Some("/")),
         BreadcrumbsItem(content = Text(messages("breadcrumbs.accountingPeriodEnding")), href = Some("/")),
-        BreadcrumbsItem(content = Text(messages("breadcrumbs.interest")),
-          href = Some("/accounting-period-overview/interest")
+        BreadcrumbsItem(
+          content = Text(messages("breadcrumbs.interest")),
+          href = Some("/ct-accounting/accounting-period-overview/interest")
         )
       )
     }

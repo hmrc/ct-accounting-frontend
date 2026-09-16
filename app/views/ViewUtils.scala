@@ -46,7 +46,7 @@ object ViewUtils {
 
   def formatPercentage(value: BigDecimal): String = {
     val valueAsDecimal = value / 100
-    val formatter = java.text.NumberFormat.getPercentInstance(java.util.Locale.UK)
+    val formatter      = java.text.NumberFormat.getPercentInstance(java.util.Locale.UK)
     formatter.setMinimumFractionDigits(2)
     formatter.setMinimumFractionDigits(2)
     formatter.format(valueAsDecimal)

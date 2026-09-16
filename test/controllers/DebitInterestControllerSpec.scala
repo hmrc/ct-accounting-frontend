@@ -32,13 +32,12 @@ import uk.gov.hmrc.http.HeaderCarrier
 import views.html.DebitInterestAccountingPeriodView
 import scala.concurrent.Future
 
-class DebitInterestControllerSpec extends SpecBase with MockitoSugar
-  with DebitInterestHelper {
+class DebitInterestControllerSpec extends SpecBase with MockitoSugar with DebitInterestHelper {
 
   private trait Fixture {
-    implicit val hc: HeaderCarrier   = HeaderCarrier()
+    implicit val hc: HeaderCarrier        = HeaderCarrier()
     val mockService: DebitInterestService = mock[DebitInterestService]
-    val application: Application     =
+    val application: Application          =
       applicationBuilder()
         .overrides(bind[DebitInterestService].toInstance(mockService))
         .build()
@@ -50,8 +49,8 @@ class DebitInterestControllerSpec extends SpecBase with MockitoSugar
   "DebitInterestController" - {
 
     "must return OK and correct view for GET" in new Fixture {
-      when(mockService.getDebitInterest(any(), any(), any() )(any()))
-        .thenReturn( Future.successful(defaultViewModel) )
+      when(mockService.getDebitInterest(any(), any(), any())(any()))
+        .thenReturn(Future.successful(defaultViewModel))
 
       running(application) {
         val request = FakeRequest(GET, routes.DebitInterestAccountingPeriodController.onPageLoad().url)
