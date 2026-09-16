@@ -48,7 +48,6 @@ object ViewUtils {
     val valueAsDecimal = value / 100
     val formatter      = java.text.NumberFormat.getPercentInstance(java.util.Locale.UK)
     formatter.setMinimumFractionDigits(2)
-    formatter.setMinimumFractionDigits(2)
     formatter.format(valueAsDecimal)
   }
 

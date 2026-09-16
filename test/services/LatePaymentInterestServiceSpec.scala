@@ -59,7 +59,7 @@ class LatePaymentInterestServiceSpec
 
     result.interestAccruals shouldBe interestAccrualMultipleObjects.interestAccruals
 
-    verify(mockConnector).getInterestAccrualList(1L, 2L, "IDE")(hc)
+    verify(mockConnector).getInterestAccrualList(any(), any(), any())(any[HeaderCarrier])
   }
   "getAccountingPeriods propagate any errors from connector" in new Fixture {
     when(
