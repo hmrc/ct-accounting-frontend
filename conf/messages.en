@@ -51,6 +51,7 @@ unauthorised.heading = You can’t access this service with this account
 breadcrumbs.home = Home
 breadcrumbs.accountingPeriods = Accounting periods
 breadcrumbs.accountingPeriodEnding = Accounting period ending
+breadcrumbs.interest = Interest
 
 taxTransactions.title = Taxes
 taxTransactions.section = Accounting period overview
@@ -109,6 +110,18 @@ interest.table.debitInterest.accruing   = Debit interest(still accruing)
 interest.table.creditInterest           = Credit Interest
 interest.table.creditInterest.accruing  = Credit Interest(still accruing)
 interest.table.total                    = Total
+
+creditInterest.title = Credit interest
+creditInterest.section = Accounting period overview
+creditInterest.heading = Credit interest
+creditInterest.table.header = Accounting period ending {0}
+creditInterest.subject = Amount subject to interest
+creditInterest.fromDate = From date
+creditInterest.toDate = To date
+creditInterest.days = Day overdue
+creditInterest.percentage = Annual Percentage Rate
+creditInterest.interest = Interest accrued
+creditInterest.table.total = Total
 
 taxDescription.assessment.a = Amended assessment {0}
 taxDescription.assessment.d = Discovery assessment {0}

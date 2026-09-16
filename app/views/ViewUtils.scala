@@ -43,4 +43,12 @@ object ViewUtils {
     val formatter = java.text.NumberFormat.getCurrencyInstance(java.util.Locale.UK)
     if (amount.signum < 0) s"-${formatter.format(amount.abs)}" else formatter.format(amount)
   }
+
+  def formatPercentage(value: BigDecimal): String = {
+    val valueAsDecimal = value / 100
+    val formatter      = java.text.NumberFormat.getPercentInstance(java.util.Locale.UK)
+    formatter.setMinimumFractionDigits(2)
+    formatter.setMinimumFractionDigits(2)
+    formatter.format(valueAsDecimal)
+  }
 }
