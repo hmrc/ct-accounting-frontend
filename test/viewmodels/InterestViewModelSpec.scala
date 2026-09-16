@@ -25,6 +25,7 @@ import play.api.mvc.Call
 import play.api.test.Helpers.stubMessages
 import uk.gov.hmrc.http.HttpVerbs.GET
 import views.ViewUtils.formatCurrency
+import controllers.routes
 
 class InterestViewModelSpec extends AnyWordSpec with Matchers with AccountingPeriodResponseHelper {
 
@@ -49,7 +50,7 @@ class InterestViewModelSpec extends AnyWordSpec with Matchers with AccountingPer
           description = messages("interest.table.repaymentInterest"),
           amount = BigDecimal("0.00"),
           isLink = false,
-          href = dummyCall
+          href = routes.RepaymentInterestController.onPageLoad()
         ),
         InterestRow(
           description = messages("interest.table.debitInterest.accruing"),
@@ -82,7 +83,7 @@ class InterestViewModelSpec extends AnyWordSpec with Matchers with AccountingPer
           description = messages("interest.table.repaymentInterest"),
           amount = BigDecimal("16.00"),
           isLink = true,
-          href = dummyCall
+          href = routes.RepaymentInterestController.onPageLoad()
         ),
         InterestRow(
           description = messages("interest.table.debitInterest"),
@@ -115,7 +116,7 @@ class InterestViewModelSpec extends AnyWordSpec with Matchers with AccountingPer
           description = messages("interest.table.repaymentInterest"),
           amount = BigDecimal("0.00"),
           isLink = false,
-          href = dummyCall
+          href = routes.RepaymentInterestController.onPageLoad()
         ),
         InterestRow(
           description = messages("interest.table.debitInterest.accruing"),
