@@ -27,7 +27,7 @@ import org.scalatest.wordspec.AnyWordSpec
 import play.api.http.Status.{BAD_REQUEST, INTERNAL_SERVER_ERROR, NOT_FOUND, OK}
 import uk.gov.hmrc.http.HeaderCarrier
 
-class DebitInterestConnectorISpec
+class InterestConnectorISpec
   extends AnyWordSpec
     with Matchers
     with ScalaFutures
@@ -41,7 +41,7 @@ class DebitInterestConnectorISpec
   private val taxRef: Long = 1L
   private val accPeriod: Long = 1L
 
-  private val connector: DebitInterestConnector = app.injector.instanceOf[DebitInterestConnector]
+  private val connector: InterestConnector = app.injector.instanceOf[InterestConnector]
 
   "getDebitInterest" should {
 

@@ -28,7 +28,7 @@ import java.net.URL
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
-class DebitInterestConnector @Inject() (http: HttpClientV2, config: ServicesConfig)(implicit
+class InterestConnector @Inject() (http: HttpClientV2, config: ServicesConfig)(implicit
   ec: ExecutionContext
 ) extends Logging {
 
@@ -45,12 +45,12 @@ class DebitInterestConnector @Inject() (http: HttpClientV2, config: ServicesConf
       .recover {
         case u: UpstreamErrorResponse =>
           logger.error(
-            s"[DebitInterestConnector][getInterest] Upstream error: $taxRef :: $accPeriod - ${u.getMessage}"
+            s"[InterestConnector][getInterest] Upstream error: $taxRef :: $accPeriod - ${u.getMessage}"
           )
           throw u
         case ex: Throwable            =>
           logger.error(
-            s"[DebitInterestConnector][getInterest]: $taxRef :: $accPeriod - ${ex.getMessage}"
+            s"[InterestConnector][getInterest]: $taxRef :: $accPeriod - ${ex.getMessage}"
           )
           throw new RuntimeException(ex.getMessage)
       }

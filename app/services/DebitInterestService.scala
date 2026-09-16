@@ -16,7 +16,7 @@
 
 package services
 
-import connectors.DebitInterestConnector
+import connectors.InterestConnector
 import models.InterestType.InterestDebit
 import play.api.Logging
 import uk.gov.hmrc.http.HeaderCarrier
@@ -27,7 +27,7 @@ import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
 class DebitInterestService @Inject (
-  connector: DebitInterestConnector
+  connector: InterestConnector
 )(implicit ec: ExecutionContext)
     extends Logging {
 

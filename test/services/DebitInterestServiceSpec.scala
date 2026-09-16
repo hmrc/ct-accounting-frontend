@@ -16,7 +16,7 @@
 
 package services
 
-import connectors.DebitInterestConnector
+import connectors.InterestConnector
 import helpers.DebitInterestHelper
 import models.InterestType
 import models.InterestType.InterestDebit
@@ -38,14 +38,14 @@ import scala.concurrent.{ExecutionContext, Future}
 class DebitInterestServiceSpec extends AnyWordSpec with DebitInterestHelper with Matchers with ScalaFutures {
 
   private trait Fixture {
-    val mockDebitInterestConnector: DebitInterestConnector = mock[DebitInterestConnector]
+    val mockInterestConnector: InterestConnector = mock[InterestConnector]
 
     val cc                            = Helpers.stubControllerComponents()
     implicit val messages: Messages   = stubMessages()
     implicit val hc: HeaderCarrier    = HeaderCarrier()
     implicit val ec: ExecutionContext = cc.executionContext
 
-    val service          = new DebitInterestService(mockDebitInterestConnector)
+    val service          = new DebitInterestService(mockInterestConnector)
     val accPeriodEndDate = LocalDate.of(2026, 1, 1)
     val taxRef: Long     = 1L
     val accPeriod: Long  = 1L
@@ -53,7 +53,7 @@ class DebitInterestServiceSpec extends AnyWordSpec with DebitInterestHelper with
 
   "getDebitInterest returns default list of records" in new Fixture {
     when(
-      mockDebitInterestConnector.getDebitInterest(any[Long], any[Long], any[InterestType])(any[HeaderCarrier])
+      mockInterestConnector.getDebitInterest(any[Long], any[Long], any[InterestType])(any[HeaderCarrier])
     ).thenReturn(Future.successful(defaultRecord))
 
     val result: DebitInterestViewModel =
@@ -61,12 +61,12 @@ class DebitInterestServiceSpec extends AnyWordSpec with DebitInterestHelper with
 
     result shouldBe defaultViewModel
 
-    verify(mockDebitInterestConnector).getDebitInterest(taxRef, accPeriod, InterestDebit)(hc)
+    verify(mockInterestConnector).getDebitInterest(taxRef, accPeriod, InterestDebit)(hc)
   }
 
   "getDebitInterest propagate any errors from connector" in new Fixture {
     when(
-      mockDebitInterestConnector.getDebitInterest(any[Long], any[Long], any[InterestType])(any[HeaderCarrier])
+      mockInterestConnector.getDebitInterest(any[Long], any[Long], any[InterestType])(any[HeaderCarrier])
     ).thenReturn(Future.failed(new RuntimeException("Boom")))
 
     val ex: Exception = intercept[Exception] {
@@ -75,7 +75,7 @@ class DebitInterestServiceSpec extends AnyWordSpec with DebitInterestHelper with
 
     ex.getMessage should include("Boom")
 
-    verify(mockDebitInterestConnector).getDebitInterest(taxRef, accPeriod, InterestDebit)(hc)
+    verify(mockInterestConnector).getDebitInterest(taxRef, accPeriod, InterestDebit)(hc)
   }
 
 }
