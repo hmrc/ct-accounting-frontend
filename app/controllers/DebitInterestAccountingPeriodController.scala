@@ -43,7 +43,7 @@ class DebitInterestAccountingPeriodController @Inject() (
     // TODO: re-wire next values to the actual in the UserSession
     val taxRef: Long     = 3L
     val accPeriod: Long  = 4L
-    val accPeriodEndDate = LocalDate.of(2026, 9, 30)
+    val accPeriodEndDate = LocalDate.of(2025, 9, 30)
 
     service
       .getDebitInterest(taxRef, accPeriod, accPeriodEndDate)
