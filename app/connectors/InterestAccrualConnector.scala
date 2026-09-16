@@ -28,10 +28,13 @@ import java.net.URL
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
-class InterestAccrualConnector @Inject()(http: HttpClientV2, config: ServicesConfig)(implicit ec: ExecutionContext)
+class InterestAccrualConnector @Inject() (http: HttpClientV2, config: ServicesConfig)(implicit ec: ExecutionContext)
     extends Logging {
-  def getInterestAccrual(taxRef: Long, accPeriod: Long, interestType: String)(implicit hc: HeaderCarrier): Future[InterestAccrualListWithInterestAccruedDays] = {
-    val url: URL = url"${config.baseUrl("corporation-tax")}/corporation-tax/interest-accrual-list/$taxRef/$accPeriod/$interestType"
+  def getInterestAccrual(taxRef: Long, accPeriod: Long, interestType: String)(implicit
+    hc: HeaderCarrier
+  ): Future[InterestAccrualListWithInterestAccruedDays] = {
+    val url: URL =
+      url"${config.baseUrl("corporation-tax")}/corporation-tax/interest-accrual-list/$taxRef/$accPeriod/$interestType"
     http
       .get(url)
       .execute[InterestAccrualListWithInterestAccruedDays]
