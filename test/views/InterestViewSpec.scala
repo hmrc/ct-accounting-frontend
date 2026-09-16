@@ -78,7 +78,7 @@ class InterestViewSpec extends SpecBase with InterestViewModelHelper {
 
       anchor.size mustEqual 1
       anchor.text() mustEqual messages("interest.table.repaymentInterest")
-      anchor.attr("href") mustEqual "/"
+      anchor.attr("href") mustEqual "/ct-accounting/accounting-period-overview/interest/repayment-interest"
     }
     "render a row as a plain text when isLink is false" in {
       val doc  = render(interestViewModelForAccruing)
