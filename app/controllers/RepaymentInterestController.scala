@@ -27,7 +27,7 @@ import views.html.RepaymentInterestView
 import java.time.LocalDate
 import javax.inject.Inject
 
-class RepaymentInterestController @Inject()(
+class RepaymentInterestController @Inject() (
   override val messagesApi: MessagesApi,
   identify: IdentifierAction,
   val controllerComponents: MessagesControllerComponents,
