@@ -53,6 +53,6 @@ final case class DebitInterestViewModel(
       TableRow(content = Text(""), classes = "govuk-!-font-weight-bold"),
       TableRow(content = Text(""), classes = "govuk-!-font-weight-bold"),
       TableRow(content = Text(""), classes = "govuk-!-font-weight-bold"),
-      TableRow(content = Text(total), classes = "govuk-!-font-weight-bold govuk-table__cell govuk-table__cell--numeric")
+      TableRow(content = Text(total), classes = "govuk-table__header govuk-table__header--numeric")
     )
 }
