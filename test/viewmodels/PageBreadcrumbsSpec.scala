@@ -87,7 +87,7 @@ class PageBreadcrumbsSpec extends AnyWordSpec with Matchers {
         BreadcrumbsItem(content = Text(messages("breadcrumbs.accountingPeriods")), href = Some("/")),
         BreadcrumbsItem(content = Text(messages("breadcrumbs.accountingPeriodEnding")), href = Some("/")),
         BreadcrumbsItem(
-          content = Text(messages("interest.title")),
+          content = Text(messages("breadcrumbs.interest")),
           href = Some(routes.LatePaymentInterestStillAccruingController.onPageLoad().url)
         )
       )
