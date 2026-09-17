@@ -27,4 +27,4 @@ GET         /accounting-period-overview/adjustments      controllers.Adjustments
 GET         /accounting-period-overview/payments         controllers.PaymentsController.onPageLoad()
 GET         /accounting-period-overview/interest        controllers.InterestController.onPageLoad()
 
-GET         /accounting-period-overview/repayments-and-reallocations       controllers.InterestController.onPageLoad()
+GET         /accounting-period-overview/repayments-and-reallocations       controllers.RepaymentsReallocationsController.onPageLoad()
