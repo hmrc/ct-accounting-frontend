@@ -16,6 +16,7 @@
 
 package helpers
 
+import controllers.routes
 import models.{
   AccountingPeriodDetails, AccountingPeriodDetailsResponse, AccountingPeriods, AccountingPeriodsRowResponse
 }
@@ -214,7 +215,7 @@ trait InterestViewModelHelper {
         description = messages("interest.table.debitInterest.accruing"),
         amount = BigDecimal("15.75"),
         isLink = false,
-        href = dummyCall
+        href = routes.DebitInterestAccountingPeriodController.onPageLoad()
       ),
       InterestRow(
         description = messages("interest.table.creditInterest.accruing"),
@@ -243,7 +244,7 @@ trait InterestViewModelHelper {
           description = messages("interest.table.debitInterest.accruing"),
           amount = BigDecimal("15.75"),
           isLink = false,
-          href = dummyCall
+          href = routes.DebitInterestAccountingPeriodController.onPageLoad()
         ),
         InterestRow(
           description = messages("interest.table.creditInterest.accruing"),
@@ -272,7 +273,7 @@ trait InterestViewModelHelper {
           description = messages("interest.table.debitInterest"),
           amount = BigDecimal("15.75"),
           isLink = true,
-          href = dummyCall
+          href = routes.DebitInterestAccountingPeriodController.onPageLoad()
         ),
         InterestRow(
           description = messages("interest.table.creditInterest"),

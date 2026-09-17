@@ -1,0 +1,55 @@
+/*
+ * Copyright 2026 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package models
+
+import play.api.libs.json.{Json, OFormat}
+
+import java.time.LocalDate
+
+case class InterestAccrualListWithInterestAccruedDays(interestAccruals: List[InterestAccrualWithInterestAccruedDays])
+
+object InterestAccrualListWithInterestAccruedDays {
+  implicit val format: OFormat[InterestAccrualListWithInterestAccruedDays] =
+    Json.format[InterestAccrualListWithInterestAccruedDays]
+}
+
+case class InterestAccrualWithInterestAccruedDays(
+  computationAmount: BigDecimal,
+  interestAccrualFromDate: LocalDate,
+  interestAccrualToDate: LocalDate,
+  interestRate: BigDecimal,
+  interestAmount: BigDecimal,
+  apEndDate: LocalDate,
+  noOfDays: Int
+)
+
+object InterestAccrualWithInterestAccruedDays {
+  implicit val format: OFormat[InterestAccrualWithInterestAccruedDays] =
+    Json.format[InterestAccrualWithInterestAccruedDays]
+}
+
+// https://github.com/hmrc/ct-core/blob/55cfafad551cbf548e2eb7a1969f58555b417419/ct-core-business/src/main/java/uk/gov/hmrc/portal/ct/business/CTBusinessConstants.java#L4
+enum InterestType(val v: String):
+  case InterestDebit extends InterestType("IDB")
+  case InterestCredit extends InterestType("ICR")
+
+object InterestType {
+  def asString(interestType: InterestType): String = interestType match {
+    case InterestDebit  => "IDB"
+    case InterestCredit => "ICR"
+  }
+}

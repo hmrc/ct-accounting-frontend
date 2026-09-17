@@ -48,7 +48,8 @@ object PageBreadcrumbs {
       BreadcrumbsItem(content = Text(messages("breadcrumbs.accountingPeriodEnding")), href = Some("/"))
     )
   )
-  def interestPage(implicit messages: Messages): Breadcrumbs                                = Breadcrumbs(
+
+  def interestPage(implicit messages: Messages): Breadcrumbs = Breadcrumbs(
     // TODO: Add hrefs
     items = Seq(
       BreadcrumbsItem(content = Text(messages("breadcrumbs.home")), href = Some("/")),
@@ -65,4 +66,18 @@ object PageBreadcrumbs {
       BreadcrumbsItem(content = Text(messages("breadcrumbs.accountingPeriodEnding")), href = Some("/"))
     )
   )
+
+  def debitInterestAccountingPeriodPage(implicit messages: Messages): Breadcrumbs = Breadcrumbs(
+    // TODO: Add hrefs
+    items = Seq(
+      BreadcrumbsItem(content = Text(messages("breadcrumbs.home")), href = Some("/")),
+      BreadcrumbsItem(content = Text(messages("breadcrumbs.accountingPeriods")), href = Some("/")),
+      BreadcrumbsItem(content = Text(messages("breadcrumbs.accountingPeriodEnding")), href = Some("/")),
+      BreadcrumbsItem(
+        content = Text(messages("breadcrumbs.interest")),
+        href = Some(controllers.routes.InterestController.onPageLoad().url)
+      )
+    )
+  )
+
 }
