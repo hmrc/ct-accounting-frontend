@@ -40,13 +40,13 @@
             content = Text("Reallocation from accounting period ending 30 Sep 2025")
           ),
           TableRow(
-            content = Text("1000"),
+            content = Text("£1000"),
             classes = "govuk-table__cell govuk-table__cell--numeric"
           )
         )
       } :+ TableTotals.totalRow(
         label = messages("repaymentreallocations.table.total"),
-        total = 2000,
+        total = 3000,
         blankCells = 1
         ),
       head = Some(Seq(
