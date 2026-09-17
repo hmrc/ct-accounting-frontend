@@ -43,18 +43,18 @@
                 HeadCell(content = Text(messages("latePaymentInterest.stillAccruing.amountSubjectToInterest"))),
                 HeadCell(content = Text(messages("latePaymentInterest.stillAccruing.toDate"))),
                 HeadCell(content = Text(messages("latePaymentInterest.stillAccruing.fromDate"))),
-                HeadCell(content = Text(messages("latePaymentInterest.stillAccruing.daysOverdue"))),
-                HeadCell(content = Text(messages("latePaymentInterest.stillAccruing.annualPercentageRate"))),
-                HeadCell(content = Text(messages("latePaymentInterest.stillAccruing.interestAccrued"))),
+                HeadCell(content = Text(messages("latePaymentInterest.stillAccruing.daysOverdue")),classes = "class govuk-table__cell govuk-table__cell--numeric"),
+                HeadCell(content = Text(messages("latePaymentInterest.stillAccruing.annualPercentageRate")),classes = "class govuk-table__cell govuk-table__cell--numeric"),
+                HeadCell(content = Text(messages("latePaymentInterest.stillAccruing.interestAccrued")),classes = "class govuk-table__cell govuk-table__cell--numeric"),
             )),
             rows = viewModel.rows.map { row =>
                 Seq(
                     TableRow(content = Text(formatCurrency(row.amountSubjectToInterest))),
                     TableRow(content = Text(formatDate(row.toDate, messages.lang))),
                     TableRow(content = Text(formatDate(row.fromDate, messages.lang))),
-                    TableRow(content = Text(row.daysOverdue.toString)),
-                    TableRow(content = Text(formatPercentage(row.annualPercentageRate))),
-                    TableRow(content = Text(formatCurrency(row.interestAccrued)))
+                    TableRow(content = Text(row.daysOverdue.toString),classes = "class govuk-table__cell govuk-table__cell--numeric"),
+                    TableRow(content = Text(formatPercentage(row.annualPercentageRate)),classes = "class govuk-table__cell govuk-table__cell--numeric"),
+                    TableRow(content = Text(formatCurrency(row.interestAccrued)),classes = "class govuk-table__cell govuk-table__cell--numeric")
                 )
 
             }:+ viewModel.totalRow(

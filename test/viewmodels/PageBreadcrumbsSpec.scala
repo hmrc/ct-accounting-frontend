@@ -16,6 +16,7 @@
 
 package viewmodels
 
+import controllers.routes
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 import uk.gov.hmrc.govukfrontend.views.viewmodels.breadcrumbs.BreadcrumbsItem
@@ -85,7 +86,10 @@ class PageBreadcrumbsSpec extends AnyWordSpec with Matchers {
         BreadcrumbsItem(content = Text(messages("breadcrumbs.home")), href = Some("/")),
         BreadcrumbsItem(content = Text(messages("breadcrumbs.accountingPeriods")), href = Some("/")),
         BreadcrumbsItem(content = Text(messages("breadcrumbs.accountingPeriodEnding")), href = Some("/")),
-        BreadcrumbsItem(content = Text(messages("latePaymentInterest.stillAccruing.title")), href = Some("/"))
+        BreadcrumbsItem(
+          content = Text(messages("interest.title")),
+          href = Some(routes.LatePaymentInterestStillAccruingController.onPageLoad().url)
+        )
       )
     }
 
