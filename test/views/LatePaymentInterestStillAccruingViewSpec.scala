@@ -64,8 +64,8 @@ class LatePaymentInterestStillAccruingViewSpec extends SpecBase with LatePayment
       val headers = doc.select("thead th")
       headers.size() mustBe 6
       headers.get(0).text() mustBe messages("latePaymentInterest.stillAccruing.amountSubjectToInterest")
-      headers.get(1).text() mustBe messages("latePaymentInterest.stillAccruing.toDate")
-      headers.get(2).text() mustBe messages("latePaymentInterest.stillAccruing.fromDate")
+      headers.get(1).text() mustBe messages("latePaymentInterest.stillAccruing.fromDate")
+      headers.get(2).text() mustBe messages("latePaymentInterest.stillAccruing.toDate")
       headers.get(3).text() mustBe messages("latePaymentInterest.stillAccruing.daysOverdue")
       headers.get(4).text() mustBe messages("latePaymentInterest.stillAccruing.annualPercentageRate")
       headers.get(5).text() mustBe messages("latePaymentInterest.stillAccruing.interestAccrued")
