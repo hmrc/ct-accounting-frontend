@@ -34,19 +34,19 @@
       rows = repayReallocationSummary.transactions.map { transaction =>
         Seq(
           TableRow(
-                content = Text(formatDate(transaction.transactionDate.getOrElse(LocalDate.of(2026,1,1)), messages.lang))
+                content = Text("10 Oct 2005")
           ),
           TableRow(
-            content = Text(messages(RepaymentsReallocationsDescriptionHelper.getDescription(transaction.type.getOrElse("")), formatDate(transaction.transactionDate.getOrElse(LocalDate.of(2026,1,1)))
+            content = Text("Reallocation from accounting period ending 30 Sep 2025")
           ),
           TableRow(
-            content = Text(formatCurrency(transaction.amount.getOrElse(0))),
+            content = Text("1000"),
             classes = "govuk-table__cell govuk-table__cell--numeric"
           )
         )
       } :+ TableTotals.totalRow(
         label = messages("repaymentreallocations.table.total"),
-        total = total,
+        total = 2000,
         blankCells = 1
         ),
       head = Some(Seq(

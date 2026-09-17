@@ -22,11 +22,11 @@ object RepaymentsReallocationsDescriptionHelper {
 
   def getDescription(transactionType: String)(implicit messages: Messages): String =
     transactionType match {
-      case "RTO"              =>
+      case "RTO" =>
         messages("repaymentreallocations.description.rto") // REALLOCATION TO
       case "RFR" =>
         messages("repaymentreallocations.description.rfr") // REALLOCATION FROM
-      case _                             =>
+      case _     =>
         ""
     }
 }
