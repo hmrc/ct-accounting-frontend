@@ -73,7 +73,7 @@ object InterestViewModel {
           description = deriveDescription("interest.table.creditInterest", accDetails.crDbCalcFlag),
           amount = accDetails.creditInterestAmount,
           isLink = isHyperLink(accDetails.creditInterestAmount, accDetails.crDbCalcFlag),
-          href = dummyCall
+          href = routes.CreditInterestController.onPageLoad()
         )
       )
     )

@@ -62,7 +62,7 @@ class InterestViewModelSpec extends AnyWordSpec with Matchers with AccountingPer
           description = messages("interest.table.creditInterest.accruing"),
           amount = BigDecimal("0.00"),
           isLink = false,
-          href = dummyCall
+          href = routes.CreditInterestController.onPageLoad()
         )
       )
     }
@@ -95,7 +95,7 @@ class InterestViewModelSpec extends AnyWordSpec with Matchers with AccountingPer
           description = messages("interest.table.creditInterest"),
           amount = BigDecimal("0.00"),
           isLink = false,
-          href = dummyCall
+          href = routes.CreditInterestController.onPageLoad()
         )
       )
     }
@@ -128,7 +128,7 @@ class InterestViewModelSpec extends AnyWordSpec with Matchers with AccountingPer
           description = messages("interest.table.creditInterest.accruing"),
           amount = BigDecimal("0.00"),
           isLink = false,
-          href = dummyCall
+          href = routes.CreditInterestController.onPageLoad()
         )
       )
     }

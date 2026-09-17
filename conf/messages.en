@@ -123,6 +123,18 @@ repaymentInterest.percentage = Annual Percentage Rate
 repaymentInterest.interest = Interest accrued
 repaymentInterest.table.total = Total
 
+creditInterest.title = Credit interest
+creditInterest.section = Accounting period overview
+creditInterest.heading = Credit interest
+creditInterest.table.header = Accounting period ending {0}
+creditInterest.subject = Amount subject to interest
+creditInterest.fromDate = From date
+creditInterest.toDate = To date
+creditInterest.days = Day overdue
+creditInterest.percentage = Annual Percentage Rate
+creditInterest.interest = Interest accrued
+creditInterest.table.total = Total
+
 taxDescription.assessment.a = Amended assessment {0}
 taxDescription.assessment.d = Discovery assessment {0}
 taxDescription.assessment.e = HMRC determination {0}
