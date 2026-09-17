@@ -32,3 +32,4 @@ GET         /accounting-period-overview/interest/late-payment-interest       con
 GET         /accounting-period-overview/interest/debit-interest   controllers.DebitInterestAccountingPeriodController.onPageLoad()
 GET         /accounting-period-overview/interest/repayment-interest controllers.RepaymentInterestController.onPageLoad()
 GET         /accounting-period-overview/interest/credit-interest controllers.CreditInterestController.onPageLoad()
+GET         /accounting-period-overview/repayments-and-reallocations       controllers.RepaymentsReallocationsController.onPageLoad()
