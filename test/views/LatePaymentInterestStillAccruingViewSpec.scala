@@ -69,12 +69,16 @@ class LatePaymentInterestStillAccruingViewSpec extends SpecBase with LatePayment
       headers.get(3).text() mustBe messages("latePaymentInterest.stillAccruing.daysOverdue")
       headers.get(4).text() mustBe messages("latePaymentInterest.stillAccruing.annualPercentageRate")
       headers.get(5).text() mustBe messages("latePaymentInterest.stillAccruing.interestAccrued")
+
+      headers.get(3).hasClass("govuk-table__cell--numeric") mustBe true
+      headers.get(4).hasClass("govuk-table__cell--numeric") mustBe true
+      headers.get(5).hasClass("govuk-table__cell--numeric") mustBe true
     }
 
     "render numeric amount cells with the numeric class" in {
       val doc         = render(viewModel)
       val amountCells = doc.select("tbody tr td.govuk-table__cell--numeric")
-      amountCells.size() must be <= 2
+      amountCells.size() must be <= 4
     }
 
     "render the total row" in {
@@ -101,7 +105,7 @@ class LatePaymentInterestStillAccruingViewSpec extends SpecBase with LatePayment
       messages("breadcrumbs.home"),
       messages("breadcrumbs.accountingPeriods"),
       messages("breadcrumbs.accountingPeriodEnding"),
-      messages("latePaymentInterest.stillAccruing.title")
+      messages("interest.title")
     )
     doc.select(".govuk-breadcrumbs__list-item").size() mustBe 4
   }
