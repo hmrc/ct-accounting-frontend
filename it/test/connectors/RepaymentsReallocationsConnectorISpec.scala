@@ -33,7 +33,7 @@ class RepaymentsReallocationsConnectorISpec
     def url(taxRef: Long, accPeriod: Long) =
       s"/corporation-tax/repayments-and-reallocations/$taxRef/$accPeriod"
 
-    "return RepayReallocationSummary, get Repayments with status code OK" in {
+    "return RepayReallocationSummary, get Reallocations From, with status code OK" in {
       val response = repaymentSummary
 
       stubFor(
@@ -61,7 +61,7 @@ class RepaymentsReallocationsConnectorISpec
       result mustEqual response
     }
 
-    "return RepayReallocationSummary, get Reallocations with status code OK" in {
+    "return RepayReallocationSummary, get Reallocations To with status code OK" in {
       val response = reallocationSummary
 
       stubFor(
@@ -89,7 +89,7 @@ class RepaymentsReallocationsConnectorISpec
       result mustEqual response
     }
 
-    "return RepayReallocationSummary, get Repayments and Reallocations with status code OK" in {
+    "return RepayReallocationSummary, get Reallocations To and From, with status code OK" in {
       val response = multipleSummaries
 
       stubFor(

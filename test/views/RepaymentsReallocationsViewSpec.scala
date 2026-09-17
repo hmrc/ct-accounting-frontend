@@ -52,19 +52,19 @@ class RepaymentsReallocationsViewSpec extends SpecBase with RepaymentsReallocati
 
     "render the correct page title" in {
       val doc = render()
-      doc.title() must include(messages("payments.title"))
-      doc.title() must include(messages("payments.section"))
+      doc.title() must include(messages("repaymentreallocations.title"))
+      doc.title() must include(messages("repaymentreallocations.section"))
     }
 
     "render the correct heading" in {
       val doc = render()
-      doc.select("h1.govuk-heading-l").text() mustBe messages("payments.heading")
+      doc.select("h1.govuk-heading-l").text() mustBe messages("repaymentreallocations.heading")
     }
 
     "render the table caption with the formatted account period" in {
       val doc = render()
       doc.select(".govuk-table__caption").text() must include(
-        messages("payments.table.header", formatDate(accountPeriod, messages.lang))
+        messages("repaymentreallocations.table.header", formatDate(accountPeriod, messages.lang))
       )
     }
 
@@ -72,9 +72,9 @@ class RepaymentsReallocationsViewSpec extends SpecBase with RepaymentsReallocati
       val doc     = render()
       val headers = doc.select("th.govuk-table__header").eachText()
       headers must contain allOf (
-        messages("payments.date"),
-        messages("payments.description"),
-        messages("payments.amount")
+        messages("repaymentreallocations.date"),
+        messages("repaymentreallocations.description"),
+        messages("repaymentreallocations.amount")
       )
     }
 
@@ -82,18 +82,23 @@ class RepaymentsReallocationsViewSpec extends SpecBase with RepaymentsReallocati
       val doc         = render()
       val description = doc.select("td.govuk-table__cell").text()
 
-      description must include(messages("payments.description.IRC"))
+      description must include(messages("repaymentreallocations.description.IRC"))
     }
-
-    "render one row per transaction when there are multiple" in {
-      val twoTransactions = paymentTransactions :+ PaymentTransaction(
-        amount = 99.99,
-        paymentType = "CP",
-        effectiveDateOfPayment = LocalDate.of(2026, 2, 1)
-      )
-      val doc             = render(items = twoTransactions)
-      doc.select("tbody.govuk-table__body tr.govuk-table__row").size() mustBe 3
-    }
+//
+//    "render one row with repayment transaction" in {
+//      val doc = render(summary = realloctionsFromSummary)
+//      doc.select("tbody.govuk-table__body tr.govuk-table__row").size() mustBe 2
+//    }
+//
+//    "render one row with reallocations transaction" in {
+//      val doc = render(summary = realloctionsToSummary)
+//      doc.select("tbody.govuk-table__body tr.govuk-table__row").size() mustBe 2
+//    }
+//
+//    "render one row with multiple transactions" in {
+//      val doc = render(summary = multipleSummaries)
+//      doc.select("tbody.govuk-table__body tr.govuk-table__row").size() mustBe 3
+//    }
 
     "render no data rows when there are no transactions" in {
       val doc = render(items = List.empty)

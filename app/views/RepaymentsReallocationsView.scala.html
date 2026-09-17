@@ -17,6 +17,7 @@
 @import views.ViewUtils._
 @import java.time.LocalDate
 @import viewmodels._
+@import utils.RepaymentsReallocationsDescriptionHelper
 
 @this(
         layout: templates.Layout,
@@ -33,13 +34,13 @@
       rows = repayReallocationSummary.transactions.map { transaction =>
         Seq(
           TableRow(
-                content = Text(formatDate(transaction.transactionDate, messages.lang))
+                content = Text(formatDate(transaction.transactionDate.getOrElse(LocalDate.of(2026,1,1)), messages.lang))
           ),
           TableRow(
-                content = Text(transaction.type.toString))
+            content = Text(messages(RepaymentsReallocationsDescriptionHelper.getDescription(transaction.type.getOrElse("")), formatDate(transaction.transactionDate.getOrElse(LocalDate.of(2026,1,1)))
           ),
           TableRow(
-            content = Text(formatCurrency(transaction.amount)),
+            content = Text(formatCurrency(transaction.amount.getOrElse(0))),
             classes = "govuk-table__cell govuk-table__cell--numeric"
           )
         )

@@ -47,9 +47,9 @@ class RepaymentsReallocationsControllerSpec extends SpecBase with MockitoSugar w
 
   "RepaymentsReallocationsController" - {
 
-    "must return OK, with repayments summary and correct view" in new Fixture {
+    "must return OK, with Reallocations From Summary, summary and correct view" in new Fixture {
       when(mockService.getRepayReallocationSummary(eqTo(1L), eqTo(1L))(any[HeaderCarrier]))
-        .thenReturn(Future.successful(repaymentSummary))
+        .thenReturn(Future.successful(realloctionsFromSummary))
 
       running(application) {
         val request = FakeRequest(GET, routes.InterestController.onPageLoad().url)
@@ -65,9 +65,9 @@ class RepaymentsReallocationsControllerSpec extends SpecBase with MockitoSugar w
       }
     }
 
-    "must return OK, with reallocations summary and correct view" in new Fixture {
+    "must return OK,with Reallocations To Summary, and correct view" in new Fixture {
       when(mockService.getRepayReallocationSummary(eqTo(1L), eqTo(1L))(any[HeaderCarrier]))
-        .thenReturn(Future.successful(reallocationSummary))
+        .thenReturn(Future.successful(realloctionsToSummary))
 
       running(application) {
         val request = FakeRequest(GET, routes.InterestController.onPageLoad().url)
@@ -83,7 +83,7 @@ class RepaymentsReallocationsControllerSpec extends SpecBase with MockitoSugar w
       }
     }
 
-    "must return OK, with multiple summaries, showing both repayments and reallocations, and correct view" in new Fixture {
+    "must return OK, with multiple summaries, showing both Reallocations To and From, and correct view" in new Fixture {
       when(mockService.getRepayReallocationSummary(eqTo(1L), eqTo(1L))(any[HeaderCarrier]))
         .thenReturn(Future.successful(multipleSummaries))
 
