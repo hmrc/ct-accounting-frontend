@@ -28,7 +28,7 @@ import viewmodels.{InterestRow, InterestViewModel}
 import java.time.LocalDate
 
 trait InterestViewModelHelper {
-  
+
   val latePaymentInterestRoute: Call = controllers.routes.LatePaymentInterestStillAccruingController.onPageLoad()
 
   val accountingPeriodDetailsResponseForAccruing: AccountingPeriodDetailsResponse    =
