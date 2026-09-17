@@ -20,7 +20,6 @@ import controllers.routes
 import uk.gov.hmrc.govukfrontend.views.viewmodels.breadcrumbs.{Breadcrumbs, BreadcrumbsItem}
 import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 import play.api.i18n.Messages
-import controllers.routes
 
 object PageBreadcrumbs {
 
