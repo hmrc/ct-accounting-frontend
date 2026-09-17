@@ -54,9 +54,9 @@
                     TableRow(content = Text( formatDate(row.fromDate, messages.lang) ) ),
                     TableRow(content = Text( formatDate(row.toDate, messages.lang) ) ),
 
-                    TableRow(content = Text(row.noOfDays.toString) ),
-                    TableRow(content = Text( formatPercentage(row.rate)  ) ),
-                    TableRow(content = Text( formatCurrency(row.interestAmount) ) ),
+                    TableRow(content = Text(row.noOfDays.toString) ,classes = "class govuk-table__cell govuk-table__cell--numeric"),
+                    TableRow(content = Text( formatPercentage(row.rate)  ) ,classes = "class govuk-table__cell govuk-table__cell--numeric"),
+                    TableRow(content = Text( formatCurrency(row.interestAmount) ) ,classes = "class govuk-table__cell govuk-table__cell--numeric"),
                 )
             } :+ viewModel.totalRow(
                 label = messages("debitInterestAccountingPeriod.total"),

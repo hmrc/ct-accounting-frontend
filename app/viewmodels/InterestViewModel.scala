@@ -23,6 +23,7 @@ import uk.gov.hmrc.govukfrontend.views.Aliases.Text
 import uk.gov.hmrc.govukfrontend.views.viewmodels.table.*
 import uk.gov.hmrc.http.HttpVerbs.GET
 import views.ViewUtils.formatCurrency
+import controllers.routes
 
 case class InterestRow(description: String, amount: BigDecimal, isLink: Boolean, href: Call) {
   val amountAsString: String = formatCurrency(amount)
@@ -66,7 +67,7 @@ object InterestViewModel {
           description = deriveDescription("interest.table.debitInterest", accDetails.crDbCalcFlag),
           amount = accDetails.debitInterestAmount,
           isLink = isHyperLink(accDetails.debitInterestAmount, accDetails.crDbCalcFlag),
-          href = dummyCall
+          href = routes.DebitInterestAccountingPeriodController.onPageLoad()
         ),
         InterestRow(
           description = deriveDescription("interest.table.creditInterest", accDetails.crDbCalcFlag),
