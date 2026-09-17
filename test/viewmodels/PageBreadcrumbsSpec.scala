@@ -115,4 +115,24 @@ class PageBreadcrumbsSpec extends AnyWordSpec with Matchers {
     }
 
   }
+
+  "PageBreadcrumbs.debitInterestAccountingPeriodPage" should {
+
+    "contain exactly four breadcrumb items" in {
+      PageBreadcrumbs.debitInterestAccountingPeriodPage.items.size shouldBe 4
+    }
+
+    "have the correct items in order" in {
+      PageBreadcrumbs.debitInterestAccountingPeriodPage.items shouldBe Seq(
+        BreadcrumbsItem(content = Text(messages("breadcrumbs.home")), href = Some("/")),
+        BreadcrumbsItem(content = Text(messages("breadcrumbs.accountingPeriods")), href = Some("/")),
+        BreadcrumbsItem(content = Text(messages("breadcrumbs.accountingPeriodEnding")), href = Some("/")),
+        BreadcrumbsItem(
+          content = Text(messages("breadcrumbs.interest")),
+          href = Some("/ct-accounting/accounting-period-overview/interest")
+        )
+      )
+    }
+
+  }
 }

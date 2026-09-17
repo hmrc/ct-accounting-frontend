@@ -83,6 +83,22 @@ adjustmentsAccountingPeriod.description    = Description
 adjustmentsAccountingPeriod.amount         = Amount
 adjustmentsAccountingPeriod.total          = Total
 
+
+
+debitInterestAccountingPeriod.caption      = Accounting period ending
+debitInterestAccountingPeriod.section      = Accounting period ending
+debitInterestAccountingPeriod.title        = Debit interest - Interest - Accounting period overview
+debitInterestAccountingPeriod.heading      = Debit interest
+
+debitInterestAccountingPeriod.tableHeader.interestAmount = Amount subject to interest
+debitInterestAccountingPeriod.tableHeader.fromDate = From date
+debitInterestAccountingPeriod.tableHeader.toDate = To date
+debitInterestAccountingPeriod.tableHeader.daysOvd = Days overdue
+debitInterestAccountingPeriod.tableHeader.aprc = Annual Percentage Rate
+debitInterestAccountingPeriod.tableHeader.interestAcc = Interest accrued
+
+debitInterestAccountingPeriod.total        = Total
+
 payments.title = Payments
 payments.section = Accounting period overview
 payments.heading = Payments
