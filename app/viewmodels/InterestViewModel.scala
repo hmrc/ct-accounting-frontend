@@ -55,7 +55,7 @@ object InterestViewModel {
           description = deriveDescription("interest.table.latePayment", accDetails.lpiCalcFlag),
           amount = accDetails.latePaymentInterestAmount,
           isLink = isHyperLink(accDetails.latePaymentInterestAmount, accDetails.lpiCalcFlag),
-          href = dummyCall
+          href = routes.LatePaymentInterestStillAccruingController.onPageLoad()
         ),
         InterestRow(
           description = messages("interest.table.repaymentInterest"),
