@@ -67,7 +67,7 @@ object PageBreadcrumbs {
       BreadcrumbsItem(content = Text(messages("breadcrumbs.accountingPeriodEnding")), href = Some("/")),
       BreadcrumbsItem(
         content = Text(messages("breadcrumbs.interest")),
-        href = Some(routes.LatePaymentInterestStillAccruingController.onPageLoad().url)
+        href = Some(routes.InterestController.onPageLoad().url)
       )
     )
   )
