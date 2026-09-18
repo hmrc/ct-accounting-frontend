@@ -24,8 +24,8 @@ import org.scalatest.matchers.should.Matchers.should
 import play.api.Application
 import play.api.i18n.{Lang, Messages, MessagesApi, MessagesImpl}
 import play.api.test.FakeRequest
-import viewmodels.InterestViewModel
-import views.html.InterestView
+import viewmodels.accountingPeriods.InterestViewModel
+import views.html.accountingPeriods.InterestView
 
 class InterestViewSpec extends SpecBase with InterestViewModelHelper {
 

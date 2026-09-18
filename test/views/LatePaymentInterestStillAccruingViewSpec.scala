@@ -24,8 +24,8 @@ import org.scalatest.matchers.should.Matchers.should
 import play.api.Application
 import play.api.i18n.{Lang, Messages, MessagesApi, MessagesImpl}
 import play.api.test.FakeRequest
-import viewmodels.LatePaymentInterestViewModel
-import views.html.LatePaymentInterestStillAccruingView
+import viewmodels.accountingPeriods.LatePaymentInterestViewModel
+import views.html.accountingPeriods.LatePaymentInterestStillAccruingView
 
 class LatePaymentInterestStillAccruingViewSpec extends SpecBase with LatePaymentInterestViewModelHelper {
 

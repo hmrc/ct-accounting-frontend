@@ -26,7 +26,7 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import connectors.InterestAccrualConnector
 import uk.gov.hmrc.http.HeaderCarrier
-import views.html.RepaymentInterestView
+import views.html.accountingPeriods.RepaymentInterestView
 
 import java.time.LocalDate
 import scala.concurrent.Future

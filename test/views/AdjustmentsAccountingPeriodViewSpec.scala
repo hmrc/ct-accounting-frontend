@@ -28,7 +28,7 @@ import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.mvc.AnyContentAsEmpty
 import play.api.test.FakeRequest
 import play.twirl.api.Html
-import views.html.AdjustmentsAccountingPeriodView
+import views.html.accountingPeriods.AdjustmentsAccountingPeriodView
 
 class AdjustmentsAccountingPeriodViewSpec
     extends SpecBase

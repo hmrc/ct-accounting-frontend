@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package viewmodels
+package viewmodels.accountingPeriods
 
 import play.api.i18n.Lang
 import uk.gov.hmrc.govukfrontend.views.Aliases.TableRow

@@ -29,7 +29,7 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import services.DebitInterestService
 import uk.gov.hmrc.http.HeaderCarrier
-import views.html.DebitInterestAccountingPeriodView
+import views.html.accountingPeriods.DebitInterestAccountingPeriodView
 import scala.concurrent.Future
 
 class DebitInterestControllerSpec extends SpecBase with MockitoSugar with DebitInterestHelper {

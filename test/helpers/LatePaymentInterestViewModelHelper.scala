@@ -17,7 +17,7 @@
 package helpers
 
 import models.{InterestAccrualListWithInterestAccruedDays, InterestAccrualWithInterestAccruedDays}
-import viewmodels.{LatePaymentInterestRow, LatePaymentInterestViewModel}
+import viewmodels.accountingPeriods.{LatePaymentInterestRow, LatePaymentInterestViewModel}
 
 import java.time.LocalDate
 

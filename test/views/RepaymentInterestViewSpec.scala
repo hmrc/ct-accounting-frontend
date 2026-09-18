@@ -23,7 +23,7 @@ import org.jsoup.nodes.Document
 import play.api.i18n.{Lang, Messages, MessagesApi, MessagesImpl}
 import play.api.test.FakeRequest
 import views.ViewUtils.formatDate
-import views.html.RepaymentInterestView
+import views.html.accountingPeriods.RepaymentInterestView
 
 import java.time.LocalDate
 

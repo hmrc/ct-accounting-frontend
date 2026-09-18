@@ -28,7 +28,7 @@ import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.mvc.AnyContentAsEmpty
 import play.api.test.FakeRequest
 import play.twirl.api.Html
-import views.html.DebitInterestAccountingPeriodView
+import views.html.accountingPeriods.DebitInterestAccountingPeriodView
 
 class DebitInterestAccountingPeriodViewSpec
     extends SpecBase
