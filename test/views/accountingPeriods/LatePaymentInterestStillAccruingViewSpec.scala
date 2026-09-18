@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package views
+package views.accountingPeriods
 
 import base.SpecBase
 import helpers.LatePaymentInterestViewModelHelper

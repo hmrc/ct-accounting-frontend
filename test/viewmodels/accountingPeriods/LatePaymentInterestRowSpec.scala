@@ -14,12 +14,11 @@
  * limitations under the License.
  */
 
-package viewmodels
+package viewmodels.accountingPeriods
 
 import helpers.InterestAccrualListHelper
 import org.scalatest.matchers.must.Matchers
 import org.scalatest.wordspec.AnyWordSpec
-import viewmodels.accountingPeriods.LatePaymentInterestRow
 import viewmodels.accountingPeriods.LatePaymentInterestRow.toViewModel
 import views.ViewUtils.formatCurrency
 

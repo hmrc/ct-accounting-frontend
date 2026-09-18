@@ -14,8 +14,9 @@
  * limitations under the License.
  */
 
-package viewmodels
+package viewmodels.accountingPeriods
 
+import controllers.routes
 import helpers.AccountingPeriodResponseHelper
 import org.scalatest.matchers.must.Matchers
 import org.scalatest.matchers.should.Matchers.should
@@ -25,8 +26,6 @@ import play.api.mvc.Call
 import play.api.test.Helpers.stubMessages
 import uk.gov.hmrc.http.HttpVerbs.GET
 import views.ViewUtils.formatCurrency
-import controllers.routes
-import viewmodels.accountingPeriods.{InterestRow, InterestViewModel}
 
 class InterestViewModelSpec extends AnyWordSpec with Matchers with AccountingPeriodResponseHelper {
 
