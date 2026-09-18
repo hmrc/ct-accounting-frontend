@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package views
+package views.accountingPeriods
 
 import base.SpecBase
 import helpers.InterestViewModelHelper
@@ -24,8 +24,8 @@ import org.scalatest.matchers.should.Matchers.should
 import play.api.Application
 import play.api.i18n.{Lang, Messages, MessagesApi, MessagesImpl}
 import play.api.test.FakeRequest
-import viewmodels.InterestViewModel
-import views.html.InterestView
+import viewmodels.accountingPeriods.InterestViewModel
+import views.html.accountingPeriods.InterestView
 
 class InterestViewSpec extends SpecBase with InterestViewModelHelper {
 
@@ -78,7 +78,7 @@ class InterestViewSpec extends SpecBase with InterestViewModelHelper {
 
       anchor.size mustEqual 1
       anchor.text() mustEqual messages("interest.table.repaymentInterest")
-      anchor.attr("href") mustEqual "/"
+      anchor.attr("href") mustEqual "/ct-accounting/accounting-period-overview/interest/repayment-interest"
     }
     "render a row as a plain text when isLink is false" in {
       val doc  = render(interestViewModelForAccruing)

@@ -19,7 +19,7 @@ package services
 import models.{AccountingPeriodsRowResponse, MissingAccountingPeriodError, MissingDataError}
 import play.api.i18n.Messages
 import uk.gov.hmrc.http.HeaderCarrier
-import viewmodels.InterestViewModel
+import viewmodels.accountingPeriods.InterestViewModel
 
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}

@@ -16,23 +16,23 @@
 
 package controllers
 
-import connectors.PaymentsConnector
+import connectors.InterestAccrualConnector
 import controllers.Execution.trampoline
 import controllers.actions.*
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
-import views.html.accountingPeriods.PaymentsView
+import views.html.accountingPeriods.RepaymentInterestView
 
 import java.time.LocalDate
 import javax.inject.Inject
 
-class PaymentsController @Inject() (
+class RepaymentInterestController @Inject() (
   override val messagesApi: MessagesApi,
   identify: IdentifierAction,
   val controllerComponents: MessagesControllerComponents,
-  view: PaymentsView,
-  connector: PaymentsConnector
+  view: RepaymentInterestView,
+  connectors: InterestAccrualConnector
 ) extends FrontendBaseController
     with I18nSupport {
 
@@ -41,9 +41,9 @@ class PaymentsController @Inject() (
     val accountPeriod = LocalDate.of(2026, 1, 1) // TODO: This needs to comes from sessionDataRepository
 
     // TODO: Get taxRef + accPeriod from sessionDataRepositry
-    connector.getPayments(1L, 1L).map { paymentsResponse =>
-      val total: BigDecimal = paymentsResponse.paymentTransactions.map(_.amount).sum
-      Ok(view(paymentsResponse.paymentTransactions, accountPeriod, total))
+    connectors.getInterestAccrual(1L, 1L, "RIN").map { repaymentInterestResponse =>
+      val total: BigDecimal = repaymentInterestResponse.interestAccruals.map(_.interestAmount).sum
+      Ok(view(repaymentInterestResponse.interestAccruals, accountPeriod, total))
     }
   }
 }

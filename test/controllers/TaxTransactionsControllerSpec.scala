@@ -22,7 +22,7 @@ import org.scalatestplus.mockito.MockitoSugar
 import play.api.inject.bind
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import views.html.TaxTransactionsView
+import views.html.accountingPeriods.TaxTransactionsView
 import models.{TaxTransactions, TaxTransactionsItem}
 import org.mockito.ArgumentMatchers.{any, eq as eqTo}
 import services.TaxTransactionsService

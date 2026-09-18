@@ -23,7 +23,7 @@ import models.{
 import play.api.i18n.Messages
 import play.api.mvc.Call
 import uk.gov.hmrc.http.HttpVerbs.GET
-import viewmodels.{InterestRow, InterestViewModel}
+import viewmodels.accountingPeriods.{InterestRow, InterestViewModel}
 
 import java.time.LocalDate
 
@@ -211,7 +211,7 @@ trait InterestViewModelHelper {
         description = messages("interest.table.repaymentInterest"),
         amount = BigDecimal("10.00"),
         isLink = true,
-        href = dummyCall
+        href = routes.RepaymentInterestController.onPageLoad()
       ),
       InterestRow(
         description = messages("interest.table.debitInterest.accruing"),
@@ -240,7 +240,7 @@ trait InterestViewModelHelper {
           description = messages("interest.table.repaymentInterest"),
           amount = BigDecimal("10.00"),
           isLink = false,
-          href = dummyCall
+          href = routes.RepaymentInterestController.onPageLoad()
         ),
         InterestRow(
           description = messages("interest.table.debitInterest.accruing"),
@@ -269,7 +269,7 @@ trait InterestViewModelHelper {
           description = messages("interest.table.repaymentInterest"),
           amount = BigDecimal("12.00"),
           isLink = false,
-          href = dummyCall
+          href = routes.RepaymentInterestController.onPageLoad()
         ),
         InterestRow(
           description = messages("interest.table.debitInterest"),

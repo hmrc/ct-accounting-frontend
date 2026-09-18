@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package views
+package views.accountingPeriods
 
 import base.SpecBase
 import helpers.PenaltiesDataHelper
@@ -22,8 +22,8 @@ import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import play.api.i18n.{Lang, Messages, MessagesApi, MessagesImpl}
 import play.api.test.FakeRequest
-import viewmodels.PenaltiesAccountingPeriodViewModel
-import views.html.PenaltiesAccountingPeriodView
+import viewmodels.accountingPeriods.PenaltiesAccountingPeriodViewModel
+import views.html.accountingPeriods.PenaltiesAccountingPeriodView
 
 class PenaltiesAccountingPeriodViewSpec extends SpecBase with PenaltiesDataHelper {
 

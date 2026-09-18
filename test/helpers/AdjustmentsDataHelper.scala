@@ -18,7 +18,7 @@ package helpers
 
 import models.AdjustmentTransactionType.{N, O, P}
 import models.{AdjustmentTransactions, AdjustmentTransactionsList}
-import viewmodels.{AdjustmentsAccountingPeriodViewModel, AdjustmentsAccountingPeriodViewModelRow}
+import viewmodels.accountingPeriods.{AdjustmentsAccountingPeriodViewModel, AdjustmentsAccountingPeriodViewModelRow}
 
 trait AdjustmentsDataHelper {
 

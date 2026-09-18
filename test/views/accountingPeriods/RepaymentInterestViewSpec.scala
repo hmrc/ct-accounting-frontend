@@ -14,23 +14,23 @@
  * limitations under the License.
  */
 
-package views
+package views.accountingPeriods
 
 import base.SpecBase
-import models.TaxTransactionsItem
+import models.InterestAccrualWithInterestAccruedDays
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import play.api.i18n.{Lang, Messages, MessagesApi, MessagesImpl}
 import play.api.test.FakeRequest
 import views.ViewUtils.formatDate
-import views.html.TaxTransactionsView
+import views.html.accountingPeriods.RepaymentInterestView
 
 import java.time.LocalDate
 
-class TaxTransactionsViewSpec extends SpecBase {
+class RepaymentInterestViewSpec extends SpecBase {
   val application = applicationBuilder().build()
 
-  val view: TaxTransactionsView = application.injector.instanceOf[TaxTransactionsView]
+  val view: RepaymentInterestView = application.injector.instanceOf[RepaymentInterestView]
 
   implicit val messagesApi: MessagesApi = application.injector.instanceOf[MessagesApi]
   implicit val messages: Messages       = MessagesImpl(Lang.defaultLang, messagesApi)
@@ -39,37 +39,40 @@ class TaxTransactionsViewSpec extends SpecBase {
 
   val accountPeriod: LocalDate = LocalDate.of(2026, 1, 1)
 
-  val total: BigDecimal                          = 10000.12
-  val taxTransactions: List[TaxTransactionsItem] = List(
-    TaxTransactionsItem(
-      currentAmount = 1234.56,
-      assessmentType = "A",
-      taxDate = LocalDate.of(2026, 1, 15),
-      correctionClaimSignal = None
+  val total: BigDecimal                                                       = 10000.12
+  val repaymentInterestResponse: List[InterestAccrualWithInterestAccruedDays] = List(
+    InterestAccrualWithInterestAccruedDays(
+      computationAmount = BigDecimal(3125.43),
+      interestAccrualFromDate = LocalDate.of(2026, 3, 1),
+      interestAccrualToDate = LocalDate.of(2026, 4, 1),
+      interestRate = BigDecimal(42),
+      interestAmount = BigDecimal(535.12),
+      apEndDate = LocalDate.of(2026, 1, 1),
+      noOfDays = 7
     )
   )
 
-  def render(items: List[TaxTransactionsItem] = taxTransactions): Document =
+  def render(items: List[InterestAccrualWithInterestAccruedDays] = repaymentInterestResponse): Document =
     Jsoup.parse(view(items, accountPeriod, total)(request, messages(application)).toString)
 
   // TODO: Extra tests covering all content
-  "TaxTransactionsView" - {
+  "RepaymentInterestView" - {
 
     "render the correct page title" in {
       val doc = render()
-      doc.title() must include(messages("taxTransactions.title"))
-      doc.title() must include(messages("taxTransactions.section"))
+      doc.title() must include(messages("repaymentInterest.title"))
+      doc.title() must include(messages("repaymentInterest.section"))
     }
 
     "render the correct heading" in {
       val doc = render()
-      doc.select("h1.govuk-heading-l").text() mustBe messages("taxTransactions.heading")
+      doc.select("h1.govuk-heading-l").text() mustBe messages("repaymentInterest.heading")
     }
 
     "render the table caption with the formatted account period" in {
       val doc = render()
       doc.select(".govuk-table__caption").text() must include(
-        messages("taxTransactions.table.header", formatDate(accountPeriod, messages.lang))
+        messages("repaymentInterest.table.header", formatDate(accountPeriod, messages.lang))
       )
     }
 
@@ -77,20 +80,26 @@ class TaxTransactionsViewSpec extends SpecBase {
       val doc     = render()
       val headers = doc.select("th.govuk-table__header").eachText()
       headers must contain allOf (
-        messages("taxTransactions.date"),
-        messages("taxTransactions.description"),
-        messages("taxTransactions.amount")
+        messages("repaymentInterest.subject"),
+        messages("repaymentInterest.fromDate"),
+        messages("repaymentInterest.toDate"),
+        messages("repaymentInterest.days"),
+        messages("repaymentInterest.percentage"),
+        messages("repaymentInterest.interest")
       )
     }
 
     "render one row per transaction when there are multiple" in {
-      val twoTransactions = taxTransactions :+ TaxTransactionsItem(
-        currentAmount = 99.99,
-        assessmentType = "A",
-        taxDate = LocalDate.of(2026, 2, 1),
-        correctionClaimSignal = Some("2")
+      val twoAccruals = repaymentInterestResponse :+ InterestAccrualWithInterestAccruedDays(
+        computationAmount = BigDecimal(213.43),
+        interestAccrualFromDate = LocalDate.of(2026, 2, 1),
+        interestAccrualToDate = LocalDate.of(2026, 2, 1),
+        interestRate = BigDecimal(1),
+        interestAmount = BigDecimal(34.12),
+        apEndDate = LocalDate.of(2026, 1, 1),
+        noOfDays = 1
       )
-      val doc             = render(items = twoTransactions)
+      val doc         = render(items = twoAccruals)
       doc.select("tbody.govuk-table__body tr.govuk-table__row").size() mustBe 3
     }
 
@@ -105,9 +114,10 @@ class TaxTransactionsViewSpec extends SpecBase {
       breadcrumbs must contain allOf (
         messages("breadcrumbs.home"),
         messages("breadcrumbs.accountingPeriods"),
-        messages("breadcrumbs.accountingPeriodEnding")
+        messages("breadcrumbs.accountingPeriodEnding"),
+        messages("breadcrumbs.interest")
       )
-      doc.select(".govuk-breadcrumbs__list-item").size() mustBe 3
+      doc.select(".govuk-breadcrumbs__list-item").size() mustBe 4
     }
   }
 }

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package viewmodels
+package viewmodels.accountingPeriods
 
 import helpers.DebitInterestHelper
 import org.scalatest.flatspec.AnyFlatSpec

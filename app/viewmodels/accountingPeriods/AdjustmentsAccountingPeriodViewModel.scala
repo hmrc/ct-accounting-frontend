@@ -14,13 +14,14 @@
  * limitations under the License.
  */
 
-package viewmodels
+package viewmodels.accountingPeriods
 
+import models.AdjustmentTransactionType.*
+import models.AdjustmentTransactionsList
+import play.api.i18n.Messages
 import uk.gov.hmrc.govukfrontend.views.Aliases.TableRow
 import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
-import play.api.i18n.Messages
-import models.AdjustmentTransactionsList
-import models.AdjustmentTransactionType.*
+//import viewmodels.accountingPeriods.{AdjustmentsAccountingPeriodViewModel, AdjustmentsAccountingPeriodViewModelRow}
 import views.ViewUtils.*
 
 case class AdjustmentsAccountingPeriodViewModelRow(

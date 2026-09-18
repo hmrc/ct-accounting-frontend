@@ -19,7 +19,7 @@ package helpers
 import models.PenaltyTransactionType.*
 import models.{PenaltiesResponse, PenaltyTransactionItem}
 import play.api.i18n.Messages
-import viewmodels.{PenaltiesAccountingPeriodViewModel, PenaltiesAccountingPeriodViewModelRow}
+import viewmodels.accountingPeriods.{PenaltiesAccountingPeriodViewModel, PenaltiesAccountingPeriodViewModelRow}
 
 import java.time.LocalDate
 

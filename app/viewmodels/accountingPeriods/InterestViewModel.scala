@@ -14,8 +14,9 @@
  * limitations under the License.
  */
 
-package viewmodels
+package viewmodels.accountingPeriods
 
+import controllers.routes
 import models.AccountingPeriodDetailsResponse
 import play.api.i18n.Messages
 import play.api.mvc.Call
@@ -23,7 +24,6 @@ import uk.gov.hmrc.govukfrontend.views.Aliases.Text
 import uk.gov.hmrc.govukfrontend.views.viewmodels.table.*
 import uk.gov.hmrc.http.HttpVerbs.GET
 import views.ViewUtils.formatCurrency
-import controllers.routes
 
 case class InterestRow(description: String, amount: BigDecimal, isLink: Boolean, href: Call) {
   val amountAsString: String = formatCurrency(amount)
@@ -61,7 +61,7 @@ object InterestViewModel {
           description = messages("interest.table.repaymentInterest"),
           amount = accDetails.repaymentInterestAmount,
           isLink = isHyperLink(accDetails.repaymentInterestAmount, clericalCalculationFlag),
-          href = dummyCall
+          href = routes.RepaymentInterestController.onPageLoad()
         ),
         InterestRow(
           description = deriveDescription("interest.table.debitInterest", accDetails.crDbCalcFlag),
