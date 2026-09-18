@@ -20,7 +20,7 @@ import connectors.InterestConnector
 import models.InterestType.InterestDebit
 import play.api.Logging
 import uk.gov.hmrc.http.HeaderCarrier
-import viewmodels.{DebitInterestRow, DebitInterestViewModel}
+import viewmodels.accountingPeriods.{DebitInterestRow, DebitInterestViewModel}
 
 import java.time.LocalDate
 import javax.inject.Inject

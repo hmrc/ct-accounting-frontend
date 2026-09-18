@@ -22,7 +22,7 @@ import controllers.actions.*
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
-import views.html.RepaymentInterestView
+import views.html.accountingPeriods.RepaymentInterestView
 
 import java.time.LocalDate
 import javax.inject.Inject

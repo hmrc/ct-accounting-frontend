@@ -23,8 +23,8 @@ import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import services.InterestService
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
-import viewmodels.InterestViewModel
-import views.html.InterestView
+import viewmodels.accountingPeriods.InterestViewModel
+import views.html.accountingPeriods.InterestView
 
 import javax.inject.Inject
 import scala.concurrent.ExecutionContext

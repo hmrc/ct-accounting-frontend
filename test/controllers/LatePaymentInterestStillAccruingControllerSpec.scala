@@ -29,7 +29,7 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import services.LatePaymentInterestService
 import uk.gov.hmrc.http.HeaderCarrier
-import views.html.LatePaymentInterestStillAccruingView
+import views.html.accountingPeriods.LatePaymentInterestStillAccruingView
 
 import scala.concurrent.Future
 

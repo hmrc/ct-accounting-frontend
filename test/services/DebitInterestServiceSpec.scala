@@ -30,7 +30,7 @@ import play.api.i18n.Messages
 import play.api.test.Helpers
 import play.api.test.Helpers.stubMessages
 import uk.gov.hmrc.http.HeaderCarrier
-import viewmodels.DebitInterestViewModel
+import viewmodels.accountingPeriods.DebitInterestViewModel
 
 import java.time.LocalDate
 import scala.concurrent.{ExecutionContext, Future}

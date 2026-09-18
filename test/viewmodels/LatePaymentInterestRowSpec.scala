@@ -19,7 +19,8 @@ package viewmodels
 import helpers.InterestAccrualListHelper
 import org.scalatest.matchers.must.Matchers
 import org.scalatest.wordspec.AnyWordSpec
-import viewmodels.LatePaymentInterestRow.toViewModel
+import viewmodels.accountingPeriods.LatePaymentInterestRow
+import viewmodels.accountingPeriods.LatePaymentInterestRow.toViewModel
 import views.ViewUtils.formatCurrency
 
 import java.time.LocalDate

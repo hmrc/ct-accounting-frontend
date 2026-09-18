@@ -22,10 +22,10 @@ import models.PenaltyTransactionType
 import play.api.Logging
 import play.api.i18n.Messages
 import uk.gov.hmrc.http.HeaderCarrier
-import viewmodels.{PenaltiesAccountingPeriodViewModel, PenaltiesAccountingPeriodViewModelRow}
 import java.time.LocalDate
 import scala.concurrent.{ExecutionContext, Future}
 import models.PenaltyTransactionType.*
+import viewmodels.accountingPeriods.{PenaltiesAccountingPeriodViewModel, PenaltiesAccountingPeriodViewModelRow}
 
 @Singleton
 class PenaltiesService @Inject() (

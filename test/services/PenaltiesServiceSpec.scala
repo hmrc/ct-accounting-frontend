@@ -28,7 +28,7 @@ import play.api.i18n.Messages
 import play.api.test.Helpers
 import play.api.test.Helpers.stubMessages
 import uk.gov.hmrc.http.HeaderCarrier
-import viewmodels.{PenaltiesAccountingPeriodViewModel, PenaltiesAccountingPeriodViewModelRow}
+import viewmodels.accountingPeriods.{PenaltiesAccountingPeriodViewModel, PenaltiesAccountingPeriodViewModelRow}
 
 import java.time.LocalDate
 import scala.concurrent.ExecutionContext.Implicits.global

@@ -30,7 +30,7 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import services.InterestService
 import uk.gov.hmrc.http.HeaderCarrier
-import views.html.InterestView
+import views.html.accountingPeriods.InterestView
 
 import scala.concurrent.Future
 

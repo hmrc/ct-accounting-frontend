@@ -17,7 +17,7 @@
 package helpers
 
 import models.{InterestAccrualListWithInterestAccruedDays, InterestAccrualWithInterestAccruedDays}
-import viewmodels.{DebitInterestRow, DebitInterestViewModel}
+import viewmodels.accountingPeriods.{DebitInterestRow, DebitInterestViewModel}
 
 import java.time.LocalDate
 

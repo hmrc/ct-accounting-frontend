@@ -26,6 +26,7 @@ import play.api.test.Helpers.stubMessages
 import uk.gov.hmrc.http.HttpVerbs.GET
 import views.ViewUtils.formatCurrency
 import controllers.routes
+import viewmodels.accountingPeriods.{InterestRow, InterestViewModel}
 
 class InterestViewModelSpec extends AnyWordSpec with Matchers with AccountingPeriodResponseHelper {
 
