@@ -127,6 +127,18 @@ interest.table.creditInterest           = Credit Interest
 interest.table.creditInterest.accruing  = Credit Interest(still accruing)
 interest.table.total                    = Total
 
+latePaymentInterest.stillAccruing.title                   = Late payment interest
+latePaymentInterest.stillAccruing.section                 = Accounting period overview
+latePaymentInterest.stillAccruing.caption                 = Accounting period ending 30 Sep 2025
+latePaymentInterest.stillAccruing.heading                 = Late payment interest (still accruing)
+latePaymentInterest.stillAccruing.amountSubjectToInterest = Amount subject to interest
+latePaymentInterest.stillAccruing.toDate                  = To date
+latePaymentInterest.stillAccruing.fromDate                = From date
+latePaymentInterest.stillAccruing.daysOverdue             = Days overdue
+latePaymentInterest.stillAccruing.annualPercentageRate    = Annual Percentage Rate
+latePaymentInterest.stillAccruing.interestAccrued         = Interest accrued
+latePaymentInterest.stillAccruing.total                   = Total
+
 taxDescription.assessment.a = Amended assessment {0}
 taxDescription.assessment.d = Discovery assessment {0}
 taxDescription.assessment.e = HMRC determination {0}

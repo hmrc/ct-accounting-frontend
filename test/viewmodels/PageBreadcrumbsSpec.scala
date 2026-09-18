@@ -16,6 +16,7 @@
 
 package viewmodels
 
+import controllers.routes
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 import uk.gov.hmrc.govukfrontend.views.viewmodels.breadcrumbs.BreadcrumbsItem
@@ -89,6 +90,25 @@ class PageBreadcrumbsSpec extends AnyWordSpec with Matchers {
         BreadcrumbsItem(
           content = Text(messages("breadcrumbs.interest")),
           href = Some("/ct-accounting/accounting-period-overview/interest")
+        )
+      )
+    }
+
+  }
+  "PageBreadcrumbs.interestStillAccruingPage" should {
+
+    "contain exactly four breadcrumb items" in {
+      PageBreadcrumbs.interestStillAccruingPage.items.size shouldBe 4
+    }
+
+    "have the correct items in order" in {
+      PageBreadcrumbs.interestStillAccruingPage.items shouldBe Seq(
+        BreadcrumbsItem(content = Text(messages("breadcrumbs.home")), href = Some("/")),
+        BreadcrumbsItem(content = Text(messages("breadcrumbs.accountingPeriods")), href = Some("/")),
+        BreadcrumbsItem(content = Text(messages("breadcrumbs.accountingPeriodEnding")), href = Some("/")),
+        BreadcrumbsItem(
+          content = Text(messages("breadcrumbs.interest")),
+          href = Some(routes.InterestController.onPageLoad().url)
         )
       )
     }

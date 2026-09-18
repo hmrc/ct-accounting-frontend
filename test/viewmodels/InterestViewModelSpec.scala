@@ -29,7 +29,8 @@ import controllers.routes
 
 class InterestViewModelSpec extends AnyWordSpec with Matchers with AccountingPeriodResponseHelper {
 
-  implicit val messages: Messages = stubMessages()
+  implicit val messages: Messages    = stubMessages()
+  val latePaymentInterestRoute: Call = controllers.routes.LatePaymentInterestStillAccruingController.onPageLoad()
 
   "InterestViewModel.toViewModel" should {
 
@@ -44,7 +45,7 @@ class InterestViewModelSpec extends AnyWordSpec with Matchers with AccountingPer
           description = messages("interest.table.latePayment.accruing"),
           amount = BigDecimal("25.50"),
           isLink = false,
-          href = dummyCall
+          href = latePaymentInterestRoute
         ),
         InterestRow(
           description = messages("interest.table.repaymentInterest"),
@@ -77,7 +78,7 @@ class InterestViewModelSpec extends AnyWordSpec with Matchers with AccountingPer
           description = messages("interest.table.latePayment"),
           amount = BigDecimal("25.50"),
           isLink = true,
-          href = dummyCall
+          href = latePaymentInterestRoute
         ),
         InterestRow(
           description = messages("interest.table.repaymentInterest"),
@@ -110,7 +111,7 @@ class InterestViewModelSpec extends AnyWordSpec with Matchers with AccountingPer
           description = messages("interest.table.latePayment.accruing"),
           amount = BigDecimal("0.00"),
           isLink = false,
-          href = dummyCall
+          href = latePaymentInterestRoute
         ),
         InterestRow(
           description = messages("interest.table.repaymentInterest"),

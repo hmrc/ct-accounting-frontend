@@ -27,4 +27,4 @@ GET         /accounting-period-overview/adjustments      controllers.Adjustments
 GET         /accounting-period-overview/payments         controllers.PaymentsController.onPageLoad()
 GET         /accounting-period-overview/interest         controllers.InterestController.onPageLoad()
 GET         /accounting-period-overview/interest/debit-interest   controllers.DebitInterestAccountingPeriodController.onPageLoad()
-
+GET         /accounting-period-overview/interest/late-payment-interest       controllers.LatePaymentInterestStillAccruingController.onPageLoad()

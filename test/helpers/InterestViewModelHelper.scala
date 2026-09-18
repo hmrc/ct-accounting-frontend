@@ -29,6 +29,8 @@ import java.time.LocalDate
 
 trait InterestViewModelHelper {
 
+  val latePaymentInterestRoute: Call = controllers.routes.LatePaymentInterestStillAccruingController.onPageLoad()
+
   val accountingPeriodDetailsResponseForAccruing: AccountingPeriodDetailsResponse    =
     AccountingPeriodDetailsResponse(accountingPeriodDetails =
       AccountingPeriodDetails(
@@ -203,7 +205,7 @@ trait InterestViewModelHelper {
         description = messages("interest.table.latePayment.accruing"),
         amount = BigDecimal("25.50"),
         isLink = false,
-        href = dummyCall
+        href = latePaymentInterestRoute
       ),
       InterestRow(
         description = messages("interest.table.repaymentInterest"),
@@ -232,7 +234,7 @@ trait InterestViewModelHelper {
           description = messages("interest.table.latePayment.accruing"),
           amount = BigDecimal("25.50"),
           isLink = false,
-          href = dummyCall
+          href = latePaymentInterestRoute
         ),
         InterestRow(
           description = messages("interest.table.repaymentInterest"),
@@ -261,7 +263,7 @@ trait InterestViewModelHelper {
           description = messages("interest.table.latePayment"),
           amount = BigDecimal("25.50"),
           isLink = true,
-          href = dummyCall
+          href = latePaymentInterestRoute
         ),
         InterestRow(
           description = messages("interest.table.repaymentInterest"),
