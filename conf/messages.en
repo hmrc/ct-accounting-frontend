@@ -127,7 +127,7 @@ interest.table.creditInterest           = Credit Interest
 interest.table.creditInterest.accruing  = Credit Interest (still accruing)
 interest.table.total                    = Total
 
-latePaymentInterest.stillAccruing.title                   = Late payment interest
+latePaymentInterest.stillAccruing.title                   = Late payment interest - Interest
 latePaymentInterest.stillAccruing.section                 = Accounting period overview
 latePaymentInterest.stillAccruing.caption                 = Accounting period ending 30 Sep 2025
 latePaymentInterest.stillAccruing.heading                 = Late payment interest (still accruing)
