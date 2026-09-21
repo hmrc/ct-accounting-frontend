@@ -18,7 +18,7 @@ package views
 
 import base.SpecBase
 import helpers.RepaymentsReallocationsHelper
-import models.{RepayReallocationSummary, RepayReallocationSummaryDetails}
+import models.RepayReallocationSummary
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import play.api.i18n.{Lang, Messages, MessagesApi, MessagesImpl}
@@ -40,9 +40,6 @@ class RepaymentsReallocationsViewSpec extends SpecBase with RepaymentsReallocati
 
   val accountPeriod: LocalDate = LocalDate.of(2026, 1, 1)
   val total: BigDecimal        = 10000.12
-
-  val paymentTypeDescription: List[String] =
-    List(messages("payments.description.IRC"), messages("payments.description.CP"), messages("payments.description.EP"))
 
   def render(summary: RepayReallocationSummary = multipleSummaries): Document =
     Jsoup.parse(view(summary, accountPeriod, total)(request, messages(application)).toString)
@@ -78,30 +75,23 @@ class RepaymentsReallocationsViewSpec extends SpecBase with RepaymentsReallocati
       )
     }
 
-    "render the correct table description" in {
-      val doc         = render()
-      val description = doc.select("td.govuk-table__cell").text()
-
-      description must include(messages("repaymentreallocations.description.IRC"))
+    "render one row with Reallocations From Summary transaction" in {
+      val doc = render(summary = realloctionsFromSummary)
+      doc.select("tbody.govuk-table__body tr.govuk-table__row").size() mustBe 2
     }
-//
-//    "render one row with repayment transaction" in {
-//      val doc = render(summary = realloctionsFromSummary)
-//      doc.select("tbody.govuk-table__body tr.govuk-table__row").size() mustBe 2
-//    }
-//
-//    "render one row with reallocations transaction" in {
-//      val doc = render(summary = realloctionsToSummary)
-//      doc.select("tbody.govuk-table__body tr.govuk-table__row").size() mustBe 2
-//    }
-//
-//    "render one row with multiple transactions" in {
-//      val doc = render(summary = multipleSummaries)
-//      doc.select("tbody.govuk-table__body tr.govuk-table__row").size() mustBe 3
-//    }
+
+    "render one row with Reallocations To Summary transaction" in {
+      val doc = render(summary = realloctionsToSummary)
+      doc.select("tbody.govuk-table__body tr.govuk-table__row").size() mustBe 2
+    }
+
+    "render one row with multiple transactions" in {
+      val doc = render(summary = multipleSummaries)
+      doc.select("tbody.govuk-table__body tr.govuk-table__row").size() mustBe 3
+    }
 
     "render no data rows when there are no transactions" in {
-      val doc = render(items = List.empty)
+      val doc = render(summary = summaryEmptyList)
       doc.select("tbody.govuk-table__body tr.govuk-table__row").size() mustBe 1
     }
 

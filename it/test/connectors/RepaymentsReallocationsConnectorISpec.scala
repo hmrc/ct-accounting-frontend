@@ -1,3 +1,19 @@
+/*
+ * Copyright 2026 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package connectors
 
 import com.github.tomakehurst.wiremock.client.WireMock.*
@@ -33,8 +49,8 @@ class RepaymentsReallocationsConnectorISpec
     def url(taxRef: Long, accPeriod: Long) =
       s"/corporation-tax/repayments-and-reallocations/$taxRef/$accPeriod"
 
-    "return RepayReallocationSummary, get Reallocations From, with status code OK" in {
-      val response = repaymentSummary
+    "return RepayReallocationSummary, get Reallocations From Summary, with status code OK" in {
+      val response = realloctionsFromSummary
 
       stubFor(
         get(urlPathEqualTo(url(1L, 5L)))
@@ -62,7 +78,7 @@ class RepaymentsReallocationsConnectorISpec
     }
 
     "return RepayReallocationSummary, get Reallocations To with status code OK" in {
-      val response = reallocationSummary
+      val response = realloctionsToSummary
 
       stubFor(
         get(urlPathEqualTo(url(1L, 5L)))

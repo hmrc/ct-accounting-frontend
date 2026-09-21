@@ -20,13 +20,15 @@ import play.api.i18n.Messages
 
 object RepaymentsReallocationsDescriptionHelper {
 
-  def getDescription(transactionType: String)(implicit messages: Messages): String =
+  def getDescription(transactionType: Option[String])(implicit messages: Messages): String =
     transactionType match {
-      case "RTO" =>
-        messages("repaymentreallocations.description.rto") // REALLOCATION TO
-      case "RFR" =>
-        messages("repaymentreallocations.description.rfr") // REALLOCATION FROM
-      case _     =>
+      case Some("RTO") =>
+        "repaymentreallocations.description.rto" // Reallocation To
+      case Some("RFR") =>
+        "repaymentreallocations.description.rfr" // Reallocation From
+      case Some("CRT") =>
+        "repaymentreallocations.description.crt" // Repayments
+      case _           =>
         ""
     }
 }

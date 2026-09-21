@@ -46,8 +46,7 @@ class RepaymentsReallocationsController @Inject() (
 
     // TODO: Get taxRef + accPeriod from sessionDataRepositry
     service.getRepayReallocationSummary(1L, 1L).map { summaryResponse =>
-      // val total: BigDecimal = summaryResponse.transactions.map(_.amount).sum
-      val total: BigDecimal = 0L
+      val total: BigDecimal = summaryResponse.transactions.flatMap(_.amount).sum
       Ok(view(summaryResponse, accountPeriod, total))
     }
   }

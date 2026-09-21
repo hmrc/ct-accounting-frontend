@@ -48,30 +48,30 @@ class RepaymentsReallocationsServiceSpec
     val service = new RepaymentsReallocationService(mockRepaymentsRealloctionsConnector)
   }
 
-  "getRepayReallocationSummary returns correct Repayment summary transaction" in new Fixture {
+  "getRepayReallocationSummary returns correct Reallocations To Summary transaction" in new Fixture {
 
     when(
       mockRepaymentsRealloctionsConnector.getRepayReallocationSummary(any[Long], any[Long])(any[HeaderCarrier])
     )
-      .thenReturn(Future.successful(repaymentSummary))
+      .thenReturn(Future.successful(realloctionsToSummary))
 
     val result: RepayReallocationSummary = service.getRepayReallocationSummary(1L, 1L).futureValue
 
-    result.transactions shouldBe repaymentSummary.transactions
+    result.transactions shouldBe realloctionsToSummary.transactions
 
     verify(mockRepaymentsRealloctionsConnector).getRepayReallocationSummary(1L, 1L)(hc)
   }
 
-  "getRepayReallocationSummary returns correct Reallocation summary transaction" in new Fixture {
+  "getRepayReallocationSummary returns correct Reallocation From Summary transaction" in new Fixture {
 
     when(
       mockRepaymentsRealloctionsConnector.getRepayReallocationSummary(any[Long], any[Long])(any[HeaderCarrier])
     )
-      .thenReturn(Future.successful(reallocationSummary))
+      .thenReturn(Future.successful(realloctionsFromSummary))
 
     val result: RepayReallocationSummary = service.getRepayReallocationSummary(1L, 1L).futureValue
 
-    result.transactions shouldBe reallocationSummary.transactions
+    result.transactions shouldBe realloctionsFromSummary.transactions
 
     verify(mockRepaymentsRealloctionsConnector).getRepayReallocationSummary(1L, 1L)(hc)
   }

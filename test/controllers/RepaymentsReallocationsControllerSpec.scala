@@ -52,13 +52,15 @@ class RepaymentsReallocationsControllerSpec extends SpecBase with MockitoSugar w
         .thenReturn(Future.successful(realloctionsFromSummary))
 
       running(application) {
-        val request = FakeRequest(GET, routes.InterestController.onPageLoad().url)
+        val request = FakeRequest(GET, routes.RepaymentsReallocationsController.onPageLoad().url)
         val result  = route(application, request).value
         val view    = application.injector.instanceOf[RepaymentsReallocationsView]
 
+        val total = realloctionsFromSummary.transactions.flatMap(_.amount).sum
+
         status(result) mustEqual OK
         contentAsString(result) mustEqual
-          view(repaymentSummary, LocalDate.of(2026, 1, 1), BigDecimal(100))(
+          view(realloctionsFromSummary, LocalDate.of(2026, 1, 1), total)(
             request,
             messages(application)
           ).toString
@@ -70,13 +72,15 @@ class RepaymentsReallocationsControllerSpec extends SpecBase with MockitoSugar w
         .thenReturn(Future.successful(realloctionsToSummary))
 
       running(application) {
-        val request = FakeRequest(GET, routes.InterestController.onPageLoad().url)
+        val request = FakeRequest(GET, routes.RepaymentsReallocationsController.onPageLoad().url)
         val result  = route(application, request).value
         val view    = application.injector.instanceOf[RepaymentsReallocationsView]
 
+        val total = realloctionsToSummary.transactions.flatMap(_.amount).sum
+
         status(result) mustEqual OK
         contentAsString(result) mustEqual
-          view(repaymentSummary, LocalDate.of(2026, 1, 1), BigDecimal(100))(
+          view(realloctionsToSummary, LocalDate.of(2026, 1, 1), total)(
             request,
             messages(application)
           ).toString
@@ -88,13 +92,15 @@ class RepaymentsReallocationsControllerSpec extends SpecBase with MockitoSugar w
         .thenReturn(Future.successful(multipleSummaries))
 
       running(application) {
-        val request = FakeRequest(GET, routes.InterestController.onPageLoad().url)
+        val request = FakeRequest(GET, routes.RepaymentsReallocationsController.onPageLoad().url)
         val result  = route(application, request).value
         val view    = application.injector.instanceOf[RepaymentsReallocationsView]
 
+        val total = multipleSummaries.transactions.flatMap(_.amount).sum
+
         status(result) mustEqual OK
         contentAsString(result) mustEqual
-          view(repaymentSummary, LocalDate.of(2026, 1, 1), BigDecimal(100))(
+          view(multipleSummaries, LocalDate.of(2026, 1, 1), total)(
             request,
             messages(application)
           ).toString
