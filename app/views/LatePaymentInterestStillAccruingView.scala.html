@@ -31,7 +31,7 @@
 
 @(viewModel: LatePaymentInterestViewModel)(implicit request: Request[_], messages: Messages)
 
-    @layout(pageTitle = titleNoForm(messages("latePaymentInterest.stillAccruing.title"), Some(messages("latePaymentInterest.stillAccruing.section"))),
+    @layout(pageTitle = titleNoForm(messages("latePaymentInterest.stillAccruing.title"), None),
         breadcrumbs = Some(PageBreadcrumbs.interestStillAccruingPage)) {
 
         @heading(messages("latePaymentInterest.stillAccruing.heading"))
