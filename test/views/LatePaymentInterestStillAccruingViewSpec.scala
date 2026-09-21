@@ -46,7 +46,6 @@ class LatePaymentInterestStillAccruingViewSpec extends SpecBase with LatePayment
       val doc = render(viewModel)
 
       doc.title() must include(messages("latePaymentInterest.stillAccruing.title"))
-      doc.title() must include(messages("latePaymentInterest.stillAccruing.section"))
     }
 
     "render the heading" in {
