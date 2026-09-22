@@ -17,47 +17,35 @@
 @import views.ViewUtils._
 @import java.time.LocalDate
 @import viewmodels._
+@import viewmodels.accountingPeriods._
+@import views.html.components.*
+@import viewmodels.PageBreadcrumbs
 
 @this(
         layout: templates.Layout,
+        heading: h1,
         govukTable: GovukTable
 )
 
-@(interestAccruals: List[InterestAccrualWithInterestAccruedDays], accountPeriod: LocalDate, total: BigDecimal)(implicit request: Request[_], messages: Messages)
+@(viewModel: CreditInterestViewModel)(implicit request: Request[_], messages: Messages)
 
 @layout(pageTitle = titleNoForm(messages("creditInterest.title"), Some(messages("creditInterest.section"))), breadcrumbs = Some(PageBreadcrumbs.creditInterestPage)) {
 
-    <h1 class="govuk-heading-l">@messages("creditInterest.heading")</h1>
+    @heading(messages("repaymentInterest.heading"))
 
     @govukTable(Table(
-      rows = interestAccruals.map { interestAccruals =>
-        Seq(
-          TableRow(
-            content = Text(formatCurrency(interestAccruals.computationAmount))
-          ),
-          TableRow(
-            content = Text(formatDate(interestAccruals.interestAccrualFromDate, messages.lang))
-          ),
-          TableRow(
-            content = Text(formatDate(interestAccruals.interestAccrualToDate, messages.lang))
-          ),
-          TableRow(
-            content = Text(s"${interestAccruals.noOfDays}"),
-            classes = "govuk-table__cell govuk-table__cell--numeric"
-          ),
-          TableRow(
-            content = Text(formatPercentage(interestAccruals.interestRate)),
-            classes = "govuk-table__cell govuk-table__cell--numeric"
-          ),
-          TableRow(
-            content = Text(formatCurrency(interestAccruals.interestAmount)),
-            classes = "govuk-table__cell govuk-table__cell--numeric"
-          )
-        )
-      } :+ TableTotals.totalRow(
+      rows = viewModel.rows.map { row =>
+      Seq(
+      TableRow(content = Text(formatCurrency(row.amountSubjectToInterest))),
+      TableRow(content = Text(formatDate(row.toDate, messages.lang))),
+      TableRow(content = Text(formatDate(row.fromDate, messages.lang))),
+      TableRow(content = Text(row.daysOverdue.toString),classes = "class govuk-table__cell govuk-table__cell--numeric"),
+      TableRow(content = Text(formatPercentage(row.annualPercentageRate)),classes = "class govuk-table__cell govuk-table__cell--numeric"),
+      TableRow(content = Text(formatCurrency(row.interestAccrued)),classes = "class govuk-table__cell govuk-table__cell--numeric")
+      )
+      } :+ viewModel.totalRow(
         label = messages("creditInterest.table.total"),
-        total = total,
-        blankCells = 4
+        total = viewModel.totalAsString
         ),
       head = Some(Seq(
         HeadCell(content = Text(messages("creditInterest.subject"))),
@@ -73,8 +61,7 @@
                 classes = "govuk-table__cell govuk-table__cell--numeric"
                 )
       )),
-    caption = Some(messages("creditInterest.table.header", formatDate(accountPeriod, messages.lang))),
-    captionClasses = "govuk-table__caption--m",
-    firstCellIsHeader = false
+    caption = Some(messages("creditInterest.table.header", formatDate(viewModel.accountingPeriodEndDate, messages.lang))),
+    captionClasses = "govuk-table__caption--m"
     ))
 }

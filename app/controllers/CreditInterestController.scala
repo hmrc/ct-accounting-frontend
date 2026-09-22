@@ -16,13 +16,16 @@
 
 package controllers
 
-import connectors.InterestAccrualConnector
+import services.CreditInterestService
 import controllers.Execution.trampoline
 import controllers.actions.*
+import play.api.i18n.Lang.logger
+import controllers.routes.JourneyRecoveryController
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
-import views.html.CreditInterestView
+import views.html.accountingPeriods.CreditInterestView
+import viewmodels.accountingPeriods.CreditInterestRow
 
 import java.time.LocalDate
 import javax.inject.Inject
@@ -32,18 +35,24 @@ class CreditInterestController @Inject() (
   identify: IdentifierAction,
   val controllerComponents: MessagesControllerComponents,
   view: CreditInterestView,
-  connectors: InterestAccrualConnector
+  service: CreditInterestService
 ) extends FrontendBaseController
     with I18nSupport {
 
   def onPageLoad: Action[AnyContent] = identify.async { implicit request =>
 
-    val accountPeriod = LocalDate.of(2026, 1, 1) // TODO: This needs to comes from sessionDataRepository
-
+    val accountPeriodEndDate = LocalDate.of(2026, 1, 1) // TODO: This needs to comes from sessionDataRepository
+    val taxRef = 1L
+    val accPeriod = 1L
+    
     // TODO: Get taxRef + accPeriod from sessionDataRepositry
-    connectors.getInterestAccrual(1L, 1L, "ICR").map { creditInterestResponse =>
-      val total: BigDecimal = creditInterestResponse.interestAccruals.map(_.interestAmount).sum
-      Ok(view(creditInterestResponse.interestAccruals, accountPeriod, total))
+    service.getCreditInterest(taxRef, accPeriod, "ICR", accountPeriodEndDate).map { creditInterestResponse =>
+      val viewModel = CreditInterestRow.toViewModel(accountPeriodEndDate, creditInterestResponse)
+      Ok(view(viewModel))
     }
+      .recover { case ex =>
+        logger.error(s"Unexpected failure while retrieving interestAccrual: ${ex.getMessage}")
+        Redirect(JourneyRecoveryController.onPageLoad())
+      }
   }
 }

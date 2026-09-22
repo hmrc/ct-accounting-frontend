@@ -24,7 +24,7 @@ import org.scalatestplus.mockito.MockitoSugar
 import play.api.inject.bind
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import connectors.InterestAccrualConnector
+import connectors.InterestAccrualListConnector
 import uk.gov.hmrc.http.HeaderCarrier
 import views.html.CreditInterestView
 
@@ -33,7 +33,7 @@ import scala.concurrent.Future
 
 class CreditInterestControllerSpec extends SpecBase with MockitoSugar {
   implicit val hc: HeaderCarrier              = HeaderCarrier()
-  val mockConnector: InterestAccrualConnector = mock[InterestAccrualConnector]
+  val mockConnector: InterestAccrualListConnector = mock[InterestAccrualListConnector]
 
   val creditInterestResponse: InterestAccrualListWithInterestAccruedDays =
     InterestAccrualListWithInterestAccruedDays(
@@ -80,7 +80,7 @@ class CreditInterestControllerSpec extends SpecBase with MockitoSugar {
         .thenReturn(Future.successful(creditInterestResponse))
 
       val application = applicationBuilder()
-        .overrides(bind[InterestAccrualConnector].toInstance(mockConnector))
+        .overrides(bind[InterestAccrualListConnector].toInstance(mockConnector))
         .build()
 
       running(application) {
