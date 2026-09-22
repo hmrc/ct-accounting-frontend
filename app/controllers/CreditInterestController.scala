@@ -42,14 +42,16 @@ class CreditInterestController @Inject() (
   def onPageLoad: Action[AnyContent] = identify.async { implicit request =>
 
     val accountPeriodEndDate = LocalDate.of(2026, 1, 1) // TODO: This needs to comes from sessionDataRepository
-    val taxRef = 1L
-    val accPeriod = 1L
-    
+    val taxRef               = 1L
+    val accPeriod            = 1L
+
     // TODO: Get taxRef + accPeriod from sessionDataRepositry
-    service.getCreditInterest(taxRef, accPeriod, "ICR", accountPeriodEndDate).map { creditInterestResponse =>
-      val viewModel = CreditInterestRow.toViewModel(accountPeriodEndDate, creditInterestResponse)
-      Ok(view(viewModel))
-    }
+    service
+      .getCreditInterest(taxRef, accPeriod, "ICR", accountPeriodEndDate)
+      .map { creditInterestResponse =>
+        val viewModel = CreditInterestRow.toViewModel(accountPeriodEndDate, creditInterestResponse)
+        Ok(view(viewModel))
+      }
       .recover { case ex =>
         logger.error(s"Unexpected failure while retrieving interestAccrual: ${ex.getMessage}")
         Redirect(JourneyRecoveryController.onPageLoad())

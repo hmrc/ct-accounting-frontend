@@ -23,7 +23,6 @@ import uk.gov.hmrc.govukfrontend.views.viewmodels.breadcrumbs.BreadcrumbsItem
 import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 import play.api.i18n.Messages
 import play.api.test.Helpers.stubMessages
-import controllers.routes
 
 class PageBreadcrumbsSpec extends AnyWordSpec with Matchers {
 

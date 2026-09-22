@@ -31,7 +31,7 @@
 
 @layout(pageTitle = titleNoForm(messages("creditInterest.title"), Some(messages("creditInterest.section"))), breadcrumbs = Some(PageBreadcrumbs.creditInterestPage)) {
 
-    @heading(messages("repaymentInterest.heading"))
+    @heading(messages("creditInterest.heading"))
 
     @govukTable(Table(
       rows = viewModel.rows.map { row =>

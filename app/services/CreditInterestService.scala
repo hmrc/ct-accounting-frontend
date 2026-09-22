@@ -25,12 +25,12 @@ import java.time.LocalDate
 import javax.inject.Inject
 import scala.concurrent.Future
 
-class CreditInterestService @Inject()(
+class CreditInterestService @Inject() (
   connector: InterestAccrualListConnector
 ) extends Logging {
 
-  def getCreditInterest(taxRef: Long, accPeriod: Long, interestType: String, accountPeriodEndDate: LocalDate)(
-    implicit hc: HeaderCarrier
+  def getCreditInterest(taxRef: Long, accPeriod: Long, interestType: String, accountPeriodEndDate: LocalDate)(implicit
+    hc: HeaderCarrier
   ): Future[InterestAccrualListWithInterestAccruedDays] = {
     logger.info(s"Calling repository with taxRef: $taxRef and accPeriod: $accPeriod")
 
