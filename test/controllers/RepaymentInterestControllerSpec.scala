@@ -17,70 +17,34 @@
 package controllers
 
 import base.SpecBase
-import models.{InterestAccrualListWithInterestAccruedDays, InterestAccrualWithInterestAccruedDays}
 import org.mockito.ArgumentMatchers.{any, eq as eqTo}
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
 import play.api.inject.bind
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import connectors.InterestAccrualConnector
+import connectors.InterestAccrualListConnector
 import uk.gov.hmrc.http.HeaderCarrier
 import views.html.accountingPeriods.RepaymentInterestView
+import helpers.RepaymentInterestHelper
 
-import java.time.LocalDate
 import scala.concurrent.Future
 
-class RepaymentInterestControllerSpec extends SpecBase with MockitoSugar {
-  implicit val hc: HeaderCarrier              = HeaderCarrier()
-  val mockConnector: InterestAccrualConnector = mock[InterestAccrualConnector]
-
-  val repaymentInterestResponse: InterestAccrualListWithInterestAccruedDays =
-    InterestAccrualListWithInterestAccruedDays(
-      List(
-        InterestAccrualWithInterestAccruedDays(
-          computationAmount = BigDecimal(1230.44),
-          interestAccrualFromDate = LocalDate.of(2026, 3, 1),
-          interestAccrualToDate = LocalDate.of(2026, 4, 1),
-          interestRate = BigDecimal(4),
-          interestAmount = BigDecimal(103.12),
-          apEndDate = LocalDate.of(2026, 1, 1),
-          noOfDays = 5
-        ),
-        InterestAccrualWithInterestAccruedDays(
-          computationAmount = BigDecimal(2344.44),
-          interestAccrualFromDate = LocalDate.of(2026, 3, 1),
-          interestAccrualToDate = LocalDate.of(2026, 4, 1),
-          interestRate = BigDecimal(5.6),
-          interestAmount = BigDecimal(3041.34),
-          apEndDate = LocalDate.of(2026, 1, 1),
-          noOfDays = 1
-        ),
-        InterestAccrualWithInterestAccruedDays(
-          computationAmount = BigDecimal(3125.43),
-          interestAccrualFromDate = LocalDate.of(2026, 3, 1),
-          interestAccrualToDate = LocalDate.of(2026, 4, 1),
-          interestRate = BigDecimal(42),
-          interestAmount = BigDecimal(535.12),
-          apEndDate = LocalDate.of(2026, 1, 1),
-          noOfDays = 7
-        )
-      )
-    )
+class RepaymentInterestControllerSpec extends SpecBase with MockitoSugar with RepaymentInterestHelper {
+  implicit val hc: HeaderCarrier                  = HeaderCarrier()
+  val mockConnector: InterestAccrualListConnector = mock[InterestAccrualListConnector]
 
   // TODO: hardcoded value in the controller until it's wired up to session data
-  val expectedAccountPeriod: LocalDate = LocalDate.of(2026, 1, 1)
-  val total: BigDecimal                = repaymentInterestResponse.interestAccruals.map(_.interestAmount).sum
 
   "RepaymentInterest Controller" - {
 
     "must return OK and the correct repayment interest view for a GET when interest type equals RIN" in {
 
-      when(mockConnector.getInterestAccrual(eqTo(1L), eqTo(1L), eqTo("RIN"))(any[HeaderCarrier]))
-        .thenReturn(Future.successful(repaymentInterestResponse))
+      when(mockConnector.getInterestAccrualList(eqTo(1L), eqTo(1L), eqTo("RIN"))(any[HeaderCarrier]))
+        .thenReturn(Future.successful(interestAccrualMultipleObjects))
 
       val application = applicationBuilder()
-        .overrides(bind[InterestAccrualConnector].toInstance(mockConnector))
+        .overrides(bind[InterestAccrualListConnector].toInstance(mockConnector))
         .build()
 
       running(application) {
@@ -90,11 +54,30 @@ class RepaymentInterestControllerSpec extends SpecBase with MockitoSugar {
 
         status(result) mustEqual OK
         contentAsString(result) mustEqual
-          view(repaymentInterestResponse.interestAccruals, expectedAccountPeriod, total)(
+          view(eqvViewModelOfInterestAccrualMultipleObjects)(
             request,
             messages(application)
           ).toString
       }
+    }
+
+    "must redirect when exception from BE occurs" in {
+
+      when(mockConnector.getInterestAccrualList(eqTo(1L), eqTo(1L), eqTo("RIN"))(any[HeaderCarrier]))
+        .thenReturn(Future.failed(RuntimeException("Error")))
+
+      val application = applicationBuilder()
+        .overrides(bind[InterestAccrualListConnector].toInstance(mockConnector))
+        .build()
+
+      running(application) {
+        val request = FakeRequest(GET, routes.RepaymentInterestController.onPageLoad().url)
+        val result  = route(application, request).value
+
+        status(result) mustEqual SEE_OTHER
+        redirectLocation(result).value mustEqual routes.JourneyRecoveryController.onPageLoad().url
+      }
+
     }
   }
 }

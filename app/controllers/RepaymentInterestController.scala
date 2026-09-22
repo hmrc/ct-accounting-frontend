@@ -16,13 +16,16 @@
 
 package controllers
 
-import connectors.InterestAccrualConnector
+import services.RepaymentInterestService
 import controllers.Execution.trampoline
 import controllers.actions.*
+import play.api.i18n.Lang.logger
+import controllers.routes.JourneyRecoveryController
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.accountingPeriods.RepaymentInterestView
+import viewmodels.accountingPeriods.RepaymentInterestRow
 
 import java.time.LocalDate
 import javax.inject.Inject
@@ -32,18 +35,26 @@ class RepaymentInterestController @Inject() (
   identify: IdentifierAction,
   val controllerComponents: MessagesControllerComponents,
   view: RepaymentInterestView,
-  connectors: InterestAccrualConnector
+  service: RepaymentInterestService
 ) extends FrontendBaseController
     with I18nSupport {
 
   def onPageLoad: Action[AnyContent] = identify.async { implicit request =>
 
-    val accountPeriod = LocalDate.of(2026, 1, 1) // TODO: This needs to comes from sessionDataRepository
+    val accountPeriodEndDate = LocalDate.of(2026, 1, 1) // TODO: This needs to comes from sessionDataRepository
+    val taxRef               = 1L
+    val accPeriod            = 1L
 
     // TODO: Get taxRef + accPeriod from sessionDataRepositry
-    connectors.getInterestAccrual(1L, 1L, "RIN").map { repaymentInterestResponse =>
-      val total: BigDecimal = repaymentInterestResponse.interestAccruals.map(_.interestAmount).sum
-      Ok(view(repaymentInterestResponse.interestAccruals, accountPeriod, total))
-    }
+    service
+      .getRepaymentInterest(taxRef, accPeriod, "RIN", accountPeriodEndDate)
+      .map { repaymentInterestResponse =>
+        val viewModel = RepaymentInterestRow.toViewModel(accountPeriodEndDate, repaymentInterestResponse)
+        Ok(view(viewModel))
+      }
+      .recover { case ex =>
+        logger.error(s"Unexpected failure while retrieving interestAccrual: ${ex.getMessage}")
+        Redirect(JourneyRecoveryController.onPageLoad())
+      }
   }
 }
