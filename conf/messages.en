@@ -136,7 +136,7 @@ latePaymentInterest.stillAccruing.annualPercentageRate    = Annual Percentage Ra
 latePaymentInterest.stillAccruing.interestAccrued         = Interest accrued
 latePaymentInterest.stillAccruing.total                   = Total
 
-repaymentInterest.title = Repayment interest
+repaymentInterest.title = Repayment interest - Interest
 repaymentInterest.section = Accounting period overview
 repaymentInterest.heading = Repayment interest
 repaymentInterest.table.header = Accounting period ending {0}
