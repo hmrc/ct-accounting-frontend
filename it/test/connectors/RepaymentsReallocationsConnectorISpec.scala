@@ -50,7 +50,7 @@ class RepaymentsReallocationsConnectorISpec
       s"/corporation-tax/repayments-and-reallocations/$taxRef/$accPeriod"
 
     "return RepayReallocationSummary, get Reallocations From Summary, with status code OK" in {
-      val response = realloctionsFromSummary
+      val response = reallocationsFromSummary
 
       stubFor(
         get(urlPathEqualTo(url(1L, 5L)))
@@ -78,7 +78,7 @@ class RepaymentsReallocationsConnectorISpec
     }
 
     "return RepayReallocationSummary, get Reallocations To with status code OK" in {
-      val response = realloctionsToSummary
+      val response = reallocationsToSummary
 
       stubFor(
         get(urlPathEqualTo(url(1L, 5L)))

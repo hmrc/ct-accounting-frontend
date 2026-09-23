@@ -21,17 +21,19 @@ import helpers.RepaymentsReallocationsHelper
 import org.mockito.ArgumentMatchers.{any, eq as eqTo}
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
+import play.api.Application
 import play.api.i18n.Messages
 import play.api.inject.bind
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import play.api.Application
-import uk.gov.hmrc.http.HeaderCarrier
 import services.RepaymentsReallocationService
+import uk.gov.hmrc.http.HeaderCarrier
+import viewmodels.RepaymentReallocationSummaryViewModel
 import views.html.RepaymentsReallocationsView
 
 import java.time.LocalDate
 import scala.concurrent.Future
+
 class RepaymentsReallocationsControllerSpec extends SpecBase with MockitoSugar with RepaymentsReallocationsHelper {
 
   private trait Fixture {
@@ -49,18 +51,17 @@ class RepaymentsReallocationsControllerSpec extends SpecBase with MockitoSugar w
 
     "must return OK, with Reallocations From Summary, summary and correct view" in new Fixture {
       when(mockService.getRepayReallocationSummary(eqTo(1L), eqTo(1L))(any[HeaderCarrier]))
-        .thenReturn(Future.successful(realloctionsFromSummary))
+        .thenReturn(Future.successful(reallocationsFromSummary))
 
       running(application) {
-        val request = FakeRequest(GET, routes.RepaymentsReallocationsController.onPageLoad().url)
-        val result  = route(application, request).value
-        val view    = application.injector.instanceOf[RepaymentsReallocationsView]
-
-        val total = realloctionsFromSummary.transactions.flatMap(_.amount).sum
+        val request   = FakeRequest(GET, routes.RepaymentsReallocationsController.onPageLoad().url)
+        val result    = route(application, request).value
+        val viewModel = RepaymentReallocationSummaryViewModel.convertToViewModel(reallocationsFromSummary)
+        val view      = application.injector.instanceOf[RepaymentsReallocationsView]
 
         status(result) mustEqual OK
         contentAsString(result) mustEqual
-          view(realloctionsFromSummary, LocalDate.of(2026, 1, 1), total)(
+          view(viewModel, LocalDate.of(2026, 1, 1))(
             request,
             messages(application)
           ).toString
@@ -69,18 +70,17 @@ class RepaymentsReallocationsControllerSpec extends SpecBase with MockitoSugar w
 
     "must return OK,with Reallocations To Summary, and correct view" in new Fixture {
       when(mockService.getRepayReallocationSummary(eqTo(1L), eqTo(1L))(any[HeaderCarrier]))
-        .thenReturn(Future.successful(realloctionsToSummary))
+        .thenReturn(Future.successful(reallocationsToSummary))
 
       running(application) {
-        val request = FakeRequest(GET, routes.RepaymentsReallocationsController.onPageLoad().url)
-        val result  = route(application, request).value
-        val view    = application.injector.instanceOf[RepaymentsReallocationsView]
-
-        val total = realloctionsToSummary.transactions.flatMap(_.amount).sum
+        val request   = FakeRequest(GET, routes.RepaymentsReallocationsController.onPageLoad().url)
+        val result    = route(application, request).value
+        val viewModel = RepaymentReallocationSummaryViewModel.convertToViewModel(reallocationsToSummary)
+        val view      = application.injector.instanceOf[RepaymentsReallocationsView]
 
         status(result) mustEqual OK
         contentAsString(result) mustEqual
-          view(realloctionsToSummary, LocalDate.of(2026, 1, 1), total)(
+          view(viewModel, LocalDate.of(2026, 1, 1))(
             request,
             messages(application)
           ).toString
@@ -92,20 +92,34 @@ class RepaymentsReallocationsControllerSpec extends SpecBase with MockitoSugar w
         .thenReturn(Future.successful(multipleSummaries))
 
       running(application) {
-        val request = FakeRequest(GET, routes.RepaymentsReallocationsController.onPageLoad().url)
-        val result  = route(application, request).value
-        val view    = application.injector.instanceOf[RepaymentsReallocationsView]
-
-        val total = multipleSummaries.transactions.flatMap(_.amount).sum
+        val request   = FakeRequest(GET, routes.RepaymentsReallocationsController.onPageLoad().url)
+        val result    = route(application, request).value
+        val viewModel = RepaymentReallocationSummaryViewModel.convertToViewModel(multipleSummaries)
+        val view      = application.injector.instanceOf[RepaymentsReallocationsView]
 
         status(result) mustEqual OK
         contentAsString(result) mustEqual
-          view(multipleSummaries, LocalDate.of(2026, 1, 1), total)(
+          view(viewModel, LocalDate.of(2026, 1, 1))(
             request,
             messages(application)
           ).toString
       }
     }
   }
+
+  "must redirect to JourneyRecoveryController when exception occurs from BE " in new Fixture {
+    when(mockService.getRepayReallocationSummary(any(), any())(any[HeaderCarrier]))
+      .thenReturn(Future.failed(new RuntimeException("Error while retrieving repayment reallocation summary")))
+
+    running(application) {
+      val request = FakeRequest(GET, routes.RepaymentsReallocationsController.onPageLoad().url)
+      val result = route(application, request).value
+
+      status(result) mustEqual SEE_OTHER
+      redirectLocation(result).value mustEqual routes.JourneyRecoveryController.onPageLoad().url
+    }
+
+  }
+
 
 }

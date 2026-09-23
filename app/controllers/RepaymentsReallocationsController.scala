@@ -23,6 +23,7 @@ import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import services.RepaymentsReallocationService
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.RepaymentsReallocationsView
+import viewmodels.RepaymentReallocationSummaryViewModel
 
 import java.time.LocalDate
 import javax.inject.Inject
@@ -46,8 +47,8 @@ class RepaymentsReallocationsController @Inject() (
 
     // TODO: Get taxRef + accPeriod from sessionDataRepositry
     service.getRepayReallocationSummary(1L, 1L).map { summaryResponse =>
-      val total: BigDecimal = summaryResponse.transactions.flatMap(_.amount).sum
-      Ok(view(summaryResponse, accountPeriod, total))
+      val viewModel = RepaymentReallocationSummaryViewModel.convertToViewModel(summaryResponse)
+      Ok(view(viewModel, accountPeriod))
     }
   }
 

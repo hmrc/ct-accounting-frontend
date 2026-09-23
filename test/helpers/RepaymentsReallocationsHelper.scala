@@ -21,7 +21,7 @@ import models.{RepayReallocationSummary, RepayReallocationSummaryDetails}
 import java.time.LocalDate
 
 trait RepaymentsReallocationsHelper {
-  val realloctionsFromSummary: RepayReallocationSummary = RepayReallocationSummary(
+  val reallocationsFromSummary: RepayReallocationSummary = RepayReallocationSummary(
     transactions = List(
       RepayReallocationSummaryDetails(
         transactionDate = Some(LocalDate.of(2008, 10, 2)),
@@ -33,7 +33,7 @@ trait RepaymentsReallocationsHelper {
     )
   )
 
-  val realloctionsToSummary: RepayReallocationSummary = RepayReallocationSummary(
+  val reallocationsToSummary: RepayReallocationSummary = RepayReallocationSummary(
     transactions = List(
       RepayReallocationSummaryDetails(
         transactionDate = Some(LocalDate.of(2007, 1, 5)),

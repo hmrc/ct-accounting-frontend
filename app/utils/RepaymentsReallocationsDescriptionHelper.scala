@@ -17,18 +17,27 @@
 package utils
 
 import play.api.i18n.Messages
+import models.RepayReallocationSummaryDetails
+import views.ViewUtils.formatDate
+import java.time.LocalDate
 
 object RepaymentsReallocationsDescriptionHelper {
 
-  def getDescription(transactionType: Option[String])(implicit messages: Messages): String =
-    transactionType match {
+  def getDescription(repayReallocationDetails: RepayReallocationSummaryDetails)(implicit messages: Messages): String = {
+    val formattedDate =
+      formatDate(repayReallocationDetails.transactionDate.getOrElse(LocalDate.of(2026, 1, 1)), messages.lang)
+
+    val messageName = repayReallocationDetails.`type` match {
       case Some("RTO") =>
-        "repaymentreallocations.description.rto" // Reallocation To
+        "repaymentReallocations.description.rto" // Reallocation To
       case Some("RFR") =>
-        "repaymentreallocations.description.rfr" // Reallocation From
+        "repaymentReallocations.description.rfr" // Reallocation From
       case Some("CRT") =>
-        "repaymentreallocations.description.crt" // Repayments
+        "repaymentReallocations.description.crt" // Repayments
       case _           =>
         ""
     }
+
+    messages(messageName, formattedDate, messages.lang)
+  }
 }

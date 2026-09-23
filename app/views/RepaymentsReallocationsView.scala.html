@@ -14,50 +14,50 @@
  * limitations under the License.
  *@
 
+@import views.html.components.*
 @import views.ViewUtils._
 @import java.time.LocalDate
 @import viewmodels._
-@import utils.RepaymentsReallocationsDescriptionHelper
 
 @this(
         layout: templates.Layout,
-        govukTable: GovukTable
+        govukTable: GovukTable,
+        h1: h1
 )
 
-@(repayReallocationSummary: RepayReallocationSummary, accountPeriod: LocalDate, total: BigDecimal)(implicit request: Request[_], messages: Messages)
+@(viewModel: RepaymentReallocationSummaryViewModel, accountPeriod: LocalDate)(implicit request: Request[_], messages: Messages)
 
-@layout(pageTitle = titleNoForm(messages("repaymentreallocations.title"), Some(messages("repaymentreallocations.section"))), breadcrumbs = Some(PageBreadcrumbs.repaymentsReallocationsPage)) {
+@layout(pageTitle = titleNoForm(messages("repaymentReallocations.title"), Some(messages("repaymentReallocations.section"))), breadcrumbs = Some(PageBreadcrumbs.repaymentsReallocationsPage)) {
 
-    <h1 class="govuk-heading-l">@messages("repaymentreallocations.heading")</h1>
+    @h1(messages("repaymentReallocations.heading"))
 
     @govukTable(Table(
-      rows = repayReallocationSummary.transactions.map { transaction =>
+      rows = viewModel.rows.map { transaction =>
         Seq(
           TableRow(
             content = Text(formatDate(transaction.transactionDate.getOrElse(LocalDate.of(2026,1,1)), messages.lang))
           ),
           TableRow(
-content =  Text(messages(RepaymentsReallocationsDescriptionHelper.getDescription(transaction.`type`), formatDate(transaction.accountingPeriodEndDate.getOrElse(LocalDate.of(2026,1,1)), messages.lang)))
+            content =  Text(transaction.description)
           ),
           TableRow(
-            content = Text(formatCurrency(transaction.amount.getOrElse(0))),
+            content = Text(transaction.amountAsString),
             classes = "govuk-table__cell govuk-table__cell--numeric"
           )
         )
       } :+ TableTotals.totalRow(
-        label = messages("repaymentreallocations.table.total"),
-        total = total,
+        label = messages("repaymentReallocations.table.total"),
+        total = viewModel.total,
         blankCells = 1
         ),
       head = Some(Seq(
-        HeadCell(content = Text(messages("repaymentreallocations.date"))),
-        HeadCell(content = Text(messages("repaymentreallocations.description"))),
-        HeadCell(content = Text(messages("repaymentreallocations.amount")),
+        HeadCell(content = Text(messages("repaymentReallocations.date"))),
+        HeadCell(content = Text(messages("repaymentReallocations.description"))),
+        HeadCell(content = Text(messages("repaymentReallocations.amount")),
                 classes = "govuk-table__cell govuk-table__cell--numeric"
     )
       )),
-    caption = Some(messages("repaymentreallocations.table.header", formatDate(accountPeriod, messages.lang))),
-    captionClasses = "govuk-table__caption--m",
-    firstCellIsHeader = false
+    caption = Some(messages("repaymentReallocations.table.header", formatDate(accountPeriod, messages.lang))),
+    captionClasses = "govuk-table__caption--m"
     ))
 }

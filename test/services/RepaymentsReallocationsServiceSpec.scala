@@ -53,11 +53,11 @@ class RepaymentsReallocationsServiceSpec
     when(
       mockRepaymentsRealloctionsConnector.getRepayReallocationSummary(any[Long], any[Long])(any[HeaderCarrier])
     )
-      .thenReturn(Future.successful(realloctionsToSummary))
+      .thenReturn(Future.successful(reallocationsToSummary))
 
     val result: RepayReallocationSummary = service.getRepayReallocationSummary(1L, 1L).futureValue
 
-    result.transactions shouldBe realloctionsToSummary.transactions
+    result.transactions shouldBe reallocationsToSummary.transactions
 
     verify(mockRepaymentsRealloctionsConnector).getRepayReallocationSummary(1L, 1L)(hc)
   }
@@ -67,11 +67,11 @@ class RepaymentsReallocationsServiceSpec
     when(
       mockRepaymentsRealloctionsConnector.getRepayReallocationSummary(any[Long], any[Long])(any[HeaderCarrier])
     )
-      .thenReturn(Future.successful(realloctionsFromSummary))
+      .thenReturn(Future.successful(reallocationsFromSummary))
 
     val result: RepayReallocationSummary = service.getRepayReallocationSummary(1L, 1L).futureValue
 
-    result.transactions shouldBe realloctionsFromSummary.transactions
+    result.transactions shouldBe reallocationsFromSummary.transactions
 
     verify(mockRepaymentsRealloctionsConnector).getRepayReallocationSummary(1L, 1L)(hc)
   }

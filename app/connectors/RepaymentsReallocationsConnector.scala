@@ -42,7 +42,7 @@ class RepaymentsReallocationsConnector @Inject() (http: HttpClientV2, config: Se
       .execute[RepayReallocationSummary]
       .recover { case ex: Throwable =>
         logger.error(
-          s"[RepaymentsReallocationsConnector][getRepayReallocationSummary] : $taxRef, $accPeriod:: - ${ex.getMessage}"
+          s"Repayment Reallocation Summary: $taxRef, $accPeriod:: - ${ex.getMessage}"
         )
         throw new RuntimeException(ex.getMessage)
       }
