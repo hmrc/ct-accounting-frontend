@@ -51,7 +51,7 @@ unauthorised.heading = You can’t access this service with this account
 breadcrumbs.home = Home
 breadcrumbs.accountingPeriods = Accounting periods
 breadcrumbs.accountingPeriodEnding = Accounting period ending
-breadcrumbs.interest   = Interest
+breadcrumbs.interest = Interest
 
 taxTransactions.title = Taxes
 taxTransactions.section = Accounting period overview
@@ -82,8 +82,6 @@ adjustmentsAccountingPeriod.caption        = Accounting period ending 30 Sep 202
 adjustmentsAccountingPeriod.description    = Description
 adjustmentsAccountingPeriod.amount         = Amount
 adjustmentsAccountingPeriod.total          = Total
-
-
 
 debitInterestAccountingPeriod.caption      = Accounting period ending
 debitInterestAccountingPeriod.section      = Accounting period ending
@@ -137,6 +135,18 @@ latePaymentInterest.stillAccruing.daysOverdue             = Days overdue
 latePaymentInterest.stillAccruing.annualPercentageRate    = Annual Percentage Rate
 latePaymentInterest.stillAccruing.interestAccrued         = Interest accrued
 latePaymentInterest.stillAccruing.total                   = Total
+
+repaymentInterest.title = Repayment interest - Interest
+repaymentInterest.section = Accounting period overview
+repaymentInterest.heading = Repayment interest
+repaymentInterest.table.header = Accounting period ending {0}
+repaymentInterest.subject = Amount subject to interest
+repaymentInterest.fromDate = From date
+repaymentInterest.toDate = To date
+repaymentInterest.days = Days overdue
+repaymentInterest.percentage = Annual Percentage Rate
+repaymentInterest.interest = Interest accrued
+repaymentInterest.table.total = Total
 
 taxDescription.assessment.a = Amended assessment {0}
 taxDescription.assessment.d = Discovery assessment {0}

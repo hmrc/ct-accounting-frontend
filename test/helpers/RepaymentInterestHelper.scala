@@ -17,11 +17,11 @@
 package helpers
 
 import models.{InterestAccrualListWithInterestAccruedDays, InterestAccrualWithInterestAccruedDays}
-import viewmodels.accountingPeriods.{LatePaymentInterestRow, LatePaymentInterestViewModel}
+import viewmodels.accountingPeriods.{RepaymentInterestRow, RepaymentInterestViewModel}
 
 import java.time.LocalDate
 
-trait LatePaymentInterestViewModelHelper {
+trait RepaymentInterestHelper {
 
   val interestAccrualMultipleObjects: InterestAccrualListWithInterestAccruedDays  =
     InterestAccrualListWithInterestAccruedDays(
@@ -60,9 +60,15 @@ trait LatePaymentInterestViewModelHelper {
         )
       )
     )
+  val interestAccrualWithNoObject: InterestAccrualListWithInterestAccruedDays     =
+    InterestAccrualListWithInterestAccruedDays(interestAccruals = List.empty)
 
-  val eqvViewModelOfInterestAccrualMultipleObjects: LatePaymentInterestViewModel =
-    LatePaymentInterestRow.toViewModel(interestAccrualMultipleObjects)
-  val viewModel: LatePaymentInterestViewModel                                    = LatePaymentInterestRow.toViewModel(interestAccrualWithSingleObject)
+  val accountingPeriodEndDate: LocalDate = LocalDate.of(2026, 1, 1)
 
+  val eqvViewModelOfInterestAccrualMultipleObjects: RepaymentInterestViewModel =
+    RepaymentInterestRow.toViewModel(accountingPeriodEndDate, interestAccrualMultipleObjects)
+  val viewModel: RepaymentInterestViewModel                                    =
+    RepaymentInterestRow.toViewModel(accountingPeriodEndDate, interestAccrualWithSingleObject)
+  val viewModelEmptyList: RepaymentInterestViewModel                           =
+    RepaymentInterestRow.toViewModel(accountingPeriodEndDate, interestAccrualWithNoObject)
 }

@@ -16,40 +16,40 @@
 
 package controllers
 
+import services.RepaymentInterestService
 import controllers.Execution.trampoline
 import controllers.actions.*
+import play.api.i18n.Lang.logger
 import controllers.routes.JourneyRecoveryController
-import play.api.Logging
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import services.LatePaymentInterestService
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
-import viewmodels.accountingPeriods.LatePaymentInterestRow
-import views.html.accountingPeriods.LatePaymentInterestStillAccruingView
+import views.html.accountingPeriods.RepaymentInterestView
+import viewmodels.accountingPeriods.RepaymentInterestRow
 
+import java.time.LocalDate
 import javax.inject.Inject
 
-class LatePaymentInterestStillAccruingController @Inject() (
+class RepaymentInterestController @Inject() (
   override val messagesApi: MessagesApi,
   identify: IdentifierAction,
   val controllerComponents: MessagesControllerComponents,
-  view: LatePaymentInterestStillAccruingView,
-  service: LatePaymentInterestService
+  view: RepaymentInterestView,
+  service: RepaymentInterestService
 ) extends FrontendBaseController
-    with I18nSupport
-    with Logging {
-
-  // TODO: - 1 :: integrate auth then its ready
-  // TODO: - 2 :: read taxRef and accPeriod and interestType from the userSession
-  private val taxRefFromSession: Long           = 1L
-  private val accountingPeriodFromSession: Long = 1L
-  private val interestType: String              = "IDE"
+    with I18nSupport {
 
   def onPageLoad: Action[AnyContent] = identify.async { implicit request =>
+
+    val accountPeriodEndDate = LocalDate.of(2026, 1, 1) // TODO: This needs to comes from sessionDataRepository
+    val taxRef               = 1L
+    val accPeriod            = 1L
+
+    // TODO: Get taxRef + accPeriod from sessionDataRepositry
     service
-      .getInterestAccrualList(taxRefFromSession, accountingPeriodFromSession, interestType)
-      .map { interestAccrualResponse =>
-        val viewModel = LatePaymentInterestRow.toViewModel(interestAccrualResponse)
+      .getRepaymentInterest(taxRef, accPeriod, "RIN", accountPeriodEndDate)
+      .map { repaymentInterestResponse =>
+        val viewModel = RepaymentInterestRow.toViewModel(accountPeriodEndDate, repaymentInterestResponse)
         Ok(view(viewModel))
       }
       .recover { case ex =>

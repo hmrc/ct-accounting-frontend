@@ -24,8 +24,8 @@ import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import controllers.routes.JourneyRecoveryController
 import services.AdjustmentsAccountingPeriodService
-import views.html.AdjustmentsAccountingPeriodView
-import viewmodels.AdjustmentsAccountingPeriodViewModel
+import viewmodels.accountingPeriods.AdjustmentsAccountingPeriodViewModel
+import views.html.accountingPeriods.AdjustmentsAccountingPeriodView
 
 import javax.inject.Inject
 

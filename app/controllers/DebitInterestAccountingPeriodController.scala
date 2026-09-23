@@ -23,7 +23,7 @@ import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import services.DebitInterestService
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import controllers.routes.JourneyRecoveryController
-import views.html.DebitInterestAccountingPeriodView
+import views.html.accountingPeriods.DebitInterestAccountingPeriodView
 
 import java.time.LocalDate
 import javax.inject.Inject

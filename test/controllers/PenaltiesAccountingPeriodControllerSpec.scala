@@ -25,7 +25,7 @@ import play.api.test.Helpers.*
 import play.api.test.{FakeRequest, Helpers}
 import services.PenaltiesService
 import viewmodels.govuk.SummaryListFluency
-import views.html.PenaltiesAccountingPeriodView
+import views.html.accountingPeriods.PenaltiesAccountingPeriodView
 
 import scala.concurrent.Future
 import org.scalatestplus.mockito.MockitoSugar.mock

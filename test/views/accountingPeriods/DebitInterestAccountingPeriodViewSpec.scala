@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package views
+package views.accountingPeriods
 
 import base.SpecBase
-import helpers.AdjustmentsDataHelper
+import helpers.DebitInterestHelper
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.scalatestplus.mockito.MockitoSugar
@@ -28,13 +28,13 @@ import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.mvc.AnyContentAsEmpty
 import play.api.test.FakeRequest
 import play.twirl.api.Html
-import views.html.AdjustmentsAccountingPeriodView
+import views.html.accountingPeriods.DebitInterestAccountingPeriodView
 
-class AdjustmentsAccountingPeriodViewSpec
+class DebitInterestAccountingPeriodViewSpec
     extends SpecBase
     with GuiceOneAppPerSuite
-    with AdjustmentsDataHelper
-    with MockitoSugar {
+    with MockitoSugar
+    with DebitInterestHelper {
 
   private trait Setup {
 
@@ -44,65 +44,70 @@ class AdjustmentsAccountingPeriodViewSpec
     implicit val messagesApi: MessagesApi                     = app.injector.instanceOf[MessagesApi]
     implicit val messages: Messages                           = MessagesImpl(Lang.defaultLang, messagesApi)
 
-    val view: AdjustmentsAccountingPeriodView = app.injector.instanceOf[AdjustmentsAccountingPeriodView]
+    val view: DebitInterestAccountingPeriodView = app.injector.instanceOf[DebitInterestAccountingPeriodView]
 
     def htmlDoc(html: Html): Document = Jsoup.parse(html.toString)
   }
 
-  "AdjustmentsAccountingPeriodView" - {
+  "DebitInterestAccountingPeriodView" - {
 
     "render the page with correct title and heading and caption" in new Setup {
-      val html = view(adjustmentsViewModelWithOneItem)
+      val html = view(defaultViewModel)
       val doc  = htmlDoc(html)
 
       val heading = doc.select("h1.govuk-heading-l")
       val caption = doc.select("caption.govuk-table__caption")
 
       heading.size() mustBe 1
-      heading.text() mustBe messages("adjustmentsAccountingPeriod.heading")
+      heading.text() mustBe messages("debitInterestAccountingPeriod.heading")
 
-      caption.text() mustBe messages("adjustmentsAccountingPeriod.caption")
-      doc.title() must include(messages("adjustmentsAccountingPeriod.title"))
+      caption.text() must startWith(messages("debitInterestAccountingPeriod.caption"))
+      doc.title()    must startWith(messages("debitInterestAccountingPeriod.title"))
     }
 
     "render the page with correct page breadcrumbs" in new Setup {
-      val html = view(adjustmentsViewModelWithOneItem)
+      val html = view(defaultViewModel)
       val doc  = htmlDoc(html)
 
       val breadcrumbs = doc.select("li.govuk-breadcrumbs__list-item")
 
-      breadcrumbs.size() mustBe 3
+      breadcrumbs.size() mustBe 4
 
       breadcrumbs.text() must include(messages("breadcrumbs.home"))
       breadcrumbs.text() must include(messages("breadcrumbs.accountingPeriods"))
       breadcrumbs.text() must include(messages("breadcrumbs.accountingPeriodEnding"))
+      breadcrumbs.text() must include(messages("breadcrumbs.interest"))
     }
 
     "render the page with correct table headings" in new Setup {
-      val html = view(adjustmentsViewModelWithOneItem)
+      val html = view(defaultViewModel)
       val doc  = htmlDoc(html)
 
       val headers = doc.select("th.govuk-table__header")
 
-      headers.size() mustBe 2
+      headers.size() mustBe 6
 
-      headers.text() must include(messages("adjustmentsAccountingPeriod.description"))
-      headers.text() must include(messages("adjustmentsAccountingPeriod.amount"))
+      headers.text() must include(messages("debitInterestAccountingPeriod.tableHeader.interestAmount"))
+      headers.text() must include(messages("debitInterestAccountingPeriod.tableHeader.fromDate"))
+      headers.text() must include(messages("debitInterestAccountingPeriod.tableHeader.toDate"))
+
+      headers.text() must include(messages("debitInterestAccountingPeriod.tableHeader.daysOvd"))
+      headers.text() must include(messages("debitInterestAccountingPeriod.tableHeader.aprc"))
+      headers.text() must include(messages("debitInterestAccountingPeriod.tableHeader.interestAcc"))
     }
 
     "render the page with correct table contents" in new Setup {
-      val html = view(adjustmentsViewModelWithOneItem)
+      val html = view(defaultViewModel)
       val doc  = htmlDoc(html)
 
       val contents = doc.select("td.govuk-table__cell")
 
-      contents.text() must include("Not currently being pursued")
-      contents.text() must include(messages("adjustmentsAccountingPeriod.total"))
-      contents.text() must include("£50.00")
+      contents.text() must include(messages("debitInterestAccountingPeriod.total"))
+      contents.text() must include("£17.01")
     }
 
     "render the page with welsh toggle translation" in new Setup {
-      val html = view(adjustmentsViewModelWithOneItem)
+      val html = view(defaultViewModel)
       val doc  = htmlDoc(html)
 
       val translation = doc.select("li.hmrc-service-navigation-language-select__list-item")
@@ -114,7 +119,7 @@ class AdjustmentsAccountingPeriodViewSpec
     }
 
     "render the page with View Corporation Tax service name" in new Setup {
-      val html = view(adjustmentsViewModelWithOneItem)
+      val html = view(defaultViewModel)
       val doc  = htmlDoc(html)
 
       val banner = doc.select("div.govuk-service-navigation__container")

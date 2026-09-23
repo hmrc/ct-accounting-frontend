@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package viewmodels
+package viewmodels.accountingPeriods
 
 import models.InterestAccrualListWithInterestAccruedDays
 import uk.gov.hmrc.govukfrontend.views.Aliases.{TableRow, Text}

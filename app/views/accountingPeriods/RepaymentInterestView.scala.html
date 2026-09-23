@@ -1,0 +1,67 @@
+@*
+ * Copyright 2026 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import views.ViewUtils._
+@import java.time.LocalDate
+@import viewmodels._
+@import viewmodels.accountingPeriods._
+@import views.html.components.*
+@import viewmodels.PageBreadcrumbs
+
+@this(
+        layout: templates.Layout,
+        heading: h1,
+        govukTable: GovukTable
+)
+
+@(viewModel: RepaymentInterestViewModel)(implicit request: Request[_], messages: Messages)
+
+@layout(pageTitle = titleNoForm(messages("repaymentInterest.title"), Some(messages("repaymentInterest.section"))), breadcrumbs = Some(PageBreadcrumbs.repaymentInterestPage)) {
+
+    @heading(messages("repaymentInterest.heading"))
+
+    @govukTable(Table(
+      rows = viewModel.rows.map { row =>
+      Seq(
+      TableRow(content = Text(formatCurrency(row.amountSubjectToInterest))),
+      TableRow(content = Text(formatDate(row.toDate, messages.lang))),
+      TableRow(content = Text(formatDate(row.fromDate, messages.lang))),
+      TableRow(content = Text(row.daysOverdue.toString),classes = "class govuk-table__cell govuk-table__cell--numeric"),
+      TableRow(content = Text(formatPercentage(row.annualPercentageRate)),classes = "class govuk-table__cell govuk-table__cell--numeric"),
+      TableRow(content = Text(formatCurrency(row.interestAccrued)),classes = "class govuk-table__cell govuk-table__cell--numeric")
+      )
+      } :+ viewModel.totalRow(
+        label = messages("repaymentInterest.table.total"),
+        total = viewModel.totalAsString
+        ),
+      head = Some(Seq(
+        HeadCell(content = Text(messages("repaymentInterest.subject"))),
+        HeadCell(content = Text(messages("repaymentInterest.fromDate"))),
+        HeadCell(content = Text(messages("repaymentInterest.toDate"))),
+        HeadCell(content = Text(messages("repaymentInterest.days")),
+                classes = "govuk-table__cell govuk-table__cell--numeric"
+                ),
+        HeadCell(content = Text(messages("repaymentInterest.percentage")),
+                classes = "govuk-table__cell govuk-table__cell--numeric"
+                ),
+        HeadCell(content = Text(messages("repaymentInterest.interest")),
+                classes = "govuk-table__cell govuk-table__cell--numeric"
+                )
+      )),
+    caption = Some(messages("repaymentInterest.table.header", formatDate(viewModel.accountingPeriodEndDate, messages.lang))),
+    captionClasses = "govuk-table__caption--m"
+    ))
+}

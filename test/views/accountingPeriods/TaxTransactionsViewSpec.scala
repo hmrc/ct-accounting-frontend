@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package views
+package views.accountingPeriods
 
 import base.SpecBase
 import models.TaxTransactionsItem
@@ -23,7 +23,7 @@ import org.jsoup.nodes.Document
 import play.api.i18n.{Lang, Messages, MessagesApi, MessagesImpl}
 import play.api.test.FakeRequest
 import views.ViewUtils.formatDate
-import views.html.TaxTransactionsView
+import views.html.accountingPeriods.TaxTransactionsView
 
 import java.time.LocalDate
 

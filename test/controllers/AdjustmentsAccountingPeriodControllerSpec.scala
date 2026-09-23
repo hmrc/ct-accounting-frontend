@@ -26,7 +26,7 @@ import play.api.inject.bind
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import uk.gov.hmrc.http.HeaderCarrier
-import views.html.AdjustmentsAccountingPeriodView
+import views.html.accountingPeriods.AdjustmentsAccountingPeriodView
 
 import scala.concurrent.Future
 

@@ -14,24 +14,24 @@
  * limitations under the License.
  */
 
-package viewmodels
+package viewmodels.accountingPeriods
 
-import helpers.InterestAccrualListHelper
+import helpers.RepaymentInterestHelper
 import org.scalatest.matchers.must.Matchers
 import org.scalatest.wordspec.AnyWordSpec
-import viewmodels.LatePaymentInterestRow.toViewModel
+import viewmodels.accountingPeriods.RepaymentInterestRow.toViewModel
 import views.ViewUtils.formatCurrency
 
 import java.time.LocalDate
 
-class LatePaymentInterestRowSpec extends AnyWordSpec with Matchers with InterestAccrualListHelper {
+class RepaymentInterestViewModelSpec extends AnyWordSpec with Matchers with RepaymentInterestHelper {
 
-  "LatePaymentInterestRow.toViewModel" should {
-    "create the expected rows in LatePaymentInterestViewModel from InterestAccrualListWithInterestAccruedDays" in {
-      val viewModel = toViewModel(interestAccrualMultipleObjects)
+  "RepaymentInterestRow.toViewModel" should {
+    "create the expected rows in RepaymentInterestViewModel from InterestAccrualListWithInterestAccruedDays" in {
+      val viewModel = toViewModel(accountingPeriodEndDate, interestAccrualMultipleObjects)
 
       viewModel.rows mustBe Seq(
-        LatePaymentInterestRow(
+        RepaymentInterestRow(
           amountSubjectToInterest = BigDecimal(10000.00),
           fromDate = LocalDate.of(2024, 4, 1),
           toDate = LocalDate.of(2024, 6, 30),
@@ -39,7 +39,7 @@ class LatePaymentInterestRowSpec extends AnyWordSpec with Matchers with Interest
           annualPercentageRate = BigDecimal(7.75),
           interestAccrued = BigDecimal("193.22")
         ),
-        LatePaymentInterestRow(
+        RepaymentInterestRow(
           amountSubjectToInterest = BigDecimal(10000.00),
           fromDate = LocalDate.of(2024, 7, 1),
           toDate = LocalDate.of(2024, 9, 30),
@@ -52,14 +52,20 @@ class LatePaymentInterestRowSpec extends AnyWordSpec with Matchers with Interest
 
     "calculate the total and format correctly" in {
       val totalInterestAccrued = interestAccrualMultipleObjects.interestAccruals.map(_.interestAmount).sum
-      val viewModel            = toViewModel(interestAccrualMultipleObjects)
+      val viewModel            = toViewModel(accountingPeriodEndDate, interestAccrualMultipleObjects)
       viewModel.total mustBe totalInterestAccrued
       viewModel.totalAsString mustBe formatCurrency(totalInterestAccrued)
+
     }
 
     "create the total row with six rows" in {
-      val viewModel = toViewModel(interestAccrualMultipleObjects)
+      val viewModel = toViewModel(accountingPeriodEndDate, interestAccrualMultipleObjects)
       val result    = viewModel.totalRow("label", "value")
+
+      result(1).content.asHtml.toString mustBe ""
+      result(2).content.asHtml.toString mustBe ""
+      result(3).content.asHtml.toString mustBe ""
+      result(4).content.asHtml.toString mustBe ""
       result.size mustBe 6
     }
 

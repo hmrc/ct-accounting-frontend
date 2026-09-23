@@ -29,7 +29,7 @@ import play.api.mvc.ControllerComponents
 import play.api.test.Helpers
 import play.api.test.Helpers.stubMessages
 import uk.gov.hmrc.http.HeaderCarrier
-import viewmodels.InterestViewModel
+import viewmodels.accountingPeriods.InterestViewModel
 
 import scala.concurrent.Future
 import scala.concurrent.ExecutionContext.Implicits.global

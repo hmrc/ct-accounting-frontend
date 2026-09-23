@@ -16,18 +16,18 @@
 
 package services
 
-import connectors.InterestConnector
-import models.InterestType.InterestDebit
+import connectors.InterestAccrualListConnector
+import models.InterestType.{InterestDebit, asString}
 import play.api.Logging
 import uk.gov.hmrc.http.HeaderCarrier
-import viewmodels.{DebitInterestRow, DebitInterestViewModel}
+import viewmodels.accountingPeriods.{DebitInterestRow, DebitInterestViewModel}
 
 import java.time.LocalDate
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
 class DebitInterestService @Inject (
-  connector: InterestConnector
+  connector: InterestAccrualListConnector
 )(implicit ec: ExecutionContext)
     extends Logging {
 
@@ -35,7 +35,7 @@ class DebitInterestService @Inject (
     hc: HeaderCarrier
   ): Future[DebitInterestViewModel] =
     connector
-      .getDebitInterest(taxRef = taxRef, accPeriod = accPeriod, interestType = InterestDebit)
+      .getInterestAccrualList(taxRef = taxRef, accPeriod = accPeriod, interestType = asString(InterestDebit))
       .map(response =>
         DebitInterestViewModel(
           accPeriodEndDate = accPeriodEndDate,
