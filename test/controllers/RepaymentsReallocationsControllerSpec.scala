@@ -113,13 +113,12 @@ class RepaymentsReallocationsControllerSpec extends SpecBase with MockitoSugar w
 
     running(application) {
       val request = FakeRequest(GET, routes.RepaymentsReallocationsController.onPageLoad().url)
-      val result = route(application, request).value
+      val result  = route(application, request).value
 
       status(result) mustEqual SEE_OTHER
       redirectLocation(result).value mustEqual routes.JourneyRecoveryController.onPageLoad().url
     }
 
   }
-
 
 }

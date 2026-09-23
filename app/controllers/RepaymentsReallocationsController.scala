@@ -17,6 +17,7 @@
 package controllers
 
 import controllers.actions.IdentifierAction
+import controllers.routes.JourneyRecoveryController
 import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
@@ -49,6 +50,9 @@ class RepaymentsReallocationsController @Inject() (
     service.getRepayReallocationSummary(1L, 1L).map { summaryResponse =>
       val viewModel = RepaymentReallocationSummaryViewModel.convertToViewModel(summaryResponse)
       Ok(view(viewModel, accountPeriod))
+    } recover { case ex =>
+      logger.error(s"Unexpected failure while retrieving Repayments Reallocations Summaries: ${ex.getMessage}")
+      Redirect(JourneyRecoveryController.onPageLoad())
     }
   }
 
