@@ -125,6 +125,18 @@ interest.table.creditInterest           = Credit Interest
 interest.table.creditInterest.accruing  = Credit Interest (still accruing)
 interest.table.total                    = Total
 
+creditInterest.title = Credit interest - Interest
+creditInterest.section = Accounting period overview
+creditInterest.heading = Credit interest
+creditInterest.table.header = Accounting period ending {0}
+creditInterest.subject = Amount subject to interest
+creditInterest.fromDate = From date
+creditInterest.toDate = To date
+creditInterest.days = Days overdue
+creditInterest.percentage = Annual Percentage Rate
+creditInterest.interest = Interest accrued
+creditInterest.table.total = Total
+
 latePaymentInterest.stillAccruing.title                   = Late payment interest - Interest - Accounting period overview
 latePaymentInterest.stillAccruing.caption                 = Accounting period ending 30 Sep 2025
 latePaymentInterest.stillAccruing.heading                 = Late payment interest (still accruing)
@@ -143,7 +155,7 @@ repaymentInterest.table.header = Accounting period ending {0}
 repaymentInterest.subject = Amount subject to interest
 repaymentInterest.fromDate = From date
 repaymentInterest.toDate = To date
-repaymentInterest.days = Days overdue
+repaymentInterest.days = Days paid early
 repaymentInterest.percentage = Annual Percentage Rate
 repaymentInterest.interest = Interest accrued
 repaymentInterest.table.total = Total

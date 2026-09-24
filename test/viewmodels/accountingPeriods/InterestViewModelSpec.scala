@@ -24,7 +24,6 @@ import org.scalatest.wordspec.AnyWordSpec
 import play.api.i18n.Messages
 import play.api.mvc.Call
 import play.api.test.Helpers.stubMessages
-import uk.gov.hmrc.http.HttpVerbs.GET
 import views.ViewUtils.formatCurrency
 
 class InterestViewModelSpec extends AnyWordSpec with Matchers with AccountingPeriodResponseHelper {
@@ -37,8 +36,7 @@ class InterestViewModelSpec extends AnyWordSpec with Matchers with AccountingPer
     "create the expected rows and descriptions when LpiCalcFlag, creditDebitCalcFlag and clericalCalculationFlag are true " in {
       val clericalCalculationFlag: Boolean = true
 
-      val viewModel       = InterestViewModel.toViewModel(accountingPeriodResponseWithAllFlagsTrue, clericalCalculationFlag)
-      val dummyCall: Call = Call(GET, "/")
+      val viewModel = InterestViewModel.toViewModel(accountingPeriodResponseWithAllFlagsTrue, clericalCalculationFlag)
 
       viewModel.rows mustBe Seq(
         InterestRow(
@@ -63,15 +61,14 @@ class InterestViewModelSpec extends AnyWordSpec with Matchers with AccountingPer
           description = messages("interest.table.creditInterest.accruing"),
           amount = BigDecimal("0.00"),
           isLink = false,
-          href = dummyCall
+          href = routes.CreditInterestController.onPageLoad()
         )
       )
     }
     "create the expected rows and descriptions when LpiCalcFlag, creditDebitCalcFlag and clericalCalculationFlag are false " in {
       val clericalCalculationFlag: Boolean = false
 
-      val viewModel       = InterestViewModel.toViewModel(accountingPeriodResponseWithAllFlagsFalse, clericalCalculationFlag)
-      val dummyCall: Call = Call(GET, "/")
+      val viewModel = InterestViewModel.toViewModel(accountingPeriodResponseWithAllFlagsFalse, clericalCalculationFlag)
 
       viewModel.rows mustBe Seq(
         InterestRow(
@@ -96,7 +93,7 @@ class InterestViewModelSpec extends AnyWordSpec with Matchers with AccountingPer
           description = messages("interest.table.creditInterest"),
           amount = BigDecimal("0.00"),
           isLink = false,
-          href = dummyCall
+          href = routes.CreditInterestController.onPageLoad()
         )
       )
     }
@@ -104,7 +101,6 @@ class InterestViewModelSpec extends AnyWordSpec with Matchers with AccountingPer
       val clericalCalculationFlag: Boolean = true
       val viewModel                        =
         InterestViewModel.toViewModel(accountingPeriodResponseWithAllFlagsTrueAmountZero, clericalCalculationFlag)
-      val dummyCall: Call                  = Call(GET, "/")
 
       viewModel.rows mustBe Seq(
         InterestRow(
@@ -129,7 +125,7 @@ class InterestViewModelSpec extends AnyWordSpec with Matchers with AccountingPer
           description = messages("interest.table.creditInterest.accruing"),
           amount = BigDecimal("0.00"),
           isLink = false,
-          href = dummyCall
+          href = routes.CreditInterestController.onPageLoad()
         )
       )
     }
