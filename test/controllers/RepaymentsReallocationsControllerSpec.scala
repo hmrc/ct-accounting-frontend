@@ -28,8 +28,8 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import services.RepaymentsReallocationService
 import uk.gov.hmrc.http.HeaderCarrier
-import viewmodels.RepaymentReallocationSummaryViewModel
-import views.html.RepaymentsReallocationsView
+import viewmodels.accountingPeriods.RepaymentReallocationSummaryViewModel
+import views.html.accountingPeriods.RepaymentsReallocationsView
 
 import java.time.LocalDate
 import scala.concurrent.Future

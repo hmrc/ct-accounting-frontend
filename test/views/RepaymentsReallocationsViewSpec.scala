@@ -22,9 +22,9 @@ import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import play.api.i18n.{Lang, Messages, MessagesApi, MessagesImpl}
 import play.api.test.FakeRequest
-import viewmodels.RepaymentReallocationSummaryViewModel
+import viewmodels.accountingPeriods.RepaymentReallocationSummaryViewModel
 import views.ViewUtils.formatDate
-import views.html.RepaymentsReallocationsView
+import views.html.accountingPeriods.RepaymentsReallocationsView
 
 import java.time.LocalDate
 

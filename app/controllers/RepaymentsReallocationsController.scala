@@ -23,8 +23,8 @@ import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import services.RepaymentsReallocationService
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
-import views.html.RepaymentsReallocationsView
-import viewmodels.RepaymentReallocationSummaryViewModel
+import viewmodels.accountingPeriods.RepaymentReallocationSummaryViewModel
+import views.html.accountingPeriods.RepaymentsReallocationsView
 
 import java.time.LocalDate
 import javax.inject.Inject

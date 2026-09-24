@@ -172,7 +172,7 @@ taxDescription.assessment.t = Taxpayer amended self assessment {0}
 taxDescription.assessment.z = Return charge {0}
 
 repaymentReallocations.title = Repayments and reallocations
-repaymentReallocations.section = Repayments and reallocations
+repaymentReallocations.section = Accounting period overview
 repaymentReallocations.heading = Repayments and reallocations
 repaymentReallocations.table.header = Accounting period ending {0}
 repaymentReallocations.date = Date

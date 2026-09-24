@@ -14,16 +14,16 @@
  * limitations under the License.
  */
 
-package viewmodels
+package viewmodels.accountingPeriods
 
 import models.RepayReallocationSummary
 import play.api.i18n.Messages
 import uk.gov.hmrc.govukfrontend.views.Aliases.TableRow
 import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
+import utils.RepaymentsReallocationsDescriptionHelper
+import views.ViewUtils.formatCurrency
 
 import java.time.LocalDate
-import views.ViewUtils.formatCurrency
-import utils.RepaymentsReallocationsDescriptionHelper
 
 case class RepaymentReallocationSummaryViewModelRow(
   transactionDate: Option[LocalDate],

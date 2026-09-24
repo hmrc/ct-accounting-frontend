@@ -64,6 +64,39 @@ trait RepaymentsReallocationsHelper {
     )
   )
 
+  val multipleSummariesWithNewTotal: RepayReallocationSummary = RepayReallocationSummary(
+    transactions = List(
+      RepayReallocationSummaryDetails(
+        transactionDate = Some(LocalDate.of(2008, 10, 2)),
+        `type` = Some("RFR"),
+        amount = Some(BigDecimal("6500.25")),
+        accountingPeriodEndDate = Some(LocalDate.of(2003, 12, 20)),
+        taxpayerReference = Some("8754000057")
+      ),
+      RepayReallocationSummaryDetails(
+        transactionDate = Some(LocalDate.of(2007, 1, 5)),
+        `type` = Some("RTO"),
+        amount = Some(BigDecimal("27000.39")),
+        accountingPeriodEndDate = Some(LocalDate.of(2003, 12, 31)),
+        taxpayerReference = Some("8754000057")
+      ),
+      RepayReallocationSummaryDetails(
+        transactionDate = Some(LocalDate.of(2007, 1, 5)),
+        `type` = Some("RTO"),
+        amount = Some(BigDecimal("-3214.05")),
+        accountingPeriodEndDate = Some(LocalDate.of(2003, 12, 31)),
+        taxpayerReference = Some("8754000057")
+      ),
+      RepayReallocationSummaryDetails(
+        transactionDate = Some(LocalDate.of(2007, 1, 5)),
+        `type` = Some("RTO"),
+        amount = Some(BigDecimal("42389.12")),
+        accountingPeriodEndDate = Some(LocalDate.of(2003, 12, 31)),
+        taxpayerReference = Some("8754000057")
+      )
+    )
+  )
+
   val summaryEmptyList: RepayReallocationSummary = RepayReallocationSummary(
     transactions = List.empty
   )

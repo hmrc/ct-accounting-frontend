@@ -18,7 +18,7 @@ package connectors
 
 import com.github.tomakehurst.wiremock.client.WireMock.*
 import itutils.ApplicationWithWiremock
-import models.{RepayReallocationSummary, RepayReallocationSummaryDetails}
+import models.RepayReallocationSummary
 import org.scalatest.BeforeAndAfterEach
 import org.scalatest.concurrent.{IntegrationPatience, ScalaFutures}
 import org.scalatest.matchers.must.Matchers
@@ -26,8 +26,6 @@ import org.scalatest.wordspec.AnyWordSpec
 import play.api.http.Status.{INTERNAL_SERVER_ERROR, OK}
 import uk.gov.hmrc.http.HeaderCarrier
 import helpers.RepaymentsReallocationsHelper
-
-import java.time.LocalDate
 
 class RepaymentsReallocationsConnectorISpec
     extends AnyWordSpec
