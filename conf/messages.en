@@ -170,3 +170,14 @@ taxDescription.assessment.r = HMRC amended self assessment {0}
 taxDescription.assessment.s = Self assessment {0}
 taxDescription.assessment.t = Taxpayer amended self assessment {0}
 taxDescription.assessment.z = Return charge {0}
+
+repaymentReallocations.title = 	Repayments and reallocations - Accounting period overview
+repaymentReallocations.heading = Repayments and reallocations
+repaymentReallocations.table.header = Accounting period ending {0}
+repaymentReallocations.date = Date
+repaymentReallocations.description = Description
+repaymentReallocations.amount = Amount
+repaymentReallocations.table.total = Total
+repaymentReallocations.description.rto = Reallocation to accounting period {0}
+repaymentReallocations.description.rfr = Reallocation from accounting period ending {0}
+repaymentReallocations.description.crt = Repayments from accounting period {0}

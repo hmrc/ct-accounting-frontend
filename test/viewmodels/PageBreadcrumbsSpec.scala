@@ -154,4 +154,20 @@ class PageBreadcrumbsSpec extends AnyWordSpec with Matchers {
     }
 
   }
+
+  "PageBreadcrumbs.repaymentsReallocationsPage" should {
+
+    "contain exactly three breadcrumb items" in {
+      PageBreadcrumbs.repaymentsReallocationsPage.items.size shouldBe 3
+    }
+
+    "have the correct items in order" in {
+      PageBreadcrumbs.repaymentsReallocationsPage.items shouldBe Seq(
+        BreadcrumbsItem(content = Text(messages("breadcrumbs.home")), href = Some("/")),
+        BreadcrumbsItem(content = Text(messages("breadcrumbs.accountingPeriods")), href = Some("/")),
+        BreadcrumbsItem(content = Text(messages("breadcrumbs.accountingPeriodEnding")), href = Some("/"))
+      )
+    }
+
+  }
 }
