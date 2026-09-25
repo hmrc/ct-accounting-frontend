@@ -21,16 +21,20 @@ GET         /account/signed-out                          controllers.auth.Signed
 GET         /unauthorised                                controllers.UnauthorisedController.onPageLoad()
 
 # DOMAIN SPECIFIC ROUTES
+
 # Accounting Periods Journey
+GET         /accounting-period-overview/                controllers.AccountingPeriodOverviewController.onPageLoad()
+
 GET         /accounting-period-overview/taxes            controllers.TaxTransactionsController.onPageLoad()
 GET         /accounting-period-overview/penalties        controllers.PenaltiesAccountingPeriodController.onPageLoad()
 GET         /accounting-period-overview/adjustments      controllers.AdjustmentsAccountingPeriodController.onPageLoad()
 GET         /accounting-period-overview/payments         controllers.PaymentsController.onPageLoad()
 GET         /accounting-period-overview/interest         controllers.InterestController.onPageLoad()
+GET         /accounting-period-overview/repayments-and-reallocations       controllers.RepaymentsReallocationsController.onPageLoad()
 
+# Interest Drill Down
 GET         /accounting-period-overview/interest/debit-interest   controllers.DebitInterestAccountingPeriodController.onPageLoad()
 GET         /accounting-period-overview/interest/late-payment-interest       controllers.LatePaymentInterestStillAccruingController.onPageLoad()
 GET         /accounting-period-overview/interest/repayment-interest controllers.RepaymentInterestController.onPageLoad()
 GET         /accounting-period-overview/interest/credit-interest controllers.CreditInterestController.onPageLoad()
 
-GET         /accounting-period-overview/repayments-and-reallocations       controllers.RepaymentsReallocationsController.onPageLoad()

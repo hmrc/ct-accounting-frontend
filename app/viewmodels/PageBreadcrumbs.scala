@@ -23,12 +23,20 @@ import play.api.i18n.Messages
 
 object PageBreadcrumbs {
 
+  def accountingPeriodOverviewPage(implicit messages: Messages): Breadcrumbs = Breadcrumbs(
+    // TODO: Add hrefs
+    items = Seq(
+      BreadcrumbsItem(content = Text(messages("breadcrumbs.home")), href = Some("/")),
+      BreadcrumbsItem(content = Text(messages("breadcrumbs.accountingPeriods")), href = Some("/")),
+    )
+  )
+
   def taxTransactionsPage(implicit messages: Messages): Breadcrumbs = Breadcrumbs(
     // TODO: Add hrefs
     items = Seq(
       BreadcrumbsItem(content = Text(messages("breadcrumbs.home")), href = Some("/")),
       BreadcrumbsItem(content = Text(messages("breadcrumbs.accountingPeriods")), href = Some("/")),
-      BreadcrumbsItem(content = Text(messages("breadcrumbs.accountingPeriodEnding")), href = Some("/"))
+      BreadcrumbsItem(content = Text(messages("breadcrumbs.accountingPeriodEnding")), href = Some(routes.AccountingPeriodOverviewController.onPageLoad().url))
     )
   )
 
@@ -37,7 +45,7 @@ object PageBreadcrumbs {
     items = Seq(
       BreadcrumbsItem(content = Text(messages("breadcrumbs.home")), href = Some("/")),
       BreadcrumbsItem(content = Text(messages("breadcrumbs.accountingPeriods")), href = Some("/")),
-      BreadcrumbsItem(content = Text(messages("breadcrumbs.accountingPeriodEnding")), href = Some("/"))
+      BreadcrumbsItem(content = Text(messages("breadcrumbs.accountingPeriodEnding")), href = Some(routes.AccountingPeriodOverviewController.onPageLoad().url))
     )
   )
 
@@ -46,7 +54,7 @@ object PageBreadcrumbs {
     items = Seq(
       BreadcrumbsItem(content = Text(messages("breadcrumbs.home")), href = Some("/")),
       BreadcrumbsItem(content = Text(messages("breadcrumbs.accountingPeriods")), href = Some("/")),
-      BreadcrumbsItem(content = Text(messages("breadcrumbs.accountingPeriodEnding")), href = Some("/"))
+      BreadcrumbsItem(content = Text(messages("breadcrumbs.accountingPeriodEnding")), href = Some(routes.AccountingPeriodOverviewController.onPageLoad().url))
     )
   )
 
@@ -55,7 +63,7 @@ object PageBreadcrumbs {
     items = Seq(
       BreadcrumbsItem(content = Text(messages("breadcrumbs.home")), href = Some("/")),
       BreadcrumbsItem(content = Text(messages("breadcrumbs.accountingPeriods")), href = Some("/")),
-      BreadcrumbsItem(content = Text(messages("breadcrumbs.accountingPeriodEnding")), href = Some("/"))
+      BreadcrumbsItem(content = Text(messages("breadcrumbs.accountingPeriodEnding")), href = Some(routes.AccountingPeriodOverviewController.onPageLoad().url))
     )
   )
 
@@ -64,7 +72,7 @@ object PageBreadcrumbs {
     items = Seq(
       BreadcrumbsItem(content = Text(messages("breadcrumbs.home")), href = Some("/")),
       BreadcrumbsItem(content = Text(messages("breadcrumbs.accountingPeriods")), href = Some("/")),
-      BreadcrumbsItem(content = Text(messages("breadcrumbs.accountingPeriodEnding")), href = Some("/")),
+      BreadcrumbsItem(content = Text(messages("breadcrumbs.accountingPeriodEnding")), href = Some(routes.AccountingPeriodOverviewController.onPageLoad().url)),
       BreadcrumbsItem(
         content = Text(messages("breadcrumbs.interest")),
         href = Some(routes.InterestController.onPageLoad().url)
@@ -77,7 +85,7 @@ object PageBreadcrumbs {
     items = Seq(
       BreadcrumbsItem(content = Text(messages("breadcrumbs.home")), href = Some("/")),
       BreadcrumbsItem(content = Text(messages("breadcrumbs.accountingPeriods")), href = Some("/")),
-      BreadcrumbsItem(content = Text(messages("breadcrumbs.accountingPeriodEnding")), href = Some("/"))
+      BreadcrumbsItem(content = Text(messages("breadcrumbs.accountingPeriodEnding")), href = Some(routes.AccountingPeriodOverviewController.onPageLoad().url))
     )
   )
 
@@ -86,7 +94,7 @@ object PageBreadcrumbs {
     items = Seq(
       BreadcrumbsItem(content = Text(messages("breadcrumbs.home")), href = Some("/")),
       BreadcrumbsItem(content = Text(messages("breadcrumbs.accountingPeriods")), href = Some("/")),
-      BreadcrumbsItem(content = Text(messages("breadcrumbs.accountingPeriodEnding")), href = Some("/")),
+      BreadcrumbsItem(content = Text(messages("breadcrumbs.accountingPeriodEnding")), href = Some(routes.AccountingPeriodOverviewController.onPageLoad().url)),
       BreadcrumbsItem(
         content = Text(messages("breadcrumbs.interest")),
         href = Some(controllers.routes.InterestController.onPageLoad().url)
@@ -99,7 +107,7 @@ object PageBreadcrumbs {
     items = Seq(
       BreadcrumbsItem(content = Text(messages("breadcrumbs.home")), href = Some("/")),
       BreadcrumbsItem(content = Text(messages("breadcrumbs.accountingPeriods")), href = Some("/")),
-      BreadcrumbsItem(content = Text(messages("breadcrumbs.accountingPeriodEnding")), href = Some("/")),
+      BreadcrumbsItem(content = Text(messages("breadcrumbs.accountingPeriodEnding")), href = Some(routes.AccountingPeriodOverviewController.onPageLoad().url)),
       BreadcrumbsItem(
         content = Text(messages("breadcrumbs.interest")),
         href = Some(routes.InterestController.onPageLoad().url)
@@ -112,7 +120,7 @@ object PageBreadcrumbs {
     items = Seq(
       BreadcrumbsItem(content = Text(messages("breadcrumbs.home")), href = Some("/")),
       BreadcrumbsItem(content = Text(messages("breadcrumbs.accountingPeriods")), href = Some("/")),
-      BreadcrumbsItem(content = Text(messages("breadcrumbs.accountingPeriodEnding")), href = Some("/")),
+      BreadcrumbsItem(content = Text(messages("breadcrumbs.accountingPeriodEnding")), href = Some(routes.AccountingPeriodOverviewController.onPageLoad().url)),
       BreadcrumbsItem(
         content = Text(messages("breadcrumbs.interest")),
         href = Some(routes.InterestController.onPageLoad().url)
@@ -125,7 +133,7 @@ object PageBreadcrumbs {
     items = Seq(
       BreadcrumbsItem(content = Text(messages("breadcrumbs.home")), href = Some("/")),
       BreadcrumbsItem(content = Text(messages("breadcrumbs.accountingPeriods")), href = Some("/")),
-      BreadcrumbsItem(content = Text(messages("breadcrumbs.accountingPeriodEnding")), href = Some("/"))
+      BreadcrumbsItem(content = Text(messages("breadcrumbs.accountingPeriodEnding")), href = Some(routes.AccountingPeriodOverviewController.onPageLoad().url))
     )
   )
 }

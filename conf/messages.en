@@ -53,6 +53,22 @@ breadcrumbs.accountingPeriods = Accounting periods
 breadcrumbs.accountingPeriodEnding = Accounting period ending
 breadcrumbs.interest = Interest
 
+accountingPeriodOverview.title = Accounting Period overview
+accountingPeriodOverview.heading = Accounting period ending {0}
+
+accountingPeriodOverview.paragraph = When paying for this accounting period, use reference number {0}
+
+accountingPeriodOverview.description = Description
+accountingPeriodOverview.amount = Amount
+accountingPeriodOverview.taxes = Taxes
+accountingPeriodOverview.interest = Interest
+accountingPeriodOverview.penalties = Penalties
+accountingPeriodOverview.subtotal = Subtotal
+accountingPeriodOverview.payments = Payments
+accountingPeriodOverview.repayments = Repayments and reallocations
+accountingPeriodOverview.adjustments = Adjustments
+accountingPeriodOverview.total = Total
+
 taxTransactions.title = Taxes
 taxTransactions.section = Accounting period overview
 taxTransactions.heading = Taxes
