@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package views
+package views.accountingPeriods
 
 import base.SpecBase
 import helpers.RepaymentsReallocationsHelper
@@ -48,12 +48,11 @@ class RepaymentsReallocationsViewSpec extends SpecBase with RepaymentsReallocati
     Jsoup.parse(view(viewModel, accountPeriod)(request, messages(application)).toString)
 
   // TODO: Extra tests covering all content
-  "PaymentsView" - {
+  "RepaymentsReallocationsView" - {
 
     "render the correct page title" in {
       val doc = render()
       doc.title() must include(messages("repaymentReallocations.title"))
-      doc.title() must include(messages("repaymentReallocations.section"))
     }
 
     "render the correct heading" in {
