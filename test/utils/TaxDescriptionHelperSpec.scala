@@ -24,10 +24,8 @@ class TaxDescriptionHelperSpec extends SpecBase {
 
   val application = applicationBuilder().build()
 
-
   implicit val messagesApi: MessagesApi = application.injector.instanceOf[MessagesApi]
-  implicit val messages: Messages = MessagesImpl(Lang.defaultLang, messagesApi)
-
+  implicit val messages: Messages       = MessagesImpl(Lang.defaultLang, messagesApi)
 
   s"Assessment Type is A, it should return correct Tax Description" - {
     val assessmentType = "A"
