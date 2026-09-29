@@ -38,7 +38,10 @@ class PageBreadcrumbsSpec extends AnyWordSpec with Matchers {
       PageBreadcrumbs.taxTransactionsPage.items shouldBe Seq(
         BreadcrumbsItem(content = Text(messages("breadcrumbs.home")), href = Some("/")),
         BreadcrumbsItem(content = Text(messages("breadcrumbs.accountingPeriods")), href = Some("/")),
-        BreadcrumbsItem(content = Text(messages("breadcrumbs.accountingPeriodEnding")), href = Some("/"))
+        BreadcrumbsItem(
+          content = Text(messages("breadcrumbs.accountingPeriodEnding")),
+          href = Some(routes.AccountingPeriodOverviewController.onPageLoad().url)
+        )
       )
     }
 
@@ -54,7 +57,10 @@ class PageBreadcrumbsSpec extends AnyWordSpec with Matchers {
       PageBreadcrumbs.paymentsPage.items shouldBe Seq(
         BreadcrumbsItem(content = Text(messages("breadcrumbs.home")), href = Some("/")),
         BreadcrumbsItem(content = Text(messages("breadcrumbs.accountingPeriods")), href = Some("/")),
-        BreadcrumbsItem(content = Text(messages("breadcrumbs.accountingPeriodEnding")), href = Some("/"))
+        BreadcrumbsItem(
+          content = Text(messages("breadcrumbs.accountingPeriodEnding")),
+          href = Some(routes.AccountingPeriodOverviewController.onPageLoad().url)
+        )
       )
     }
 
@@ -70,7 +76,10 @@ class PageBreadcrumbsSpec extends AnyWordSpec with Matchers {
       PageBreadcrumbs.paymentsPage.items shouldBe Seq(
         BreadcrumbsItem(content = Text(messages("breadcrumbs.home")), href = Some("/")),
         BreadcrumbsItem(content = Text(messages("breadcrumbs.accountingPeriods")), href = Some("/")),
-        BreadcrumbsItem(content = Text(messages("breadcrumbs.accountingPeriodEnding")), href = Some("/"))
+        BreadcrumbsItem(
+          content = Text(messages("breadcrumbs.accountingPeriodEnding")),
+          href = Some(routes.AccountingPeriodOverviewController.onPageLoad().url)
+        )
       )
     }
 
@@ -86,7 +95,10 @@ class PageBreadcrumbsSpec extends AnyWordSpec with Matchers {
       PageBreadcrumbs.repaymentInterestPage.items shouldBe Seq(
         BreadcrumbsItem(content = Text(messages("breadcrumbs.home")), href = Some("/")),
         BreadcrumbsItem(content = Text(messages("breadcrumbs.accountingPeriods")), href = Some("/")),
-        BreadcrumbsItem(content = Text(messages("breadcrumbs.accountingPeriodEnding")), href = Some("/")),
+        BreadcrumbsItem(
+          content = Text(messages("breadcrumbs.accountingPeriodEnding")),
+          href = Some(routes.AccountingPeriodOverviewController.onPageLoad().url)
+        ),
         BreadcrumbsItem(
           content = Text(messages("breadcrumbs.interest")),
           href = Some(routes.InterestController.onPageLoad().url)
@@ -106,7 +118,10 @@ class PageBreadcrumbsSpec extends AnyWordSpec with Matchers {
       PageBreadcrumbs.debitInterestAccountingPeriodPage.items shouldBe Seq(
         BreadcrumbsItem(content = Text(messages("breadcrumbs.home")), href = Some("/")),
         BreadcrumbsItem(content = Text(messages("breadcrumbs.accountingPeriods")), href = Some("/")),
-        BreadcrumbsItem(content = Text(messages("breadcrumbs.accountingPeriodEnding")), href = Some("/")),
+        BreadcrumbsItem(
+          content = Text(messages("breadcrumbs.accountingPeriodEnding")),
+          href = Some(routes.AccountingPeriodOverviewController.onPageLoad().url)
+        ),
         BreadcrumbsItem(
           content = Text(messages("breadcrumbs.interest")),
           href = Some("/ct-accounting/accounting-period-overview/interest")
@@ -125,7 +140,10 @@ class PageBreadcrumbsSpec extends AnyWordSpec with Matchers {
       PageBreadcrumbs.interestStillAccruingPage.items shouldBe Seq(
         BreadcrumbsItem(content = Text(messages("breadcrumbs.home")), href = Some("/")),
         BreadcrumbsItem(content = Text(messages("breadcrumbs.accountingPeriods")), href = Some("/")),
-        BreadcrumbsItem(content = Text(messages("breadcrumbs.accountingPeriodEnding")), href = Some("/")),
+        BreadcrumbsItem(
+          content = Text(messages("breadcrumbs.accountingPeriodEnding")),
+          href = Some(routes.AccountingPeriodOverviewController.onPageLoad().url)
+        ),
         BreadcrumbsItem(
           content = Text(messages("breadcrumbs.interest")),
           href = Some(routes.InterestController.onPageLoad().url)
@@ -145,7 +163,10 @@ class PageBreadcrumbsSpec extends AnyWordSpec with Matchers {
       PageBreadcrumbs.creditInterestPage.items shouldBe Seq(
         BreadcrumbsItem(content = Text(messages("breadcrumbs.home")), href = Some("/")),
         BreadcrumbsItem(content = Text(messages("breadcrumbs.accountingPeriods")), href = Some("/")),
-        BreadcrumbsItem(content = Text(messages("breadcrumbs.accountingPeriodEnding")), href = Some("/")),
+        BreadcrumbsItem(
+          content = Text(messages("breadcrumbs.accountingPeriodEnding")),
+          href = Some(routes.AccountingPeriodOverviewController.onPageLoad().url)
+        ),
         BreadcrumbsItem(
           content = Text(messages("breadcrumbs.interest")),
           href = Some(routes.InterestController.onPageLoad().url)
@@ -165,7 +186,25 @@ class PageBreadcrumbsSpec extends AnyWordSpec with Matchers {
       PageBreadcrumbs.repaymentsReallocationsPage.items shouldBe Seq(
         BreadcrumbsItem(content = Text(messages("breadcrumbs.home")), href = Some("/")),
         BreadcrumbsItem(content = Text(messages("breadcrumbs.accountingPeriods")), href = Some("/")),
-        BreadcrumbsItem(content = Text(messages("breadcrumbs.accountingPeriodEnding")), href = Some("/"))
+        BreadcrumbsItem(
+          content = Text(messages("breadcrumbs.accountingPeriodEnding")),
+          href = Some(routes.AccountingPeriodOverviewController.onPageLoad().url)
+        )
+      )
+    }
+
+  }
+
+  "PageBreadcrumbs.accountingPeriodOverviewPage" should {
+
+    "contain exactly three breadcrumb items" in {
+      PageBreadcrumbs.accountingPeriodOverviewPage.items.size shouldBe 2
+    }
+
+    "have the correct items in order" in {
+      PageBreadcrumbs.accountingPeriodOverviewPage.items shouldBe Seq(
+        BreadcrumbsItem(content = Text(messages("breadcrumbs.home")), href = Some("/")),
+        BreadcrumbsItem(content = Text(messages("breadcrumbs.accountingPeriods")), href = Some("/"))
       )
     }
 

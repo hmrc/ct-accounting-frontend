@@ -25,12 +25,12 @@ import java.time.LocalDate
 import javax.inject.Inject
 import scala.concurrent.Future
 
-class AccountingPeriodOverviewService @Inject()(
+class AccountingPeriodOverviewService @Inject() (
   connector: AccountingPeriodOverviewConnector
 ) extends Logging {
 
-  def getAccountingPeriodOverview(taxRef: Long, accPeriod: Long, accountPeriodEndDate: LocalDate)(
-    implicit hc: HeaderCarrier
+  def getAccountingPeriodOverview(taxRef: Long, accPeriod: Long, accountPeriodEndDate: LocalDate)(implicit
+    hc: HeaderCarrier
   ): Future[AccountingPeriodOverview] = {
     logger.info(s"Calling repository with taxRef: $taxRef and accPeriod: $accPeriod")
 

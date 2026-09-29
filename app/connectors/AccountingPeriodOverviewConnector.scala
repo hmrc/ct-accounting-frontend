@@ -28,8 +28,8 @@ import java.net.URL
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
-class AccountingPeriodOverviewConnector @Inject()(http: HttpClientV2, config: ServicesConfig)(implicit
-                                                                                              ec: ExecutionContext
+class AccountingPeriodOverviewConnector @Inject() (http: HttpClientV2, config: ServicesConfig)(implicit
+  ec: ExecutionContext
 ) extends Logging {
 
   def getAccountingPeriodOverview(taxRef: Long, accPeriod: Long)(implicit

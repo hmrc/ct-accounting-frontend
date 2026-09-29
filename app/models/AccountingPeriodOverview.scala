@@ -21,25 +21,25 @@ import play.api.libs.json.{Json, OFormat}
 import java.time.LocalDate
 
 case class AccountingPeriodOverview(
-                                     accountingPeriod: BigDecimal,
-                                     apStartDate: LocalDate,
-                                     apEndDate: LocalDate,
-                                     apStatus: String,
-                                     taxChargePresent: Boolean,
-                                     clericalIntSig: Boolean,
-                                     creditDebitInterestInd: Boolean,
-                                     taxTotal: BigDecimal,
-                                     interestTotal: BigDecimal,
-                                     penaltyTotal: BigDecimal,
-                                     payslipTotal: BigDecimal,
-                                     repayReallocTotal: BigDecimal,
-                                     adjustmentTotal: BigDecimal,
-                                     clericalCalculationFlag: Boolean,
-                                     taxIsDisplayNeededFlag: Boolean,
-                                     interestIsDisplayNeededFlag: Boolean,
-                                     paymentIsDisplayNeededFlag: Boolean,
-                                     repayReallocIsDisplayNeededFlag: Boolean
-                                   )
+  accountingPeriod: Long,
+  apStartDate: LocalDate,
+  apEndDate: LocalDate,
+  apStatus: String,
+  taxChargePresent: Boolean,
+  clericalIntSig: Boolean,
+  creditDebitInterestInd: Boolean,
+  taxTotal: BigDecimal,
+  interestTotal: BigDecimal,
+  penaltyTotal: BigDecimal,
+  payslipTotal: BigDecimal,
+  repayReallocTotal: BigDecimal,
+  adjustmentTotal: BigDecimal,
+  clericalCalculationFlag: Boolean,
+  taxIsDisplayNeededFlag: Boolean,
+  interestIsDisplayNeededFlag: Boolean,
+  paymentIsDisplayNeededFlag: Boolean,
+  repayReallocIsDisplayNeededFlag: Boolean
+)
 
 object AccountingPeriodOverview {
   implicit val format: OFormat[AccountingPeriodOverview] = Json.format[AccountingPeriodOverview]

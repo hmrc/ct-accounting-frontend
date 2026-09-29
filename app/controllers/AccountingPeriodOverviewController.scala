@@ -30,7 +30,7 @@ import views.html.accountingPeriods.AccountingPeriodsOverviewView
 import java.time.LocalDate
 import javax.inject.Inject
 
-class AccountingPeriodOverviewController @Inject()(
+class AccountingPeriodOverviewController @Inject() (
   override val messagesApi: MessagesApi,
   identify: IdentifierAction,
   val controllerComponents: MessagesControllerComponents,
@@ -49,7 +49,8 @@ class AccountingPeriodOverviewController @Inject()(
     service
       .getAccountingPeriodOverview(taxRef, accPeriod, accountPeriodEndDate)
       .map { accountingPeriodOverviewResponse =>
-        val viewModel = AccountingPeriodOverviewViewModel.toViewModel(accountPeriodEndDate, accountingPeriodOverviewResponse)
+        val viewModel =
+          AccountingPeriodOverviewViewModel.toViewModel(accountPeriodEndDate, accountingPeriodOverviewResponse, taxRef)
         Ok(view(viewModel))
       }
       .recover { case ex =>
