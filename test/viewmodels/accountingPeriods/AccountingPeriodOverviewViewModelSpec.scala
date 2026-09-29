@@ -24,7 +24,6 @@ import controllers.routes
 import play.api.i18n.Messages
 import play.api.test.Helpers.stubMessages
 
-
 class AccountingPeriodOverviewViewModelSpec extends AnyWordSpec with Matchers with AccountingPeriodOverviewHelper {
 
   implicit val messages: Messages = stubMessages()
