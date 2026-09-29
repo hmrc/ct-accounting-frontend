@@ -20,12 +20,10 @@ import helpers.AccountingPeriodOverviewHelper
 import org.scalatest.matchers.must.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 import viewmodels.accountingPeriods.AccountingPeriodOverviewViewModel.toViewModel
-//import views.ViewUtils.formatCurrency
 import controllers.routes
 import play.api.i18n.Messages
 import play.api.test.Helpers.stubMessages
 
-//import java.time.LocalDate
 
 class AccountingPeriodOverviewViewModelSpec extends AnyWordSpec with Matchers with AccountingPeriodOverviewHelper {
 
