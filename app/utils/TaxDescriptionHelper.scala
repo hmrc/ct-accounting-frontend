@@ -24,7 +24,7 @@ object TaxDescriptionHelper {
     messages: Messages
   ): String = {
     val messageType = correctionClaim match {
-      case Some("2") => "(claim)"
+      case Some("2") => messages("taxDescription.assessment.claim")
       case _         => ""
     }
 
