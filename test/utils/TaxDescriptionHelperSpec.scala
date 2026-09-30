@@ -16,31 +16,18 @@
 
 package utils
 
-import org.scalatest.concurrent.ScalaFutures
-import org.scalatest.matchers.must.Matchers
-import org.scalatest.wordspec.AnyWordSpec
-import play.api.i18n.{DefaultMessagesApi, Lang, Messages}
+import base.SpecBase
 
-class TaxDescriptionHelperSpec extends AnyWordSpec with Matchers with ScalaFutures {
+import play.api.i18n.{Lang, Messages, MessagesApi, MessagesImpl}
 
-  implicit val messages: Messages = new DefaultMessagesApi(
-    Map(
-      "en" -> Map(
-        "taxDescription.assessment.a" -> "Amended assessment {0}",
-        "taxDescription.assessment.d" -> "Discovery assessment {0}",
-        "taxDescription.assessment.e" -> "HMRC determination {0}",
-        "taxDescription.assessment.f" -> "Further assessment {0}",
-        "taxDescription.assessment.j" -> "HMRC amended self assessment {0}",
-        "taxDescription.assessment.m" -> "Main assessment {0}",
-        "taxDescription.assessment.r" -> "HMRC amended self assessment {0}",
-        "taxDescription.assessment.s" -> "Self assessment {0}",
-        "taxDescription.assessment.t" -> "Taxpayer amended self assessment {0}",
-        "taxDescription.assessment.z" -> "Return charge {0}"
-      )
-    )
-  ).preferred(Seq(Lang("en")))
+class TaxDescriptionHelperSpec extends SpecBase {
 
-  s"Assessment Type is A, it should return correct Tax Description" should {
+  val application = applicationBuilder().build()
+
+  implicit val messagesApi: MessagesApi = application.injector.instanceOf[MessagesApi]
+  implicit val messages: Messages       = MessagesImpl(Lang.defaultLang, messagesApi)
+
+  s"Assessment Type is A, it should return correct Tax Description" - {
     val assessmentType = "A"
 
     "when Correction Claim Indicator is null" in {
@@ -71,7 +58,7 @@ class TaxDescriptionHelperSpec extends AnyWordSpec with Matchers with ScalaFutur
     }
   }
 
-  s"Assessment Type is D, it should return correct Tax Description" should {
+  s"Assessment Type is D, it should return correct Tax Description" - {
     val assessmentType = "D"
 
     "when Correction Claim Indicator is null" in {
@@ -102,7 +89,7 @@ class TaxDescriptionHelperSpec extends AnyWordSpec with Matchers with ScalaFutur
     }
   }
 
-  s"Assessment Type is E, it should return correct Tax Description" should {
+  s"Assessment Type is E, it should return correct Tax Description" - {
     val assessmentType = "E"
 
     "when Correction Claim Indicator is null" in {
@@ -133,7 +120,7 @@ class TaxDescriptionHelperSpec extends AnyWordSpec with Matchers with ScalaFutur
     }
   }
 
-  s"Assessment Type is F, it should return correct Tax Description" should {
+  s"Assessment Type is F, it should return correct Tax Description" - {
     val assessmentType = "F"
 
     "when Correction Claim Indicator is null" in {
@@ -164,7 +151,7 @@ class TaxDescriptionHelperSpec extends AnyWordSpec with Matchers with ScalaFutur
     }
   }
 
-  s"Assessment Type is J, it should return correct Tax Description" should {
+  s"Assessment Type is J, it should return correct Tax Description" - {
     val assessmentType = "J"
 
     "when Correction Claim Indicator is null" in {
@@ -195,7 +182,7 @@ class TaxDescriptionHelperSpec extends AnyWordSpec with Matchers with ScalaFutur
     }
   }
 
-  s"Assessment Type is M, it should return correct Tax Description" should {
+  s"Assessment Type is M, it should return correct Tax Description" - {
     val assessmentType = "M"
 
     "when Correction Claim Indicator is null" in {
@@ -226,7 +213,7 @@ class TaxDescriptionHelperSpec extends AnyWordSpec with Matchers with ScalaFutur
     }
   }
 
-  s"Assessment Type is R, it should return correct Tax Description" should {
+  s"Assessment Type is R, it should return correct Tax Description" - {
     val assessmentType = "M"
 
     "when Correction Claim Indicator is null" in {
@@ -257,7 +244,7 @@ class TaxDescriptionHelperSpec extends AnyWordSpec with Matchers with ScalaFutur
     }
   }
 
-  s"Assessment Type is S, it should return correct Tax Description" should {
+  s"Assessment Type is S, it should return correct Tax Description" - {
     val assessmentType = "S"
 
     "when Correction Claim Indicator is null" in {
@@ -288,7 +275,7 @@ class TaxDescriptionHelperSpec extends AnyWordSpec with Matchers with ScalaFutur
     }
   }
 
-  s"Assessment Type is T, it should return correct Tax Description" should {
+  s"Assessment Type is T, it should return correct Tax Description" - {
     val assessmentType = "T"
 
     "when Correction Claim Indicator is null" in {
@@ -319,7 +306,7 @@ class TaxDescriptionHelperSpec extends AnyWordSpec with Matchers with ScalaFutur
     }
   }
 
-  s"Assessment Type is Z, it should return correct Tax Description" should {
+  s"Assessment Type is Z, it should return correct Tax Description" - {
     val assessmentType = "Z"
 
     "when Correction Claim Indicator is null" in {
