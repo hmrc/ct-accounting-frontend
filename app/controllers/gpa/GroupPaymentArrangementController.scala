@@ -31,30 +31,33 @@ import java.time.LocalDate
 import javax.inject.Inject
 
 class GroupPaymentArrangementController @Inject() (
-                                                     override val messagesApi: MessagesApi,
-                                                     identify: IdentifierAction,
-                                                     val controllerComponents: MessagesControllerComponents,
-                                                     view: GroupPaymentArrangementView,
-                                                     service: AccountingPeriodOverviewService
-                                                   ) extends FrontendBaseController
-  with I18nSupport {
+  override val messagesApi: MessagesApi,
+  identify: IdentifierAction,
+  val controllerComponents: MessagesControllerComponents,
+  view: GroupPaymentArrangementView,
+  service: AccountingPeriodOverviewService
+) extends FrontendBaseController
+    with I18nSupport {
 
   def onPageLoad: Action[AnyContent] = identify.async { implicit request =>
 
     val accountPeriodEndDate = LocalDate.of(2026, 1, 1) // TODO: This needs to comes from sessionDataRepository
     val taxRef               = 1L
     val accPeriod            = 1L
+    val groupPayments        = 10.00
+    val groupTaxes           = 10.00
+    val gpaStatus            = "Open"
 
     // TODO: Get taxRef + accPeriod from sessionDataRepositry
     service
       .getAccountingPeriodOverview(taxRef, accPeriod, accountPeriodEndDate)
       .map { accountingPeriodOverviewResponse =>
         val viewModel =
-          AccountingPeriodOverviewViewModel.toViewModel(accountPeriodEndDate, accountingPeriodOverviewResponse, taxRef)
+          GroupPaymentArrangementViewModel.toViewModel(accountPeriodEndDate, groupPayments, groupTaxes, gpaStatus)
         Ok(view(viewModel))
       }
       .recover { case ex =>
-        logger.error(s"Unexpected failure while retrieving interestAccrual: ${ex.getMessage}")
+        logger.error(s"Unexpected failure while retrieving group payment arrangement: ${ex.getMessage}")
         Redirect(JourneyRecoveryController.onPageLoad())
       }
   }
