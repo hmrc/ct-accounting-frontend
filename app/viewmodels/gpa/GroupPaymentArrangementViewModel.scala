@@ -22,13 +22,28 @@ import views.ViewUtils.formatCurrency
 
 import java.time.LocalDate
 
-
 case class GroupPaymentArrangementViewModel(
-                                         periodOfAccountEnding: LocalDate,
-                                         groupPayments: BigDecimal,
-                                         groupTaxes: BigDecimal,
-                                         status: String
-                                       ) {
+  periodOfAccountEnding: LocalDate,
+  groupPayments: BigDecimal,
+  groupTaxes: BigDecimal,
+  status: String
+) {
   val groupPaymentsAsString: String = formatCurrency(groupPayments)
-  val groupTaxesAsString: String = formatCurrency(groupTaxes)
+  val groupTaxesAsString: String    = formatCurrency(groupTaxes)
+}
+
+object GroupPaymentArrangementViewModel {
+  def toViewModel(
+    periodOfAccountEnding: LocalDate,
+    groupPayments: BigDecimal,
+    groupTaxes: BigDecimal,
+    status: String
+  ): GroupPaymentArrangementViewModel =
+    GroupPaymentArrangementViewModel(
+      periodOfAccountEnding = periodOfAccountEnding,
+      groupPayments = groupPayments,
+      groupTaxes = groupTaxes,
+      status = status
+    )
+
 }
