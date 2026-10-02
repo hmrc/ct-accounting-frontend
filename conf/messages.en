@@ -98,6 +98,9 @@ adjustmentsAccountingPeriod.caption        = Accounting period ending 30 Sep 202
 adjustmentsAccountingPeriod.description    = Description
 adjustmentsAccountingPeriod.amount         = Amount
 adjustmentsAccountingPeriod.total          = Total
+adjustmentsAccountingPeriod.description.n  = Not currently being pursued
+adjustmentsAccountingPeriod.description.o  = Permanent overpayment
+adjustmentsAccountingPeriod.description.p  = Postponement
 
 debitInterestAccountingPeriod.caption      = Accounting period ending
 debitInterestAccountingPeriod.section      = Accounting period ending
