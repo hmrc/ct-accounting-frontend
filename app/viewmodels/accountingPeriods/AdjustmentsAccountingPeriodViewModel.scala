@@ -17,7 +17,7 @@
 package viewmodels.accountingPeriods
 
 import models.AdjustmentTransactionType.*
-import models.AdjustmentTransactionsList
+import models.{AdjustmentTransactionType, AdjustmentTransactionsList}
 import play.api.i18n.Messages
 import uk.gov.hmrc.govukfrontend.views.Aliases.TableRow
 import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
@@ -53,9 +53,16 @@ object AdjustmentsAccountingPeriodViewModel {
     AdjustmentsAccountingPeriodViewModel(
       rows = adjustmentTransactions.adjustmentTransactionsList.map { adjustment =>
         AdjustmentsAccountingPeriodViewModelRow(
-          description = asString(adjustment.`type`),
+          description = getDescription(adjustment.`type`),
           amount = adjustment.amount
         )
       }
     )
+
+  def getDescription(adjustmentTransactionType: AdjustmentTransactionType)(implicit messages: Messages): String =
+    adjustmentTransactionType match {
+      case N => messages("adjustmentsAccountingPeriod.description.n")
+      case O => messages("adjustmentsAccountingPeriod.description.o")
+      case P => messages("adjustmentsAccountingPeriod.description.p")
+    }
 }

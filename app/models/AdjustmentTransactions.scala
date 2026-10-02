@@ -37,15 +37,6 @@ enum AdjustmentTransactionType {
   case N, O, P
 }
 
-object AdjustmentTransactionType {
-  def asString(att: AdjustmentTransactionType): String =
-    att match {
-      case N => "Not currently being pursued"
-      case O => "Permanent overpayment"
-      case P => "Postponement"
-    }
-}
-
 implicit val adjustmentTransactionType: Format[AdjustmentTransactionType] = new Format[AdjustmentTransactionType] {
   def reads(json: JsValue): JsResult[AdjustmentTransactionType] = json match {
     case JsString(s) =>
