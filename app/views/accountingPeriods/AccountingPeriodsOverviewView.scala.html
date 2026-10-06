@@ -53,7 +53,7 @@
                           TableRow(
                             content = HtmlContent(
                               row.href
-                                .map(href => link(row.description, href.url, row.isLink))
+                                .map(href => link(row.description, href.url, row.isLink.getOrElse(false)))
                                 .getOrElse(Html(row.description))
                             ),
                             classes = row.classes

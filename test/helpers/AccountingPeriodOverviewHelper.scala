@@ -68,6 +68,28 @@ trait AccountingPeriodOverviewHelper {
       repayReallocIsDisplayNeededFlag = false
     )
 
+  val accountingPeriodOverviewResponseZeroValues: AccountingPeriodOverview =
+    AccountingPeriodOverview(
+      accountingPeriod = 1L,
+      apStartDate = LocalDate.of(2025, 1, 1),
+      apEndDate = LocalDate.of(2026, 1, 1),
+      apStatus = "OPEN",
+      taxChargePresent = true,
+      clericalIntSig = true,
+      creditDebitInterestInd = true,
+      taxTotal = 0.00,
+      interestTotal = 0.00,
+      penaltyTotal = 0.00,
+      payslipTotal = 0.00,
+      repayReallocTotal = 0.00,
+      adjustmentTotal = 0.00,
+      clericalCalculationFlag = true,
+      taxIsDisplayNeededFlag = true,
+      interestIsDisplayNeededFlag = true,
+      paymentIsDisplayNeededFlag = true,
+      repayReallocIsDisplayNeededFlag = true
+    )
+
   val accountingPeriodEndDate: LocalDate = LocalDate.of(2026, 1, 1)
 
   val taxReference: Long = 1L
@@ -83,6 +105,13 @@ trait AccountingPeriodOverviewHelper {
     AccountingPeriodOverviewViewModel.toViewModel(
       accountingPeriodEndDate,
       accountingPeriodOverviewResponseNoDisplay,
+      taxReference
+    )
+
+  def viewModelNoLinks(implicit messages: Messages): AccountingPeriodOverviewViewModel =
+    AccountingPeriodOverviewViewModel.toViewModel(
+      accountingPeriodEndDate,
+      accountingPeriodOverviewResponseZeroValues,
       taxReference
     )
 }

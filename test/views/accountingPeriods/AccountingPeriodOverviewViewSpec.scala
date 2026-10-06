@@ -145,9 +145,20 @@ class AccountingPeriodOverviewViewSpec extends SpecBase with AccountingPeriodOve
 
       val rows = doc.select("tbody.govuk-table__body tr.govuk-table__row")
 
+      val linkRows = doc.getElementsByClass("govuk-table__cell").select("a")
+
       rows.size() mustBe 4
       rows.text() mustNot contain oneOf ("Taxes", "Interest", "Payments", "Repayments and reallocation")
+      linkRows.size() mustBe 2
 
+    }
+
+    "render correct table with no links where amount equals 0" in {
+      val doc = render(viewModelNoLinks)
+
+      val linkRows = doc.getElementsByClass("govuk-table__cell").select("a")
+
+      linkRows.size() mustBe 0
     }
   }
 }
