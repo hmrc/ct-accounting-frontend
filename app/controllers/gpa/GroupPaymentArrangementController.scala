@@ -42,18 +42,19 @@ class GroupPaymentArrangementController @Inject() (
   def onPageLoad: Action[AnyContent] = identify.async { implicit request =>
 
     val accountPeriodEndDate = LocalDate.of(2026, 1, 1) // TODO: This needs to comes from sessionDataRepository
+    val referenceNumber      = "933636936A00104A"
     val taxRef               = 1L
     val accPeriod            = 1L
-    val groupPayments        = 10.00
-    val groupTaxes           = 10.00
+    val groupPayments        = -1536642.00
+    val groupTaxes           = 1536642.00
     val gpaStatus            = "Open"
 
-    // TODO: Get taxRef + accPeriod from sessionDataRepositry
+    // TODO: Get taxRef + accPeriod from sessionDataRepositry. Use different service!
     service
       .getAccountingPeriodOverview(taxRef, accPeriod, accountPeriodEndDate)
       .map { accountingPeriodOverviewResponse =>
         val viewModel =
-          GroupPaymentArrangementViewModel.toViewModel(accountPeriodEndDate, groupPayments, groupTaxes, gpaStatus)
+          GroupPaymentArrangementViewModel.toViewModel(referenceNumber,accountPeriodEndDate, groupPayments, groupTaxes, gpaStatus)
         Ok(view(viewModel))
       }
       .recover { case ex =>
