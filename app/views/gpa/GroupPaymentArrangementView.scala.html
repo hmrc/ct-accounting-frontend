@@ -25,7 +25,9 @@
         layout: templates.Layout,
         heading: h1,
         p: Paragraph,
-        govukTable: GovukTable
+        govukTable: GovukTable,
+        govukInsetText: GovukInsetText,
+        link:Link
 )
 
 @(viewModel: GroupPaymentArrangementViewModel)(implicit request: Request[_], messages: Messages)
@@ -43,7 +45,7 @@
         <li>@messages("groupPaymentArrangement.summaryText.bulletPoint2")</li>
     </ul>
 
-    @p(messages("groupPaymentArrangement.summaryText.reference", "REFERENCE_NUMBER"))
+    @p(messages("groupPaymentArrangement.summaryText.reference", viewModel.referenceNumber))
 
     @govukTable(
             Table(
@@ -53,17 +55,16 @@
                     HeadCell(content = Text(messages("groupPaymentArrangement.tableHeader.groupTaxes"))),
                     HeadCell(content = Text(messages("groupPaymentArrangement.tableHeader.status")))
                     )),
-                rows = TableRow(
-                        content = HtmlContent(
-                            row.href
-                            .map(href => link(row.description, href.url, row.isLink))
-                            .getOrElse(Html(row.description))
-                            ),
-                            classes = row.classes
+                rows = Seq(
+                        Seq(
+                            TableRow(content = Text(formatDate(viewModel.periodOfAccountEnding, messages.lang)), classes = "govuk-table__cell"),
+                            TableRow(content = HtmlContent(link(viewModel.groupPaymentsAsString, "http://localhost:11200/", true)), classes = "govuk-table__cell govuk-table__cell--numeric"),
+                            TableRow(content = HtmlContent(link(viewModel.groupTaxesAsString, "http://localhost:11200/", true)), classes = "govuk-table__cell govuk-table__cell--numeric"),
+                            TableRow(content = Text(viewModel.status), classes = "govuk-table__cell")
+                            )
                         )
-                }
                 )
             )
 
-    @p(messages("groupPaymentArrangement.insetText"))
+    @govukInsetText(InsetText(content=messages("groupPaymentArrangement.insetText")))
 }

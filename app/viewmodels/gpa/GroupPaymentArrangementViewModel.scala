@@ -16,13 +16,13 @@
 
 package viewmodels.gpa
 
-import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
-import uk.gov.hmrc.govukfrontend.views.viewmodels.table.TableRow
+import play.api.mvc.Call
 import views.ViewUtils.formatCurrency
 
 import java.time.LocalDate
 
 case class GroupPaymentArrangementViewModel(
+  referenceNumber: String,
   periodOfAccountEnding: LocalDate,
   groupPayments: BigDecimal,
   groupTaxes: BigDecimal,
@@ -32,14 +32,20 @@ case class GroupPaymentArrangementViewModel(
   val groupTaxesAsString: String    = formatCurrency(groupTaxes)
 }
 
+case class GroupPaymentArrangementRow(description: String, amount: BigDecimal, isLink: Boolean, href: Call) {
+  val amountAsString: String = formatCurrency(amount)
+}
+
 object GroupPaymentArrangementViewModel {
   def toViewModel(
+    referenceNumber: String,
     periodOfAccountEnding: LocalDate,
     groupPayments: BigDecimal,
     groupTaxes: BigDecimal,
     status: String
   ): GroupPaymentArrangementViewModel =
     GroupPaymentArrangementViewModel(
+      referenceNumber = referenceNumber,
       periodOfAccountEnding = periodOfAccountEnding,
       groupPayments = groupPayments,
       groupTaxes = groupTaxes,
