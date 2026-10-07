@@ -37,13 +37,19 @@ class GroupPaymentArrangementsViewSpec extends SpecBase {
     taxTotal = BigDecimal(1125000),
     records = List(
       GroupPaymentRecord(
-        date = LocalDate.of(2025, 1, 1), description = "Electronic payment", amount = BigDecimal(50.17)
+        date = LocalDate.of(2025, 1, 1),
+        description = "Electronic payment",
+        amount = BigDecimal(50.17)
       ),
       GroupPaymentRecord(
-        date = LocalDate.of(2021, 2, 7), description = "Electronic payment", amount = BigDecimal(475)
+        date = LocalDate.of(2021, 2, 7),
+        description = "Electronic payment",
+        amount = BigDecimal(475)
       ),
       GroupPaymentRecord(
-        date = LocalDate.of(2026, 4, 8), description = "Electronic payment", amount = BigDecimal(50.18)
+        date = LocalDate.of(2026, 4, 8),
+        description = "Electronic payment",
+        amount = BigDecimal(50.18)
       )
     )
   )
@@ -58,14 +64,12 @@ class GroupPaymentArrangementsViewSpec extends SpecBase {
   def render(viewModel: GroupPaymentArrangementViewModel): Document =
     Jsoup.parse(view(viewModel)(request, messages(application)).toString)
 
-
   "GroupPaymentArrangementView" - {
 
     "render the correct page title" in {
       val doc = render(viewModel)
       doc.title() mustBe "Group payments – Group Payment Arrangement - GOV.UK"
     }
-
 
     "render the correct heading" in {
       val doc = render(viewModel)
@@ -85,7 +89,6 @@ class GroupPaymentArrangementsViewSpec extends SpecBase {
       doc.select(".govuk-breadcrumbs__list-item").size() mustBe 2
     }
 
-
     "render correct table with all content" in {
       val doc      = render(viewModel)
       val firstRow =
@@ -94,13 +97,11 @@ class GroupPaymentArrangementsViewSpec extends SpecBase {
       firstRow.get(1).text() mustBe "Electronic payment"
       firstRow.get(2).text() mustBe "£50.17"
 
-
       val secondRow =
         doc.select("tbody.govuk-table__body tr.govuk-table__row").get(1).getElementsByClass("govuk-table__cell")
       secondRow.get(0).text() mustBe "07 Feb 2021"
       secondRow.get(1).text() mustBe "Electronic payment"
       secondRow.get(2).text() mustBe "£475.00"
-
 
       val thirdRow =
         doc.select("tbody.govuk-table__body tr.govuk-table__row").get(2).getElementsByClass("govuk-table__cell")
@@ -111,17 +112,16 @@ class GroupPaymentArrangementsViewSpec extends SpecBase {
       doc.select("tbody.govuk-table__body tr.govuk-table__row").size() mustBe 3
     }
 
-
     "render correct table with no links where amount equals 0" in {
       val doc = render(viewModel)
 
-      val text = doc.getElementsByClass("govuk-table__caption govuk-table__caption govuk-table__caption--m").select("caption").text()
+      val text = doc
+        .getElementsByClass("govuk-table__caption govuk-table__caption govuk-table__caption--m")
+        .select("caption")
+        .text()
 
       text mustBe "Group payment records"
     }
-
-
-
 
   }
 }

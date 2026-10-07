@@ -26,34 +26,34 @@ import views.ViewUtils.{formatCurrency, formatDate}
 import java.time.LocalDate
 
 case class GroupPaymentArrangementViewModel(
-                                             arrangementReference: String,
-                                             accountEnding: LocalDate,
-                                             accountStatus: String,
-                                             paymentTotal: BigDecimal,
-                                             taxTotal: BigDecimal,
-                                             records: List[GroupPaymentRecord]
-                                           ) {
+  arrangementReference: String,
+  accountEnding: LocalDate,
+  accountStatus: String,
+  paymentTotal: BigDecimal,
+  taxTotal: BigDecimal,
+  records: List[GroupPaymentRecord]
+) {
   def summary(implicit messages: Messages): SummaryList = SummaryListViewModel(
     rows = Seq(
       SummaryListRowViewModel(
         key = "groupPaymentsArrangements.ArrangementReference",
-        value = ValueViewModel(Text( this.arrangementReference))
+        value = ValueViewModel(Text(this.arrangementReference))
       ),
       SummaryListRowViewModel(
         key = "groupPaymentsArrangements.PeriodAccountEnding",
-        value = ValueViewModel(Text( formatDate(this.accountEnding, messages.lang)  ))
+        value = ValueViewModel(Text(formatDate(this.accountEnding, messages.lang)))
       ),
       SummaryListRowViewModel(
         key = "groupPaymentsArrangements.PeriodAccountStatus",
-        value = ValueViewModel(Text( this.accountStatus))
+        value = ValueViewModel(Text(this.accountStatus))
       ),
       SummaryListRowViewModel(
         key = "groupPaymentsArrangements.PaymentTotal",
-        value = ValueViewModel(Text( formatCurrency(paymentTotal) ))
+        value = ValueViewModel(Text(formatCurrency(paymentTotal)))
       ),
       SummaryListRowViewModel(
         key = "groupPaymentsArrangements.TaxTotal",
-        value = ValueViewModel(Text( formatCurrency(taxTotal) ))
+        value = ValueViewModel(Text(formatCurrency(taxTotal)))
       )
     )
   )
