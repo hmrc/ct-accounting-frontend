@@ -16,7 +16,7 @@
 
 package connectors
 
-import models.{AccountingPeriodDetailsResponse, GpaPaymentsDetailsResponse}
+import models.{GpaPaymentsDetailsResponse}
 import play.api.Logging
 import uk.gov.hmrc.http.HttpReads.Implicits.*
 import uk.gov.hmrc.http.client.HttpClientV2
