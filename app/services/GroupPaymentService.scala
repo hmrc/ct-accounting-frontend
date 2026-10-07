@@ -24,7 +24,7 @@ import java.time.LocalDate
 import javax.inject.Inject
 import scala.concurrent.Future
 
-class GroupPaymentService @Inject()(
+class GroupPaymentService @Inject() (
 ) extends Logging {
 
   def getViewModel(taxRef: Long, accPeriod: Long)(implicit
@@ -41,13 +41,19 @@ class GroupPaymentService @Inject()(
       taxTotal = BigDecimal(1125000),
       records = List(
         GroupPaymentRecord(
-          date = LocalDate.of(2025, 1, 1), description = "Electronic payment", amount = BigDecimal(50.17)
+          date = LocalDate.of(2025, 1, 1),
+          description = "Electronic payment",
+          amount = BigDecimal(50.17)
         ),
         GroupPaymentRecord(
-          date = LocalDate.of(2021, 2, 7), description = "Electronic payment", amount = BigDecimal(475)
+          date = LocalDate.of(2021, 2, 7),
+          description = "Electronic payment",
+          amount = BigDecimal(475)
         ),
         GroupPaymentRecord(
-          date = LocalDate.of(2026, 4, 8), description = "Electronic payment", amount = BigDecimal(50.18)
+          date = LocalDate.of(2026, 4, 8),
+          description = "Electronic payment",
+          amount = BigDecimal(50.18)
         )
       )
     )

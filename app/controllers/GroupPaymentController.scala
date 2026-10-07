@@ -27,7 +27,7 @@ import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.GroupPaymentArrangementsView
 import javax.inject.Inject
 
-class GroupPaymentController @Inject()(
+class GroupPaymentController @Inject() (
   override val messagesApi: MessagesApi,
   identify: IdentifierAction,
   val controllerComponents: MessagesControllerComponents,
@@ -37,8 +37,8 @@ class GroupPaymentController @Inject()(
     with I18nSupport {
 
   def onPageLoad: Action[AnyContent] = identify.async { implicit request =>
-    val taxRef               = 1L
-    val accPeriod            = 1L
+    val taxRef    = 1L
+    val accPeriod = 1L
 
     service
       .getViewModel(taxRef, accPeriod)
