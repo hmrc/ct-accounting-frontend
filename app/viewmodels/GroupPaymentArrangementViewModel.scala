@@ -16,6 +16,12 @@
 
 package viewmodels
 
+import play.api.i18n.Messages
+import uk.gov.hmrc.govukfrontend.views.Aliases.Text
+import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryList
+import viewmodels.govuk.summarylist.*
+import viewmodels.implicits.*
+
 import java.time.LocalDate
 
 case class GroupPaymentArrangementViewModel(
@@ -25,6 +31,31 @@ case class GroupPaymentArrangementViewModel(
                                              paymentTotal: BigDecimal,
                                              taxTotal: BigDecimal,
                                              records: List[GroupPaymentRecord]
-                                           )
+                                           ) {
+  def summary(implicit messages: Messages): SummaryList = SummaryListViewModel(
+    rows = Seq(
+      SummaryListRowViewModel(
+        key = "groupPaymentsArrangements.ArrangementReference",
+        value = ValueViewModel(Text( this.arrangementReference))
+      ),
+      SummaryListRowViewModel(
+        key = "groupPaymentsArrangements.PeriodAccountEnding",
+        value = ValueViewModel(Text( this.accountEnding.toString))
+      ),
+      SummaryListRowViewModel(
+        key = "groupPaymentsArrangements.PeriodAccountStatus",
+        value = ValueViewModel(Text( this.accountStatus.toString))
+      ),
+      SummaryListRowViewModel(
+        key = "groupPaymentsArrangements.PaymentTotal",
+        value = ValueViewModel(Text( this.paymentTotal.toString))
+      ),
+      SummaryListRowViewModel(
+        key = "groupPaymentsArrangements.TaxTotal",
+        value = ValueViewModel(Text( this.taxTotal.toString()))
+      )
+    )
+  )
+}
 
 case class GroupPaymentRecord(date: LocalDate, description: String, amount: BigDecimal)

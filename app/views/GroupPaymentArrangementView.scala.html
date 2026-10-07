@@ -26,7 +26,8 @@
         h1: h1,
         paragraph: Paragraph,
         link:Link,
-        appConfig: FrontendAppConfig
+        appConfig: FrontendAppConfig,
+        govukSummaryList: GovukSummaryList
 )
 
 
@@ -35,10 +36,9 @@
     @layout(pageTitle = titleNoForm(messages("accountingPeriodOverview.title")),
         breadcrumbs = Some(PageBreadcrumbs.accountingPeriodOverviewPage)) {
 
-        @h1(messages("accountingPeriodOverview.heading", formatDate(viewModel.accountEnding, messages.lang)))
+        @h1(messages("groupPaymentsArrangements.heading"))
 
-        @paragraph(messages("accountingPeriodOverview.paragraph", viewModel.arrangementReference))
-
+        @govukSummaryList(viewModel.summary())
 
         @govukTable(
             Table(
