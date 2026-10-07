@@ -74,117 +74,53 @@ class GroupPaymentArrangementsViewSpec extends SpecBase {
         .text() mustBe s"Group payments"
     }
 
-
-    /*
-    "render the paragraph with tax reference" in {
-      val doc = render(viewModel)
-      doc
-        .getElementsByClass("govuk-body")
-        .get(0)
-        .text() mustBe s"When paying for this accounting period, use reference number $taxReference."
-    }
-
-
-    "render the link with correct text and href" in {
-      val doc = render(viewModel)
-      doc.getElementsByClass("govuk-body").get(1).text() mustBe s"How to pay (opens in new tab)"
-      doc
-        .getElementsByClass("govuk-body")
-        .get(1)
-        .select("a")
-        .attr("href") mustBe "https://www.gov.uk/pay-corporation-tax"
-
-    }
-
-    "render the correct table headers" in {
-      val doc     = render(viewModel)
-      val headers = doc.select("th.govuk-table__header").eachText()
-      headers must contain allOf (
-        messages("Description"),
-        messages("Amount")
-      )
-      headers.size() mustBe 2
-    }
-
     "render the correct breadcrumbs" in {
       val doc         = render(viewModel)
       val breadcrumbs = doc.select("li.govuk-breadcrumbs__list-item").eachText()
 
       breadcrumbs must contain allOf (
         messages("Home"),
-        messages("Accounting periods")
+        messages("Group Payment Arrangement")
       )
       doc.select(".govuk-breadcrumbs__list-item").size() mustBe 2
     }
+
 
     "render correct table with all content" in {
       val doc      = render(viewModel)
       val firstRow =
         doc.select("tbody.govuk-table__body tr.govuk-table__row").get(0).getElementsByClass("govuk-table__cell")
-      firstRow.get(0).text() mustBe "Taxes"
-      firstRow.get(1).text() mustBe "£100.00"
+      firstRow.get(0).text() mustBe "01 Jan 2025"
+      firstRow.get(1).text() mustBe "Electronic payment"
+      firstRow.get(2).text() mustBe "£50.17"
+
 
       val secondRow =
         doc.select("tbody.govuk-table__body tr.govuk-table__row").get(1).getElementsByClass("govuk-table__cell")
-      secondRow.get(0).text() mustBe "Interest"
-      secondRow.get(1).text() mustBe "£150.00"
+      secondRow.get(0).text() mustBe "07 Feb 2021"
+      secondRow.get(1).text() mustBe "Electronic payment"
+      secondRow.get(2).text() mustBe "£475.00"
+
 
       val thirdRow =
         doc.select("tbody.govuk-table__body tr.govuk-table__row").get(2).getElementsByClass("govuk-table__cell")
-      thirdRow.get(0).text() mustBe "Penalties"
-      thirdRow.get(1).text() mustBe "£100.00"
+      thirdRow.get(0).text() mustBe "08 Apr 2026"
+      thirdRow.get(1).text() mustBe "Electronic payment"
+      thirdRow.get(2).text() mustBe "£50.18"
 
-      val forthRow =
-        doc.select("tbody.govuk-table__body tr.govuk-table__row").get(3).getElementsByClass("govuk-table__cell")
-      forthRow.get(0).text() mustBe "Subtotal"
-      forthRow.get(1).text() mustBe "£350.00"
-
-      val fifthRow =
-        doc.select("tbody.govuk-table__body tr.govuk-table__row").get(4).getElementsByClass("govuk-table__cell")
-      fifthRow.get(0).text() mustBe "Payments"
-      fifthRow.get(1).text() mustBe "£300.00"
-
-      val sixthRow =
-        doc.select("tbody.govuk-table__body tr.govuk-table__row").get(5).getElementsByClass("govuk-table__cell")
-      sixthRow.get(0).text() mustBe "Repayments and reallocations"
-      sixthRow.get(1).text() mustBe "£250.00"
-
-      val seventhRow =
-        doc.select("tbody.govuk-table__body tr.govuk-table__row").get(6).getElementsByClass("govuk-table__cell")
-      seventhRow.get(0).text() mustBe "Adjustments"
-      seventhRow.get(1).text() mustBe "£155.00"
-
-      val eighthRow =
-        doc.select("tbody.govuk-table__body tr.govuk-table__row").get(7).getElementsByClass("govuk-table__cell")
-      eighthRow.get(0).text() mustBe "Total"
-      eighthRow.get(1).text() mustBe "£1,055.00"
-
-      doc.select("tbody.govuk-table__body tr.govuk-table__row").size() mustBe 8
-
+      doc.select("tbody.govuk-table__body tr.govuk-table__row").size() mustBe 3
     }
 
-    "render correct table with display needed set false content" in {
-      val doc = render(viewModelNoDisplay)
-
-      val rows = doc.select("tbody.govuk-table__body tr.govuk-table__row")
-
-      val linkRows = doc.getElementsByClass("govuk-table__cell").select("a")
-
-      rows.size() mustBe 4
-      rows.text() mustNot contain oneOf ("Taxes", "Interest", "Payments", "Repayments and reallocation")
-      linkRows.size() mustBe 2
-
-    }
 
     "render correct table with no links where amount equals 0" in {
-      val doc = render(viewModelNoLinks)
+      val doc = render(viewModel)
 
-      val linkRows = doc.getElementsByClass("govuk-table__cell").select("a")
+      val text = doc.getElementsByClass("govuk-table__caption govuk-table__caption govuk-table__caption--m").select("caption").text()
 
-      linkRows.size() mustBe 0
+      text mustBe "Group payment records"
     }
 
-    */
+
 
 
   }
