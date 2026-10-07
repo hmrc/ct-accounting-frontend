@@ -18,7 +18,8 @@ package services
 
 import play.api.Logging
 import uk.gov.hmrc.http.HeaderCarrier
-import viewmodels.GroupPaymentArrangementViewModel
+import viewmodels.{GroupPaymentArrangementViewModel, GroupPaymentRecord}
+
 import java.time.LocalDate
 import javax.inject.Inject
 import scala.concurrent.Future
@@ -38,7 +39,17 @@ class GroupPaymentService @Inject()(
       accountStatus = "Open",
       paymentTotal = BigDecimal(1125000),
       taxTotal = BigDecimal(1125000),
-      records = List.empty
+      records = List(
+        GroupPaymentRecord(
+          date = LocalDate.of(2025, 1, 1), description = "Electronic payment", amount = BigDecimal(50.17)
+        ),
+        GroupPaymentRecord(
+          date = LocalDate.of(2021, 2, 7), description = "Electronic payment", amount = BigDecimal(475)
+        ),
+        GroupPaymentRecord(
+          date = LocalDate.of(2026, 4, 8), description = "Electronic payment", amount = BigDecimal(50.18)
+        )
+      )
     )
     Future.successful(record)
   }

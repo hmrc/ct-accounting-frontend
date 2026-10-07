@@ -201,3 +201,9 @@ repaymentReallocations.table.total = Total
 repaymentReallocations.description.rto = Reallocation to accounting period {0}
 repaymentReallocations.description.rfr = Reallocation from accounting period ending {0}
 repaymentReallocations.description.crt = Repayments from accounting period {0}
+
+groupPaymentsArrangements.records.description = Description
+groupPaymentsArrangements.records.amount = Amount
+groupPaymentsArrangements.records.date = Date
+
+groupPaymentsArrangements.heading2 = Group payment records

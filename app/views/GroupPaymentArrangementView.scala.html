@@ -39,33 +39,30 @@
 
         @paragraph(messages("accountingPeriodOverview.paragraph", viewModel.arrangementReference))
 
-        <p class="govuk-body">
-            @link(messages("accountingPeriodOverview.howToPay"), appConfig.howToPayUrl, true, true)
-        </p>
+
         @govukTable(
             Table(
-                head = Some(Seq(
-                    HeadCell(content = Text(messages("accountingPeriodOverview.description"))),
-                    HeadCell(content = Text(messages("accountingPeriodOverview.amount")), classes = "govuk-table__cell govuk-table__cell--numeric")
-                    ))
-//                    rows = viewModel.rows.map { row =>
-//                        Seq(
-//                          TableRow(
-//                            content = HtmlContent(
-//                              row.href
-//                                .map(href => link(row.description, href.url, row.isLink.getOrElse(false)))
-//                                .getOrElse(Html(row.description))
-//                            ),
-//                            classes = row.classes
-//                          ),
-//                          TableRow(
-//                            content = Text(row.amountAsString),
-//                            classes = s"govuk-table__cell govuk-table__cell--numeric + ${row.classes}"
-//                          )
-//                        )
-//                    }  :+ viewModel.totalRow(
-//                        label = messages("accountingPeriodOverview.total"),
-//                    )
+                caption = Some( messages("groupPaymentsArrangements.heading2") ),
+                captionClasses = "govuk-table__caption govuk-table__caption--m",
+                head = Some(
+                    Seq(
+                    HeadCell(content = Text(messages("groupPaymentsArrangements.records.date"))),
+                    HeadCell(content = Text(messages("groupPaymentsArrangements.records.description"))),
+                    HeadCell(content = Text(messages("groupPaymentsArrangements.records.amount"))),
+                    )),
+                    rows = viewModel.records.map { record =>
+                        Seq(
+                           TableRow(
+                            content = Text(record.date.toString)
+                           ),
+                           TableRow(
+                                content = Text(record.description)
+                           ),
+                           TableRow(
+                                content = Text(record.amount.toString)
+                            ),
+                        )
+                    }
                 )
             )
 
