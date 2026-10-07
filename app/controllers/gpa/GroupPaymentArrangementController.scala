@@ -54,7 +54,13 @@ class GroupPaymentArrangementController @Inject() (
       .getAccountingPeriodOverview(taxRef, accPeriod, accountPeriodEndDate)
       .map { accountingPeriodOverviewResponse =>
         val viewModel =
-          GroupPaymentArrangementViewModel.toViewModel(referenceNumber,accountPeriodEndDate, groupPayments, groupTaxes, gpaStatus)
+          GroupPaymentArrangementViewModel.toViewModel(
+            referenceNumber,
+            accountPeriodEndDate,
+            groupPayments,
+            groupTaxes,
+            gpaStatus
+          )
         Ok(view(viewModel))
       }
       .recover { case ex =>
