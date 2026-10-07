@@ -210,7 +210,6 @@ groupTaxCharges.summaryHeader.groupPeriodOfAccountStatus = Group period of accou
 groupTaxCharges.summaryHeader.groupPaymentTotal = Group payment total
 groupTaxCharges.summaryHeader.groupTaxTotal = Group payment total
 groupTaxCharges.subheading = Group tax records
-
 groupTaxCharges.tableHeader.participatingCompany = Participating company
 groupTaxCharges.tableHeader.utr = Unique Taxpayer Reference
 groupTaxCharges.tableHeader.accountingPeriodEnding = Accounting period ending
