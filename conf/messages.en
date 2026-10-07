@@ -207,3 +207,10 @@ gpaPayment.Description.rfr.taxRef = Reallocation TO {0}, AP ending {1}
 gpaPayment.Description.rfr.date = Reallocation TO AP ending {0}
 gpaPayment.Description.rto.taxRef = Reallocation FROM {0}, AP ending {1}
 gpaPayment.Description.rto.date = Reallocation FROM AP ending {0}
+
+
+groupPaymentsArrangements.records.description = Description
+groupPaymentsArrangements.records.amount = Amount
+groupPaymentsArrangements.records.date = Date
+
+groupPaymentsArrangements.heading2 = Group payment records
