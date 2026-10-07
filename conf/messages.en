@@ -207,3 +207,12 @@ groupPaymentsArrangements.records.amount = Amount
 groupPaymentsArrangements.records.date = Date
 
 groupPaymentsArrangements.heading2 = Group payment records
+
+groupPaymentsArrangements.heading1 = Group payment records
+groupPaymentsArrangements.ArrangementReference = Group Payment Arrangement reference
+groupPaymentsArrangements.PeriodAccountEnding = Period of account ending
+groupPaymentsArrangements.PeriodAccountStatus = Group period of account status
+groupPaymentsArrangements.PaymentTotal = Group payment total
+groupPaymentsArrangements.TaxTotal = Group tax total
+
+groupPaymentsArrangements.heading = Group payments
