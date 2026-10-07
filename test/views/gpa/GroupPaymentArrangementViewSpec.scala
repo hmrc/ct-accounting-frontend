@@ -1,6 +1,5 @@
 package views.gpa
 
-
 import base.SpecBase
 import helpers.gpa.GroupPaymentArrangementHelper
 import org.jsoup.Jsoup
@@ -58,7 +57,7 @@ class GroupPaymentArrangementViewSpec extends SpecBase with GroupPaymentArrangem
       doc
         .getElementsByClass("govuk-list govuk-list--bullet")
         .get(0)
-        .text() contains  s"nominate one member of the group to make the payments on behalf of all the companies"
+        .text() contains s"nominate one member of the group to make the payments on behalf of all the companies"
     }
 
     "render the second bullet point" in {
@@ -66,7 +65,7 @@ class GroupPaymentArrangementViewSpec extends SpecBase with GroupPaymentArrangem
       doc
         .getElementsByClass("govuk-list govuk-list--bullet")
         .get(0)
-        .text() contains  s"reduce the administration when making many individual payments and might also reduce the group’s overall interest charges"
+        .text() contains s"reduce the administration when making many individual payments and might also reduce the group’s overall interest charges"
     }
 
     "render the correct table headers" in {

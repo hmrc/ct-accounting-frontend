@@ -52,6 +52,6 @@ class GroupPaymentArrangementControllerSpec extends SpecBase with MockitoSugar w
           ).toString
       }
     }
-    
+
   }
 }
