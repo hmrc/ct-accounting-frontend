@@ -24,14 +24,14 @@ import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import services.GroupPaymentService
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
-import views.html.GroupPaymentArrangementView
+import views.html.GroupPaymentArrangementsView
 import javax.inject.Inject
 
 class GroupPaymentController @Inject()(
   override val messagesApi: MessagesApi,
   identify: IdentifierAction,
   val controllerComponents: MessagesControllerComponents,
-  view: GroupPaymentArrangementView,
+  view: GroupPaymentArrangementsView,
   service: GroupPaymentService
 ) extends FrontendBaseController
     with I18nSupport {
