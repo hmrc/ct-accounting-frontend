@@ -38,10 +38,9 @@ class GroupPaymentController @Inject() (
 
   def onPageLoad: Action[AnyContent] = identify.async { implicit request =>
     val taxRef    = 1L
-    val accPeriod = 1L
 
     service
-      .getViewModel(taxRef, accPeriod)
+      .getViewModel(taxRef)
       .map { viewModel =>
         Ok(view(viewModel))
       }
