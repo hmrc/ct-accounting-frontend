@@ -201,3 +201,18 @@ repaymentReallocations.table.total = Total
 repaymentReallocations.description.rto = Reallocation to accounting period {0}
 repaymentReallocations.description.rfr = Reallocation from accounting period ending {0}
 repaymentReallocations.description.crt = Repayments from accounting period {0}
+
+groupTaxCharges.title = Group taxes – Group Payment Arrangement
+groupTaxCharges.heading = Group taxes
+groupTaxCharges.summaryHeader.groupArrangementReference = Group Payment Arrangement reference
+groupTaxCharges.summaryHeader.periodOfAccountEnding = Period of account ending
+groupTaxCharges.summaryHeader.groupPeriodOfAccountStatus = Group period of account status
+groupTaxCharges.summaryHeader.groupPaymentTotal = Group payment total
+groupTaxCharges.summaryHeader.groupTaxTotal = Group payment total
+groupTaxCharges.subheading = Group tax records
+
+groupTaxCharges.tableHeader.participatingCompany = Participating company
+groupTaxCharges.tableHeader.utr = Unique Taxpayer Reference
+groupTaxCharges.tableHeader.accountingPeriodEnding = Accounting period ending
+groupTaxCharges.tableHeader.taxLiability = Tax Liability
+groupTaxCharges.tableHeader.paymentAllocated = Payment Allocated
