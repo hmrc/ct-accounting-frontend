@@ -75,7 +75,7 @@ class NominatedCompanyGPAServiceGuard @Inject() (
       }
     } else {
       logger.error(
-        s"Group Payment Period is greater than 5 years :: pMonthsRestriction:: $pMonthRestriction"
+        s"Group Payment Period is greater than ${config.pMonthsRestriction} :: pMonthsRestriction:: $pMonthRestriction"
       )
       Future.successful(Some(redirectOnError))
     }

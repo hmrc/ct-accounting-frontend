@@ -22,9 +22,9 @@ import connectors.gpa.{CompanyNominatorConnector, GroupPaymentPeriodInRangeConne
 import models.AuthenticatedRequest
 import models.gpa.{CompanyNominator, PeriodWithinRange}
 import org.mockito.ArgumentMatchers.any
-import org.mockito.Mockito.{reset, times, verify, verifyNoInteractions, when}
+import org.mockito.Mockito.*
 import org.scalatest.matchers.should.Matchers.should
-import play.api.mvc.{AnyContentAsEmpty, Result}
+import play.api.mvc.AnyContentAsEmpty
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import play.api.{Application, inject}
@@ -57,7 +57,29 @@ class NominatedCompanyGPAServiceGuardSpec extends SpecBase {
         verifyNoInteractions(mockGroupPaymentPeriodInRangeConnector)
       }
     }
-    "successfully validate nominated company when CompanyNominator and PeriodWithinRange both return true" in new Setup {
+    "successfully validate nominated company when CompanyNominator and PeriodWithinRange both return true when pMonthRestriction < 60" in new Setup {
+      running(application) {
+        when(mockCompanyNominatorConnector.getCompanyNominator(any(), any())(any[HeaderCarrier]))
+          .thenReturn(Future.successful(companyNominatorTrueValue))
+
+        when(
+          mockGroupPaymentPeriodInRangeConnector.getGroupPaymentPeriodInRange(any(), any(), any(), any())(
+            any[HeaderCarrier]
+          )
+        )
+          .thenReturn(Future.successful(periodWithinRangeTrueValue))
+
+        val result = await(nominatedServiceGuard.filter(authenticatedRequest))
+
+        result mustBe None
+
+        verify(mockCompanyNominatorConnector, times(1)).getCompanyNominator(any(), any())(any[HeaderCarrier])
+        verify(mockGroupPaymentPeriodInRangeConnector, times(1))
+          .getGroupPaymentPeriodInRange(any(), any(), any(), any())(any[HeaderCarrier])
+
+      }
+    }
+    "successfully validate nominated company when CompanyNominator and PeriodWithinRange both return true when pMonthRestriction = 60" in new Setup {
       running(application) {
         when(mockCompanyNominatorConnector.getCompanyNominator(any(), any())(any[HeaderCarrier]))
           .thenReturn(Future.successful(companyNominatorTrueValue))
@@ -171,6 +193,7 @@ class NominatedCompanyGPAServiceGuardSpec extends SpecBase {
   trait Setup {
     reset(mockCompanyNominatorConnector, mockGroupPaymentPeriodInRangeConnector, mockFrontendAppConfig)
     when(mockFrontendAppConfig.pMonthsRestriction).thenReturn(60)
+    when(mockFrontendAppConfig.cacheTtl).thenReturn(900L)
 
     implicit lazy val application: Application = applicationBuilder()
       .overrides(
@@ -183,11 +206,12 @@ class NominatedCompanyGPAServiceGuardSpec extends SpecBase {
     val nominatedServiceGuard: NominatedCompanyGPAServiceGuard =
       application.injector.instanceOf[NominatedCompanyGPAServiceGuard]
 
-    val gpaUtr: Long                 = 123533L
-    val nominatedCompanyUtr: Long    = 8967969L
-    val pPeriod: Int                 = 12
-    val validMonthRestriction: Int   = 30
-    val invalidMonthRestriction: Int = 80
+    val gpaUtr: Long                     = 123533L
+    val nominatedCompanyUtr: Long        = 8967969L
+    val pPeriod: Int                     = 12
+    val validMonthRestriction: Int       = 30
+    val validMonthRestrictionWith60: Int = 60
+    val invalidMonthRestriction: Int     = 80
 
     val companyNominatorTrueValue: CompanyNominator  = CompanyNominator(isParticipator = true)
     val companyNominatorFalseValue: CompanyNominator = CompanyNominator(isParticipator = false)
@@ -197,10 +221,12 @@ class NominatedCompanyGPAServiceGuardSpec extends SpecBase {
 
     val redirectOnError: String = controllers.routes.JourneyRecoveryController.onPageLoad().url
 
-    val authenticatedRequest: AuthenticatedRequest[AnyContentAsEmpty.type] =
+    val authenticatedRequest: AuthenticatedRequest[AnyContentAsEmpty.type]                       =
       AuthenticatedRequest(FakeRequest("GET", "/"), gpaUtr, nominatedCompanyUtr, pPeriod, validMonthRestriction)
+    val authenticatedRequestWithMonthRestriction60: AuthenticatedRequest[AnyContentAsEmpty.type] =
+      AuthenticatedRequest(FakeRequest("GET", "/"), gpaUtr, nominatedCompanyUtr, pPeriod, validMonthRestrictionWith60)
 
     val invalidMonthRestrictionAuthenticatedRequest: AuthenticatedRequest[AnyContentAsEmpty.type] =
-      AuthenticatedRequest(FakeRequest("GET", "/"), gpaUtr, gpaUtr, pPeriod, invalidMonthRestriction)
+      AuthenticatedRequest(FakeRequest("GET", "/"), gpaUtr, nominatedCompanyUtr, pPeriod, invalidMonthRestriction)
   }
 }
