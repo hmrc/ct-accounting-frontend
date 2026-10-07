@@ -21,6 +21,7 @@ import uk.gov.hmrc.govukfrontend.views.Aliases.Text
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryList
 import viewmodels.govuk.summarylist.*
 import viewmodels.implicits.*
+import views.ViewUtils.{formatCurrency, formatDate}
 
 import java.time.LocalDate
 
@@ -40,19 +41,19 @@ case class GroupPaymentArrangementViewModel(
       ),
       SummaryListRowViewModel(
         key = "groupPaymentsArrangements.PeriodAccountEnding",
-        value = ValueViewModel(Text( this.accountEnding.toString))
+        value = ValueViewModel(Text( formatDate(this.accountEnding, messages.lang)  ))
       ),
       SummaryListRowViewModel(
         key = "groupPaymentsArrangements.PeriodAccountStatus",
-        value = ValueViewModel(Text( this.accountStatus.toString))
+        value = ValueViewModel(Text( this.accountStatus))
       ),
       SummaryListRowViewModel(
         key = "groupPaymentsArrangements.PaymentTotal",
-        value = ValueViewModel(Text( this.paymentTotal.toString))
+        value = ValueViewModel(Text( formatCurrency(paymentTotal) ))
       ),
       SummaryListRowViewModel(
         key = "groupPaymentsArrangements.TaxTotal",
-        value = ValueViewModel(Text( this.taxTotal.toString()))
+        value = ValueViewModel(Text( formatCurrency(taxTotal) ))
       )
     )
   )

@@ -53,13 +53,13 @@
                     rows = viewModel.records.map { record =>
                         Seq(
                            TableRow(
-                            content = Text(record.date.toString)
+                            content = Text( formatDate(record.date, messages.lang) )
                            ),
                            TableRow(
                                 content = Text(record.description)
                            ),
                            TableRow(
-                                content = Text(record.amount.toString)
+                                content = Text( formatCurrency(record.amount) )
                             ),
                         )
                     }
