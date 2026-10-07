@@ -16,27 +16,25 @@
 
 package services
 
+import connectors.GroupPaymentsConnector
+import models.GpaPaymentsDetailsResponse
 import play.api.Logging
 import uk.gov.hmrc.http.HeaderCarrier
 import viewmodels.{GroupPaymentArrangementViewModel, GroupPaymentRecord}
 
 import java.time.LocalDate
 import javax.inject.Inject
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 class GroupPaymentService @Inject() (
-) extends Logging {
+                                      connector: GroupPaymentsConnector
+) (implicit ec: ExecutionContext) extends Logging  {
 
-  def getViewModel(taxRef: Long, accPeriod: Long)(implicit
-    hc: HeaderCarrier
-  ): Future[GroupPaymentArrangementViewModel] = {
-    logger.info(
-      s"Get Group Payment Arrangement ViewModel for taxRef: $taxRef and accPeriod: $accPeriod"
-    )
-    val record = GroupPaymentArrangementViewModel(
+  private def transform(record : GpaPaymentsDetailsResponse) : GroupPaymentArrangementViewModel = {
+    GroupPaymentArrangementViewModel(
       arrangementReference = "933636936A00104A",
       accountEnding = LocalDate.of(2026, 1, 1),
-      accountStatus = "Open",
+      accountStatus = record.gppStatus,
       paymentTotal = BigDecimal(1125000),
       taxTotal = BigDecimal(1125000),
       records = List(
@@ -57,6 +55,16 @@ class GroupPaymentService @Inject() (
         )
       )
     )
-    Future.successful(record)
+  }
+
+  def getViewModel(taxRef: Long)(implicit
+    hc: HeaderCarrier
+  ): Future[GroupPaymentArrangementViewModel] = {
+    logger.info(
+      s"Get Group Payment Arrangement ViewModel for taxRef: $taxRef"
+    )
+    connector
+      .getPaymentDetails(taxRef)
+      .map(transform)
   }
 }
