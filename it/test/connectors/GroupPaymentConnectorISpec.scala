@@ -19,16 +19,17 @@ package connectors
 import com.github.tomakehurst.wiremock.client.WireMock.*
 import helpers.GroupPaymentHelper
 import itutils.ApplicationWithWiremock
-import models.{AccountingPeriodDetails, AccountingPeriodDetailsResponse, GpaPaymentsDetailsResponse, GpaPaymentsRecord}
 import org.scalatest.BeforeAndAfterEach
 import org.scalatest.concurrent.{IntegrationPatience, ScalaFutures}
 import org.scalatest.matchers.must.Matchers
 import org.scalatest.wordspec.AnyWordSpec
-import play.api.http.Status.{BAD_REQUEST, INTERNAL_SERVER_ERROR, NOT_FOUND, OK}
+import play.api.http.Status.{BAD_REQUEST, INTERNAL_SERVER_ERROR, OK}
 import uk.gov.hmrc.http.HeaderCarrier
 
+
+
 class GroupPaymentConnectorISpec
-    extends AnyWordSpec
+  extends AnyWordSpec
     with Matchers
     with ScalaFutures
     with IntegrationPatience
@@ -80,10 +81,10 @@ class GroupPaymentConnectorISpec
       result mustEqual response
     }
 
-    /*
+
     "return INTERNAL_ERROR when BE failed" in {
       stubFor(
-        get(urlPathEqualTo(url(1L, 5L)))
+        get(urlEqualTo(url(1L, 5L, 0, 20)))
           .willReturn(
             aResponse()
               .withStatus(INTERNAL_SERVER_ERROR)
@@ -92,14 +93,15 @@ class GroupPaymentConnectorISpec
       )
 
       val ex = intercept[Exception] {
-        connector.getAccountingPeriodResponse(1L, 5L).futureValue
+        connector.getPaymentDetails(1L, 5L, 0, 20).futureValue
       }
       ex.getMessage.toLowerCase must include("boom")
     }
 
+
     "return 400 when BE returns BAD_REQUEST " in {
       stubFor(
-        get(urlPathEqualTo(url(1L, 5L)))
+        get(urlEqualTo(url(1L, 5L, 0, 20)))
           .willReturn(
             aResponse()
               .withStatus(BAD_REQUEST)
@@ -108,28 +110,11 @@ class GroupPaymentConnectorISpec
       )
 
       val ex = intercept[Exception] {
-        connector.getAccountingPeriodResponse(1L, 5L).futureValue
+        connector.getPaymentDetails(1L, 5L, 0, 20).futureValue
       }
       ex.getMessage must include("Invalid Request")
     }
 
-    "return 404 when BE returns NOT_FOUND " in {
-      stubFor(
-        get(urlPathEqualTo(url(1L, 5L)))
-          .willReturn(
-            aResponse()
-              .withStatus(NOT_FOUND)
-              .withBody("Not found")
-          )
-      )
-
-      val ex = intercept[Exception] {
-        connector.getAccountingPeriodResponse(1L, 5L).futureValue
-      }
-      ex.getMessage must include("Not found")
-    }
-
-     */
   }
 
 }
