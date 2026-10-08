@@ -52,6 +52,7 @@ breadcrumbs.home = Home
 breadcrumbs.accountingPeriods = Accounting periods
 breadcrumbs.accountingPeriodEnding = Accounting period ending
 breadcrumbs.interest = Interest
+breadcrumbs.groupPaymentArrangements  = Group Payment Arrangement
 
 accountingPeriodOverview.title = Accounting period overview
 accountingPeriodOverview.heading = Accounting period ending {0}
@@ -201,3 +202,19 @@ repaymentReallocations.table.total = Total
 repaymentReallocations.description.rto = Reallocation to accounting period {0}
 repaymentReallocations.description.rfr = Reallocation from accounting period ending {0}
 repaymentReallocations.description.crt = Repayments from accounting period {0}
+
+groupPaymentsArrangements.records.description = Description
+groupPaymentsArrangements.records.amount = Amount
+groupPaymentsArrangements.records.date = Date
+
+groupPaymentsArrangements.heading2 = Group payment records
+
+groupPaymentsArrangements.heading1 = Group payment records
+groupPaymentsArrangements.ArrangementReference = Group Payment Arrangement reference
+groupPaymentsArrangements.PeriodAccountEnding = Period of account ending
+groupPaymentsArrangements.PeriodAccountStatus = Group period of account status
+groupPaymentsArrangements.PaymentTotal = Group payment total
+groupPaymentsArrangements.TaxTotal = Group tax total
+
+groupPaymentsArrangements.heading = Group payments
+groupPaymentsArrangements.title   = Group payments – Group Payment Arrangement
