@@ -41,9 +41,7 @@ class GroupPaymentsConnector @Inject()(http: HttpClientV2, config: ServicesConfi
   ): Future[GpaPaymentsDetailsResponse] = {
     val baseUrl  = config.baseUrl("corporation-tax")
     val url: URL = url"$baseUrl/corporation-tax/gpa-payment-details/$taxRef?contractVersion=$accPeriod&startIndex=$startIndex&count=$count"
-
-    println(s"DATA: $url")
-
+    
     http
       .get(url)
       .execute[GpaPaymentsDetailsResponse]
