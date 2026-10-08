@@ -18,11 +18,12 @@ package viewmodels.gpa
 
 import play.api.mvc.Call
 import views.ViewUtils.formatCurrency
+import models.gpa.GroupSummaryDetailsResponse
 
 import java.time.LocalDate
 
 case class GroupPaymentArrangementViewModel(
-  referenceNumber: String,
+  taxPayerReference: Long,
   periodOfAccountEnding: LocalDate,
   groupPayments: BigDecimal,
   groupTaxes: BigDecimal,
@@ -38,18 +39,14 @@ case class GroupPaymentArrangementRow(description: String, amount: BigDecimal, i
 
 object GroupPaymentArrangementViewModel {
   def toViewModel(
-    referenceNumber: String,
-    periodOfAccountEnding: LocalDate,
-    groupPayments: BigDecimal,
-    groupTaxes: BigDecimal,
-    status: String
+    groupSummaryDetailsResponse: GroupSummaryDetailsResponse
   ): GroupPaymentArrangementViewModel =
     GroupPaymentArrangementViewModel(
-      referenceNumber = referenceNumber,
-      periodOfAccountEnding = periodOfAccountEnding,
-      groupPayments = groupPayments,
-      groupTaxes = groupTaxes,
-      status = status
+      taxPayerReference = groupSummaryDetailsResponse.gpaReferenceNumberLst.head.taxpayerReference,
+      periodOfAccountEnding = groupSummaryDetailsResponse.gpaGrpSummaryDetails.head.contractEndDate,
+      groupPayments = groupSummaryDetailsResponse.gpaGrpSummaryDetails.head.groupPayment,
+      groupTaxes = groupSummaryDetailsResponse.gpaGrpSummaryDetails.head.groupTaxCharge,
+      status = groupSummaryDetailsResponse.gpaGrpSummaryDetails.head.contractStatus
     )
 
 }

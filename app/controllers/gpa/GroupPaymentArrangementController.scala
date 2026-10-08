@@ -22,12 +22,11 @@ import controllers.routes.JourneyRecoveryController
 import play.api.i18n.Lang.logger
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import services.AccountingPeriodOverviewService
+import services.gpa.GroupPaymentsService
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import viewmodels.gpa.GroupPaymentArrangementViewModel
 import views.html.gpa.GroupPaymentArrangementView
 
-import java.time.LocalDate
 import javax.inject.Inject
 
 class GroupPaymentArrangementController @Inject() (
@@ -35,32 +34,22 @@ class GroupPaymentArrangementController @Inject() (
   identify: IdentifierAction,
   val controllerComponents: MessagesControllerComponents,
   view: GroupPaymentArrangementView,
-  service: AccountingPeriodOverviewService
+  service: GroupPaymentsService
 ) extends FrontendBaseController
     with I18nSupport {
 
   def onPageLoad: Action[AnyContent] = identify.async { implicit request =>
 
-    val accountPeriodEndDate = LocalDate.of(2026, 1, 1) // TODO: This needs to comes from sessionDataRepository
-    val referenceNumber      = "933636936A00104A"
-    val taxRef               = 1L
-    val accPeriod            = 1L
-    val groupPayments        = -1536642.00
-    val groupTaxes           = 1536642.00
-    val gpaStatus            = "Open"
+    // TODO: This needs to comes from sessionDataRepository
+    val taxRef        = 1L
+    val nomCompanyUtr = 1L
 
-    // TODO: Get taxRef + accPeriod from sessionDataRepositry. Use different service!
+    // TODO: Get taxRef + accPeriod from sessionDataRepositry.
     service
-      .getAccountingPeriodOverview(taxRef, accPeriod, accountPeriodEndDate)
-      .map { accountingPeriodOverviewResponse =>
+      .getGroupSummary(taxRef, nomCompanyUtr)
+      .map { groupPaymentsResponse =>
         val viewModel =
-          GroupPaymentArrangementViewModel.toViewModel(
-            referenceNumber,
-            accountPeriodEndDate,
-            groupPayments,
-            groupTaxes,
-            gpaStatus
-          )
+          GroupPaymentArrangementViewModel.toViewModel(groupPaymentsResponse)
         Ok(view(viewModel))
       }
       .recover { case ex =>
