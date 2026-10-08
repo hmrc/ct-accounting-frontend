@@ -27,7 +27,7 @@ import java.time.LocalDate
 
 case class GroupPaymentArrangementViewModel(
   arrangementReference: String,
-  accountEnding: LocalDate,
+  accountEnding: Option[LocalDate],
   accountStatus: String,
   paymentTotal: BigDecimal,
   taxTotal: BigDecimal,
@@ -41,7 +41,7 @@ case class GroupPaymentArrangementViewModel(
       ),
       SummaryListRowViewModel(
         key = "groupPaymentsArrangements.PeriodAccountEnding",
-        value = ValueViewModel(Text(formatDate(this.accountEnding, messages.lang)))
+        value = ValueViewModel( Text( this.accountEnding.map(d => formatDate(d, messages.lang) ).getOrElse("") ))
       ),
       SummaryListRowViewModel(
         key = "groupPaymentsArrangements.PeriodAccountStatus",
@@ -59,4 +59,4 @@ case class GroupPaymentArrangementViewModel(
   )
 }
 
-case class GroupPaymentRecord(date: LocalDate, description: String, amount: BigDecimal)
+case class GroupPaymentRecord(date: Option[LocalDate], description: String, amount: BigDecimal)

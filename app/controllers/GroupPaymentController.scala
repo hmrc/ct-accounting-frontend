@@ -27,20 +27,27 @@ import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.GroupPaymentArrangementsView
 import javax.inject.Inject
 
-class GroupPaymentController @Inject() (
-  override val messagesApi: MessagesApi,
-  identify: IdentifierAction,
-  val controllerComponents: MessagesControllerComponents,
-  view: GroupPaymentArrangementsView,
-  service: GroupPaymentService
-) extends FrontendBaseController
-    with I18nSupport {
+class GroupPaymentController @Inject()(
+                                        override val messagesApi: MessagesApi,
+                                        identify: IdentifierAction,
+                                        val controllerComponents: MessagesControllerComponents,
+                                        view: GroupPaymentArrangementsView,
+                                        service: GroupPaymentService
+                                      ) extends FrontendBaseController
+  with I18nSupport {
 
   def onPageLoad: Action[AnyContent] = identify.async { implicit request =>
-    val taxRef    = 1L
+    val taxRef = 1111444444L // 2L
+    val accPeriod: Long = 1
+    // Pagination params
+    val startIndex: Int = 0
+    val count: Int = 20
 
     service
-      .getViewModel(taxRef)
+      .getViewModel(taxRef,
+        accPeriod: Long,
+        startIndex,
+        count)
       .map { viewModel =>
         Ok(view(viewModel))
       }
