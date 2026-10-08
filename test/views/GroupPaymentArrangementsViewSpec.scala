@@ -27,27 +27,28 @@ import views.html.GroupPaymentArrangementsView
 import java.time.LocalDate
 
 class GroupPaymentArrangementsViewSpec extends SpecBase {
+  
   val application = applicationBuilder().build()
 
   val viewModel = GroupPaymentArrangementViewModel(
     arrangementReference = "933636936A00104A",
-    accountEnding = LocalDate.of(2026, 1, 1),
+    accountEnding = Some(LocalDate.of(2026, 1, 1)),
     accountStatus = "Open",
     paymentTotal = BigDecimal(1125000),
     taxTotal = BigDecimal(1125000),
     records = List(
       GroupPaymentRecord(
-        date = LocalDate.of(2025, 1, 1),
+        date = Some(LocalDate.of(2025, 1, 1)),
         description = "Electronic payment",
         amount = BigDecimal(50.17)
       ),
       GroupPaymentRecord(
-        date = LocalDate.of(2021, 2, 7),
+        date = Some(LocalDate.of(2021, 2, 7)),
         description = "Electronic payment",
         amount = BigDecimal(475)
       ),
       GroupPaymentRecord(
-        date = LocalDate.of(2026, 4, 8),
+        date = Some(LocalDate.of(2026, 4, 8)),
         description = "Electronic payment",
         amount = BigDecimal(50.18)
       )
