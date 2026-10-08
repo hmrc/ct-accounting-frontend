@@ -16,7 +16,8 @@
 
 package controllers.actions
 
-import connectors.gpa.CompanyNominatorConnector
+import config.FrontendAppConfig
+import connectors.gpa.GroupPaymentPeriodInRangeConnector
 import models.AuthenticatedRequest
 import play.api.Logging
 import play.api.mvc.Results.Redirect
@@ -29,8 +30,9 @@ import scala.concurrent.{ExecutionContext, Future}
 import scala.util.control.NonFatal
 
 @Singleton
-class NominatedCompanyGPAServiceGuard @Inject() (
-  companyNominatorConnector: CompanyNominatorConnector
+class GroupPaymentPeriodInRangeServiceGuard @Inject() (
+  groupPaymentPeriodInRangeConnector: GroupPaymentPeriodInRangeConnector,
+  config: FrontendAppConfig
 )(implicit val executionContext: ExecutionContext)
     extends ActionFilter[AuthenticatedRequest]
     with Logging {
@@ -41,13 +43,17 @@ class NominatedCompanyGPAServiceGuard @Inject() (
 
     val gpaUtr              = request.gpaUtr
     val nominatedCompanyUtr = request.nominatedCompanyUtr
+    val pPeriod             = request.pPeriod
 
     // TODO Change this redirectOnError to point to Error Page
     val redirectOnError = Redirect(controllers.routes.JourneyRecoveryController.onPageLoad())
+
     (for {
-      companyNominatorResponse <- companyNominatorConnector.getCompanyNominator(gpaUtr, nominatedCompanyUtr)
+      groupPaymentResponse <-
+        groupPaymentPeriodInRangeConnector
+          .getGroupPaymentPeriodInRange(gpaUtr, nominatedCompanyUtr, pPeriod, config.pMonthsRestriction)
     } yield
-      if (companyNominatorResponse.isParticipator) {
+      if (groupPaymentResponse.isPeriodWithinRange) {
         logger.info(
           s"Successfully validated nominatedCompany gpaUTR :: $gpaUtr, nominatedCompanyUtr :: $nominatedCompanyUtr"
         )
@@ -57,12 +63,12 @@ class NominatedCompanyGPAServiceGuard @Inject() (
           s"Validation failure for nominatedCompany gpaUTR :: $gpaUtr, nominatedCompanyUtr :: $nominatedCompanyUtr"
         )
         Some(redirectOnError)
-      })
-      .recover { case NonFatal(e) =>
-        logger.error(
-          s"Error while validating nominated company gpaUTR :: $gpaUtr, nominatedCompanyUtr :: $nominatedCompanyUtr"
-        )
-        Some(redirectOnError)
-      }
+      }).recover { case NonFatal(e) =>
+      logger.error(
+        s"Error while validating nominated company gpaUTR :: $gpaUtr, nominatedCompanyUtr :: $nominatedCompanyUtr"
+      )
+      Some(redirectOnError)
+    }
   }
+
 }

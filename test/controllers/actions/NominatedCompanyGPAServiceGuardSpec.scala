@@ -17,10 +17,9 @@
 package controllers.actions
 
 import base.SpecBase
-import config.FrontendAppConfig
-import connectors.gpa.{CompanyNominatorConnector, GroupPaymentPeriodInRangeConnector}
+import connectors.gpa.CompanyNominatorConnector
 import models.AuthenticatedRequest
-import models.gpa.{CompanyNominator, PeriodWithinRange}
+import models.gpa.CompanyNominator
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.*
 import org.scalatest.matchers.should.Matchers.should
@@ -36,197 +35,65 @@ import scala.concurrent.Future
 class NominatedCompanyGPAServiceGuardSpec extends SpecBase {
 
   "NominatedCompanyGPAServiceGuard" - {
-    "redirect to Error Page when pMonthRestriction > 60 " in new Setup {
+    "successfully validate nominated company when CompanyNominator returns true" in new Setup {
       running(application) {
         when(mockCompanyNominatorConnector.getCompanyNominator(any(), any())(any[HeaderCarrier]))
           .thenReturn(Future.successful(companyNominatorTrueValue))
-
-        when(
-          mockGroupPaymentPeriodInRangeConnector.getGroupPaymentPeriodInRange(any(), any(), any(), any())(
-            any[HeaderCarrier]
-          )
-        )
-          .thenReturn(Future.successful(periodWithinRangeTrueValue))
-
-        val result = nominatedServiceGuard.filter(invalidMonthRestrictionAuthenticatedRequest).map(_.value)
-
-        status(result) mustBe SEE_OTHER
-        redirectLocation(result) mustBe Some(redirectOnError)
-
-        verifyNoInteractions(mockCompanyNominatorConnector)
-        verifyNoInteractions(mockGroupPaymentPeriodInRangeConnector)
-      }
-    }
-    "successfully validate nominated company when CompanyNominator and PeriodWithinRange both return true when pMonthRestriction < 60" in new Setup {
-      running(application) {
-        when(mockCompanyNominatorConnector.getCompanyNominator(any(), any())(any[HeaderCarrier]))
-          .thenReturn(Future.successful(companyNominatorTrueValue))
-
-        when(
-          mockGroupPaymentPeriodInRangeConnector.getGroupPaymentPeriodInRange(any(), any(), any(), any())(
-            any[HeaderCarrier]
-          )
-        )
-          .thenReturn(Future.successful(periodWithinRangeTrueValue))
 
         val result = await(nominatedServiceGuard.filter(authenticatedRequest))
-
         result mustBe None
-
         verify(mockCompanyNominatorConnector, times(1)).getCompanyNominator(any(), any())(any[HeaderCarrier])
-        verify(mockGroupPaymentPeriodInRangeConnector, times(1))
-          .getGroupPaymentPeriodInRange(any(), any(), any(), any())(any[HeaderCarrier])
-
       }
     }
-    "successfully validate nominated company when CompanyNominator and PeriodWithinRange both return true when pMonthRestriction = 60" in new Setup {
-      running(application) {
-        when(mockCompanyNominatorConnector.getCompanyNominator(any(), any())(any[HeaderCarrier]))
-          .thenReturn(Future.successful(companyNominatorTrueValue))
-
-        when(
-          mockGroupPaymentPeriodInRangeConnector.getGroupPaymentPeriodInRange(any(), any(), any(), any())(
-            any[HeaderCarrier]
-          )
-        )
-          .thenReturn(Future.successful(periodWithinRangeTrueValue))
-
-        val result = await(nominatedServiceGuard.filter(authenticatedRequest))
-
-        result mustBe None
-
-        verify(mockCompanyNominatorConnector, times(1)).getCompanyNominator(any(), any())(any[HeaderCarrier])
-        verify(mockGroupPaymentPeriodInRangeConnector, times(1))
-          .getGroupPaymentPeriodInRange(any(), any(), any(), any())(any[HeaderCarrier])
-
-      }
-    }
-    "redirect to Error page when CompanyNominator is true but PeriodWithinRange is false" in new Setup {
-      running(application) {
-        when(mockCompanyNominatorConnector.getCompanyNominator(any(), any())(any[HeaderCarrier]))
-          .thenReturn(Future.successful(companyNominatorTrueValue))
-
-        when(
-          mockGroupPaymentPeriodInRangeConnector.getGroupPaymentPeriodInRange(any(), any(), any(), any())(
-            any[HeaderCarrier]
-          )
-        )
-          .thenReturn(Future.successful(periodWithinRangeFalseValue))
-
-        val result = nominatedServiceGuard.filter(authenticatedRequest).map(_.value)
-
-        status(result) mustBe SEE_OTHER
-        redirectLocation(result) mustBe Some(redirectOnError)
-
-        verify(mockCompanyNominatorConnector, times(1)).getCompanyNominator(any(), any())(any[HeaderCarrier])
-        verify(mockGroupPaymentPeriodInRangeConnector, times(1))
-          .getGroupPaymentPeriodInRange(any(), any(), any(), any())(any[HeaderCarrier])
-      }
-    }
-    "redirect to Error page when CompanyNominator is false but PeriodWithinRange is true" in new Setup {
+    "redirect to Error page when both CompanyNominator returns false " in new Setup {
       running(application) {
         when(mockCompanyNominatorConnector.getCompanyNominator(any(), any())(any[HeaderCarrier]))
           .thenReturn(Future.successful(companyNominatorFalseValue))
 
-        when(
-          mockGroupPaymentPeriodInRangeConnector.getGroupPaymentPeriodInRange(any(), any(), any(), any())(
-            any[HeaderCarrier]
-          )
-        )
-          .thenReturn(Future.successful(periodWithinRangeTrueValue))
-
         val result = nominatedServiceGuard.filter(authenticatedRequest).map(_.value)
 
         status(result) mustBe SEE_OTHER
         redirectLocation(result) mustBe Some(redirectOnError)
 
         verify(mockCompanyNominatorConnector, times(1)).getCompanyNominator(any(), any())(any[HeaderCarrier])
-        verify(mockGroupPaymentPeriodInRangeConnector, times(1))
-          .getGroupPaymentPeriodInRange(any(), any(), any(), any())(any[HeaderCarrier])
       }
     }
-    "redirect to Error page when both CompanyNominator and PeriodWithinRange are false " in new Setup {
-      running(application) {
-        when(mockCompanyNominatorConnector.getCompanyNominator(any(), any())(any[HeaderCarrier]))
-          .thenReturn(Future.successful(companyNominatorFalseValue))
-
-        when(
-          mockGroupPaymentPeriodInRangeConnector.getGroupPaymentPeriodInRange(any(), any(), any(), any())(
-            any[HeaderCarrier]
-          )
-        )
-          .thenReturn(Future.successful(periodWithinRangeFalseValue))
-
-        val result = nominatedServiceGuard.filter(authenticatedRequest).map(_.value)
-
-        status(result) mustBe SEE_OTHER
-        redirectLocation(result) mustBe Some(redirectOnError)
-
-        verify(mockCompanyNominatorConnector, times(1)).getCompanyNominator(any(), any())(any[HeaderCarrier])
-        verify(mockGroupPaymentPeriodInRangeConnector, times(1))
-          .getGroupPaymentPeriodInRange(any(), any(), any(), any())(any[HeaderCarrier])
-      }
-    }
-    "redirect to Error page when there is exception from BE" in new Setup {
+    "redirect to JourneyRecoveryController when there is exception from BE" in new Setup {
       running(application) {
         when(mockCompanyNominatorConnector.getCompanyNominator(any(), any())(any[HeaderCarrier]))
           .thenReturn(Future.failed(new RuntimeException("Error in downstream services")))
 
-        when(
-          mockGroupPaymentPeriodInRangeConnector.getGroupPaymentPeriodInRange(any(), any(), any(), any())(
-            any[HeaderCarrier]
-          )
-        )
-          .thenReturn(Future.successful(periodWithinRangeTrueValue))
-
         val result = nominatedServiceGuard.filter(authenticatedRequest).map(_.value)
 
         status(result) mustBe SEE_OTHER
         redirectLocation(result) mustBe Some(redirectOnError)
 
         verify(mockCompanyNominatorConnector, times(1)).getCompanyNominator(any(), any())(any[HeaderCarrier])
-        verifyNoInteractions(mockGroupPaymentPeriodInRangeConnector)
       }
     }
   }
 
   trait Setup {
-    reset(mockCompanyNominatorConnector, mockGroupPaymentPeriodInRangeConnector, mockFrontendAppConfig)
-    when(mockFrontendAppConfig.pMonthsRestriction).thenReturn(60)
-    when(mockFrontendAppConfig.cacheTtl).thenReturn(900L)
-
+    reset(mockCompanyNominatorConnector)
     implicit lazy val application: Application = applicationBuilder()
       .overrides(
-        inject.bind[CompanyNominatorConnector].toInstance(mockCompanyNominatorConnector),
-        inject.bind[GroupPaymentPeriodInRangeConnector].toInstance(mockGroupPaymentPeriodInRangeConnector),
-        inject.bind[FrontendAppConfig].toInstance(mockFrontendAppConfig)
+        inject.bind[CompanyNominatorConnector].toInstance(mockCompanyNominatorConnector)
       )
       .build()
 
     val nominatedServiceGuard: NominatedCompanyGPAServiceGuard =
       application.injector.instanceOf[NominatedCompanyGPAServiceGuard]
 
-    val gpaUtr: Long                     = 123533L
-    val nominatedCompanyUtr: Long        = 8967969L
-    val pPeriod: Int                     = 12
-    val validMonthRestriction: Int       = 30
-    val validMonthRestrictionWith60: Int = 60
-    val invalidMonthRestriction: Int     = 80
+    val gpaUtr: Long              = 123533L
+    val nominatedCompanyUtr: Long = 8967969L
+    val pPeriod: Int              = 12
 
     val companyNominatorTrueValue: CompanyNominator  = CompanyNominator(isParticipator = true)
     val companyNominatorFalseValue: CompanyNominator = CompanyNominator(isParticipator = false)
 
-    val periodWithinRangeTrueValue: PeriodWithinRange  = PeriodWithinRange(isPeriodWithinRange = true)
-    val periodWithinRangeFalseValue: PeriodWithinRange = PeriodWithinRange(isPeriodWithinRange = false)
-
     val redirectOnError: String = controllers.routes.JourneyRecoveryController.onPageLoad().url
 
-    val authenticatedRequest: AuthenticatedRequest[AnyContentAsEmpty.type]                       =
-      AuthenticatedRequest(FakeRequest("GET", "/"), gpaUtr, nominatedCompanyUtr, pPeriod, validMonthRestriction)
-    val authenticatedRequestWithMonthRestriction60: AuthenticatedRequest[AnyContentAsEmpty.type] =
-      AuthenticatedRequest(FakeRequest("GET", "/"), gpaUtr, nominatedCompanyUtr, pPeriod, validMonthRestrictionWith60)
-
-    val invalidMonthRestrictionAuthenticatedRequest: AuthenticatedRequest[AnyContentAsEmpty.type] =
-      AuthenticatedRequest(FakeRequest("GET", "/"), gpaUtr, nominatedCompanyUtr, pPeriod, invalidMonthRestriction)
+    val authenticatedRequest: AuthenticatedRequest[AnyContentAsEmpty.type] =
+      AuthenticatedRequest(FakeRequest("GET", "/"), gpaUtr, nominatedCompanyUtr, pPeriod)
   }
 }

@@ -22,6 +22,5 @@ final case class AuthenticatedRequest[A](
   request: Request[A],
   gpaUtr: Long,
   nominatedCompanyUtr: Long,
-  pPeriod: Int,
-  pMonthRestriction: Int
+  pPeriod: Int
 ) extends WrappedRequest[A](request)

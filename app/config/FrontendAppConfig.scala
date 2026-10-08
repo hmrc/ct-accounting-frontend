@@ -49,7 +49,7 @@ class FrontendAppConfig @Inject() (configuration: Configuration) {
     "cy" -> Lang("cy")
   )
 
-  val pMonthsRestriction: Int = 60
+  val pMonthsRestriction: Int = configuration.get[Int]("monthsRestriction.pMonthsRestriction")
 
   val timeout: Int   = configuration.get[Int]("timeout-dialog.timeout")
   val countdown: Int = configuration.get[Int]("timeout-dialog.countdown")
