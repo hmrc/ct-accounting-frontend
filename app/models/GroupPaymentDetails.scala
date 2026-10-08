@@ -20,34 +20,33 @@ import play.api.libs.json.{Json, OFormat}
 
 import java.time.LocalDate
 
-
 case class GpaPaymentsRecord(
-                              displayDate: Option[LocalDate],
-                              total: BigDecimal,
-                              tablename: Option[String],
-                              paymentType: Option[String],
-                              repaymentType: Option[String],
-                              targetTaxpayerReference: Option[String],
-                              targetApNo: Option[Int],
-                              targetApEndDate: Option[LocalDate],
-                              contractEndDate: Option[LocalDate],
-                              participatorPresent: Option[Boolean]
-                            )
+  displayDate: Option[LocalDate],
+  total: BigDecimal,
+  tablename: Option[String],
+  paymentType: Option[String],
+  repaymentType: Option[String],
+  targetTaxpayerReference: Option[String],
+  targetApNo: Option[Int],
+  targetApEndDate: Option[LocalDate],
+  contractEndDate: Option[LocalDate],
+  participatorPresent: Option[Boolean]
+)
 
 object GpaPaymentsRecord {
   implicit val format: OFormat[GpaPaymentsRecord] = Json.format[GpaPaymentsRecord]
 }
 
 case class GpaPaymentsDetailsResponse(
-                                       gpaPayments: List[GpaPaymentsRecord],
-                                       totalNumOfRecords: Option[Long],
-                                       gppEndDate: Option[LocalDate],
-                                       gppTotalGroupPayment: BigDecimal,
-                                       gppTotalGroupTax: BigDecimal,
-                                       gppStatus: String,
-                                       gppCni: Option[LocalDate],
-                                       gppApportionmentMethod: Option[String]
-                                     )
+  gpaPayments: List[GpaPaymentsRecord],
+  totalNumOfRecords: Option[Long],
+  gppEndDate: Option[LocalDate],
+  gppTotalGroupPayment: BigDecimal,
+  gppTotalGroupTax: BigDecimal,
+  gppStatus: String,
+  gppCni: Option[LocalDate],
+  gppApportionmentMethod: Option[String]
+)
 
 object GpaPaymentsDetailsResponse {
   implicit val format: OFormat[GpaPaymentsDetailsResponse] = Json.format[GpaPaymentsDetailsResponse]

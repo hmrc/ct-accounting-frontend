@@ -25,27 +25,27 @@ import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
 class GroupPaymentService @Inject() (
-                                      connector: GroupPaymentsConnector
-) (implicit ec: ExecutionContext) extends Logging  {
+  connector: GroupPaymentsConnector
+)(implicit ec: ExecutionContext)
+    extends Logging {
 
   private def getStatus(s: String): String = s match {
     case "O" | "S" => "Open"
-    case "C" => "Earlier Cleared"
-    case "L" => "Cleared"
-    case "E" => "Earlier Exempt"
-    case _ => ""
+    case "C"       => "Earlier Cleared"
+    case "L"       => "Cleared"
+    case "E"       => "Earlier Exempt"
+    case _         => ""
   }
 
   // TODO: review next mappings:
   // arrangementReference - ??
-  private def transform(record : GpaPaymentsDetailsResponse, taxRef: Long) : GroupPaymentArrangementViewModel = {
-    val records = record
-      .gpaPayments.map( r =>
-        GroupPaymentRecord(
-          date = r.displayDate,
-          description = r.paymentType.getOrElse(""),
-          amount = r.total
-        )
+  private def transform(record: GpaPaymentsDetailsResponse, taxRef: Long): GroupPaymentArrangementViewModel = {
+    val records = record.gpaPayments.map(r =>
+      GroupPaymentRecord(
+        date = r.displayDate,
+        description = r.paymentType.getOrElse(""),
+        amount = r.total
+      )
     )
     GroupPaymentArrangementViewModel(
       arrangementReference = taxRef.toString,
@@ -57,10 +57,7 @@ class GroupPaymentService @Inject() (
     )
   }
 
-  def getViewModel(taxRef: Long,
-                   accPeriod: Long,
-                   startIndex: Int,
-                   count:Int)(implicit
+  def getViewModel(taxRef: Long, accPeriod: Long, startIndex: Int, count: Int)(implicit
     hc: HeaderCarrier
   ): Future[GroupPaymentArrangementViewModel] = {
     logger.info(
