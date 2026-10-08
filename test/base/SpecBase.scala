@@ -16,12 +16,15 @@
 
 package base
 
+import config.FrontendAppConfig
+import connectors.gpa.{CompanyNominatorConnector, GroupPaymentPeriodInRangeConnector}
 import controllers.actions.*
 import models.UserAnswers
 import org.scalatest.concurrent.{IntegrationPatience, ScalaFutures}
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.must.Matchers
 import org.scalatest.{OptionValues, TryValues}
+import org.scalatestplus.mockito.MockitoSugar.mock
 import play.api.Application
 import play.api.i18n.{Messages, MessagesApi}
 import play.api.inject.bind
@@ -41,6 +44,11 @@ trait SpecBase
   def emptyUserAnswers: UserAnswers = UserAnswers(userAnswersId)
 
   def messages(app: Application): Messages = app.injector.instanceOf[MessagesApi].preferred(FakeRequest())
+
+  lazy val mockCompanyNominatorConnector: CompanyNominatorConnector                   = mock[CompanyNominatorConnector]
+  lazy val mockGroupPaymentPeriodInRangeConnector: GroupPaymentPeriodInRangeConnector =
+    mock[GroupPaymentPeriodInRangeConnector]
+  lazy val mockFrontendAppConfig: FrontendAppConfig                                   = mock[FrontendAppConfig]
 
   protected def applicationBuilder(userAnswers: Option[UserAnswers] = None): GuiceApplicationBuilder =
     new GuiceApplicationBuilder()
