@@ -41,7 +41,7 @@ case class GroupPaymentArrangementViewModel(
       ),
       SummaryListRowViewModel(
         key = "groupPaymentsArrangements.PeriodAccountEnding",
-        value = ValueViewModel( Text( this.accountEnding.map(d => formatDate(d, messages.lang) ).getOrElse("") ))
+        value = ValueViewModel(Text(this.accountEnding.map(d => formatDate(d, messages.lang)).getOrElse("")))
       ),
       SummaryListRowViewModel(
         key = "groupPaymentsArrangements.PeriodAccountStatus",

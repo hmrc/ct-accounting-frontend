@@ -27,7 +27,7 @@ import views.html.GroupPaymentArrangementsView
 import java.time.LocalDate
 
 class GroupPaymentArrangementsViewSpec extends SpecBase {
-  
+
   val application = applicationBuilder().build()
 
   val viewModel = GroupPaymentArrangementViewModel(

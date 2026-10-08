@@ -16,7 +16,7 @@
 
 package connectors
 
-import models.{GpaPaymentsDetailsResponse}
+import models.GpaPaymentsDetailsResponse
 import play.api.Logging
 import uk.gov.hmrc.http.HttpReads.Implicits.*
 import uk.gov.hmrc.http.client.HttpClientV2
@@ -28,20 +28,17 @@ import java.net.URL
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
-class GroupPaymentsConnector @Inject()(http: HttpClientV2, config: ServicesConfig)(implicit
-                                                                                   ec: ExecutionContext
+class GroupPaymentsConnector @Inject() (http: HttpClientV2, config: ServicesConfig)(implicit
+  ec: ExecutionContext
 ) extends Logging {
 
-  def getPaymentDetails(taxRef: Long,
-                        accPeriod: Long,
-                        startIndex: Int,
-                        count:Int
-                       )(implicit
+  def getPaymentDetails(taxRef: Long, accPeriod: Long, startIndex: Int, count: Int)(implicit
     hc: HeaderCarrier
   ): Future[GpaPaymentsDetailsResponse] = {
     val baseUrl  = config.baseUrl("corporation-tax")
-    val url: URL = url"$baseUrl/corporation-tax/gpa-payment-details/$taxRef?contractVersion=$accPeriod&startIndex=$startIndex&count=$count"
-    
+    val url: URL =
+      url"$baseUrl/corporation-tax/gpa-payment-details/$taxRef?contractVersion=$accPeriod&startIndex=$startIndex&count=$count"
+
     http
       .get(url)
       .execute[GpaPaymentsDetailsResponse]
