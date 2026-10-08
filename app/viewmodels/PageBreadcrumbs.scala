@@ -27,7 +27,7 @@ object PageBreadcrumbs {
     // TODO: Add hrefs
     items = Seq(
       BreadcrumbsItem(content = Text(messages("breadcrumbs.home")), href = Some("/")),
-      BreadcrumbsItem(content = Text(messages("breadcrumbs.accountingPeriods")), href = Some("/"))
+      BreadcrumbsItem(content = Text(messages("breadcrumbs.accountingPeriods")), href = Some("/ct-accounting/accounting-period-overview/accounting-periods"))
     )
   )
 
@@ -164,6 +164,13 @@ object PageBreadcrumbs {
         content = Text(messages("breadcrumbs.accountingPeriodEnding")),
         href = Some(routes.AccountingPeriodOverviewController.onPageLoad().url)
       )
+    )
+  )
+
+  def accountingPeriodsPage(implicit messages: Messages): Breadcrumbs = Breadcrumbs(
+    // TODO: Add/check hrefs
+    items = Seq(
+      BreadcrumbsItem(content = Text(messages("breadcrumbs.home")), href = Some("/ct-accounting"))
     )
   )
 }
