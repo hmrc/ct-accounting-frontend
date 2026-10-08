@@ -21,6 +21,10 @@ import viewmodels.{GroupPaymentArrangementViewModel, GroupPaymentRecord}
 
 import java.time.LocalDate
 
+/*
+GroupPaymentArrangementViewModel("12", Some(2026-01-01), "Earlier Cleared", 1125017, 1125012, List(GroupPaymentRecord(Some(2025-01-01), "BGP", 17.01)))
+GroupPaymentArrangementViewModel("12", Some(2026-01-01), "Earlier Cleared", 1125012, 1125017, List(GroupPaymentRecord(Some(2025-01-01), "Payslip", 17.01)))
+ */
 trait GroupPaymentHelper {
 
   val response = GpaPaymentsDetailsResponse(
@@ -29,7 +33,7 @@ trait GroupPaymentHelper {
         displayDate = Some(LocalDate.of(2025, 1, 1)),
         total = BigDecimal(17.01),
         tablename = Some("Payslip"),
-        paymentType = Some("BGP"),
+        paymentType = Some("Payslip"),
         repaymentType = None,
         targetTaxpayerReference = None,
         targetApNo = Some(7),
@@ -48,11 +52,11 @@ trait GroupPaymentHelper {
   )
 
   val viewModel = GroupPaymentArrangementViewModel(
-    arrangementReference = "REF",
+    arrangementReference = "12",
     accountEnding = Some(LocalDate.of(2026, 1, 1)),
-    accountStatus = "C",
-    paymentTotal = BigDecimal(1125012),
-    taxTotal = BigDecimal(1125017),
+    accountStatus = "Earlier Cleared",
+    paymentTotal = BigDecimal(1125017),
+    taxTotal = BigDecimal(1125012),
     records = List(
       GroupPaymentRecord(
         date = Some(LocalDate.of(2025, 1, 1)),
