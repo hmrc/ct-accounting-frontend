@@ -30,12 +30,10 @@ import uk.gov.hmrc.http.HeaderCarrier
 import views.html.GroupPaymentArrangementsView
 import scala.concurrent.Future
 
+class GroupPaymentControllerSpec extends SpecBase with MockitoSugar with GroupPaymentHelper {
 
-class GroupPaymentControllerSpec extends SpecBase
-  with MockitoSugar with GroupPaymentHelper {
-
-  implicit val hc: HeaderCarrier                       = HeaderCarrier()
-  val mockService: GroupPaymentService                 = mock[GroupPaymentService]
+  implicit val hc: HeaderCarrier       = HeaderCarrier()
+  val mockService: GroupPaymentService = mock[GroupPaymentService]
 
   val application = applicationBuilder()
     .overrides(bind[GroupPaymentService].toInstance(mockService))
@@ -43,7 +41,6 @@ class GroupPaymentControllerSpec extends SpecBase
 
   implicit val messagesApi: MessagesApi = application.injector.instanceOf[MessagesApi]
   implicit val messages: Messages       = MessagesImpl(Lang.defaultLang, messagesApi)
-
 
   "GroupPaymentController" - {
 
@@ -70,7 +67,7 @@ class GroupPaymentControllerSpec extends SpecBase
       }
 
     }
-    
+
     "must redirect when exception from BE occurs" in {
 
       when(mockService.getViewModel(any(), any(), any(), any())(any[HeaderCarrier]))
@@ -89,7 +86,6 @@ class GroupPaymentControllerSpec extends SpecBase
       }
 
     }
-
 
   }
 }

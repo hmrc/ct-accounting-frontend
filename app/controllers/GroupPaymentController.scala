@@ -27,7 +27,6 @@ import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.GroupPaymentArrangementsView
 import javax.inject.Inject
 
-
 class GroupPaymentController @Inject() (
   override val messagesApi: MessagesApi,
   identify: IdentifierAction,
