@@ -66,22 +66,19 @@ class GroupPaymentServiceSpec
 
     }
 
-    /*
     "propagate any errors or exceptions from connector" in new BaseSetup {
 
-      when(mockConnector.getAccountingPeriodResponse(eqTo(taxPayerReference), eqTo(accPeriod))(any[HeaderCarrier]))
+      when(mockConnector.getPaymentDetails(any(), any(), any(), any())(any[HeaderCarrier]))
         .thenReturn(Future.failed(new RuntimeException("boom")))
 
       val ex: RuntimeException = intercept[RuntimeException] {
-        service.getAccountingPeriodResponse(taxPayerReference, accPeriod).futureValue
+        service.getViewModel(taxPayerReference, accPeriod, 0, 20).futureValue
       }
 
       ex.getMessage should include("boom")
 
-      verify(mockConnector, times(1)).getAccountingPeriodResponse(taxPayerReference, accPeriod)
-
+      verify(mockConnector, times(1)).getPaymentDetails(taxPayerReference, accPeriod, 0, 20)
     }
-    */
 
   }
 
