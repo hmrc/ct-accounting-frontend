@@ -43,7 +43,7 @@ class GroupTaxChargesController @Inject() (
     val pGpaUtr              = 1L // TODO: This needs to comes from sessionDataRepository
     val pGppContractVersion  = 1
     val pStartIndex          = 0
-    val pCount               = 0
+    val pCount               = 10
 
     // TODO: Get taxRef + accPeriod from sessionDataRepositry
     service
