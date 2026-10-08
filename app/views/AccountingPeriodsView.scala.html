@@ -1,0 +1,80 @@
+@*
+ * Copyright 2026 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import views.html.components.*
+@import viewmodels._
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
+@import viewmodels.accountingPeriods.AccountingPeriodsViewModel
+@import models.ApAmountItem
+@import views.ViewUtils._
+
+@this(
+        layout: templates.Layout,
+        govukButton: GovukButton,
+        h1: h1,
+        link:Link,
+        paragraph: Paragraph,
+        govukTable: GovukTable
+)
+
+@(viewModel: AccountingPeriodsViewModel, accountingPeriodIsEmpty: Boolean)(implicit request: Request[_], messages: Messages)
+
+@layout(pageTitle = titleNoForm(messages("accountingPeriods.title")),
+    breadcrumbs = Some(PageBreadcrumbs.accountingPeriodsPage)) {
+
+    @h1(messages("accountingPeriods.heading"))
+
+      @if(accountingPeriodIsEmpty) {
+          @paragraph(messages("accountingPeriods.p2"))
+      } else {
+          @paragraph(messages("accountingPeriods.p1", formatCurrency(viewModel.amountDue.get))) 
+
+          @govukTable(
+              Table(
+                  head = Some(Seq(
+                      HeadCell(content = Text(messages("accountingPeriods.accountingPeriodEnding"))),
+                      HeadCell(content = Text(messages("accountingPeriods.accountingPeriodStatus"))),
+                      HeadCell(content = Text(messages("accountingPeriods.accountingPeriodAmount")))
+                  )),
+                  rows = viewModel.rows.map { row =>
+                      Seq(
+                          TableRow(
+                              content = HtmlContent(
+                                  row.href
+                                  .map(href => link(row.dateAsString, href.url, row.isLink.getOrElse(false)))
+                                  .getOrElse(Html(row.dateAsString))
+                              )
+                          ),
+                          TableRow(
+                              content = Text(row.status.getOrElse(""))
+                          ),
+                          TableRow(
+                              content = Text(row.apAmountAsString)
+                          )
+                      )
+
+                  }
+              ))
+      }
+
+
+
+
+
+
+
+
+}

@@ -52,6 +52,7 @@ breadcrumbs.home = Home
 breadcrumbs.accountingPeriods = Accounting periods
 breadcrumbs.accountingPeriodEnding = Accounting period ending
 breadcrumbs.interest = Interest
+breadcrumbs.accountingPeriods = Accounting periods
 
 accountingPeriodOverview.title = Accounting period overview
 accountingPeriodOverview.heading = Accounting period ending {0}
@@ -201,3 +202,11 @@ repaymentReallocations.table.total = Total
 repaymentReallocations.description.rto = Reallocation to accounting period {0}
 repaymentReallocations.description.rfr = Reallocation from accounting period ending {0}
 repaymentReallocations.description.crt = Repayments from accounting period {0}
+
+accountingPeriods.title = Accounting periods
+accountingPeriods.heading = Accounting periods
+accountingPeriods.p1 = Your Corporation Tax balance is {0}. This amount is based on the accounting periods currently shown.
+accountingPeriods.p2 = There is no data for any accounting periods yet.
+accountingPeriods.accountingPeriodEnding = Accounting period ending
+accountingPeriods.accountingPeriodStatus = Status
+accountingPeriods.accountingPeriodAmount = Amount
