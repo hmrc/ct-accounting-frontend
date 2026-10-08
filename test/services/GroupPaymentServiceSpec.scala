@@ -44,9 +44,9 @@ class GroupPaymentServiceSpec
     implicit val ec: ExecutionContext    = cc.executionContext
 
     val mockConnector: GroupPaymentsConnector = mock[GroupPaymentsConnector]
-    val service                                         = new GroupPaymentService(mockConnector)
-    val taxPayerReference: Long                         = 12L
-    val accPeriod: Long                                 = 2L
+    val service                               = new GroupPaymentService(mockConnector)
+    val taxPayerReference: Long               = 12L
+    val accPeriod: Long                       = 2L
   }
 
   "GroupPaymentService.getAccountingPeriodResponse" should {
