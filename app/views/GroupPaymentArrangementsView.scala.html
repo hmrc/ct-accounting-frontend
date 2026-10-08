@@ -53,7 +53,7 @@
                     rows = viewModel.records.map { record =>
                         Seq(
                            TableRow(
-                            content = Text( formatDate(record.date, messages.lang) )
+                            content = Text( record.date.map(d => formatDate(d, messages.lang)).getOrElse("") )
                            ),
                            TableRow(
                                 content = Text(record.description)

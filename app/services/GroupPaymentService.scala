@@ -21,8 +21,6 @@ import models.GpaPaymentsDetailsResponse
 import play.api.Logging
 import uk.gov.hmrc.http.HeaderCarrier
 import viewmodels.{GroupPaymentArrangementViewModel, GroupPaymentRecord}
-
-import java.time.LocalDate
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -30,41 +28,46 @@ class GroupPaymentService @Inject() (
                                       connector: GroupPaymentsConnector
 ) (implicit ec: ExecutionContext) extends Logging  {
 
-  private def transform(record : GpaPaymentsDetailsResponse) : GroupPaymentArrangementViewModel = {
-    GroupPaymentArrangementViewModel(
-      arrangementReference = "933636936A00104A",
-      accountEnding = LocalDate.of(2026, 1, 1),
-      accountStatus = record.gppStatus,
-      paymentTotal = BigDecimal(1125000),
-      taxTotal = BigDecimal(1125000),
-      records = List(
+  private def getStatus(s: String): String = s match {
+    case "O" | "S" => "Open"
+    case "C" => "Earlier Cleared"
+    case "L" => "Cleared"
+    case "E" => "Earlier Exempt"
+    case _ => ""
+  }
+
+  // TODO: review next mappings:
+  // arrangementReference - ??
+  private def transform(record : GpaPaymentsDetailsResponse, taxRef: Long) : GroupPaymentArrangementViewModel = {
+    val records = record
+      .gpaPayments.map( r =>
         GroupPaymentRecord(
-          date = LocalDate.of(2025, 1, 1),
-          description = "Electronic payment",
-          amount = BigDecimal(50.17)
-        ),
-        GroupPaymentRecord(
-          date = LocalDate.of(2021, 2, 7),
-          description = "Electronic payment",
-          amount = BigDecimal(475)
-        ),
-        GroupPaymentRecord(
-          date = LocalDate.of(2026, 4, 8),
-          description = "Electronic payment",
-          amount = BigDecimal(50.18)
+          date = r.displayDate,
+          description = r.paymentType.getOrElse(""),
+          amount = r.total
         )
-      )
+    )
+    GroupPaymentArrangementViewModel(
+      arrangementReference = taxRef.toString,
+      accountEnding = record.gppEndDate,
+      accountStatus = getStatus(record.gppStatus),
+      paymentTotal = record.gppTotalGroupPayment,
+      taxTotal = record.gppTotalGroupTax,
+      records = records
     )
   }
 
-  def getViewModel(taxRef: Long)(implicit
+  def getViewModel(taxRef: Long,
+                   accPeriod: Long,
+                   startIndex: Int,
+                   count:Int)(implicit
     hc: HeaderCarrier
   ): Future[GroupPaymentArrangementViewModel] = {
     logger.info(
       s"Get Group Payment Arrangement ViewModel for taxRef: $taxRef"
     )
     connector
-      .getPaymentDetails(taxRef)
-      .map(transform)
+      .getPaymentDetails(taxRef, accPeriod, startIndex, count)
+      .map(response => transform(response, taxRef))
   }
 }

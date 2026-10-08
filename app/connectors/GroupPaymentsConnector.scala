@@ -32,11 +32,17 @@ class GroupPaymentsConnector @Inject()(http: HttpClientV2, config: ServicesConfi
                                                                                    ec: ExecutionContext
 ) extends Logging {
 
-  def getPaymentDetails(taxRef: Long)(implicit
+  def getPaymentDetails(taxRef: Long,
+                        accPeriod: Long,
+                        startIndex: Int,
+                        count:Int
+                       )(implicit
     hc: HeaderCarrier
   ): Future[GpaPaymentsDetailsResponse] = {
     val baseUrl  = config.baseUrl("corporation-tax")
-    val url: URL = url"$baseUrl/corporation-tax/gpa-payment-details/$taxRef"
+    val url: URL = url"$baseUrl/corporation-tax/gpa-payment-details/$taxRef?contractVersion=$accPeriod&startIndex=$startIndex&count=$count"
+
+    println(s"DATA: $url")
 
     http
       .get(url)
