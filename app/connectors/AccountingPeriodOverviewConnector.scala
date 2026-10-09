@@ -41,6 +41,12 @@ class AccountingPeriodOverviewConnector @Inject() (http: HttpClientV2, config: S
     http
       .get(url)
       .execute[AccountingPeriodOverview]
+      .recover { case ex: Throwable =>
+        logger.error(
+          s"Accounting period overview: $taxRef, $accPeriod :: - ${ex.getMessage}"
+        )
+        throw new RuntimeException(ex.getMessage)
+      }
   }
 
 }
