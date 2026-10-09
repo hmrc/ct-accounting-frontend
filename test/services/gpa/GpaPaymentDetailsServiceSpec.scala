@@ -44,14 +44,14 @@ class GpaPaymentDetailsServiceSpec
 
   "GpaPaymentDetailsService.GpaPaymentDescription" should {
 
-    "Return miscellaneous transfer when participator is false for rfr and rto payments" in new BaseSetup {
+    "Return miscellaneous transfer when tax reference and utr not equal && participator is false for rfr and rto payments" in new BaseSetup {
 
       val resultRFR: String =
-        service.gpaPaymentDescription(gpaPaymentsDefault.copy(participatorPresent = Some(false)), utr, contractEndDate)
+        service.gpaPaymentDescription(gpaPaymentsDefault.copy(participatorPresent = Some(false), targetTaxpayerReference = Some("99")), utr, contractEndDate)
 
       val resultRTO: String =
         service.gpaPaymentDescription(
-          gpaPaymentsDefault.copy(tablename = Some("RTOReallocation"), participatorPresent = Some(false)),
+          gpaPaymentsDefault.copy(tablename = Some("RTOReallocation"), participatorPresent = Some(false), targetTaxpayerReference = Some("99")),
           utr,
           contractEndDate
         )
@@ -62,14 +62,14 @@ class GpaPaymentDetailsServiceSpec
 
     }
 
-    "Return miscellaneous transfer when participator is None for rfr and rto payments" in new BaseSetup {
+    "Return miscellaneous transfer when tax reference and utr not equal && participator is None for rfr and rto payments" in new BaseSetup {
 
       val resultRFR: String =
-        service.gpaPaymentDescription(gpaPaymentsDefault.copy(participatorPresent = None), utr, contractEndDate)
+        service.gpaPaymentDescription(gpaPaymentsDefault.copy(participatorPresent = None, targetTaxpayerReference = Some("99")), utr, contractEndDate)
 
       val resultRTO: String =
         service.gpaPaymentDescription(
-          gpaPaymentsDefault.copy(tablename = Some("RTOReallocation"), participatorPresent = None),
+          gpaPaymentsDefault.copy(tablename = Some("RTOReallocation"), participatorPresent = None, targetTaxpayerReference = Some("99")),
           utr,
           contractEndDate
         )
@@ -80,41 +80,60 @@ class GpaPaymentDetailsServiceSpec
 
     }
 
-    "Return miscellaneous transfer when target accounting period is 0 for rfr and rto payments" in new BaseSetup {
+    "Return miscellaneous transfer when target accounting period is 0 for rto payments" in new BaseSetup {
 
-      val resultRFR: String =
-        service.gpaPaymentDescription(gpaPaymentsDefault.copy(targetApNo = Some(0)), utr, contractEndDate)
-
-      val resultRTO: String =
+      val result: String =
         service.gpaPaymentDescription(
           gpaPaymentsDefault.copy(tablename = Some("RTOReallocation"), targetApNo = Some(0)),
           utr,
           contractEndDate
         )
 
-      resultRFR shouldBe "gpaPayment.Description.miscellaneous"
 
-      resultRTO shouldBe "gpaPayment.Description.miscellaneous"
+      result shouldBe "gpaPayment.Description.miscellaneous"
 
     }
 
-    "Return miscellaneous transfer when target accounting period is None for rfr and rto payments" in new BaseSetup {
+    "Return miscellaneous transfer when target accounting period is None for rto payments" in new BaseSetup {
 
-      val resultRFR: String =
-        service.gpaPaymentDescription(gpaPaymentsDefault.copy(targetApNo = None), utr, contractEndDate)
-
-      val resultRTO: String =
+      val result: String =
         service.gpaPaymentDescription(
           gpaPaymentsDefault.copy(tablename = Some("RTOReallocation"), targetApNo = None),
           utr,
           contractEndDate
         )
 
-      resultRFR shouldBe "gpaPayment.Description.miscellaneous"
-
-      resultRTO shouldBe "gpaPayment.Description.miscellaneous"
+      result shouldBe "gpaPayment.Description.miscellaneous"
 
     }
+
+    "Return miscellaneous transfer when tax reference and utr not equal && target accounting period is 0 for rto payments" in new BaseSetup {
+
+      val result: String =
+        service.gpaPaymentDescription(
+          gpaPaymentsDefault.copy(tablename = Some("RTOReallocation"), targetApNo = Some(0), targetTaxpayerReference = Some("99")),
+          utr,
+          contractEndDate
+        )
+
+
+      result shouldBe "gpaPayment.Description.miscellaneous"
+
+    }
+
+    "Return miscellaneous transfer when tax reference and utr not equal && target accounting period is None for rto payments" in new BaseSetup {
+
+      val result: String =
+        service.gpaPaymentDescription(
+          gpaPaymentsDefault.copy(tablename = Some("RTOReallocation"), targetApNo = None, targetTaxpayerReference = Some("99")),
+          utr,
+          contractEndDate
+        )
+
+      result shouldBe "gpaPayment.Description.miscellaneous"
+
+    }
+
 
     "Return Reallocation TO {0}, AP ending {1} for rfr payments when reallocation tax reference does not equal utr" in new BaseSetup {
 

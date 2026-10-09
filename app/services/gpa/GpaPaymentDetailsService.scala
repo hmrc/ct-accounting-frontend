@@ -30,35 +30,40 @@ class GpaPaymentDetailsService(
     messages: Messages
   ): String =
     gpaPayment.tablename match {
-      case Some("RFRReallocation") | Some("RTOReallocation") if !gpaPayment.participatorPresent.getOrElse(false) =>
-        messages("gpaPayment.Description.miscellaneous")
-      case Some("RFRReallocation") | Some("RTOReallocation") if gpaPayment.targetApNo.getOrElse(0) == 0          =>
-        messages("gpaPayment.Description.miscellaneous")
-      case Some("RFRReallocation")                                                                               => rfrReallocationDescription(gpaPayment, utr, accountingPeriodEndDate)
-      case Some("RTOReallocation")                                                                               => rtoReallocationDescription(gpaPayment, utr, accountingPeriodEndDate)
-      case Some("Payslip")                                                                                       => PaymentsDescriptionHelper.getPaymentsDescription(gpaPayment.paymentType.getOrElse(""))
-      case Some("Repayment") | Some("CancelledRepayment")                                                        =>
+      case Some("RFRReallocation")                        => reallocationDescription(gpaPayment, utr, accountingPeriodEndDate, isRto = false)
+      case Some("RTOReallocation")                        => reallocationDescription(gpaPayment, utr, accountingPeriodEndDate, isRto = true)
+      case Some("Payslip")                                => PaymentsDescriptionHelper.getPaymentsDescription(gpaPayment.paymentType.getOrElse(""))
+      case Some("Repayment") | Some("CancelledRepayment") =>
         "" // No mapping in ASIS for repayment/cancelled in gpa journey
-      case _                                                                                                     => ""
+      case _                                              => ""
     }
 
-  private def rfrReallocationDescription(gpaPayment: GpaPayments, utr: Long, accountingPeriodEndDate: LocalDate)(
-    implicit messages: Messages
-  ): String =
-    (gpaPayment.targetTaxpayerReference, gpaPayment.contractEndDate) match {
-      case (Some(reallocationTaxRef), _) if reallocationTaxRef != utr.toString =>
-        messages("gpaPayment.Description.rfr.taxRef", reallocationTaxRef, accountingPeriodEndDate)
-      case (_, None)                                                           => messages("gpaPayment.Description.rfr.date", accountingPeriodEndDate)
-      case (_, Some(endDate))                                                  => messages("gpaPayment.Description.rfr.date", endDate)
-    }
+  private def reallocationDescription(
+    gpaPayment: GpaPayments,
+    utr: Long,
+    accountingPeriodEndDate: LocalDate,
+    isRto: Boolean
+  )(implicit
+    messages: Messages
+  ): String = {
+    val keyPrefix          = if (isRto) "gpaPayment.Description.rto" else "gpaPayment.Description.rfr"
+    val miscellaneous      = messages("gpaPayment.Description.miscellaneous")
+    val isRtoWithZeroAp    = isRto && gpaPayment.targetApNo.getOrElse(0) == 0
+    val participantPresent = gpaPayment.participatorPresent.getOrElse(false)
 
-  private def rtoReallocationDescription(gpaPayment: GpaPayments, utr: Long, accountingPeriodEndDate: LocalDate)(
-    implicit messages: Messages
-  ): String =
-    (gpaPayment.targetTaxpayerReference, gpaPayment.contractEndDate) match {
-      case (Some(reallocationTaxRef), _) if reallocationTaxRef != utr.toString =>
-        messages("gpaPayment.Description.rto.taxRef", reallocationTaxRef, accountingPeriodEndDate)
-      case (_, None)                                                           => messages("gpaPayment.Description.rto.date", accountingPeriodEndDate)
-      case (_, Some(endDate))                                                  => messages("gpaPayment.Description.rto.date", endDate)
+    gpaPayment.targetTaxpayerReference match {
+      case Some(reallocationTaxRef) if reallocationTaxRef == utr.toString =>
+        if (isRtoWithZeroAp)
+          miscellaneous
+        else
+          messages(s"$keyPrefix.date", gpaPayment.contractEndDate.getOrElse(accountingPeriodEndDate))
+
+      case Some(reallocationTaxRef) =>
+        if (!participantPresent || isRtoWithZeroAp)
+          miscellaneous
+        else messages(s"$keyPrefix.taxRef", reallocationTaxRef, accountingPeriodEndDate)
+      case None                     => miscellaneous
     }
+  }
+
 }
