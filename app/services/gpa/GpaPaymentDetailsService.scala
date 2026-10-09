@@ -20,6 +20,7 @@ import models.gpa.GpaPayments
 import play.api.Logging
 import play.api.i18n.Messages
 import utils.PaymentsDescriptionHelper
+import utils.Constants.{ZERO, emptyString}
 
 import java.time.LocalDate
 
@@ -33,10 +34,11 @@ class GpaPaymentDetailsService(
       case Some("RFRReallocation")                        =>
         reallocationDescription(gpaPayment, gpaUtr, accountingPeriodEndDate, isRto = false)
       case Some("RTOReallocation")                        => reallocationDescription(gpaPayment, gpaUtr, accountingPeriodEndDate, isRto = true)
-      case Some("Payslip")                                => PaymentsDescriptionHelper.getPaymentsDescription(gpaPayment.paymentType.getOrElse(""))
+      case Some("Payslip")                                =>
+        PaymentsDescriptionHelper.getPaymentsDescription(gpaPayment.paymentType.getOrElse(emptyString))
       case Some("Repayment") | Some("CancelledRepayment") =>
-        "" // No mapping in ASIS for repayment/cancelled in gpa journey
-      case _                                              => ""
+        emptyString // No mapping in ASIS for repayment/cancelled in gpa journey
+      case _                                              => emptyString
     }
 
   private def reallocationDescription(
@@ -49,7 +51,7 @@ class GpaPaymentDetailsService(
   ): String = {
     val keyPrefix          = if (isRto) "gpaPayment.Description.rto" else "gpaPayment.Description.rfr"
     val miscellaneous      = messages("gpaPayment.Description.miscellaneous")
-    val isRtoWithZeroAp    = isRto && gpaPayment.targetApNo.getOrElse(0) == 0
+    val isRtoWithZeroAp    = isRto && gpaPayment.targetApNo.getOrElse(ZERO) == ZERO
     val participantPresent = gpaPayment.participatorPresent.getOrElse(false)
 
     gpaPayment.targetTaxpayerReference match {

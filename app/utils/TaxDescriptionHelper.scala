@@ -17,6 +17,7 @@
 package utils
 
 import play.api.i18n.Messages
+import utils.Constants.emptyString
 
 object TaxDescriptionHelper {
 
@@ -25,7 +26,7 @@ object TaxDescriptionHelper {
   ): String = {
     val messageType = correctionClaim match {
       case Some("2") => messages("taxDescription.assessment.claim")
-      case _         => ""
+      case _         => emptyString
     }
 
     val result = messages(s"taxDescription.assessment.${assessmentType.toLowerCase()}", messageType)

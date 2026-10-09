@@ -17,6 +17,7 @@
 package utils
 
 import play.api.i18n.Messages
+import utils.Constants.emptyString
 
 object PaymentsDescriptionHelper {
 
@@ -29,6 +30,6 @@ object PaymentsDescriptionHelper {
       case "BAC" | "BGP" | "CHP"         =>
         messages("payments.description.EP") // Electronic payment
       case _                             =>
-        ""
+        emptyString
     }
 }
