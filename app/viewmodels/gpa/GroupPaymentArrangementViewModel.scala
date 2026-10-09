@@ -16,37 +16,54 @@
 
 package viewmodels.gpa
 
+import controllers.gpa.routes
 import play.api.mvc.Call
 import views.ViewUtils.formatCurrency
 import models.gpa.GroupSummaryDetailsResponse
+import play.api.i18n.Messages
 
 import java.time.LocalDate
 
 case class GroupPaymentArrangementViewModel(
   taxPayerReference: Long,
-  periodOfAccountEnding: LocalDate,
-  groupPayments: BigDecimal,
-  groupTaxes: BigDecimal,
-  status: String
-) {
-  val groupPaymentsAsString: String = formatCurrency(groupPayments)
-  val groupTaxesAsString: String    = formatCurrency(groupTaxes)
-}
+  rows: Seq[GroupPaymentArrangementViewRow]
+)
 
-case class GroupPaymentArrangementRow(description: String, amount: BigDecimal, isLink: Boolean, href: Call) {
+case class GroupPaymentArrangementViewRow(
+  periodOfAccountEnding: LocalDate,
+  groupPayments: GroupPaymentArrangementPaymentRow,
+  groupTaxes: GroupPaymentArrangementPaymentRow,
+  status: String
+)
+
+case class GroupPaymentArrangementPaymentRow(description: String, amount: BigDecimal, isLink: Boolean, href: Call) {
   val amountAsString: String = formatCurrency(amount)
 }
 
 object GroupPaymentArrangementViewModel {
   def toViewModel(
     groupSummaryDetailsResponse: GroupSummaryDetailsResponse
-  ): GroupPaymentArrangementViewModel =
+  )(implicit messages: Messages): GroupPaymentArrangementViewModel =
     GroupPaymentArrangementViewModel(
       taxPayerReference = groupSummaryDetailsResponse.gpaReferenceNumberLst.head.taxpayerReference,
-      periodOfAccountEnding = groupSummaryDetailsResponse.gpaGrpSummaryDetails.head.contractEndDate,
-      groupPayments = groupSummaryDetailsResponse.gpaGrpSummaryDetails.head.groupPayment,
-      groupTaxes = groupSummaryDetailsResponse.gpaGrpSummaryDetails.head.groupTaxCharge,
-      status = groupSummaryDetailsResponse.gpaGrpSummaryDetails.head.contractStatus
+      rows = groupSummaryDetailsResponse.gpaGrpSummaryDetails.map { groupSummaryDetailsResponse =>
+        GroupPaymentArrangementViewRow(
+          periodOfAccountEnding = groupSummaryDetailsResponse.contractEndDate,
+          groupPayments = GroupPaymentArrangementPaymentRow(
+            description = formatCurrency(groupSummaryDetailsResponse.groupPayment),
+            amount = groupSummaryDetailsResponse.groupPayment,
+            isLink = true,
+            href = routes.GroupPaymentArrangementController.onPageLoad()
+          ),
+          groupTaxes = GroupPaymentArrangementPaymentRow(
+            description = formatCurrency(groupSummaryDetailsResponse.groupTaxCharge),
+            amount = groupSummaryDetailsResponse.groupTaxCharge,
+            isLink = true,
+            href = routes.GroupPaymentArrangementController.onPageLoad()
+          ),
+          status = groupSummaryDetailsResponse.contractStatus
+        )
+      }
     )
 
 }
