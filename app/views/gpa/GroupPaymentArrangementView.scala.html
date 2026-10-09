@@ -1,0 +1,70 @@
+@*
+ * Copyright 2026 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import views.ViewUtils._
+@import java.time.LocalDate
+@import viewmodels._
+@import viewmodels.gpa._
+@import views.html.components.*
+@import viewmodels.PageBreadcrumbs
+
+@this(
+        layout: templates.Layout,
+        heading: h1,
+        p: Paragraph,
+        govukTable: GovukTable,
+        govukInsetText: GovukInsetText,
+        link:Link
+)
+
+@(viewModel: GroupPaymentArrangementViewModel)(implicit request: Request[_], messages: Messages)
+
+@layout(pageTitle = titleNoForm(messages("groupPaymentArrangement.title")), breadcrumbs = Some(PageBreadcrumbs.groupPaymentArrangementPage))  {
+
+    @heading(messages("groupPaymentArrangement.heading"))
+
+    @p(messages("groupPaymentArrangement.summaryText.firstline"))
+
+    @p(messages("groupPaymentArrangement.summaryText.secondline"))
+
+    <ul class="govuk-list govuk-list--bullet">
+        <li>@messages("groupPaymentArrangement.summaryText.bulletPoint1")</li>
+        <li>@messages("groupPaymentArrangement.summaryText.bulletPoint2")</li>
+    </ul>
+
+    @p(messages("groupPaymentArrangement.summaryText.reference", viewModel.taxPayerReference))
+
+    @govukTable(
+            Table(
+                head = Some(Seq(
+                    HeadCell(content = Text(messages("groupPaymentArrangement.tableHeader.periodOfAccountEnding"))),
+                    HeadCell(content = Text(messages("groupPaymentArrangement.tableHeader.groupPayments"))),
+                    HeadCell(content = Text(messages("groupPaymentArrangement.tableHeader.groupTaxes"))),
+                    HeadCell(content = Text(messages("groupPaymentArrangement.tableHeader.status")))
+                    )),
+                rows = viewModel.rows.map { row =>
+                        Seq(
+                            TableRow(content = Text(formatDate(row.periodOfAccountEnding, messages.lang)), classes = "govuk-table__cell"),
+                            TableRow(content = HtmlContent(link(row.groupPayments.description, row.groupPayments.href.url, row.groupPayments.isLink)), classes = "govuk-table__cell govuk-table__cell--numeric"),
+                            TableRow(content = HtmlContent(link(row.groupTaxes.description, row.groupTaxes.href.url, row.groupTaxes.isLink)), classes = "govuk-table__cell govuk-table__cell--numeric"),
+                            TableRow(content = Text(row.status), classes = "govuk-table__cell")
+                        )
+                    }
+                )
+            )
+
+    @govukInsetText(InsetText(content=messages("groupPaymentArrangement.insetText")))
+}

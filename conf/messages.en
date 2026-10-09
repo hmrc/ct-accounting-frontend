@@ -201,3 +201,16 @@ repaymentReallocations.table.total = Total
 repaymentReallocations.description.rto = Reallocation to accounting period {0}
 repaymentReallocations.description.rfr = Reallocation from accounting period ending {0}
 repaymentReallocations.description.crt = Repayments from accounting period {0}
+
+groupPaymentArrangement.title = Group Payment Arrangement
+groupPaymentArrangement.heading = Group Payment Arrangement
+groupPaymentArrangement.summaryText.firstline = It is an optional agreement with HMRC. Your company can participate only if it is a member of a group that meets HMRC’s conditions.
+groupPaymentArrangement.summaryText.secondline = Under a Group Payment Arrangement, your company can:
+groupPaymentArrangement.summaryText.bulletPoint1 = nominate one member of the group to make the payments on behalf of all the companies
+groupPaymentArrangement.summaryText.bulletPoint2 = reduce the administration when making many individual payments and might also reduce the group’s overall interest charges
+groupPaymentArrangement.summaryText.reference = Group Payment Arrangement reference {0}.
+groupPaymentArrangement.tableHeader.periodOfAccountEnding = Period of account ending
+groupPaymentArrangement.tableHeader.groupPayments = Group payments
+groupPaymentArrangement.tableHeader.groupTaxes = Group taxes
+groupPaymentArrangement.tableHeader.status = Status
+groupPaymentArrangement.insetText = Any changes to the Group Payment Arrangement that have not yet been approved and processed by HMRC will not be shown.
