@@ -55,14 +55,14 @@
                     HeadCell(content = Text(messages("groupPaymentArrangement.tableHeader.groupTaxes"))),
                     HeadCell(content = Text(messages("groupPaymentArrangement.tableHeader.status")))
                     )),
-                rows = Seq(
+                rows = viewModel.rows.map { row =>
                         Seq(
-                            TableRow(content = Text(formatDate(viewModel.periodOfAccountEnding, messages.lang)), classes = "govuk-table__cell"),
-                            TableRow(content = HtmlContent(link(viewModel.groupPaymentsAsString, "http://localhost:11200/", true)), classes = "govuk-table__cell govuk-table__cell--numeric"),
-                            TableRow(content = HtmlContent(link(viewModel.groupTaxesAsString, "http://localhost:11200/", true)), classes = "govuk-table__cell govuk-table__cell--numeric"),
-                            TableRow(content = Text(viewModel.status), classes = "govuk-table__cell")
-                            )
+                            TableRow(content = Text(formatDate(row.periodOfAccountEnding, messages.lang)), classes = "govuk-table__cell"),
+                            TableRow(content = HtmlContent(link(row.groupPayments.description, row.groupPayments.href.url, row.groupPayments.isLink)), classes = "govuk-table__cell govuk-table__cell--numeric"),
+                            TableRow(content = HtmlContent(link(row.groupTaxes.description, row.groupTaxes.href.url, row.groupTaxes.isLink)), classes = "govuk-table__cell govuk-table__cell--numeric"),
+                            TableRow(content = Text(row.status), classes = "govuk-table__cell")
                         )
+                    }
                 )
             )
 

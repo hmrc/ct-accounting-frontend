@@ -16,7 +16,10 @@
 
 package helpers.gpa
 
-import viewmodels.gpa.GroupPaymentArrangementViewModel
+import controllers.gpa.routes
+import viewmodels.gpa.{
+  GroupPaymentArrangementPaymentRow, GroupPaymentArrangementViewModel, GroupPaymentArrangementViewRow
+}
 
 import java.time.LocalDate
 
@@ -32,10 +35,56 @@ trait GroupPaymentArrangementHelper {
   val groupPaymentArrangementViewModel: GroupPaymentArrangementViewModel =
     GroupPaymentArrangementViewModel(
       taxPayerReference = taxPayerReference,
-      periodOfAccountEnding = accountingPeriodEndDate,
-      groupPayments = groupPayments,
-      groupTaxes = groupTaxes,
-      status = gpaStatus
+      rows = Seq(
+        GroupPaymentArrangementViewRow(
+          periodOfAccountEnding = LocalDate.of(2026, 1, 1),
+          groupPayments = GroupPaymentArrangementPaymentRow(
+            description = "£11.01",
+            amount = 11.01,
+            isLink = true,
+            href = routes.GroupPaymentArrangementController.onPageLoad()
+          ),
+          groupTaxes = GroupPaymentArrangementPaymentRow(
+            description = "£13.01",
+            amount = 13.01,
+            isLink = true,
+            href = routes.GroupPaymentArrangementController.onPageLoad()
+          ),
+          status = "ACTIVE"
+        ),
+        GroupPaymentArrangementViewRow(
+          periodOfAccountEnding = LocalDate.of(2026, 5, 4),
+          groupPayments = GroupPaymentArrangementPaymentRow(
+            description = "-£430.32",
+            amount = -430.32,
+            isLink = true,
+            href = routes.GroupPaymentArrangementController.onPageLoad()
+          ),
+          groupTaxes = GroupPaymentArrangementPaymentRow(
+            description = "-£700.53",
+            amount = -700.53,
+            isLink = true,
+            href = routes.GroupPaymentArrangementController.onPageLoad()
+          ),
+          status = "CLOSED"
+        ),
+        GroupPaymentArrangementViewRow(
+          periodOfAccountEnding = LocalDate.of(2024, 8, 12),
+          groupPayments = GroupPaymentArrangementPaymentRow(
+            description = "-£952.12",
+            amount = -952.12,
+            isLink = true,
+            href = routes.GroupPaymentArrangementController.onPageLoad()
+          ),
+          groupTaxes = GroupPaymentArrangementPaymentRow(
+            description = "-£691.76",
+            amount = -691.76,
+            isLink = true,
+            href = routes.GroupPaymentArrangementController.onPageLoad()
+          ),
+          status = "CLOSED"
+        )
+      )
     )
 
 }
