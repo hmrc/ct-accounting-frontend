@@ -62,7 +62,7 @@ class GroupPaymentArrangementControllerSpec
         val viewModel = GroupPaymentArrangementViewModel.toViewModel(groupPaymentDetailsResponse)
         val view      = application.injector.instanceOf[GroupPaymentArrangementView]
 
-        status(result) mustEqual SEE_OTHER
+        status(result) mustEqual OK
         contentAsString(result) mustEqual
           view(viewModel)(
             request,
