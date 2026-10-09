@@ -26,12 +26,12 @@ import java.time.LocalDate
 class GpaPaymentDetailsService(
 ) extends Logging {
 
-  def gpaPaymentDescription(gpaPayment: GpaPayments, utr: Long, accountingPeriodEndDate: LocalDate)(implicit
+  def gpaPaymentDescription(gpaPayment: GpaPayments, gpaUtr: Long, accountingPeriodEndDate: LocalDate)(implicit
     messages: Messages
   ): String =
     gpaPayment.tablename match {
-      case Some("RFRReallocation")                        => reallocationDescription(gpaPayment, utr, accountingPeriodEndDate, isRto = false)
-      case Some("RTOReallocation")                        => reallocationDescription(gpaPayment, utr, accountingPeriodEndDate, isRto = true)
+      case Some("RFRReallocation")                        => reallocationDescription(gpaPayment, gpaUtr, accountingPeriodEndDate, isRto = false)
+      case Some("RTOReallocation")                        => reallocationDescription(gpaPayment, gpaUtr, accountingPeriodEndDate, isRto = true)
       case Some("Payslip")                                => PaymentsDescriptionHelper.getPaymentsDescription(gpaPayment.paymentType.getOrElse(""))
       case Some("Repayment") | Some("CancelledRepayment") =>
         "" // No mapping in ASIS for repayment/cancelled in gpa journey
@@ -40,7 +40,7 @@ class GpaPaymentDetailsService(
 
   private def reallocationDescription(
     gpaPayment: GpaPayments,
-    utr: Long,
+    gpaUtr: Long,
     accountingPeriodEndDate: LocalDate,
     isRto: Boolean
   )(implicit
@@ -52,7 +52,7 @@ class GpaPaymentDetailsService(
     val participantPresent = gpaPayment.participatorPresent.getOrElse(false)
 
     gpaPayment.targetTaxpayerReference match {
-      case Some(reallocationTaxRef) if reallocationTaxRef == utr.toString =>
+      case Some(reallocationTaxRef) if reallocationTaxRef == gpaUtr.toString =>
         if (isRtoWithZeroAp)
           miscellaneous
         else
