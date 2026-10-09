@@ -41,8 +41,6 @@ class GroupPaymentsConnectorISpec
 
   private val connector: GroupPaymentsConnector = app.injector.instanceOf[GroupPaymentsConnector]
 
-  // TODO: add auth stub logic and relevant cases
-
   "getGroupSummary" should {
 
     def url(gpaUTR: Long, nomCompanyUTR: Long) =
