@@ -24,9 +24,10 @@ import play.api.i18n.{Lang, Messages, MessagesApi, MessagesImpl}
 import play.api.test.FakeRequest
 import viewmodels.gpa.GroupPaymentArrangementViewModel
 import views.html.gpa.GroupPaymentArrangementView
+import play.api.Application
 
 class GroupPaymentArrangementViewSpec extends SpecBase with GroupPaymentArrangementHelper {
-  val application = applicationBuilder().build()
+  val application: Application = applicationBuilder().build()
 
   val view: GroupPaymentArrangementView = application.injector.instanceOf[GroupPaymentArrangementView]
 
