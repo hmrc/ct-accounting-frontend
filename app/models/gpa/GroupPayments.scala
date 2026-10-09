@@ -20,36 +20,12 @@ import play.api.libs.json.{Json, OFormat}
 
 import java.time.LocalDate
 
-// RDS
-case class GroupSummaryDetailsItem(
-  contractEndDate: LocalDate,
-  groupTaxCharge: Option[BigDecimal],
-  groupPayment: Option[BigDecimal],
-  groupPaymentRecordCount: Int,
-  contractStatus: String,
-  contractVersion: Int
-)
-
-object GroupSummaryDetailsItem {
-  implicit val format: OFormat[GroupSummaryDetailsItem] = Json.format[GroupSummaryDetailsItem]
-}
-
 case class GroupReferenceNumberLstItem(
   taxpayerReference: Long
 )
 
 object GroupReferenceNumberLstItem {
   implicit val format: OFormat[GroupReferenceNumberLstItem] = Json.format[GroupReferenceNumberLstItem]
-}
-
-case class GroupSummaryDetails(
-  gpaGrpSummaryDetails: List[GroupSummaryDetailsItem],
-  gpaReferenceNumberLst: List[GroupReferenceNumberLstItem],
-  nominatedCompanyName: String
-)
-
-object GroupSummaryDetails {
-  implicit val format: OFormat[GroupSummaryDetails] = Json.format[GroupSummaryDetails]
 }
 
 // BE

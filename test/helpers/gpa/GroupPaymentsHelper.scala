@@ -18,20 +18,12 @@ package helpers.gpa
 
 import models.gpa.{
   GpaPaymentsDetails, GpaPaymentsDetailsResponse, GpaPaymentsItem, GpaPaymentsRecord, GroupReferenceNumberLstItem,
-  GroupSummaryDetails, GroupSummaryDetailsItem, GroupSummaryDetailsRecord, GroupSummaryDetailsResponse
+  GroupSummaryDetailsRecord, GroupSummaryDetailsResponse
 }
 
 import java.time.LocalDate
 
 trait GroupPaymentsHelper {
-  val groupSummaryDetItemOne = GroupSummaryDetailsItem(
-    contractEndDate = LocalDate.of(2026, 1, 7),
-    groupTaxCharge = Some(BigDecimal(11.01)),
-    groupPayment = Some(BigDecimal(13.02)),
-    groupPaymentRecordCount = 2,
-    contractStatus = "ACTIVE",
-    contractVersion = 2
-  )
 
   val groupSummaryDetRecOne = GroupSummaryDetailsRecord(
     contractEndDate = LocalDate.of(2026, 1, 7),
@@ -42,16 +34,6 @@ trait GroupPaymentsHelper {
     contractVersion = 2
   )
 
-  val groupPaymentDetails = GroupSummaryDetails(
-    gpaGrpSummaryDetails = List(
-      groupSummaryDetItemOne
-    ),
-    gpaReferenceNumberLst = List(
-      GroupReferenceNumberLstItem(112)
-    ),
-    nominatedCompanyName = "Some company name"
-  )
-
   val groupPaymentDetailsResponse = GroupSummaryDetailsResponse(
     gpaGrpSummaryDetails = List(
       groupSummaryDetRecOne
@@ -60,12 +42,6 @@ trait GroupPaymentsHelper {
       GroupReferenceNumberLstItem(112)
     ),
     nominatedCompanyName = "Some company name"
-  )
-
-  val groupPaymentDetailsEmpty = GroupSummaryDetails(
-    gpaGrpSummaryDetails = List.empty,
-    gpaReferenceNumberLst = List.empty,
-    nominatedCompanyName = "CompanyName"
   )
 
   // PaymentDetails

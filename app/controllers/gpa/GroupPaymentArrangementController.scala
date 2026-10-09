@@ -44,7 +44,6 @@ class GroupPaymentArrangementController @Inject() (
     val taxRef        = 1L
     val nomCompanyUtr = 1L
 
-    // TODO: Get taxRef + accPeriod from sessionDataRepositry.
     service
       .getGroupSummary(taxRef, nomCompanyUtr)
       .map { groupPaymentsResponse =>

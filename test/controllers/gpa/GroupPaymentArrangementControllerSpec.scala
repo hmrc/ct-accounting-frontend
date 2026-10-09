@@ -70,5 +70,19 @@ class GroupPaymentArrangementControllerSpec
           ).toString
       }
     }
+
+    "must redirect when exception occurs from BE occurs" in new Fixture {
+      when(mockService.getGroupSummary(eqTo(1L), eqTo(1L))(any[HeaderCarrier]))
+        .thenReturn(Future.failed(new RuntimeException("Error")))
+
+      running(application) {
+        val request = FakeRequest(GET, routes.GroupPaymentArrangementController.onPageLoad().url)
+        val result = route(application, request).value
+
+        status(result) mustEqual SEE_OTHER
+        redirectLocation(result).value mustEqual controllers.routes.JourneyRecoveryController.onPageLoad().url
+      }
+    }
+    
   }
 }
