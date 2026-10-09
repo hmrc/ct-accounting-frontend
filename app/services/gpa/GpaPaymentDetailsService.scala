@@ -30,7 +30,8 @@ class GpaPaymentDetailsService(
     messages: Messages
   ): String =
     gpaPayment.tablename match {
-      case Some("RFRReallocation")                        => reallocationDescription(gpaPayment, gpaUtr, accountingPeriodEndDate, isRto = false)
+      case Some("RFRReallocation")                        =>
+        reallocationDescription(gpaPayment, gpaUtr, accountingPeriodEndDate, isRto = false)
       case Some("RTOReallocation")                        => reallocationDescription(gpaPayment, gpaUtr, accountingPeriodEndDate, isRto = true)
       case Some("Payslip")                                => PaymentsDescriptionHelper.getPaymentsDescription(gpaPayment.paymentType.getOrElse(""))
       case Some("Repayment") | Some("CancelledRepayment") =>
