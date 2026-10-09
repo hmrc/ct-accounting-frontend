@@ -217,3 +217,7 @@ accountingPeriods.p2 = There is no data for any accounting periods yet.
 accountingPeriods.accountingPeriodEnding = Accounting period ending
 accountingPeriods.accountingPeriodStatus = Status
 accountingPeriods.accountingPeriodAmount = Amount
+accountingPeriods.status.description.LIVE = Live
+accountingPeriods.status.description.SUPERSEDED = Superseded
+accountingPeriods.status.description.DORMANT = Dormant
+accountingPeriods.status.description.EXEMPT = Exempt

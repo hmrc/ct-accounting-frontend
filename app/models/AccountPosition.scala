@@ -20,24 +20,24 @@ import play.api.libs.json.{Json, OFormat}
 
 import java.time.LocalDate
 
-case class ApAmountItem(
+case class ApAmountRecord(
                          accountingPeriod: Long,
                          apEndDate: Option[LocalDate],
-                         amountDueForAp: Option[BigDecimal],
+                         amountDueForAp: BigDecimal,
                          apStatus: Option[String]
                        )
 
-object ApAmountItem {
-  implicit val format: OFormat[ApAmountItem] = Json.format[ApAmountItem]
+object ApAmountRecord {
+  implicit val format: OFormat[ApAmountRecord] = Json.format[ApAmountRecord]
 }
 
 case class AccountPositionResponse(
-                                    amountDue: Option[BigDecimal],
+                                    amountDue: BigDecimal,
                                     asOnDate: Option[LocalDate],
-                                    gpaLinkFlag: Option[Boolean],
+                                    gpaLinkFlag: Boolean,
                                     taxpayerList: List[String],
-                                    apAmounts: List[ApAmountItem],
-                                    doesCompanyExist: Option[Boolean]
+                                    apAmounts: List[ApAmountRecord],
+                                    doesCompanyExist: Boolean
                                   )
 
 object AccountPositionResponse {

@@ -37,16 +37,16 @@ class AccountingPeriodsController @Inject()(
 
   def onPageLoad: Action[AnyContent] = identify.async { implicit request =>
 
-    val taxRef = 3L
+    //TODO update to retrieve from session
+    val taxRef = 5L
 
     service
       .getAccountPosition(taxRef)
       .map { response =>
-        val accountingPeriodsEmpty: Boolean = response.apAmounts.isEmpty
         val viewModel = AccountingPeriodsViewModel.toViewModel(
           amountDue = response.amountDue, accountingPeriods = response, taxReference = taxRef
         )
-          Ok(view(viewModel, accountingPeriodsEmpty))
+          Ok(view(viewModel))
       }
   }
 }

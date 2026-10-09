@@ -31,45 +31,52 @@
  */
 
 package viewmodels.accountingPeriods
-import play.api.i18n.Lang
 import play.api.i18n.Messages
 import views.ViewUtils.*
 import models.AccountPositionResponse
 import play.api.mvc.Call
+import utils.AccountingPeriodsStatusHelper
 
 import java.time.LocalDate
 
 case class AccountingPeriodsViewModelRow(
-  date: LocalDate,
-  apAmount: BigDecimal,
-  status: Option[String],
+  date: Option[LocalDate],
+  amountDueForAp: BigDecimal,
+  status: String,
   href: Option [Call],
   isLink: Option[Boolean]
-) {
-  val dateAsString: String = formatDate(date, Lang.defaultLang)
-  val apAmountAsString: String = formatCurrency(apAmount)
+)(implicit messages: Messages) {
+  val dateAsString: String = date
+    .map(formatDate(_, messages.lang))
+    .getOrElse("")
+  val apAmountAsString: String = formatCurrency(amountDueForAp)
 }
 
 case class AccountingPeriodsViewModel(
   taxReference: Long,
-  amountDue: Option[BigDecimal],
+  amountDue: BigDecimal,
+  displayTable: Boolean,
   rows: Seq[AccountingPeriodsViewModelRow]
 )
 
 object AccountingPeriodsViewModel {
   def toViewModel(
-    amountDue: Option[BigDecimal],
+    amountDue: BigDecimal,
     accountingPeriods: AccountPositionResponse,
     taxReference: Long
   )(implicit messages: Messages): AccountingPeriodsViewModel = {
+
+    val displayTable: Boolean = accountingPeriods.apAmounts.nonEmpty && amountDue.signum != 0
+
     AccountingPeriodsViewModel(
       amountDue = amountDue,
       taxReference = taxReference,
+      displayTable = displayTable,
       rows = accountingPeriods.apAmounts.map { value =>
         AccountingPeriodsViewModelRow(
-          date = value.apEndDate.get, //TODO: DTR-6447 - Sort .get here and below
-          apAmount = value.amountDueForAp.get,
-          status = value.apStatus,
+          date = value.apEndDate,
+          amountDueForAp = value.amountDueForAp,
+          status = AccountingPeriodsStatusHelper.getAccountPeriodsStatusDescription(value.apStatus),
           href = Some(controllers.routes.AccountingPeriodOverviewController.onPageLoad()),
           isLink = Some(true)
         )

@@ -18,7 +18,7 @@
 @import viewmodels._
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
 @import viewmodels.accountingPeriods.AccountingPeriodsViewModel
-@import models.ApAmountItem
+@import models.ApAmountRecord
 @import views.ViewUtils._
 
 @this(
@@ -30,17 +30,15 @@
         govukTable: GovukTable
 )
 
-@(viewModel: AccountingPeriodsViewModel, accountingPeriodIsEmpty: Boolean)(implicit request: Request[_], messages: Messages)
+@(viewModel: AccountingPeriodsViewModel)(implicit request: Request[_], messages: Messages)
 
 @layout(pageTitle = titleNoForm(messages("accountingPeriods.title")),
     breadcrumbs = Some(PageBreadcrumbs.accountingPeriodsPage)) {
 
     @h1(messages("accountingPeriods.heading"))
 
-      @if(accountingPeriodIsEmpty) {
-          @paragraph(messages("accountingPeriods.p2"))
-      } else {
-          @paragraph(messages("accountingPeriods.p1", formatCurrency(viewModel.amountDue.get))) 
+      @if(viewModel.displayTable) {
+          @paragraph(messages("accountingPeriods.p1", formatCurrency(viewModel.amountDue)))
 
           @govukTable(
               Table(
@@ -59,7 +57,7 @@
                               )
                           ),
                           TableRow(
-                              content = Text(row.status.getOrElse(""))
+                              content = Text(row.status)
                           ),
                           TableRow(
                               content = Text(row.apAmountAsString)
@@ -68,13 +66,8 @@
 
                   }
               ))
+
+      } else {
+          @paragraph(messages("accountingPeriods.p2"))
       }
-
-
-
-
-
-
-
-
 }
