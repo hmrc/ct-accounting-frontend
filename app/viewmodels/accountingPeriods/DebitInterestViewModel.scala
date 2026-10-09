@@ -18,6 +18,7 @@ package viewmodels.accountingPeriods
 
 import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 import uk.gov.hmrc.govukfrontend.views.viewmodels.table.TableRow
+import utils.Constants.emptyString
 import views.ViewUtils.formatCurrency
 
 import java.time.LocalDate
@@ -49,10 +50,10 @@ final case class DebitInterestViewModel(
   def totalRow(total: String, label: String): Seq[TableRow] =
     Seq(
       TableRow(content = Text(label), classes = "govuk-!-font-weight-bold"),
-      TableRow(content = Text(""), classes = "govuk-!-font-weight-bold"),
-      TableRow(content = Text(""), classes = "govuk-!-font-weight-bold"),
-      TableRow(content = Text(""), classes = "govuk-!-font-weight-bold"),
-      TableRow(content = Text(""), classes = "govuk-!-font-weight-bold"),
+      TableRow(content = Text(emptyString), classes = "govuk-!-font-weight-bold"),
+      TableRow(content = Text(emptyString), classes = "govuk-!-font-weight-bold"),
+      TableRow(content = Text(emptyString), classes = "govuk-!-font-weight-bold"),
+      TableRow(content = Text(emptyString), classes = "govuk-!-font-weight-bold"),
       TableRow(content = Text(total), classes = "govuk-table__header govuk-table__header--numeric")
     )
 }

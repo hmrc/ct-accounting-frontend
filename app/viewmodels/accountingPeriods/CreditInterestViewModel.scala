@@ -19,6 +19,7 @@ package viewmodels.accountingPeriods
 import models.InterestAccrualListWithInterestAccruedDays
 import uk.gov.hmrc.govukfrontend.views.Aliases.{TableRow, Text}
 import views.ViewUtils.formatCurrency
+import utils.Constants.emptyString
 
 import java.time.LocalDate
 
@@ -39,10 +40,10 @@ case class CreditInterestViewModel(accountingPeriodEndDate: LocalDate, rows: Seq
   def totalRow(label: String, total: String): Seq[TableRow] =
     Seq(
       TableRow(content = Text(label), classes = "govuk-!-font-weight-bold"),
-      TableRow(content = Text(""), classes = "govuk-!-font-weight-bold"),
-      TableRow(content = Text(""), classes = "govuk-!-font-weight-bold"),
-      TableRow(content = Text(""), classes = "govuk-!-font-weight-bold"),
-      TableRow(content = Text(""), classes = "govuk-!-font-weight-bold"),
+      TableRow(content = Text(emptyString), classes = "govuk-!-font-weight-bold"),
+      TableRow(content = Text(emptyString), classes = "govuk-!-font-weight-bold"),
+      TableRow(content = Text(emptyString), classes = "govuk-!-font-weight-bold"),
+      TableRow(content = Text(emptyString), classes = "govuk-!-font-weight-bold"),
       TableRow(content = Text(total), classes = "govuk-!-font-weight-bold govuk-table__cell govuk-table__cell--numeric")
     )
 }

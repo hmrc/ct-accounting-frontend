@@ -201,3 +201,9 @@ repaymentReallocations.table.total = Total
 repaymentReallocations.description.rto = Reallocation to accounting period {0}
 repaymentReallocations.description.rfr = Reallocation from accounting period ending {0}
 repaymentReallocations.description.crt = Repayments from accounting period {0}
+
+gpaPayment.Description.miscellaneous = Miscellaneous Transfer
+gpaPayment.Description.rfr.taxRef = Reallocation TO {0}, AP ending {1}
+gpaPayment.Description.rfr.date = Reallocation TO AP ending {0}
+gpaPayment.Description.rto.taxRef = Reallocation FROM {0}, AP ending {1}
+gpaPayment.Description.rto.date = Reallocation FROM AP ending {0}

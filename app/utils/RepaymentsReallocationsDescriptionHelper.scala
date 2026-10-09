@@ -18,7 +18,9 @@ package utils
 
 import play.api.i18n.Messages
 import models.RepayReallocationSummaryDetails
+import utils.Constants.emptyString
 import views.ViewUtils.formatDate
+
 import java.time.LocalDate
 
 object RepaymentsReallocationsDescriptionHelper {
@@ -35,7 +37,7 @@ object RepaymentsReallocationsDescriptionHelper {
       case Some("CRT") =>
         "repaymentReallocations.description.crt" // Repayments
       case _           =>
-        ""
+        emptyString
     }
 
     messages(messageName, formattedDate, messages.lang)
