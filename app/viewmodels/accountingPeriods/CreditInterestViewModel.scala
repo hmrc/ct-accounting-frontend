@@ -17,9 +17,12 @@
 package viewmodels.accountingPeriods
 
 import models.InterestAccrualListWithInterestAccruedDays
-import uk.gov.hmrc.govukfrontend.views.Aliases.{TableRow, Text}
+import play.api.i18n.Messages
+import uk.gov.hmrc.govukfrontend.views.Aliases.{Pagination, TableRow, Text}
 import views.ViewUtils.formatCurrency
 import utils.Constants.emptyString
+import utils.PaginationHelper
+import viewmodels.Paginated
 
 import java.time.LocalDate
 
@@ -32,7 +35,7 @@ case class CreditInterestRow(
   interestAccrued: BigDecimal
 )
 
-case class CreditInterestViewModel(accountingPeriodEndDate: LocalDate, rows: Seq[CreditInterestRow]) {
+case class CreditInterestViewModel(accountingPeriodEndDate: LocalDate, rows: Seq[CreditInterestRow], page: Paginated[CreditInterestRow], pagination: Option[Pagination]) {
   val total: BigDecimal = rows.map(_.interestAccrued).sum
 
   val totalAsString: String = formatCurrency(total)
@@ -51,19 +54,29 @@ case class CreditInterestViewModel(accountingPeriodEndDate: LocalDate, rows: Seq
 object CreditInterestRow {
   def toViewModel(
     accountingPeriodEndDate: LocalDate,
-    interestAccrualList: InterestAccrualListWithInterestAccruedDays
-  ): CreditInterestViewModel =
+    interestAccrualList: InterestAccrualListWithInterestAccruedDays,
+    requestedPage: Option[Int],
+    pageUrl: Int => String
+  )(implicit messages: Messages): CreditInterestViewModel = {
+    
+    val rows = interestAccrualList.interestAccruals.map { value =>
+      CreditInterestRow(
+        amountSubjectToInterest = value.computationAmount,
+        fromDate = value.interestAccrualFromDate,
+        toDate = value.interestAccrualToDate,
+        daysOverdue = value.noOfDays,
+        annualPercentageRate = value.interestRate,
+        interestAccrued = value.interestAmount
+      )
+    }
+    
+    val page = Paginated.paginate(rows, requestedPage)
+      
     CreditInterestViewModel(
       accountingPeriodEndDate = accountingPeriodEndDate,
-      rows = interestAccrualList.interestAccruals.map { value =>
-        CreditInterestRow(
-          amountSubjectToInterest = value.computationAmount,
-          fromDate = value.interestAccrualFromDate,
-          toDate = value.interestAccrualToDate,
-          daysOverdue = value.noOfDays,
-          annualPercentageRate = value.interestRate,
-          interestAccrued = value.interestAmount
-        )
-      }
+      rows = rows,
+      page = page,
+      pagination = PaginationHelper.toPagination(page, pageUrl)
     )
+  }
 }
