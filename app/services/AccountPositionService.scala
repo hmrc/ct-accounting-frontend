@@ -24,7 +24,7 @@ import uk.gov.hmrc.http.HeaderCarrier
 import javax.inject.Inject
 import scala.concurrent.Future
 
-class AccountPositionService @Inject()(
+class AccountPositionService @Inject() (
   accountPositionConnector: AccountPositionConnector
 ) extends Logging {
 

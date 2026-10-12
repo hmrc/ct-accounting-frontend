@@ -27,27 +27,29 @@ import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import viewmodels.accountingPeriods.AccountingPeriodsViewModel
 import views.html.AccountingPeriodsView
 
-
-class AccountingPeriodsController @Inject()(
-                                       override val messagesApi: MessagesApi,
-                                       identify: IdentifierAction,
-                                       val controllerComponents: MessagesControllerComponents,
-                                       view: AccountingPeriodsView,
-                                       service: AccountPositionService
-                                     ) extends FrontendBaseController with I18nSupport {
+class AccountingPeriodsController @Inject() (
+  override val messagesApi: MessagesApi,
+  identify: IdentifierAction,
+  val controllerComponents: MessagesControllerComponents,
+  view: AccountingPeriodsView,
+  service: AccountPositionService
+) extends FrontendBaseController
+    with I18nSupport {
 
   def onPageLoad: Action[AnyContent] = identify.async { implicit request =>
 
-    //TODO update to retrieve from session
+    // TODO update to retrieve from session
     val taxRef = 5L
 
     service
       .getAccountPosition(taxRef)
       .map { response =>
         val viewModel = AccountingPeriodsViewModel.toViewModel(
-          amountDue = response.amountDue, accountingPeriods = response, taxReference = taxRef
+          amountDue = response.amountDue,
+          accountingPeriods = response,
+          taxReference = taxRef
         )
-          Ok(view(viewModel))
+        Ok(view(viewModel))
       }
       .recover { case ex =>
         logger.error(s"Unexpected failure while retrieving accounting periods: ${ex.getMessage}")

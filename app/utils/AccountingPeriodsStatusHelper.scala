@@ -30,7 +30,7 @@ object AccountingPeriodsStatusHelper {
         messages("accountingPeriods.status.description.DORMANT")
       case Some("E") =>
         messages("accountingPeriods.status.description.EXEMPT")
-      case _                             =>
+      case _         =>
         ""
     }
 }

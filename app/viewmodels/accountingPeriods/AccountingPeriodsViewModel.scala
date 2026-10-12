@@ -43,10 +43,10 @@ case class AccountingPeriodsViewModelRow(
   date: Option[LocalDate],
   amountDueForAp: BigDecimal,
   status: String,
-  href: Option [Call],
+  href: Option[Call],
   isLink: Option[Boolean]
 )(implicit messages: Messages) {
-  val dateAsString: String = date
+  val dateAsString: String     = date
     .map(formatDate(_, messages.lang))
     .getOrElse("")
   val apAmountAsString: String = formatCurrency(amountDueForAp)

@@ -45,8 +45,8 @@ class AccountingPositionServiceSpec
     implicit val ec: ExecutionContext    = cc.executionContext
 
     val mockConnector: AccountPositionConnector = mock[AccountPositionConnector]
-    val service                                         = new AccountPositionService(mockConnector)
-    val taxPayerReference: Long                         = 1L
+    val service                                 = new AccountPositionService(mockConnector)
+    val taxPayerReference: Long                 = 1L
   }
 
   "AccountPositionService.getAccountPosition" should {

@@ -32,21 +32,20 @@ import play.api.inject.bind
 import scala.concurrent.Future
 
 class AccountingPeriodsControllerSpec extends SpecBase with MockitoSugar with AccountPositionHelper {
-  implicit val hc: HeaderCarrier = HeaderCarrier()
+  implicit val hc: HeaderCarrier              = HeaderCarrier()
   val mockConnector: AccountPositionConnector = mock[AccountPositionConnector]
-  
+
   val application = applicationBuilder()
     .overrides(bind[AccountPositionConnector].toInstance(mockConnector))
     .build()
 
   implicit val messagesApi: MessagesApi = application.injector.instanceOf[MessagesApi]
-  implicit val messages: Messages = MessagesImpl(Lang.defaultLang, messagesApi)
-
+  implicit val messages: Messages       = MessagesImpl(Lang.defaultLang, messagesApi)
 
   "AccountingPeriods Controller" - {
 
     "must return OK and the correct view for a GET" in {
-      
+
       when(mockConnector.getAccountPosition(eqTo(5L))(any[HeaderCarrier]))
         .thenReturn(Future.successful(accountPositionResponse))
 
@@ -56,7 +55,7 @@ class AccountingPeriodsControllerSpec extends SpecBase with MockitoSugar with Ac
         val result = route(application, request).value
 
         val view = application.injector.instanceOf[AccountingPeriodsView]
-        
+
         status(result) mustEqual OK
         contentAsString(result) mustEqual view(viewModel)(request, messages(application)).toString
       }
@@ -73,7 +72,7 @@ class AccountingPeriodsControllerSpec extends SpecBase with MockitoSugar with Ac
 
       running(testApplication) {
         val request = FakeRequest(GET, routes.AccountingPeriodsController.onPageLoad().url)
-        val result = route(testApplication, request).value
+        val result  = route(testApplication, request).value
 
         status(result) mustEqual SEE_OTHER
         redirectLocation(result).value mustEqual routes.JourneyRecoveryController.onPageLoad().url

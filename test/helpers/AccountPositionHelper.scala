@@ -23,7 +23,7 @@ import viewmodels.accountingPeriods.AccountingPeriodsViewModel
 import java.time.LocalDate
 
 trait AccountPositionHelper {
-  
+
   val apAmounts: List[ApAmountRecord] =
     List(
       ApAmountRecord(
@@ -52,13 +52,12 @@ trait AccountPositionHelper {
       )
     )
 
-    
   val accountPositionResponse: AccountPositionResponse =
     AccountPositionResponse(
-      amountDue = 15.50, 
-      asOnDate = Some(LocalDate.of(2025, 1, 1)), 
-      gpaLinkFlag = true, 
-      taxpayerList = List(""), 
+      amountDue = 15.50,
+      asOnDate = Some(LocalDate.of(2025, 1, 1)),
+      gpaLinkFlag = true,
+      taxpayerList = List(""),
       apAmounts = apAmounts,
       doesCompanyExist = true
     )
@@ -72,7 +71,7 @@ trait AccountPositionHelper {
       apAmounts = List.empty,
       doesCompanyExist = true
     )
-    
+
   val taxReference: Long = 1L
 
   val amountDue: BigDecimal = 15.50
