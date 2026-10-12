@@ -24,7 +24,8 @@ import uk.gov.hmrc.http.HeaderCarrier
 import javax.inject.Inject
 import scala.concurrent.Future
 
-class PaymentAllocationDetailsService @Inject()(paymentAllocationDetailsConnector: PaymentAllocationDetailsConnector) extends Logging {
+class PaymentAllocationDetailsService @Inject() (paymentAllocationDetailsConnector: PaymentAllocationDetailsConnector)
+    extends Logging {
 
   def getGPAPaymentAllocationDetail(
     gpaUtr: Long,
@@ -40,6 +41,13 @@ class PaymentAllocationDetailsService @Inject()(paymentAllocationDetailsConnecto
       s"Calling connector for gpaUtr: $gpaUtr, gppContractVersion: $gppContractVersion, participatorUtr: $participatorUtr, participatorAp: $participatorAp, startIndex: $startIndex and count: $count"
     )
 
-    paymentAllocationDetailsConnector.getGPAPaymentAllocationDetail(gpaUtr, gppContractVersion, participatorUtr, participatorAp, startIndex, count)
+    paymentAllocationDetailsConnector.getGPAPaymentAllocationDetail(
+      gpaUtr,
+      gppContractVersion,
+      participatorUtr,
+      participatorAp,
+      startIndex,
+      count
+    )
   }
 }

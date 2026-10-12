@@ -28,22 +28,23 @@ import java.net.URL
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
-class PaymentAllocationDetailsConnector @Inject()(http: HttpClientV2, config: ServicesConfig)(implicit
-                                                                                              ec: ExecutionContext
+class PaymentAllocationDetailsConnector @Inject() (http: HttpClientV2, config: ServicesConfig)(implicit
+  ec: ExecutionContext
 ) extends Logging {
 
   def getGPAPaymentAllocationDetail(
-                                     gpaUtr: Long,
-                                     gppContractVersion: Long,
-                                     participatorUtr: Long,
-                                     participatorAp: Long,
-                                     startIndex: Int,
-                                     count: Int
-                                   )(implicit
+    gpaUtr: Long,
+    gppContractVersion: Long,
+    participatorUtr: Long,
+    participatorAp: Long,
+    startIndex: Int,
+    count: Int
+  )(implicit
     hc: HeaderCarrier
   ): Future[PaymentAllocationDetails] = {
     val baseUrl  = config.baseUrl("corporation-tax")
-    val url: URL = url"$baseUrl/corporation-tax/gpa-payment-allocation-details/$gpaUtr/$gppContractVersion/$participatorUtr/$participatorAp?startIndex=$startIndex&count=$count"
+    val url: URL =
+      url"$baseUrl/corporation-tax/gpa-payment-allocation-details/$gpaUtr/$gppContractVersion/$participatorUtr/$participatorAp?startIndex=$startIndex&count=$count"
 
     http
       .get(url)
