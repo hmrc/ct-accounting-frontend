@@ -32,7 +32,7 @@ class AccountingPeriodsViewModelSpec extends AnyWordSpec with Matchers with Acco
 
   "AccountingPeriodsViewModel.toViewModel" should {
     "create the expected rows in AccountingPeriodsViewModel from AccountPosition" in {
-      val viewModel = toViewModel(amountDue, accountPositionResponse, taxReference)
+      val viewModel = toViewModel(accountPositionResponse, taxReference)
 
       viewModel.rows mustBe Seq(
         AccountingPeriodsViewModelRow(

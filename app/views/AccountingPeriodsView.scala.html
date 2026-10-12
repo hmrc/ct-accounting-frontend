@@ -45,7 +45,7 @@
                   head = Some(Seq(
                       HeadCell(content = Text(messages("accountingPeriods.accountingPeriodEnding"))),
                       HeadCell(content = Text(messages("accountingPeriods.accountingPeriodStatus"))),
-                      HeadCell(content = Text(messages("accountingPeriods.accountingPeriodAmount")))
+                      HeadCell(content = Text(messages("accountingPeriods.accountingPeriodAmount")), classes = "govuk-table__header govuk-table__header--numeric")
                   )),
                   rows = viewModel.rows.map { row =>
                       Seq(
@@ -60,7 +60,7 @@
                               content = Text(row.status)
                           ),
                           TableRow(
-                              content = Text(row.apAmountAsString)
+                              content = Text(row.apAmountAsString), classes = "govuk-table__cell govuk-table__cell--numeric "
                           )
                       )
 

@@ -61,15 +61,14 @@ case class AccountingPeriodsViewModel(
 
 object AccountingPeriodsViewModel {
   def toViewModel(
-    amountDue: BigDecimal,
     accountingPeriods: AccountPositionResponse,
     taxReference: Long
   )(implicit messages: Messages): AccountingPeriodsViewModel = {
 
-    val displayTable: Boolean = accountingPeriods.apAmounts.nonEmpty && amountDue.signum != 0
+    val displayTable: Boolean = accountingPeriods.apAmounts.nonEmpty && accountingPeriods.amountDue.signum != 0
 
     AccountingPeriodsViewModel(
-      amountDue = amountDue,
+      amountDue = accountingPeriods.amountDue,
       taxReference = taxReference,
       displayTable = displayTable,
       rows = accountingPeriods.apAmounts.map { value =>

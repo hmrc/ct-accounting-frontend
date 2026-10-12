@@ -78,14 +78,12 @@ trait AccountPositionHelper {
 
   def viewModel(implicit messages: Messages): AccountingPeriodsViewModel =
     AccountingPeriodsViewModel.toViewModel(
-      accountPositionResponse.amountDue,
       accountPositionResponse,
       taxReference
     )
 
   def viewModelNoAccounts(implicit messages: Messages): AccountingPeriodsViewModel =
     AccountingPeriodsViewModel.toViewModel(
-      accountPositionResponseNoAccounts.amountDue,
       accountPositionResponseNoAccounts,
       taxReference
     )

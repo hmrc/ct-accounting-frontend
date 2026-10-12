@@ -25,7 +25,7 @@ GET         /unauthorised                                controllers.Unauthorise
 # Accounting Periods Journey
 GET         /accounting-period-overview                                    controllers.AccountingPeriodOverviewController.onPageLoad()
 
-GET         /accounting-period-overview/accounting-periods                 controllers.AccountingPeriodsController.onPageLoad()
+GET         /accounting-periods                                            controllers.AccountingPeriodsController.onPageLoad()
 GET         /accounting-period-overview/taxes                              controllers.TaxTransactionsController.onPageLoad()
 GET         /accounting-period-overview/penalties                          controllers.PenaltiesAccountingPeriodController.onPageLoad()
 GET         /accounting-period-overview/adjustments                        controllers.AdjustmentsAccountingPeriodController.onPageLoad()

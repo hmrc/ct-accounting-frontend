@@ -45,7 +45,6 @@ class AccountingPeriodsController @Inject() (
       .getAccountPosition(taxRef)
       .map { response =>
         val viewModel = AccountingPeriodsViewModel.toViewModel(
-          amountDue = response.amountDue,
           accountingPeriods = response,
           taxReference = taxRef
         )
