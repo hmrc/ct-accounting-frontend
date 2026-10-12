@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package controllers
+package controllers.gpa
 
 import controllers.Execution.trampoline
 import controllers.actions.*
@@ -25,6 +25,7 @@ import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import services.GroupPaymentService
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.GroupPaymentArrangementsView
+
 import javax.inject.Inject
 
 class GroupPaymentController @Inject() (

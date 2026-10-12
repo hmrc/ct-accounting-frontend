@@ -17,6 +17,7 @@
 package connectors
 
 import com.github.tomakehurst.wiremock.client.WireMock.*
+import connectors.gpa.GroupPaymentsConnector
 import helpers.GroupPaymentHelper
 import itutils.ApplicationWithWiremock
 import org.scalatest.BeforeAndAfterEach

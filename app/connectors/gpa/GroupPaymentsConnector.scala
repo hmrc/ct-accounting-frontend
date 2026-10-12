@@ -14,9 +14,10 @@
  * limitations under the License.
  */
 
-package connectors
+package connectors.gpa
 
-import models.GpaPaymentsDetailsResponse
+import models.gpa.GpaPaymentDetails
+import models.gpa.GpaPaymentsDetailsResponse.format
 import play.api.Logging
 import uk.gov.hmrc.http.HttpReads.Implicits.*
 import uk.gov.hmrc.http.client.HttpClientV2
@@ -34,14 +35,14 @@ class GroupPaymentsConnector @Inject() (http: HttpClientV2, config: ServicesConf
 
   def getPaymentDetails(taxRef: Long, accPeriod: Long, startIndex: Int, count: Int)(implicit
     hc: HeaderCarrier
-  ): Future[GpaPaymentsDetailsResponse] = {
+  ): Future[GpaPaymentDetails] = {
     val baseUrl  = config.baseUrl("corporation-tax")
     val url: URL =
       url"$baseUrl/corporation-tax/gpa-payment-details/$taxRef?contractVersion=$accPeriod&startIndex=$startIndex&count=$count"
 
     http
       .get(url)
-      .execute[GpaPaymentsDetailsResponse]
+      .execute[GpaPaymentDetails]
       .recover {
         case u: UpstreamErrorResponse =>
           logger.error(

@@ -16,7 +16,7 @@
 
 package services
 
-import connectors.GroupPaymentsConnector
+import connectors.gpa.GroupPaymentsConnector
 import helpers.GroupPaymentHelper
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.{times, verify, when}
@@ -26,6 +26,7 @@ import org.scalatest.wordspec.AnyWordSpec
 import org.scalatestplus.mockito.MockitoSugar
 import play.api.mvc.ControllerComponents
 import play.api.test.Helpers.stubControllerComponents
+import services.gpa.GpaPaymentDetailsService
 import uk.gov.hmrc.http.HeaderCarrier
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -44,14 +45,60 @@ class GroupPaymentServiceSpec
     implicit val ec: ExecutionContext    = cc.executionContext
 
     val mockConnector: GroupPaymentsConnector = mock[GroupPaymentsConnector]
-    val service                               = new GroupPaymentService(mockConnector)
+    val mockGpaDescriptionService: GpaPaymentDetailsService = mock[GpaPaymentDetailsService]
+    val service                               = new GroupPaymentService(mockConnector, mockGpaDescriptionService)
     val taxPayerReference: Long               = 12L
     val accPeriod: Long                       = 2L
   }
 
-  "GroupPaymentService.getAccountingPeriodResponse" should {
+  "GroupPaymentService.getViewModel" should {
 
-    "delegate to connector and successfully return AccountingPeriodDetailsResponse" in new BaseSetup {
+    "delegate to connector and successfully return GroupPaymentArrangementViewModel" in new BaseSetup {
+
+      when(mockConnector.getPaymentDetails(any(), any(), any(), any())(any[HeaderCarrier]))
+        .thenReturn(Future.successful(response))
+
+      val result = service.getViewModel(taxPayerReference, accPeriod, 0, 20).futureValue
+
+      result shouldBe viewModel
+
+      verify(mockConnector).getPaymentDetails(taxPayerReference, accPeriod, 0, 20)
+
+      verify(mockConnector, times(1)).getPaymentDetails(taxPayerReference, accPeriod, 0, 20)
+
+    }
+    
+    "delegate to connector and successfully return GroupPaymentArrangementViewModel" in new BaseSetup {
+
+      when(mockConnector.getPaymentDetails(any(), any(), any(), any())(any[HeaderCarrier]))
+        .thenReturn(Future.successful(response))
+
+      val result = service.getViewModel(taxPayerReference, accPeriod, 0, 20).futureValue
+
+      result shouldBe viewModel
+
+      verify(mockConnector).getPaymentDetails(taxPayerReference, accPeriod, 0, 20)
+
+      verify(mockConnector, times(1)).getPaymentDetails(taxPayerReference, accPeriod, 0, 20)
+
+    }
+   
+    "delegate to connector and successfully return GroupPaymentArrangementViewModel" in new BaseSetup {
+
+      when(mockConnector.getPaymentDetails(any(), any(), any(), any())(any[HeaderCarrier]))
+        .thenReturn(Future.successful(response))
+
+      val result = service.getViewModel(taxPayerReference, accPeriod, 0, 20).futureValue
+
+      result shouldBe viewModel
+
+      verify(mockConnector).getPaymentDetails(taxPayerReference, accPeriod, 0, 20)
+
+      verify(mockConnector, times(1)).getPaymentDetails(taxPayerReference, accPeriod, 0, 20)
+
+    }
+    
+    "delegate to connector and successfully return GroupPaymentArrangementViewModel" in new BaseSetup {
 
       when(mockConnector.getPaymentDetails(any(), any(), any(), any())(any[HeaderCarrier]))
         .thenReturn(Future.successful(response))

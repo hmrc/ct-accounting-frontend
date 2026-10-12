@@ -16,35 +16,39 @@
 
 package services
 
-import connectors.GroupPaymentsConnector
-import models.GpaPaymentsDetailsResponse
+import connectors.gpa.GroupPaymentsConnector
+import models.gpa.GpaPaymentDetails
 import play.api.Logging
+import play.api.i18n.Messages
+import services.gpa.GpaPaymentDetailsService
 import uk.gov.hmrc.http.HeaderCarrier
+import utils.Constants.emptyString
 import viewmodels.{GroupPaymentArrangementViewModel, GroupPaymentRecord}
+
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
 class GroupPaymentService @Inject() (
-  connector: GroupPaymentsConnector
-)(implicit ec: ExecutionContext)
+  connector: GroupPaymentsConnector,
+  service: GpaPaymentDetailsService
+)(implicit ec: ExecutionContext, messages: Messages)
     extends Logging {
 
-  private def getStatus(s: String): String = s match {
+  private def getStatus(s: String): String = s.trim match {
     case "O" | "S" => "Open"
     case "C"       => "Earlier Cleared"
     case "L"       => "Cleared"
     case "E"       => "Earlier Exempt"
-    case _         => ""
+    case _         => emptyString
   }
 
-  // TODO: review next mappings:
-  // arrangementReference - ??
-  private def transform(record: GpaPaymentsDetailsResponse, taxRef: Long): GroupPaymentArrangementViewModel = {
-    val records = record.gpaPayments.map(r =>
+  private def transform(record: GpaPaymentDetails, taxRef: Long): GroupPaymentArrangementViewModel = {
+    val records = record.gpaPayments.map(gpaPayments =>
       GroupPaymentRecord(
-        date = r.displayDate,
-        description = r.paymentType.getOrElse(""),
-        amount = r.total
+        date = gpaPayments.displayDate,
+        description =
+          service.gpaPaymentDescription(gpaPayments, taxRef, record.gppEndDate.getOrElse(emptyString).toString),
+        amount = gpaPayments.total
       )
     )
     GroupPaymentArrangementViewModel(

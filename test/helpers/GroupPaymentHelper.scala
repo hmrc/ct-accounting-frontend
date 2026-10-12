@@ -16,20 +16,17 @@
 
 package helpers
 
-import models.{GpaPaymentsDetailsResponse, GpaPaymentsRecord}
+import models.gpa.{GpaPaymentDetails, GpaPayments}
 import viewmodels.{GroupPaymentArrangementViewModel, GroupPaymentRecord}
 
 import java.time.LocalDate
 
-/*
-GroupPaymentArrangementViewModel("12", Some(2026-01-01), "Earlier Cleared", 1125017, 1125012, List(GroupPaymentRecord(Some(2025-01-01), "BGP", 17.01)))
-GroupPaymentArrangementViewModel("12", Some(2026-01-01), "Earlier Cleared", 1125012, 1125017, List(GroupPaymentRecord(Some(2025-01-01), "Payslip", 17.01)))
- */
+
 trait GroupPaymentHelper {
 
-  val response = GpaPaymentsDetailsResponse(
+  val response = GpaPaymentDetails(
     gpaPayments = List(
-      GpaPaymentsRecord(
+      GpaPayments(
         displayDate = Some(LocalDate.of(2025, 1, 1)),
         total = BigDecimal(17.01),
         tablename = Some("Payslip"),
