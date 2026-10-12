@@ -30,7 +30,7 @@
 
 @(viewModel: PaymentAllocationDetailsViewModel)(implicit request: Request[_], messages: Messages)
 
-    @layout(pageTitle = titleNoForm(messages("paymentAllocationDetails.title"), Some(messages("interest.section"))),
+    @layout(pageTitle = titleNoForm(messages("paymentAllocationDetails.title"), Some(messages("paymentAllocationDetails.section"))),
         breadcrumbs = Some(PageBreadcrumbs.paymentAllocationDetailsPage)) {
 
         @h1(messages("paymentAllocationDetails.heading"))
