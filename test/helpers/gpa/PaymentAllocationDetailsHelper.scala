@@ -18,7 +18,6 @@ package helpers.gpa
 
 import models.gpa.{AllocationDetails, PaymentAllocationDetails}
 import viewmodels.gpa.{PaymentAllocationDetailsViewModel, PaymentAllocationDetailsViewModelRow}
-import controllers.routes
 
 import java.time.LocalDate
 
@@ -94,61 +93,63 @@ trait PaymentAllocationDetailsHelper {
       totalNumOfRecords = BigDecimal(30)
     )
 
-  val fullPaymentAllocationDetailsVM: PaymentAllocationDetailsViewModel  = PaymentAllocationDetailsViewModel(rows = List(
-    PaymentAllocationDetailsViewModelRow(
-      rowName = "Group Payment Arrangement reference",
-      content = "12345",
-      isLink = false,
-      href = None
-    ), 
-    PaymentAllocationDetailsViewModelRow(
-      rowName = "Participating company",
-      content = "ABC Limited",
-      isLink = false,
-      href = None
-    ),
-    PaymentAllocationDetailsViewModelRow(
-      rowName = "Accounting period ending",
-      content = "24 Jul 2026",
-      isLink = false,
-      href = None
-    ),
-    PaymentAllocationDetailsViewModelRow(
-      rowName = "Period of account ending",
-      content = "24 Jul 2026",
-      isLink = false,
-      href = None
-    ),
-    PaymentAllocationDetailsViewModelRow(
-      rowName = "Group period of account status",
-      content = "P",
-      isLink = false,
-      href = None
-    ),
-    PaymentAllocationDetailsViewModelRow(
-      rowName = "Tax charge as of Cleared status",
-      content = "£30.00",
-      isLink = false,
-      href = None
-    ),
-    PaymentAllocationDetailsViewModelRow(
-      rowName = "Payment allocated by",
-      content = "P",
-      isLink = false,
-      href = None
-    ),
-    PaymentAllocationDetailsViewModelRow(
-      rowName = "Payment Allocated",
-      content = "-30.00",
-      isLink = false,
-      href = None
-    ),
-    PaymentAllocationDetailsViewModelRow(
-      rowName = "Group Tax Total",
-      content = "£0.00",
-      isLink = true,
-      href = Some(routes.TaxTransactionsController.onPageLoad())
+  val fullPaymentAllocationDetailsVM: PaymentAllocationDetailsViewModel = PaymentAllocationDetailsViewModel(rows =
+    List(
+      PaymentAllocationDetailsViewModelRow(
+        rowName = "Group Payment Arrangement reference",
+        content = "12345",
+        isLink = false,
+        href = None
+      ),
+      PaymentAllocationDetailsViewModelRow(
+        rowName = "Participating company",
+        content = "ABC Limited",
+        isLink = false,
+        href = None
+      ),
+      PaymentAllocationDetailsViewModelRow(
+        rowName = "Accounting period ending",
+        content = "24 Jul 2026",
+        isLink = false,
+        href = None
+      ),
+      PaymentAllocationDetailsViewModelRow(
+        rowName = "Period of account ending",
+        content = "24 Jul 2026",
+        isLink = false,
+        href = None
+      ),
+      PaymentAllocationDetailsViewModelRow(
+        rowName = "Group period of account status",
+        content = "P",
+        isLink = false,
+        href = None
+      ),
+      PaymentAllocationDetailsViewModelRow(
+        rowName = "Tax charge as of Cleared status",
+        content = "£30.00",
+        isLink = false,
+        href = None
+      ),
+      PaymentAllocationDetailsViewModelRow(
+        rowName = "Payment allocated by",
+        content = "P",
+        isLink = false,
+        href = None
+      ),
+      PaymentAllocationDetailsViewModelRow(
+        rowName = "Payment Allocated",
+        content = "-30.00",
+        isLink = false,
+        href = None
+      ),
+      PaymentAllocationDetailsViewModelRow(
+        rowName = "Group Tax Total",
+        content = "£0.00",
+        isLink = true,
+        href = None
+      )
     )
-  ))
+  )
 
 }

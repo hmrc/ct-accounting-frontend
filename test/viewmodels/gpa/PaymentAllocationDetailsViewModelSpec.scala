@@ -20,7 +20,6 @@ import helpers.gpa.PaymentAllocationDetailsHelper
 import org.scalatest.wordspec.AnyWordSpec
 import play.api.i18n.Messages
 import play.api.test.Helpers.stubMessages
-import controllers.routes
 import org.scalatest.matchers.must.Matchers.mustBe
 import viewmodels.gpa.PaymentAllocationDetailsViewModel.convertToViewModel
 
@@ -28,17 +27,18 @@ class PaymentAllocationDetailsViewModelSpec extends AnyWordSpec with PaymentAllo
 
   implicit val messages: Messages = stubMessages()
 
-  "AccountingPeriodOverviewRow.toViewModel" should {
-    "create the expected rows in AccountingPeriodOverviewViewModel from AccountingPeriodOverview" in {
+  "PaymentAllocationDetailsViewModelRow.convertToViewModel" should {
+    "create the expected rows in PaymentAllocationDetailsViewModel from PaymentAllocationDetails" in {
       val viewModel = convertToViewModel(fullPaymentAllocationDetails)
 
       viewModel.rows mustBe
-        List(PaymentAllocationDetailsViewModelRow(
-          rowName = messages("paymentAllocationDetails.gpaReference"),
-          content = "10",
-          isLink = false,
-          href = None
-        ),
+        List(
+          PaymentAllocationDetailsViewModelRow(
+            rowName = messages("paymentAllocationDetails.gpaReference"),
+            content = "10",
+            isLink = false,
+            href = None
+          ),
           PaymentAllocationDetailsViewModelRow(
             rowName = messages("paymentAllocationDetails.participatingCompany"),
             content = "ABC Limited",
@@ -85,8 +85,9 @@ class PaymentAllocationDetailsViewModelSpec extends AnyWordSpec with PaymentAllo
             rowName = messages("paymentAllocationDetails.groupTaxTotal"),
             content = "£10.00",
             isLink = true,
-            href = Some(routes.TaxTransactionsController.onPageLoad())
-          ))
+            href = None
+          )
+        )
 
     }
   }
