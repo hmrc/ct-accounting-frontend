@@ -61,13 +61,13 @@ object PaymentAllocationDetailsViewModel {
         ),
         PaymentAllocationDetailsViewModelRow(
           rowName = messages("paymentAllocationDetails.accountingPeriodEnding"),
-          content = formatDate(paymentAllocationDetails.participatorAccPeriodEnd, messages.lang),
+          content = formatDate(paymentAllocationDetails.gppEndDate, messages.lang),
           isLink = false,
           href = None
         ),
         PaymentAllocationDetailsViewModelRow(
           rowName = messages("paymentAllocationDetails.periodAccountEnding"),
-          content = formatDate(paymentAllocationDetails.gppEndDate, messages.lang),
+          content = formatDate(paymentAllocationDetails.participatorAccPeriodEnd, messages.lang),
           isLink = false,
           href = None
         ),
@@ -85,7 +85,7 @@ object PaymentAllocationDetailsViewModel {
         ),
         PaymentAllocationDetailsViewModelRow(
           rowName = messages("paymentAllocationDetails.paymentAllocatedBy"),
-          content = paymentAllocationDetails.gppStatus,
+          content = paymentAllocationDetails.gppApportionmentMethod,
           isLink = false,
           href = None
         ),
