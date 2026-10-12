@@ -41,7 +41,7 @@ class PaymentAllocationDetailsServiceSpec
     implicit val hc: HeaderCarrier = HeaderCarrier()
 
     val mockConnector: PaymentAllocationDetailsConnector = mock[PaymentAllocationDetailsConnector]
-    val service                                             = new PaymentAllocationDetailsService(mockConnector)
+    val service                                          = new PaymentAllocationDetailsService(mockConnector)
   }
 
   "getGPAPaymentAllocationDetail" should {

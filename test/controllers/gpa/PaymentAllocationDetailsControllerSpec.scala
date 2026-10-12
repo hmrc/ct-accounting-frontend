@@ -34,7 +34,7 @@ class PaymentAllocationDetailsControllerSpec extends SpecBase with MockitoSugar 
 
   private trait Setup {
     val mockService: PaymentAllocationDetailsService = mock[PaymentAllocationDetailsService]
-    implicit val hc: HeaderCarrier                      = HeaderCarrier()
+    implicit val hc: HeaderCarrier                   = HeaderCarrier()
 
     val paymentAllocationDetailsRoute = routes.PaymentAllocationDetailsController.onPageLoad().url
 
@@ -46,7 +46,11 @@ class PaymentAllocationDetailsControllerSpec extends SpecBase with MockitoSugar 
   "PaymentAllocationDetailsController" - {
 
     "return 200 and a successful response for payment allocation details" in new Setup {
-      when(mockService.getGPAPaymentAllocationDetail(eqTo(1L), eqTo(2L), eqTo(3L), eqTo(4L), eqTo(5), eqTo(6))(any[HeaderCarrier]))
+      when(
+        mockService.getGPAPaymentAllocationDetail(eqTo(1L), eqTo(2L), eqTo(3L), eqTo(4L), eqTo(5), eqTo(6))(
+          any[HeaderCarrier]
+        )
+      )
         .thenReturn(Future.successful(fullPaymentAllocationDetails))
 
       running(application) {
@@ -60,11 +64,15 @@ class PaymentAllocationDetailsControllerSpec extends SpecBase with MockitoSugar 
     }
 
     "return 303 and redirect to Journey recovery" in new Setup {
-      when(mockService.getGPAPaymentAllocationDetail(eqTo(1L), eqTo(2L), eqTo(3L), eqTo(4L), eqTo(5), eqTo(6))(any[HeaderCarrier]))
+      when(
+        mockService.getGPAPaymentAllocationDetail(eqTo(1L), eqTo(2L), eqTo(3L), eqTo(4L), eqTo(5), eqTo(6))(
+          any[HeaderCarrier]
+        )
+      )
         .thenReturn(Future.failed(new RuntimeException("error")))
 
       running(application) {
-        val request = FakeRequest(GET, routes.PaymentAllocationDetailsController.onPageLoad().url)
+        val request = FakeRequest(GET, paymentAllocationDetailsRoute)
         val result  = route(application, request).value
 
         status(result) mustEqual SEE_OTHER

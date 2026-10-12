@@ -22,18 +22,16 @@ import play.api.i18n.Messages
 import play.api.mvc.Call
 import uk.gov.hmrc.govukfrontend.views.Aliases.TableRow
 import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
-import controllers.routes
 import views.ViewUtils.*
 
 case class PaymentAllocationDetailsViewModelRow(
-                                                 rowName: String,
-                                                 content: String,
-                                                 isLink: Boolean,
-                                                 href: Option[Call]
-                                               )
+  rowName: String,
+  content: String,
+  isLink: Boolean,
+  href: Option[Call]
+)
 
-case class PaymentAllocationDetailsViewModel(rows: List[PaymentAllocationDetailsViewModelRow]
-) {
+case class PaymentAllocationDetailsViewModel(rows: List[PaymentAllocationDetailsViewModelRow]) {
 
   def totalRow(total: String, label: String): Seq[TableRow] =
     Seq(
@@ -48,23 +46,24 @@ object PaymentAllocationDetailsViewModel {
     paymentAllocationDetails: PaymentAllocationDetails
   )(implicit messages: Messages): PaymentAllocationDetailsViewModel =
     PaymentAllocationDetailsViewModel(
-      rows = List(PaymentAllocationDetailsViewModelRow(
-        rowName = messages("paymentAllocationDetails.gpaReference"),
-        content = paymentAllocationDetails.gpaUtr.toString(),
-        isLink = false,
-        href = None
-      ),
+      rows = List(
         PaymentAllocationDetailsViewModelRow(
-          rowName = messages("paymentAllocationDetails.participatingCompany"),
-          content = paymentAllocationDetails.participatingCompanyDesc,
-          isLink = false, 
+          rowName = messages("paymentAllocationDetails.gpaReference"),
+          content = paymentAllocationDetails.gpaUtr.toString(),
+          isLink = false,
           href = None
         ),
         PaymentAllocationDetailsViewModelRow(
-        rowName = messages("paymentAllocationDetails.accountingPeriodEnding"),
-        content = formatDate(paymentAllocationDetails.participatorAccPeriodEnd, messages.lang),
-        isLink = false,
-        href = None
+          rowName = messages("paymentAllocationDetails.participatingCompany"),
+          content = paymentAllocationDetails.participatingCompanyDesc,
+          isLink = false,
+          href = None
+        ),
+        PaymentAllocationDetailsViewModelRow(
+          rowName = messages("paymentAllocationDetails.accountingPeriodEnding"),
+          content = formatDate(paymentAllocationDetails.participatorAccPeriodEnd, messages.lang),
+          isLink = false,
+          href = None
         ),
         PaymentAllocationDetailsViewModelRow(
           rowName = messages("paymentAllocationDetails.periodAccountEnding"),
@@ -100,8 +99,9 @@ object PaymentAllocationDetailsViewModel {
           rowName = messages("paymentAllocationDetails.groupTaxTotal"),
           content = formatCurrency(paymentAllocationDetails.gppTotalGroupTax),
           isLink = isHyperLink(paymentAllocationDetails.gppTotalGroupTax),
-          href = Some(routes.TaxTransactionsController.onPageLoad())
-        ))
+          href = None // TODO Change to group taxes when implemented
+        )
+      )
     )
 
   private def isHyperLink(amount: BigDecimal): Boolean =

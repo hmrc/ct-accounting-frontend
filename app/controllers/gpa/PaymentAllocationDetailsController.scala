@@ -29,7 +29,7 @@ import views.html.gpa.PaymentAllocationDetailsView
 import javax.inject.Inject
 import scala.concurrent.ExecutionContext
 
-class PaymentAllocationDetailsController @Inject()(
+class PaymentAllocationDetailsController @Inject() (
   val controllerComponents: MessagesControllerComponents,
   identify: IdentifierAction,
   paymentAllocationDetailsService: PaymentAllocationDetailsService,
@@ -40,12 +40,13 @@ class PaymentAllocationDetailsController @Inject()(
     with Logging {
 
   def onPageLoad(): Action[AnyContent] = identify.async { implicit request =>
-    paymentAllocationDetailsService.getGPAPaymentAllocationDetail(1L, 2L, 3L, 4L, 0, 10).map { paymentAllocationDetails =>
-      logger.info(
-        s"Successfully retrieved payment allocation details"
-      )
-      val vm = PaymentAllocationDetailsViewModel.convertToViewModel(paymentAllocationDetails)
-      Ok(view(vm))
+    paymentAllocationDetailsService.getGPAPaymentAllocationDetail(1L, 2L, 3L, 4L, 0, 10).map {
+      paymentAllocationDetails =>
+        logger.info(
+          s"Successfully retrieved payment allocation details"
+        )
+        val vm = PaymentAllocationDetailsViewModel.convertToViewModel(paymentAllocationDetails)
+        Ok(view(vm))
     } recover { case ex =>
       logger.error(s"Unexpected failure: ${ex.getMessage}")
       Redirect(JourneyRecoveryController.onPageLoad())
