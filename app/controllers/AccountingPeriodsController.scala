@@ -19,6 +19,7 @@ package controllers
 import controllers.actions.*
 import controllers.Execution.trampoline
 import javax.inject.Inject
+import play.api.i18n.Lang.logger
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import services.AccountPositionService
@@ -47,6 +48,10 @@ class AccountingPeriodsController @Inject()(
           amountDue = response.amountDue, accountingPeriods = response, taxReference = taxRef
         )
           Ok(view(viewModel))
+      }
+      .recover { case ex =>
+        logger.error(s"Unexpected failure while retrieving accounting periods: ${ex.getMessage}")
+        Redirect(routes.JourneyRecoveryController.onPageLoad())
       }
   }
 }

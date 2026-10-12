@@ -124,7 +124,7 @@ class PageBreadcrumbsSpec extends AnyWordSpec with Matchers {
         ),
         BreadcrumbsItem(
           content = Text(messages("breadcrumbs.interest")),
-          href = Some("/ct-accounting/accounting-period-overview/interest")
+          href = Some(routes.InterestController.onPageLoad().url)
         )
       )
     }
