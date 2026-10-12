@@ -16,8 +16,9 @@
 
 package utils
 
-object EmptyString {
+object Constants {
 
   val emptyString = ""
+  val ZERO        = 0
 
 }
