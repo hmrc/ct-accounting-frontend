@@ -204,7 +204,10 @@ class PageBreadcrumbsSpec extends AnyWordSpec with Matchers {
     "have the correct items in order" in {
       PageBreadcrumbs.accountingPeriodOverviewPage.items shouldBe Seq(
         BreadcrumbsItem(content = Text(messages("breadcrumbs.home")), href = Some("/")),
-        BreadcrumbsItem(content = Text(messages("breadcrumbs.accountingPeriods")), href = Some("/"))
+        BreadcrumbsItem(
+          content = Text(messages("breadcrumbs.accountingPeriods")),
+          href = Some(routes.AccountingPeriodsController.onPageLoad().url)
+        )
       )
     }
 
