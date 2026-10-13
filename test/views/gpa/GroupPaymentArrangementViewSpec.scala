@@ -111,11 +111,25 @@ class GroupPaymentArrangementViewSpec extends SpecBase with GroupPaymentArrangem
       val firstRow =
         doc.select("tbody.govuk-table__body tr.govuk-table__row").get(0).getElementsByClass("govuk-table__cell")
       firstRow.get(0).text() mustBe "01 Jan 2026"
-      firstRow.get(1).text() mustBe "-£1,536,642.00"
-      firstRow.get(2).text() mustBe "£1,536,642.00"
-      firstRow.get(3).text() mustBe "Open"
+      firstRow.get(1).text() mustBe "£11.01"
+      firstRow.get(2).text() mustBe "£13.01"
+      firstRow.get(3).text() mustBe "ACTIVE"
 
-      doc.select("tbody.govuk-table__body tr.govuk-table__row").size() mustBe 1
+      val secondRow =
+        doc.select("tbody.govuk-table__body tr.govuk-table__row").get(1).getElementsByClass("govuk-table__cell")
+      secondRow.get(0).text() mustBe "04 May 2026"
+      secondRow.get(1).text() mustBe "-£430.32"
+      secondRow.get(2).text() mustBe "-£700.53"
+      secondRow.get(3).text() mustBe "CLOSED"
+
+      val thirdRow =
+        doc.select("tbody.govuk-table__body tr.govuk-table__row").get(2).getElementsByClass("govuk-table__cell")
+      thirdRow.get(0).text() mustBe "12 Aug 2024"
+      thirdRow.get(1).text() mustBe "-£952.12"
+      thirdRow.get(2).text() mustBe "-£691.76"
+      thirdRow.get(3).text() mustBe "CLOSED"
+
+      doc.select("tbody.govuk-table__body tr.govuk-table__row").size() mustBe 3
 
     }
 

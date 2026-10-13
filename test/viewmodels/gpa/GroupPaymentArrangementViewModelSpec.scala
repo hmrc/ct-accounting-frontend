@@ -31,30 +31,45 @@ class GroupPaymentArrangementViewModelSpec extends AnyWordSpec with Matchers wit
     "check format for each amount in payments and taxes from the response" in {
       val viewModel = GroupPaymentArrangementViewModel.toViewModel(groupPaymentDetailsResponse)
 
-      viewModel.rows(0).groupPayments.amount mustBe -11.01
-      viewModel.rows(0).groupPayments.amountAsString mustBe "-£11.01"
-      viewModel.rows(0).groupTaxes.amount mustBe 13.02
-      viewModel.rows(0).groupTaxes.amountAsString mustBe "-£13.02"
+      viewModel.rows(0).groupPayments.amount mustBe -13.02
+      viewModel.rows(0).groupPayments.amountAsString mustBe "-£13.02"
+      viewModel.rows(0).groupTaxes.amount mustBe -11.01
+      viewModel.rows(0).groupTaxes.amountAsString mustBe "-£11.01"
 
-      viewModel.rows(1).groupPayments.amount mustBe -430.32
-      viewModel.rows(1).groupPayments.amountAsString mustBe "-£430.32"
-      viewModel.rows(1).groupTaxes.amount mustBe -700.53
-      viewModel.rows(1).groupTaxes.amountAsString mustBe "-£700.53"
+      viewModel.rows(1).groupPayments.amount mustBe 742.16
+      viewModel.rows(1).groupPayments.amountAsString mustBe "£742.16"
+      viewModel.rows(1).groupTaxes.amount mustBe -532.86
+      viewModel.rows(1).groupTaxes.amountAsString mustBe "-£532.86"
 
-      viewModel.rows(2).groupPayments.amount mustBe -952.12
-      viewModel.rows(2).groupPayments.amountAsString mustBe "-£952.12"
-      viewModel.rows(2).groupTaxes.amount mustBe -691.76
-      viewModel.rows(2).groupTaxes.amountAsString mustBe "-£691.76"
+      viewModel.rows(2).groupPayments.amount mustBe -217.62
+      viewModel.rows(2).groupPayments.amountAsString mustBe "-£217.62"
+      viewModel.rows(2).groupTaxes.amount mustBe -384.09
+      viewModel.rows(2).groupTaxes.amountAsString mustBe "-£384.09"
+
+      viewModel.rows(3).groupPayments.amount mustBe 12.73
+      viewModel.rows(3).groupPayments.amountAsString mustBe "£12.73"
+      viewModel.rows(3).groupTaxes.amount mustBe 832.52
+      viewModel.rows(3).groupTaxes.amountAsString mustBe "£832.52"
+
+      viewModel.rows(4).groupPayments.amount mustBe -431.56
+      viewModel.rows(4).groupPayments.amountAsString mustBe "-£431.56"
+      viewModel.rows(4).groupTaxes.amount mustBe 743.32
+      viewModel.rows(4).groupTaxes.amountAsString mustBe "£743.32"
+
     }
 
     "check formatting for each date from the response" in {
       val viewModel = GroupPaymentArrangementViewModel.toViewModel(groupPaymentDetailsResponse)
 
-      viewModel.rows(0).periodOfAccountEnding mustBe LocalDate.of(2026,1,1)
+      viewModel.rows(0).periodOfAccountEnding mustBe LocalDate.of(2026, 1, 7)
 
-      viewModel.rows(1).periodOfAccountEnding mustBe LocalDate.of(2026,5,4)
+      viewModel.rows(1).periodOfAccountEnding mustBe LocalDate.of(2025, 1, 4)
 
-      viewModel.rows(2).periodOfAccountEnding mustBe LocalDate.of(2026,8,12)
+      viewModel.rows(2).periodOfAccountEnding mustBe LocalDate.of(2024, 1, 9)
+
+      viewModel.rows(3).periodOfAccountEnding mustBe LocalDate.of(2023, 1, 7)
+
+      viewModel.rows(4).periodOfAccountEnding mustBe LocalDate.of(2022, 1, 12)
     }
 
     "get the correct status" in {

@@ -77,12 +77,12 @@ class GroupPaymentArrangementControllerSpec
 
       running(application) {
         val request = FakeRequest(GET, routes.GroupPaymentArrangementController.onPageLoad().url)
-        val result = route(application, request).value
+        val result  = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
         redirectLocation(result).value mustEqual controllers.routes.JourneyRecoveryController.onPageLoad().url
       }
     }
-    
+
   }
 }

@@ -61,7 +61,36 @@ class GroupPaymentsConnectorISpec
                    | "groupPayment": -13.02,
                    | "groupPaymentRecordCount": 2,
                    | "contractStatus": "ACTIVE",
-                   | "contractVersion": 2 } ],
+                   | "contractVersion": 2 },
+                   |  {
+                   | "contractEndDate": "2025-01-04",
+                   | "groupTaxCharge": -532.86,
+                   | "groupPayment": 742.16,
+                   | "groupPaymentRecordCount": 2,
+                   | "contractStatus": "CLOSED",
+                   | "contractVersion": 1 },
+                   |  {
+                   | "contractEndDate": "2024-01-09",
+                   | "groupTaxCharge": -384.09,
+                   | "groupPayment": -217.62,
+                   | "groupPaymentRecordCount": 2,
+                   | "contractStatus": "CLOSED",
+                   | "contractVersion": 1 },
+                   | {
+                   | "contractEndDate": "2023-01-07",
+                   | "groupTaxCharge": 832.52,
+                   | "groupPayment": 12.73,
+                   | "groupPaymentRecordCount": 2,
+                   | "contractStatus": "CLOSED",
+                   | "contractVersion": 1 },
+                   | {
+                   | "contractEndDate": "2022-01-12",
+                   | "groupTaxCharge": 743.32,
+                   | "groupPayment": -431.56,
+                   | "groupPaymentRecordCount": 2,
+                   | "contractStatus": "CLOSED",
+                   | "contractVersion": 1 }
+                   | ],
                    | "gpaReferenceNumberLst": [ {
                    | "taxpayerReference": 112 } ],
                    | "nominatedCompanyName": "Some company name"

@@ -34,9 +34,49 @@ trait GroupPaymentsHelper {
     contractVersion = 2
   )
 
+  val groupSummaryDetRecTwo = GroupSummaryDetailsRecord(
+    contractEndDate = LocalDate.of(2025, 1, 4),
+    groupTaxCharge = BigDecimal(-532.86),
+    groupPayment = BigDecimal(742.16),
+    groupPaymentRecordCount = 2,
+    contractStatus = "CLOSED",
+    contractVersion = 1
+  )
+
+  val groupSummaryDetRecThree = GroupSummaryDetailsRecord(
+    contractEndDate = LocalDate.of(2024, 1, 9),
+    groupTaxCharge = BigDecimal(-384.09),
+    groupPayment = BigDecimal(-217.62),
+    groupPaymentRecordCount = 2,
+    contractStatus = "CLOSED",
+    contractVersion = 1
+  )
+
+  val groupSummaryDetRecFour = GroupSummaryDetailsRecord(
+    contractEndDate = LocalDate.of(2023, 1, 7),
+    groupTaxCharge = BigDecimal(832.52),
+    groupPayment = BigDecimal(12.73),
+    groupPaymentRecordCount = 2,
+    contractStatus = "CLOSED",
+    contractVersion = 1
+  )
+
+  val groupSummaryDetRecFive = GroupSummaryDetailsRecord(
+    contractEndDate = LocalDate.of(2022, 1, 12),
+    groupTaxCharge = BigDecimal(743.32),
+    groupPayment = BigDecimal(-431.56),
+    groupPaymentRecordCount = 2,
+    contractStatus = "CLOSED",
+    contractVersion = 1
+  )
+
   val groupPaymentDetailsResponse = GroupSummaryDetailsResponse(
     gpaGrpSummaryDetails = List(
-      groupSummaryDetRecOne
+      groupSummaryDetRecOne,
+      groupSummaryDetRecTwo,
+      groupSummaryDetRecThree,
+      groupSummaryDetRecFour,
+      groupSummaryDetRecFive
     ),
     gpaReferenceNumberLst = List(
       GroupReferenceNumberLstItem(112)
