@@ -17,10 +17,12 @@
 package viewmodels.gpa
 
 import play.api.i18n.Messages
+import play.api.mvc.Call
 import views.ViewUtils.formatCurrency
 import models.gpa.GpaGroupTaxCharges
 import uk.gov.hmrc.govukfrontend.views.Aliases.Text
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.{Key, Value, SummaryListRow}
+import controllers.gpa.routes
 
 import java.time.LocalDate
 
@@ -28,17 +30,18 @@ case class GroupTaxRecordRow(
   participatingCompany: String,
   uniqueTaxpayerReference: Long,
   accountingPeriodEnding: LocalDate,
-  taxLiability: BigDecimal,
-  paymentAllocated: BigDecimal
-) {
-  val taxLiabilityAsString: String     = formatCurrency(taxLiability)
-  val paymentAllocatedAsString: String = formatCurrency(paymentAllocated)
-}
+  taxLiability: AmountRow,
+  paymentAllocated: AmountRow
+)
 
 case class GroupTaxChargesViewModel(
                                      summaryListRows: Seq[SummaryListRow],
                                      groupTaxRecordsRows: Seq[GroupTaxRecordRow]
 )
+
+case class AmountRow(description: String, amount: BigDecimal, isLink: Boolean, href: Call) {
+  val amountAsString: String = formatCurrency(amount)
+}
 
 object GroupTaxChargesViewModel {
   def toViewModel(
@@ -72,8 +75,18 @@ object GroupTaxChargesViewModel {
           participatingCompany = groupTaxCharge.participatorName,
           uniqueTaxpayerReference = groupTaxCharge.participatorReference,
           accountingPeriodEnding = groupTaxCharge.participatorApEndDate,
-          taxLiability = groupTaxCharge.participatorTaxCharge.getOrElse(0.00),
-          paymentAllocated = groupTaxCharge.allocatedPayment.getOrElse(0.00)
+          taxLiability = AmountRow(
+            description = formatCurrency(groupTaxCharge.participatorTaxCharge.getOrElse(0.00)),
+            amount = groupTaxCharge.participatorTaxCharge.getOrElse(0.00),
+            isLink = false,
+            href = routes.GroupTaxChargesController.onPageLoad()
+          ),
+          paymentAllocated = AmountRow(
+            description = formatCurrency(groupTaxCharge.allocatedPayment.getOrElse(0.00)),
+            amount = groupTaxCharge.allocatedPayment.getOrElse(0.00),
+            isLink = true,
+            href = routes.GroupTaxChargesController.onPageLoad()
+          )
         )
       }
     )
