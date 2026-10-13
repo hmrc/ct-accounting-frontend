@@ -17,11 +17,17 @@
 package helpers.gpa
 
 import models.gpa.{AllocationDetails, PaymentAllocationDetails}
-import viewmodels.gpa.{AllocationDetailsViewModelRow, PaymentAllocationDetailsViewModel, PaymentAllocationDetailsViewModelRow}
+import play.api.i18n.Messages
+import utils.PaginationHelper
+import viewmodels.Paginated
+import viewmodels.gpa.{
+  AllocationDetailsViewModelRow, PaymentAllocationDetailsViewModel, PaymentAllocationDetailsViewModelRow
+}
 
 import java.time.LocalDate
 
 trait PaymentAllocationDetailsHelper {
+  implicit val msgs: Messages
 
   val fullPaymentAllocationDetails: PaymentAllocationDetails =
     PaymentAllocationDetails(
@@ -93,8 +99,16 @@ trait PaymentAllocationDetailsHelper {
       totalNumOfRecords = BigDecimal(30)
     )
 
-  val fullPaymentAllocationDetailsVM: PaymentAllocationDetailsViewModel = PaymentAllocationDetailsViewModel(rows =
-    List(
+  val allocRows = List(
+    AllocationDetailsViewModelRow(
+      paymentDate = "24 Jul 2024",
+      allocatedPaymentAmount = "£10.00"
+    )
+  )
+  val page      = Paginated.alreadyPaginated(allocRows, Some(1), fullPaymentAllocationDetails.totalNumOfRecords.toInt)
+
+  val fullPaymentAllocationDetailsVM: PaymentAllocationDetailsViewModel = PaymentAllocationDetailsViewModel(
+    rows = List(
       PaymentAllocationDetailsViewModelRow(
         rowName = "Group Payment Arrangement reference",
         content = "10",
@@ -149,12 +163,16 @@ trait PaymentAllocationDetailsHelper {
         isLink = true,
         href = None
       )
-    ), allocRows = List(
+    ),
+    allocRows = List(
       AllocationDetailsViewModelRow(
         paymentDate = "24 Jul 2024",
         allocatedPaymentAmount = "£10.00"
       )
-    )
+    ),
+    page = page,
+    pagination = PaginationHelper
+      .toPagination(page, _ => s"/ct-accounting/group-payment-arrangement/group-taxes/payment-allocated?page=1")(msgs)
   )
 
 }

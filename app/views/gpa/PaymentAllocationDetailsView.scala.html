@@ -25,11 +25,12 @@
         h1: h1,
         h2: h2,
         p: Paragraph,
-        link: Link
+        link: Link,
+        govukPagination: GovukPagination
 )
 
 
-@(viewModel: PaymentAllocationDetailsViewModel)(implicit request: Request[_], messages: Messages)
+@(viewModel: PaymentAllocationDetailsViewModel, numOfRecords: BigDecimal)(implicit request: Request[_], messages: Messages)
 
     @layout(pageTitle = titleNoForm(messages("paymentAllocationDetails.title"), Some(messages("paymentAllocationDetails.section"))),
         breadcrumbs = Some(PageBreadcrumbs.paymentAllocationDetailsPage)) {
@@ -53,7 +54,7 @@
 
             @p(messages("paymentAllocationDetails.p2"), extraClasses = "govuk-!-margin-bottom-8")
 
-        } else {
+        } else if(viewModel.allocRows.nonEmpty && numOfRecords > 10) {
 
             @h2(messages("paymentAllocationDetails.paymentAllocationRecords"))
 
@@ -71,5 +72,26 @@
                         }
                 )
             )
+
+            @viewModel.pagination.map(govukPagination(_))
+
+        } else {
+            @h2(messages("paymentAllocationDetails.paymentAllocationRecords"))
+
+            @govukTable(
+                Table(
+                    head = Some(Seq(
+                    HeadCell(content = Text(messages("paymentAllocationDetails.paymentDate"))),
+                    HeadCell(content = Text(messages("paymentAllocationDetails.allocatedPaymentAmount")), classes = "govuk-table__cell govuk-table__cell--numeric")
+                    )),
+                    rows = viewModel.allocRows.map { allocRow =>
+                        Seq(
+                            TableRow(content = Text(allocRow.paymentDate)),
+                            TableRow(content = Text(allocRow.allocatedPaymentAmount), classes = "govuk-table__cell govuk-table__cell--numeric")
+                        )
+                    }
+                )
+            )
         }
     }
+

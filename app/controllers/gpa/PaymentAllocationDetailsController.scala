@@ -40,14 +40,18 @@ class PaymentAllocationDetailsController @Inject() (
     with I18nSupport
     with Logging {
 
-  def onPageLoad(): Action[AnyContent] = identify.async { implicit request =>
+  def onPageLoad(page: Option[Int]): Action[AnyContent] = identify.async { implicit request =>
     paymentAllocationDetailsService.getGPAPaymentAllocationDetail(1L, 2L, 3L, 4L, 0, 10).map {
       paymentAllocationDetails =>
         logger.info(
           s"Successfully retrieved payment allocation details"
         )
-        val vm = PaymentAllocationDetailsViewModel.convertToViewModel(paymentAllocationDetails)
-        Ok(view(vm))
+        val vm = PaymentAllocationDetailsViewModel.convertToViewModel(
+          paymentAllocationDetails,
+          pageUrl = pageNumber => routes.PaymentAllocationDetailsController.onPageLoad(Some(pageNumber)).url,
+          page
+        )
+        Ok(view(vm, paymentAllocationDetails.totalNumOfRecords))
     } recover { case ex =>
       logger.error(s"Unexpected failure: ${ex.getMessage}")
       Redirect(JourneyRecoveryController.onPageLoad())
