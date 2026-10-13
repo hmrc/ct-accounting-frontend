@@ -17,7 +17,7 @@
 package helpers.gpa
 
 import models.gpa.{AllocationDetails, PaymentAllocationDetails}
-import viewmodels.gpa.{PaymentAllocationDetailsViewModel, PaymentAllocationDetailsViewModelRow}
+import viewmodels.gpa.{AllocationDetailsViewModelRow, PaymentAllocationDetailsViewModel, PaymentAllocationDetailsViewModelRow}
 
 import java.time.LocalDate
 
@@ -97,7 +97,7 @@ trait PaymentAllocationDetailsHelper {
     List(
       PaymentAllocationDetailsViewModelRow(
         rowName = "Group Payment Arrangement reference",
-        content = "12345",
+        content = "10",
         isLink = false,
         href = None
       ),
@@ -109,45 +109,50 @@ trait PaymentAllocationDetailsHelper {
       ),
       PaymentAllocationDetailsViewModelRow(
         rowName = "Accounting period ending",
-        content = "24 Jul 2026",
+        content = "24 Jul 2024",
         isLink = false,
         href = None
       ),
       PaymentAllocationDetailsViewModelRow(
         rowName = "Period of account ending",
-        content = "24 Jul 2026",
+        content = "24 Jul 2024",
         isLink = false,
         href = None
       ),
       PaymentAllocationDetailsViewModelRow(
         rowName = "Group period of account status",
-        content = "P",
+        content = "O",
         isLink = false,
         href = None
       ),
       PaymentAllocationDetailsViewModelRow(
         rowName = "Tax charge as of Cleared status",
-        content = "£30.00",
+        content = "£10.00",
         isLink = false,
         href = None
       ),
       PaymentAllocationDetailsViewModelRow(
         rowName = "Payment allocated by",
-        content = "P",
+        content = "O",
         isLink = false,
         href = None
       ),
       PaymentAllocationDetailsViewModelRow(
-        rowName = "Payment Allocated",
-        content = "-30.00",
+        rowName = "Payment allocated",
+        content = "£10.00",
         isLink = false,
         href = None
       ),
       PaymentAllocationDetailsViewModelRow(
-        rowName = "Group Tax Total",
-        content = "£0.00",
+        rowName = "Group tax total",
+        content = "£10.00",
         isLink = true,
         href = None
+      )
+    ), allocRows = List(
+      AllocationDetailsViewModelRow(
+        paymentDate = "24 Jul 2024",
+        allocatedPaymentAmount = "£10.00"
       )
     )
   )

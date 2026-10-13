@@ -20,8 +20,6 @@ import models.AdjustmentTransactionType.*
 import models.gpa.PaymentAllocationDetails
 import play.api.i18n.Messages
 import play.api.mvc.Call
-import uk.gov.hmrc.govukfrontend.views.Aliases.TableRow
-import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 import views.ViewUtils.*
 
 case class PaymentAllocationDetailsViewModelRow(
@@ -31,14 +29,12 @@ case class PaymentAllocationDetailsViewModelRow(
   href: Option[Call]
 )
 
-case class PaymentAllocationDetailsViewModel(rows: List[PaymentAllocationDetailsViewModelRow]) {
+case class AllocationDetailsViewModelRow(
+                                                 paymentDate: String,
+                                                 allocatedPaymentAmount: String
+                                               )
 
-  def totalRow(total: String, label: String): Seq[TableRow] =
-    Seq(
-      TableRow(content = Text(label), classes = "govuk-!-font-weight-bold"),
-      TableRow(content = Text(total), classes = "govuk-!-font-weight-bold govuk-table__cell govuk-table__cell--numeric")
-    )
-}
+case class PaymentAllocationDetailsViewModel(rows: List[PaymentAllocationDetailsViewModelRow], allocRows: List[AllocationDetailsViewModelRow])
 
 object PaymentAllocationDetailsViewModel {
 
@@ -101,7 +97,12 @@ object PaymentAllocationDetailsViewModel {
           isLink = isHyperLink(paymentAllocationDetails.gppTotalGroupTax),
           href = None // TODO Change to group taxes when implemented
         )
-      )
+      ), allocRows = paymentAllocationDetails.allocationDetails.map { allocDetails =>
+        AllocationDetailsViewModelRow(
+          paymentDate = formatDate(allocDetails.effectivePaymentDate, messages.lang),
+          allocatedPaymentAmount = formatCurrency(allocDetails.paymentAmount)
+        )
+      }
     )
 
   private def isHyperLink(amount: BigDecimal): Boolean =

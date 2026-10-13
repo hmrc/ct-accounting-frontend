@@ -90,5 +90,16 @@ class PaymentAllocationDetailsViewModelSpec extends AnyWordSpec with PaymentAllo
         )
 
     }
+    "create the expected rows in AllocationDetailsViewModel from PaymentAllocationDetails" in {
+      val viewModel = convertToViewModel(fullPaymentAllocationDetails)
+
+      viewModel.allocRows mustBe
+        List(
+          AllocationDetailsViewModelRow(
+            paymentDate = "24 Jul 2024",
+            allocatedPaymentAmount = "£10.00",
+          )
+        )
+    }
   }
 }

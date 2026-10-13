@@ -18,9 +18,10 @@ package controllers.gpa
 
 import base.SpecBase
 import helpers.gpa.PaymentAllocationDetailsHelper
-import org.mockito.ArgumentMatchers.{any, eq as eqTo}
+import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
+import play.api.i18n.Messages
 import play.api.inject.bind
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
@@ -41,13 +42,15 @@ class PaymentAllocationDetailsControllerSpec extends SpecBase with MockitoSugar 
     val application = applicationBuilder()
       .overrides(bind[PaymentAllocationDetailsService].toInstance(mockService))
       .build()
+
+    implicit val msgs: Messages                 = messages(application)
   }
 
   "PaymentAllocationDetailsController" - {
 
     "return 200 and a successful response for payment allocation details" in new Setup {
       when(
-        mockService.getGPAPaymentAllocationDetail(eqTo(1L), eqTo(2L), eqTo(3L), eqTo(4L), eqTo(5), eqTo(6))(
+        mockService.getGPAPaymentAllocationDetail(any(), any(), any(), any(), any(), any())(
           any[HeaderCarrier]
         )
       )
@@ -65,14 +68,14 @@ class PaymentAllocationDetailsControllerSpec extends SpecBase with MockitoSugar 
 
     "return 303 and redirect to Journey recovery" in new Setup {
       when(
-        mockService.getGPAPaymentAllocationDetail(eqTo(1L), eqTo(2L), eqTo(3L), eqTo(4L), eqTo(5), eqTo(6))(
+        mockService.getGPAPaymentAllocationDetail(any(), any(), any(), any(), any(), any())(
           any[HeaderCarrier]
         )
       )
         .thenReturn(Future.failed(new RuntimeException("error")))
 
       running(application) {
-        val request = FakeRequest(GET, paymentAllocationDetailsRoute)
+        val request = FakeRequest(GET, routes.PaymentAllocationDetailsController.onPageLoad().url)
         val result  = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
