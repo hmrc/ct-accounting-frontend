@@ -17,8 +17,7 @@
 package helpers.gpa
 
 import models.gpa.{
-  GpaPaymentsDetails, GpaPaymentsDetailsResponse, GpaPaymentsItem, GpaPaymentsRecord, GroupReferenceNumberLstItem,
-  GroupSummaryDetailsRecord, GroupSummaryDetailsResponse
+  GpaPaymentDetails, GpaPayments, GroupReferenceNumberLstItem, GroupSummaryDetailsRecord, GroupSummaryDetailsResponse
 }
 
 import java.time.LocalDate
@@ -85,11 +84,11 @@ trait GroupPaymentsHelper {
   )
 
   // PaymentDetails
-  val defaultPaymentDetails = GpaPaymentsDetails(
+  val defaultPaymentDetails = GpaPaymentDetails(
     gpaPayments = List(
-      GpaPaymentsItem(
+      GpaPayments(
         displayDate = Some(LocalDate.of(2008, 4, 14)),
-        total = Some(BigDecimal(6250)),
+        total = BigDecimal(6250),
         tablename = Some("Payslip"),
         targetTaxpayerReference = None,
         paymentType = Some("BGP"),
@@ -97,21 +96,21 @@ trait GroupPaymentsHelper {
         targetApNo = Some(0),
         targetApEndDate = None,
         contractEndDate = None,
-        participatorCount = Some(0L)
+        participatorPresent = Some(false)
       )
     ),
     totalNumOfRecords = Some(1L),
     gppEndDate = Some(LocalDate.of(2007, 12, 31)),
-    gppTotalGroupPayment = Some(BigDecimal(25000)),
-    gppTotalGroupTax = Some(BigDecimal(-250000)),
+    gppTotalGroupPayment = BigDecimal(25000),
+    gppTotalGroupTax = BigDecimal(-250000),
     gppStatus = "L",
     gppCni = None,
     gppApportionmentMethod = Some("METHOD")
   )
 
-  val defaultPaymentDetailsResponse = GpaPaymentsDetailsResponse(
+  val defaultPaymentDetailsResponse = GpaPaymentDetails(
     gpaPayments = List(
-      GpaPaymentsRecord(
+      GpaPayments(
         displayDate = Some(LocalDate.of(2008, 4, 14)),
         total = BigDecimal(-6250),
         tablename = Some("Payslip"),
