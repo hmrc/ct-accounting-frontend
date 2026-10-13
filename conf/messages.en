@@ -208,7 +208,7 @@ repaymentReallocations.description.crt = Repayments from accounting period {0}
 
 paymentAllocationDetails.title = Payment allocated – Group taxes –
 paymentAllocationDetails.section = Group Payment Arrangement
-paymentAllocationDetails.heading = Allocated payment
+paymentAllocationDetails.heading = Payment Allocated
 paymentAllocationDetails.p1 = Money applied by the nominated company against this company`s tax liabilities once they are confirmed.
 paymentAllocationDetails.p2 = There is no data for this Group Payment Arrangement.
 
