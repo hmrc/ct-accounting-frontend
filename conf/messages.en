@@ -246,7 +246,7 @@ groupPaymentsArrangements.status.earlierExempt = Earlier Exempt
 paymentAllocationDetails.title = Payment allocated – Group taxes –
 paymentAllocationDetails.section = Group Payment Arrangement
 paymentAllocationDetails.heading = Allocated payment
-paymentAllocationDetails.p1 = Money applied by the nominated company against this company's tax liabilities once they are confirmed.
+paymentAllocationDetails.p1 = Money applied by the nominated company against this company`s tax liabilities once they are confirmed.
 paymentAllocationDetails.p2 = There is no data for this Group Payment Arrangement.
 
 paymentAllocationDetails.gpaReference = Group Payment Arrangement reference
@@ -259,3 +259,6 @@ paymentAllocationDetails.paymentAllocatedBy = Payment allocated by
 paymentAllocationDetails.paymentAllocated = Payment allocated
 paymentAllocationDetails.groupTaxTotal = Group tax total
 
+paymentAllocationDetails.paymentAllocationRecords = Payment allocation records
+paymentAllocationDetails.paymentDate = Payment date
+paymentAllocationDetails.allocatedPaymentAmount = Allocated Payment Amount
