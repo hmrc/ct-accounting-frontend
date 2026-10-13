@@ -18,11 +18,12 @@ package viewmodels.gpa
 
 import play.api.i18n.Messages
 import play.api.mvc.Call
-import views.ViewUtils.formatCurrency
+import views.ViewUtils.{formatCurrency, formatDate}
 import models.gpa.GpaGroupTaxCharges
 import uk.gov.hmrc.govukfrontend.views.Aliases.Text
-import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.{Key, Value, SummaryListRow}
 import controllers.gpa.routes
+import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.{Key, SummaryList}
+import viewmodels.govuk.summarylist.*
 
 import java.time.LocalDate
 
@@ -35,7 +36,7 @@ case class GroupTaxRecordRow(
 )
 
 case class GroupTaxChargesViewModel(
-                                     summaryListRows: Seq[SummaryListRow],
+                                     summaryList: SummaryList,
                                      groupTaxRecordsRows: Seq[GroupTaxRecordRow]
 )
 
@@ -48,27 +49,29 @@ object GroupTaxChargesViewModel {
     gpaGroupTaxCharges: GpaGroupTaxCharges
   )(implicit messages: Messages): GroupTaxChargesViewModel = {
     GroupTaxChargesViewModel(
-      summaryListRows = Seq(
-        SummaryListRow(key = Key(content = Text(messages("groupTaxCharges.summaryHeader.groupArrangementReference"))),
-          value = Value(content = Text(gpaGroupTaxCharges.pGpaUtr2.toString)),
-          classes = "",
-          actions = None),
-        SummaryListRow(key = Key(content = Text(messages("groupTaxCharges.summaryHeader.periodOfAccountEnding"))),
-          value = Value(content = Text(gpaGroupTaxCharges.pGppEndDate.getOrElse(LocalDate.of(2026, 1, 1)).toString)),
-          classes = "",
-          actions = None),
-        SummaryListRow(key = Key(content = Text(messages("groupTaxCharges.summaryHeader.groupPeriodOfAccountStatus"))),
-          value = Value(content = Text(gpaGroupTaxCharges.pGppStatus.getOrElse(""))),
-          classes = "",
-          actions = None),
-        SummaryListRow(key = Key(content = Text(messages("groupTaxCharges.summaryHeader.groupPaymentTotal"))),
-          value = Value(content = Text(gpaGroupTaxCharges.pGppTotalGroupTax.getOrElse(0.00).toString)),
-          classes = "",
-          actions = None),
-        SummaryListRow(key = Key(content = Text(messages("groupTaxCharges.summaryHeader.groupTaxTotal"))),
-          value = Value(content = Text(gpaGroupTaxCharges.pGppTotalGroupTax.getOrElse(0.00).toString)),
-          classes = "",
-          actions = None),
+      summaryList = SummaryListViewModel(rows =
+        Seq(
+          SummaryListRowViewModel(
+            key = Key(content = Text(messages("groupTaxCharges.summaryHeader.groupArrangementReference"))),
+            value = ValueViewModel(Text(gpaGroupTaxCharges.pGpaUtr2.toString))
+          ),
+          SummaryListRowViewModel(
+            key = Key(content = Text(messages("groupTaxCharges.summaryHeader.periodOfAccountEnding"))),
+            value = ValueViewModel(Text(formatDate(gpaGroupTaxCharges.pGppEndDate.getOrElse(LocalDate.of(2026, 1, 1)), messages.lang)))
+          ),
+          SummaryListRowViewModel(
+            key = Key(content = Text(messages("groupTaxCharges.summaryHeader.groupPeriodOfAccountStatus"))),
+            value = ValueViewModel(Text(gpaGroupTaxCharges.pGppStatus.getOrElse("")))
+          ),
+          SummaryListRowViewModel(
+            key = Key(content = Text(messages("groupTaxCharges.summaryHeader.groupPaymentTotal"))),
+            value = ValueViewModel(Text(formatCurrency(gpaGroupTaxCharges.pGppTotalGroupPayment.getOrElse(0.00))))
+          ),
+          SummaryListRowViewModel(
+            key = Key(content = Text(messages("groupTaxCharges.summaryHeader.groupTaxTotal"))),
+            value = ValueViewModel(Text(formatCurrency(gpaGroupTaxCharges.pGppTotalGroupTax.getOrElse(0.00))))
+          ),
+        )
       ),
       groupTaxRecordsRows = gpaGroupTaxCharges.pCurGroupTaxCharges.map { groupTaxCharge =>
         GroupTaxRecordRow(
