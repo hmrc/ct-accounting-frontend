@@ -19,6 +19,7 @@ package viewmodels.accountingPeriods
 import play.api.i18n.Lang
 import uk.gov.hmrc.govukfrontend.views.Aliases.TableRow
 import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
+import utils.Constants.emptyString
 import views.ViewUtils.{formatCurrency, formatDate}
 
 import java.time.LocalDate
@@ -42,7 +43,7 @@ case class PenaltiesAccountingPeriodViewModel(
 
   def totalRow(label: String, total: String, blankCells: Int): Seq[TableRow] =
     TableRow(content = Text(label), classes = "govuk-!-font-weight-bold") +:
-      Seq.fill(blankCells)(TableRow(content = Text(""))) :+
+      Seq.fill(blankCells)(TableRow(content = Text(emptyString))) :+
       TableRow(content = Text(total), classes = "govuk-!-font-weight-bold")
 
 }

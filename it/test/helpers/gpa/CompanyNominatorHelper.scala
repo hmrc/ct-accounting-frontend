@@ -14,10 +14,12 @@
  * limitations under the License.
  */
 
-package utils
+package helpers.gpa
+import models.gpa.CompanyNominator
 
-object EmptyString {
-
-  val emptyString = ""
+trait CompanyNominatorHelper {
+  
+  val companyNominatorWithFalseValue: CompanyNominator = CompanyNominator(isParticipator = false)
+  val companyNominatorWithTrueValue: CompanyNominator = CompanyNominator(isParticipator = true)
 
 }
