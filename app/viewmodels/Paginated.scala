@@ -37,4 +37,10 @@ object Paginated {
     val page = requestedPage.getOrElse(1).max(1).min(totalPages)
     Paginated(items.slice((page - 1) * pageSize, page * pageSize), page, pageSize, items.size)
   }
+
+  def alreadyPaginated[A](items: Seq[A], requestedPage: Option[Int], totalNumberRecords: Int, pageSize: Int = defaultPageSize): Paginated[A] = {
+    val totalPages = math.max(1, (totalNumberRecords + pageSize -1) / pageSize)
+    val page = requestedPage.getOrElse(1).max(1).min(totalPages)
+    Paginated(items, page, pageSize, totalNumberRecords)
+  }
 }

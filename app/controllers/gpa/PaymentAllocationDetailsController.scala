@@ -17,6 +17,7 @@
 package controllers.gpa
 
 import controllers.actions.IdentifierAction
+//import controllers.gpa.routes
 import controllers.routes.JourneyRecoveryController
 import play.api.Logging
 import play.api.i18n.I18nSupport
@@ -39,13 +40,13 @@ class PaymentAllocationDetailsController @Inject() (
     with I18nSupport
     with Logging {
 
-  def onPageLoad(): Action[AnyContent] = identify.async { implicit request =>
+  def onPageLoad(page: Option[Int]): Action[AnyContent] = identify.async { implicit request =>
     paymentAllocationDetailsService.getGPAPaymentAllocationDetail(1L, 2L, 3L, 4L, 0, 10).map {
       paymentAllocationDetails =>
         logger.info(
           s"Successfully retrieved payment allocation details"
         )
-        val vm = PaymentAllocationDetailsViewModel.convertToViewModel(paymentAllocationDetails)
+        val vm = PaymentAllocationDetailsViewModel.convertToViewModel(paymentAllocationDetails, page, pageUrl = pageNumber => routes.PaymentAllocationDetailsController.onPageLoad(Some(pageNumber)).url)
         Ok(view(vm))
     } recover { case ex =>
       logger.error(s"Unexpected failure: ${ex.getMessage}")

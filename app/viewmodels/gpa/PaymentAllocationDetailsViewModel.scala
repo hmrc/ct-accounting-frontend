@@ -20,9 +20,13 @@ import models.AdjustmentTransactionType.*
 import models.gpa.PaymentAllocationDetails
 import play.api.i18n.Messages
 import play.api.mvc.Call
-import uk.gov.hmrc.govukfrontend.views.Aliases.TableRow
+import uk.gov.hmrc.govukfrontend.views.Aliases.{Pagination, TableRow}
 import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
+import utils.PaginationHelper
+import viewmodels.Paginated
 import views.ViewUtils.*
+
+import java.time.LocalDate
 
 case class PaymentAllocationDetailsViewModelRow(
   rowName: String,
@@ -31,7 +35,12 @@ case class PaymentAllocationDetailsViewModelRow(
   href: Option[Call]
 )
 
-case class PaymentAllocationDetailsViewModel(rows: List[PaymentAllocationDetailsViewModelRow]) {
+case class PaymentDetailsRow(
+                              paymentDate: LocalDate,
+                              amount: BigDecimal
+                            )
+
+case class PaymentAllocationDetailsViewModel(rows: List[PaymentAllocationDetailsViewModelRow], paymentRows: List[PaymentDetailsRow], page: Paginated[PaymentDetailsRow], pagination: Option[Pagination]) {
 
   def totalRow(total: String, label: String): Seq[TableRow] =
     Seq(
@@ -43,10 +52,12 @@ case class PaymentAllocationDetailsViewModel(rows: List[PaymentAllocationDetails
 object PaymentAllocationDetailsViewModel {
 
   def convertToViewModel(
-    paymentAllocationDetails: PaymentAllocationDetails
-  )(implicit messages: Messages): PaymentAllocationDetailsViewModel =
-    PaymentAllocationDetailsViewModel(
-      rows = List(
+    paymentAllocationDetails: PaymentAllocationDetails,
+    requestedPage: Option[Int],
+    pageUrl: Int => String
+  )(implicit messages: Messages): PaymentAllocationDetailsViewModel = {
+    
+    val rows = List(
         PaymentAllocationDetailsViewModelRow(
           rowName = messages("paymentAllocationDetails.gpaReference"),
           content = paymentAllocationDetails.gpaUtr.toString(),
@@ -102,7 +113,15 @@ object PaymentAllocationDetailsViewModel {
           href = None // TODO Change to group taxes when implemented
         )
       )
-    )
+    
+      val paymentRows = paymentAllocationDetails.allocationDetails.map { value
+        =>  PaymentDetailsRow(paymentDate = value.effectivePaymentDate, amount = value.paymentAmount)
+      }
+    
+    val page = Paginated.alreadyPaginated(paymentRows, requestedPage, paymentAllocationDetails.totalNumOfRecords)
+
+    PaymentAllocationDetailsViewModel(rows = rows, paymentRows = paymentRows, page = page, pagination = PaginationHelper.toPagination(page, pageUrl))
+  }
 
   private def isHyperLink(amount: BigDecimal): Boolean =
     amount != BigDecimal(0.00)

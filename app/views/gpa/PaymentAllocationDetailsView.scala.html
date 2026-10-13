@@ -24,7 +24,9 @@
         govukTable: GovukTable,
         h1: h1,
         p: Paragraph,
-        link: Link
+        link: Link,
+        govukPagination: GovukPagination
+
 )
 
 
@@ -47,6 +49,18 @@
                 }
             )
         )
+
+        @govukTable(
+            Table(
+                rows = viewModel.page.items.map { row =>
+                    Seq(
+                        TableRow(content = Text(formatDate(row.paymentDate, messages.lang))),
+                        TableRow(content = Text(formatCurrency(row.amount))),
+                    )
+                }
+            )
+        )
+        @viewModel.pagination.map(govukPagination(_))
 
         @p(messages("paymentAllocationDetails.p2"), extraClasses = "govuk-!-margin-bottom-8")
 

@@ -33,7 +33,7 @@ case class PaymentAllocationDetails(
   gpaUtr: BigDecimal,
   gppContractVersionOut: BigDecimal,
   allocationDetails: List[AllocationDetails],
-  totalNumOfRecords: BigDecimal
+  totalNumOfRecords: Int
 )
 
 object PaymentAllocationDetails {
