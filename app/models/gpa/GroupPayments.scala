@@ -28,7 +28,6 @@ object GroupReferenceNumberLstItem {
   implicit val format: OFormat[GroupReferenceNumberLstItem] = Json.format[GroupReferenceNumberLstItem]
 }
 
-// BE
 case class GroupSummaryDetailsRecord(
   contractEndDate: LocalDate,
   groupTaxCharge: BigDecimal,

@@ -51,8 +51,8 @@
             Table(
                 head = Some(Seq(
                     HeadCell(content = Text(messages("groupPaymentArrangement.tableHeader.periodOfAccountEnding"))),
-                    HeadCell(content = Text(messages("groupPaymentArrangement.tableHeader.groupPayments"))),
-                    HeadCell(content = Text(messages("groupPaymentArrangement.tableHeader.groupTaxes"))),
+                    HeadCell(content = Text(messages("groupPaymentArrangement.tableHeader.groupPayments")), classes = "govuk-table__header govuk-table__header--numeric"),
+                    HeadCell(content = Text(messages("groupPaymentArrangement.tableHeader.groupTaxes")), classes = "govuk-table__header govuk-table__header--numeric"),
                     HeadCell(content = Text(messages("groupPaymentArrangement.tableHeader.status")))
                     )),
                 rows = viewModel.rows.map { row =>
