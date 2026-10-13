@@ -16,10 +16,13 @@
 
 package viewmodels.gpa
 
+import uk.gov.hmrc.govukfrontend.views.Aliases.Pagination
 import models.AdjustmentTransactionType.*
 import models.gpa.PaymentAllocationDetails
 import play.api.i18n.Messages
 import play.api.mvc.Call
+import utils.PaginationHelper
+import viewmodels.Paginated
 import views.ViewUtils.*
 
 case class PaymentAllocationDetailsViewModelRow(
@@ -30,17 +33,34 @@ case class PaymentAllocationDetailsViewModelRow(
 )
 
 case class AllocationDetailsViewModelRow(
-                                                 paymentDate: String,
-                                                 allocatedPaymentAmount: String
-                                               )
+  paymentDate: String,
+  allocatedPaymentAmount: String
+)
 
-case class PaymentAllocationDetailsViewModel(rows: List[PaymentAllocationDetailsViewModelRow], allocRows: List[AllocationDetailsViewModelRow])
+case class PaymentAllocationDetailsViewModel(
+  rows: List[PaymentAllocationDetailsViewModelRow],
+  allocRows: List[AllocationDetailsViewModelRow],
+  page: Paginated[AllocationDetailsViewModelRow],
+  pagination: Option[Pagination]
+)
 
 object PaymentAllocationDetailsViewModel {
 
   def convertToViewModel(
-    paymentAllocationDetails: PaymentAllocationDetails
-  )(implicit messages: Messages): PaymentAllocationDetailsViewModel =
+    paymentAllocationDetails: PaymentAllocationDetails,
+    pageUrl: Int => String,
+    requestedPage: Option[Int]
+  )(implicit messages: Messages): PaymentAllocationDetailsViewModel = {
+
+    val allocRows = paymentAllocationDetails.allocationDetails.map { allocDetails =>
+      AllocationDetailsViewModelRow(
+        paymentDate = formatDate(allocDetails.effectivePaymentDate, messages.lang),
+        allocatedPaymentAmount = formatCurrency(allocDetails.paymentAmount)
+      )
+    }
+
+    val page = Paginated.alreadyPaginated(allocRows, requestedPage, paymentAllocationDetails.totalNumOfRecords.toInt)
+
     PaymentAllocationDetailsViewModel(
       rows = List(
         PaymentAllocationDetailsViewModelRow(
@@ -97,13 +117,12 @@ object PaymentAllocationDetailsViewModel {
           isLink = isHyperLink(paymentAllocationDetails.gppTotalGroupTax),
           href = None // TODO Change to group taxes when implemented
         )
-      ), allocRows = paymentAllocationDetails.allocationDetails.map { allocDetails =>
-        AllocationDetailsViewModelRow(
-          paymentDate = formatDate(allocDetails.effectivePaymentDate, messages.lang),
-          allocatedPaymentAmount = formatCurrency(allocDetails.paymentAmount)
-        )
-      }
+      ),
+      allocRows = allocRows,
+      page = page,
+      pagination = PaginationHelper.toPagination(page, pageUrl)
     )
+  }
 
   private def isHyperLink(amount: BigDecimal): Boolean =
     amount != BigDecimal(0.00)
