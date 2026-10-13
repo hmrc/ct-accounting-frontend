@@ -89,7 +89,7 @@ class PaymentAllocationDetailsViewSpec
       paragraphs.text() must include(messages("paymentAllocationDetails.p2"))
     }
 
-    "render the page with correct table contents" in new Setup {
+    "render the page with correct table contents for Allocated Payment" in new Setup {
       val html = view(fullPaymentAllocationDetailsVM)
       val doc  = htmlDoc(html)
 
@@ -102,6 +102,21 @@ class PaymentAllocationDetailsViewSpec
 
       contents.text() must include(messages("paymentAllocationDetails.paymentAllocated"))
       contents.text() must include("-30.00")
+
+    }
+
+    "render the page with correct table header and contents for Payment Allocation Records" in new Setup {
+      val html = view(fullPaymentAllocationDetailsVM)
+      val doc = htmlDoc(html)
+
+      val headers = doc.select("th.govuk-table__header")
+      val contents = doc.select("td.govuk-table__cell")
+
+      headers.text() must include(messages("paymentAllocationDetails.paymentDate"))
+      contents.text() must include("24 Jul 2024")
+
+      headers.text() must include(messages("paymentAllocationDetails.allocatedPaymentAmount"))
+      contents.text() must include("£10.00")
 
     }
 

@@ -19,7 +19,7 @@ package controllers.gpa
 import controllers.actions.IdentifierAction
 import controllers.routes.JourneyRecoveryController
 import play.api.Logging
-import play.api.i18n.I18nSupport
+import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import services.gpa.PaymentAllocationDetailsService
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
@@ -31,6 +31,7 @@ import scala.concurrent.ExecutionContext
 
 class PaymentAllocationDetailsController @Inject() (
   val controllerComponents: MessagesControllerComponents,
+  override val messagesApi: MessagesApi,
   identify: IdentifierAction,
   paymentAllocationDetailsService: PaymentAllocationDetailsService,
   view: PaymentAllocationDetailsView
