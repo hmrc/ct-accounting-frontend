@@ -36,9 +36,9 @@ class GpaPaymentDetailsServiceSpec
   private trait BaseSetup {
     implicit val messages: Messages = stubMessages()
 
-    val service                    = new GpaPaymentDetailsService()
-    val gpaUtr: Long               = 1L
-    val contractEndDate: LocalDate = LocalDate.of(2026, 1, 1)
+    val service                 = new GpaPaymentDetailsService()
+    val gpaUtr: Long            = 1L
+    val contractEndDate: String = "2026-01-01"
 
   }
 
