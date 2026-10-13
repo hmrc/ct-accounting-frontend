@@ -19,15 +19,18 @@ package services
 import connectors.gpa.GroupPaymentsConnector
 import helpers.GroupPaymentHelper
 import org.mockito.ArgumentMatchers.any
-import org.mockito.Mockito.{times, verify, when}
+import org.mockito.Mockito.{times, verify, verifyNoInteractions, when}
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalatestplus.mockito.MockitoSugar
+import play.api.i18n.Messages
 import play.api.mvc.ControllerComponents
-import play.api.test.Helpers.stubControllerComponents
-import services.gpa.GpaPaymentDetailsService
+import play.api.test.Helpers.{stubControllerComponents, stubMessages}
+import services.gpa.{GpaPaymentDetailsService, GroupPaymentService}
 import uk.gov.hmrc.http.HeaderCarrier
+import utils.Constants.emptyString
+import viewmodels.gpa.GroupPaymentArrangementViewModel
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -44,87 +47,117 @@ class GroupPaymentServiceSpec
     private val cc: ControllerComponents = stubControllerComponents()
     implicit val ec: ExecutionContext    = cc.executionContext
 
-    val mockConnector: GroupPaymentsConnector = mock[GroupPaymentsConnector]
+    implicit val messages: Messages = stubMessages()
+
+    val mockConnector: GroupPaymentsConnector               = mock[GroupPaymentsConnector]
     val mockGpaDescriptionService: GpaPaymentDetailsService = mock[GpaPaymentDetailsService]
-    val service                               = new GroupPaymentService(mockConnector, mockGpaDescriptionService)
-    val taxPayerReference: Long               = 12L
-    val accPeriod: Long                       = 2L
+    val service                                             = new GroupPaymentService(mockConnector, mockGpaDescriptionService)
+    val taxPayerReference: Long                             = 12L
+    val accPeriod: Long                                     = 2L
   }
 
   "GroupPaymentService.getViewModel" should {
-
-    "delegate to connector and successfully return GroupPaymentArrangementViewModel" in new BaseSetup {
-
+    "delegate to connector and successfully return GroupPaymentArrangementViewModel with appropriate description for RFRReallocation, status for O and S" in new BaseSetup {
       when(mockConnector.getPaymentDetails(any(), any(), any(), any())(any[HeaderCarrier]))
-        .thenReturn(Future.successful(response))
+        .thenReturn(Future.successful(responseRfrReallocation))
 
-      val result = service.getViewModel(taxPayerReference, accPeriod, 0, 20).futureValue
+      when(mockGpaDescriptionService.gpaPaymentDescription(any(), any(), any())(any[Messages]))
+        .thenReturn("Miscellaneous Transfer")
 
-      result shouldBe viewModel
+      val result: GroupPaymentArrangementViewModel =
+        service.getViewModel(taxPayerReference, accPeriod, 0, 20).futureValue
 
-      verify(mockConnector).getPaymentDetails(taxPayerReference, accPeriod, 0, 20)
+      result shouldBe viewModelResponseRfrReallocation
 
-      verify(mockConnector, times(1)).getPaymentDetails(taxPayerReference, accPeriod, 0, 20)
+      result.records.head.description shouldBe "Miscellaneous Transfer"
+
+      verify(mockConnector).getPaymentDetails(any(), any(), any(), any())(any[HeaderCarrier])
+
+      verify(mockGpaDescriptionService, times(1)).gpaPaymentDescription(any(), any(), any())(any[Messages])
+
+      verify(mockConnector, times(1)).getPaymentDetails(any(), any(), any(), any())(any[HeaderCarrier])
 
     }
-    
-    "delegate to connector and successfully return GroupPaymentArrangementViewModel" in new BaseSetup {
+    "delegate to connector and successfully return GroupPaymentArrangementViewModel with appropriate description for RTOReallocation, status for C" in new BaseSetup {
 
       when(mockConnector.getPaymentDetails(any(), any(), any(), any())(any[HeaderCarrier]))
-        .thenReturn(Future.successful(response))
+        .thenReturn(Future.successful(responseRtoReallocation))
 
-      val result = service.getViewModel(taxPayerReference, accPeriod, 0, 20).futureValue
+      when(mockGpaDescriptionService.gpaPaymentDescription(any(), any(), any())(any[Messages]))
+        .thenReturn("Reallocation FROM 99, AP ending 2026-01-01")
 
-      result shouldBe viewModel
+      val result: GroupPaymentArrangementViewModel =
+        service.getViewModel(taxPayerReference, accPeriod, 0, 20).futureValue
 
-      verify(mockConnector).getPaymentDetails(taxPayerReference, accPeriod, 0, 20)
+      result shouldBe viewModelResponseRtoReallocation
 
-      verify(mockConnector, times(1)).getPaymentDetails(taxPayerReference, accPeriod, 0, 20)
+      result.records.head.description shouldBe "Reallocation FROM 99, AP ending 2026-01-01"
+
+      verify(mockConnector).getPaymentDetails(any(), any(), any(), any())(any[HeaderCarrier])
+
+      verify(mockGpaDescriptionService, times(1)).gpaPaymentDescription(any(), any(), any())(any[Messages])
+
+      verify(mockConnector, times(1)).getPaymentDetails(any(), any(), any(), any())(any[HeaderCarrier])
 
     }
-   
-    "delegate to connector and successfully return GroupPaymentArrangementViewModel" in new BaseSetup {
-
+    "delegate to connector and successfully return GroupPaymentArrangementViewModel with appropriate description for Payslip, status for L" in new BaseSetup {
       when(mockConnector.getPaymentDetails(any(), any(), any(), any())(any[HeaderCarrier]))
-        .thenReturn(Future.successful(response))
+        .thenReturn(Future.successful(responsePayslipReallocation))
 
-      val result = service.getViewModel(taxPayerReference, accPeriod, 0, 20).futureValue
+      when(mockGpaDescriptionService.gpaPaymentDescription(any(), any(), any())(any[Messages]))
+        .thenReturn("HMRC Credit")
 
-      result shouldBe viewModel
+      val result: GroupPaymentArrangementViewModel =
+        service.getViewModel(taxPayerReference, accPeriod, 0, 20).futureValue
 
-      verify(mockConnector).getPaymentDetails(taxPayerReference, accPeriod, 0, 20)
+      result shouldBe viewModelResponsePayslipReallocation
 
-      verify(mockConnector, times(1)).getPaymentDetails(taxPayerReference, accPeriod, 0, 20)
+      result.records.head.description shouldBe "HMRC Credit"
+
+      verify(mockConnector).getPaymentDetails(any(), any(), any(), any())(any[HeaderCarrier])
+
+      verify(mockGpaDescriptionService, times(1)).gpaPaymentDescription(any(), any(), any())(any[Messages])
+
+      verify(mockConnector, times(1)).getPaymentDetails(any(), any(), any(), any())(any[HeaderCarrier])
 
     }
-    
-    "delegate to connector and successfully return GroupPaymentArrangementViewModel" in new BaseSetup {
-
+    "delegate to connector and successfully return GroupPaymentArrangementViewModel with appropriate description for Repayment or CancelledPayment status for E" in new BaseSetup {
       when(mockConnector.getPaymentDetails(any(), any(), any(), any())(any[HeaderCarrier]))
-        .thenReturn(Future.successful(response))
+        .thenReturn(Future.successful(responseRepaymentReallocation))
 
-      val result = service.getViewModel(taxPayerReference, accPeriod, 0, 20).futureValue
+      when(mockGpaDescriptionService.gpaPaymentDescription(any(), any(), any())(any[Messages]))
+        .thenReturn(emptyString)
 
-      result shouldBe viewModel
+      val result: GroupPaymentArrangementViewModel =
+        service.getViewModel(taxPayerReference, accPeriod, 0, 20).futureValue
 
-      verify(mockConnector).getPaymentDetails(taxPayerReference, accPeriod, 0, 20)
+      result shouldBe viewModelRepaymentReallocation
 
-      verify(mockConnector, times(1)).getPaymentDetails(taxPayerReference, accPeriod, 0, 20)
+      result.records.head.description shouldBe emptyString
+
+      verify(mockConnector).getPaymentDetails(any(), any(), any(), any())(any[HeaderCarrier])
+
+      verify(mockGpaDescriptionService, times(1)).gpaPaymentDescription(any(), any(), any())(any[Messages])
+
+      verify(mockConnector, times(1)).getPaymentDetails(any(), any(), any(), any())(any[HeaderCarrier])
 
     }
-
     "propagate any errors or exceptions from connector" in new BaseSetup {
-
       when(mockConnector.getPaymentDetails(any(), any(), any(), any())(any[HeaderCarrier]))
-        .thenReturn(Future.failed(new RuntimeException("boom")))
+        .thenReturn(Future.failed(new RuntimeException("Boom")))
 
-      val ex: RuntimeException = intercept[RuntimeException] {
+      when(mockGpaDescriptionService.gpaPaymentDescription(any(), any(), any())(any[Messages]))
+        .thenReturn(emptyString)
+
+      val exception: Exception = intercept[Exception] {
         service.getViewModel(taxPayerReference, accPeriod, 0, 20).futureValue
       }
 
-      ex.getMessage should include("boom")
+      exception.getMessage should include("Boom")
 
-      verify(mockConnector, times(1)).getPaymentDetails(taxPayerReference, accPeriod, 0, 20)
+      verify(mockConnector).getPaymentDetails(any(), any(), any(), any())(any[HeaderCarrier])
+      verifyNoInteractions(mockGpaDescriptionService)
+
     }
 
   }

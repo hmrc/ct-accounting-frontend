@@ -40,10 +40,6 @@ class GroupPaymentConnectorISpec
   implicit val hc: HeaderCarrier = HeaderCarrier()
 
   private val connector: GroupPaymentsConnector = app.injector.instanceOf[GroupPaymentsConnector]
-/*
-GpaPaymentsDetailsResponse(List(GpaPaymentsRecord(Some(2025-01-01), 17.01, Some("Payslip"),     Some("BGP"), None, None, Some(7), None, None, Some(true))), Some(17), Some(2026-01-01), 1125017, 1125012, "C", None, Some("METHOD")) did not equal
-GpaPaymentsDetailsResponse(List(GpaPaymentsRecord(Some(2025-01-01), 17.01, Some("Payslip"), Some("Payslip"), None, None, Some(7), None, None, Some(true))), Some(17), Some(2026-01-01), 1125017, 1125012, "C", None, Some("METHOD"))
- */
 
   "getPaymentDetails" should {
 
@@ -65,7 +61,7 @@ GpaPaymentsDetailsResponse(List(GpaPaymentsRecord(Some(2025-01-01), 17.01, Some(
                    |     "displayDate":"2025-01-01",
                    |     "total":17.01,
                    |     "tablename":"Payslip",
-                   |     "paymentType":"Payslip",
+                   |     "paymentType":"IRP",
                    |     "targetApNo":7,
                    |     "participatorPresent":true
                    |   }],
@@ -73,7 +69,7 @@ GpaPaymentsDetailsResponse(List(GpaPaymentsRecord(Some(2025-01-01), 17.01, Some(
                    |   "gppEndDate":"2026-01-01",
                    |   "gppTotalGroupPayment":1125017,
                    |   "gppTotalGroupTax":1125012,
-                   |   "gppStatus":"C",
+                   |   "gppStatus":"L",
                    |   "gppApportionmentMethod":"METHOD"
                    |   }
                    |""".stripMargin
@@ -82,7 +78,7 @@ GpaPaymentsDetailsResponse(List(GpaPaymentsRecord(Some(2025-01-01), 17.01, Some(
       )
 
       val result = connector.getPaymentDetails(1L, 5L, 0, 20).futureValue
-      result mustEqual response
+      result mustEqual responsePayslipReallocation
     }
 
 

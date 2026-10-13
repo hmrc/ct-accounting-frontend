@@ -14,53 +14,51 @@
  * limitations under the License.
  */
 
-package controllers
+package controllers.gpa
 
 import base.SpecBase
+import controllers.routes
 import helpers.GroupPaymentHelper
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
-import play.api.i18n.{Lang, Messages, MessagesApi, MessagesImpl}
+import play.api.Application
+import play.api.i18n.Messages
 import play.api.inject.bind
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import services.GroupPaymentService
+import services.gpa.GroupPaymentService
 import uk.gov.hmrc.http.HeaderCarrier
 import views.html.GroupPaymentArrangementsView
+
 import scala.concurrent.Future
 
 class GroupPaymentControllerSpec extends SpecBase with MockitoSugar with GroupPaymentHelper {
 
-  implicit val hc: HeaderCarrier       = HeaderCarrier()
-  val mockService: GroupPaymentService = mock[GroupPaymentService]
+  private trait Fixture {
+    implicit val hc: HeaderCarrier       = HeaderCarrier()
+    val mockService: GroupPaymentService = mock[GroupPaymentService]
 
-  val application = applicationBuilder()
-    .overrides(bind[GroupPaymentService].toInstance(mockService))
-    .build()
+    val application: Application = applicationBuilder()
+      .overrides(bind[GroupPaymentService].toInstance(mockService))
+      .build()
 
-  implicit val messagesApi: MessagesApi = application.injector.instanceOf[MessagesApi]
-  implicit val messages: Messages       = MessagesImpl(Lang.defaultLang, messagesApi)
+    implicit val msgs: Messages = messages(application)
+  }
 
   "GroupPaymentController" - {
+    "must return OK on GET" in new Fixture {
+      when(mockService.getViewModel(any(), any(), any(), any())(any[HeaderCarrier], any[Messages]))
+        .thenReturn(Future.successful(viewModelResponseRfrReallocation))
 
-    "must return OK on GET" in {
-
-      when(mockService.getViewModel(any(), any(), any(), any())(any[HeaderCarrier]))
-        .thenReturn(Future.successful(viewModel))
-
-      val testApplication = applicationBuilder()
-        .overrides(bind[GroupPaymentService].toInstance(mockService))
-        .build()
-
-      running(testApplication) {
-        val request = FakeRequest(GET, routes.GroupPaymentController.onPageLoad().url)
+      running(application) {
+        val request = FakeRequest(GET, controllers.gpa.routes.GroupPaymentController.onPageLoad().url)
         val result  = route(application, request).value
         val view    = application.injector.instanceOf[GroupPaymentArrangementsView]
 
         status(result) mustEqual OK
         contentAsString(result) mustEqual
-          view(viewModel)(
+          view(viewModelResponseRfrReallocation)(
             request,
             messages(application)
           ).toString
@@ -68,17 +66,12 @@ class GroupPaymentControllerSpec extends SpecBase with MockitoSugar with GroupPa
 
     }
 
-    "must redirect when exception from BE occurs" in {
-
-      when(mockService.getViewModel(any(), any(), any(), any())(any[HeaderCarrier]))
+    "must redirect to Journey Recovery Controller when exception from BE occurs" in new Fixture {
+      when(mockService.getViewModel(any(), any(), any(), any())(any[HeaderCarrier], any[Messages]))
         .thenReturn(Future.failed(RuntimeException("Error")))
 
-      val testApplication = applicationBuilder()
-        .overrides(bind[GroupPaymentService].toInstance(mockService))
-        .build()
-
-      running(testApplication) {
-        val request = FakeRequest(GET, routes.GroupPaymentController.onPageLoad().url)
+      running(application) {
+        val request = FakeRequest(GET, controllers.gpa.routes.GroupPaymentController.onPageLoad().url)
         val result  = route(application, request).value
 
         status(result) mustEqual SEE_OTHER

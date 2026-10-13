@@ -19,18 +19,19 @@ package views
 import base.SpecBase
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
+import play.api.Application
 import play.api.i18n.{Lang, Messages, MessagesApi, MessagesImpl}
 import play.api.test.FakeRequest
-import viewmodels.{GroupPaymentArrangementViewModel, GroupPaymentRecord}
+import viewmodels.gpa.{GroupPaymentArrangementViewModel, GroupPaymentRecord}
 import views.html.GroupPaymentArrangementsView
 
 import java.time.LocalDate
 
 class GroupPaymentArrangementsViewSpec extends SpecBase {
 
-  val application = applicationBuilder().build()
+  val application: Application = applicationBuilder().build()
 
-  val viewModel = GroupPaymentArrangementViewModel(
+  val viewModel: GroupPaymentArrangementViewModel = GroupPaymentArrangementViewModel(
     arrangementReference = "933636936A00104A",
     accountEnding = Some(LocalDate.of(2026, 1, 1)),
     accountStatus = "Open",

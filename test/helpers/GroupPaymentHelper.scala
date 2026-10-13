@@ -17,20 +17,67 @@
 package helpers
 
 import models.gpa.{GpaPaymentDetails, GpaPayments}
-import viewmodels.{GroupPaymentArrangementViewModel, GroupPaymentRecord}
+import play.api.i18n.Messages
+import utils.Constants.emptyString
+import viewmodels.gpa.{GroupPaymentArrangementViewModel, GroupPaymentRecord}
 
 import java.time.LocalDate
 
-
 trait GroupPaymentHelper {
 
-  val response = GpaPaymentDetails(
+  val responseRfrReallocation: GpaPaymentDetails       = GpaPaymentDetails(
+    gpaPayments = List(
+      GpaPayments(
+        displayDate = Some(LocalDate.of(2025, 1, 1)),
+        total = BigDecimal(17.01),
+        tablename = Some("RFRReallocation"),
+        paymentType = Some("RFRReallocation"),
+        repaymentType = None,
+        targetTaxpayerReference = None,
+        targetApNo = Some(7),
+        targetApEndDate = None,
+        contractEndDate = None,
+        participatorPresent = Some(false)
+      )
+    ),
+    totalNumOfRecords = Some(17),
+    gppEndDate = Some(LocalDate.of(2026, 1, 1)),
+    gppTotalGroupPayment = BigDecimal(1125017),
+    gppTotalGroupTax = BigDecimal(1125012),
+    gppStatus = "S",
+    gppCni = None,
+    gppApportionmentMethod = Some("METHOD")
+  )
+  val responseRtoReallocation: GpaPaymentDetails       = GpaPaymentDetails(
+    gpaPayments = List(
+      GpaPayments(
+        displayDate = Some(LocalDate.of(2025, 1, 1)),
+        total = BigDecimal(17.01),
+        tablename = Some("RTOReallocation"),
+        paymentType = Some("RTOReallocation"),
+        repaymentType = None,
+        targetTaxpayerReference = Some("99"),
+        targetApNo = Some(7),
+        targetApEndDate = Some(LocalDate.of(2026, 1, 1)),
+        contractEndDate = Some(LocalDate.of(2026, 2, 1)),
+        participatorPresent = Some(true)
+      )
+    ),
+    totalNumOfRecords = Some(17),
+    gppEndDate = Some(LocalDate.of(2026, 1, 1)),
+    gppTotalGroupPayment = BigDecimal(1125017),
+    gppTotalGroupTax = BigDecimal(1125012),
+    gppStatus = "C",
+    gppCni = None,
+    gppApportionmentMethod = Some("METHOD")
+  )
+  val responsePayslipReallocation: GpaPaymentDetails   = GpaPaymentDetails(
     gpaPayments = List(
       GpaPayments(
         displayDate = Some(LocalDate.of(2025, 1, 1)),
         total = BigDecimal(17.01),
         tablename = Some("Payslip"),
-        paymentType = Some("Payslip"),
+        paymentType = Some("IRP"),
         repaymentType = None,
         targetTaxpayerReference = None,
         targetApNo = Some(7),
@@ -43,24 +90,93 @@ trait GroupPaymentHelper {
     gppEndDate = Some(LocalDate.of(2026, 1, 1)),
     gppTotalGroupPayment = BigDecimal(1125017),
     gppTotalGroupTax = BigDecimal(1125012),
-    gppStatus = "C",
+    gppStatus = "L",
+    gppCni = None,
+    gppApportionmentMethod = Some("METHOD")
+  )
+  val responseRepaymentReallocation: GpaPaymentDetails = GpaPaymentDetails(
+    gpaPayments = List(
+      GpaPayments(
+        displayDate = Some(LocalDate.of(2025, 1, 1)),
+        total = BigDecimal(17.01),
+        tablename = Some("Repayment"),
+        paymentType = Some("Repayment"),
+        repaymentType = None,
+        targetTaxpayerReference = None,
+        targetApNo = Some(7),
+        targetApEndDate = None,
+        contractEndDate = None,
+        participatorPresent = Some(true)
+      )
+    ),
+    totalNumOfRecords = Some(17),
+    gppEndDate = Some(LocalDate.of(2026, 1, 1)),
+    gppTotalGroupPayment = BigDecimal(1125017),
+    gppTotalGroupTax = BigDecimal(1125012),
+    gppStatus = "E",
     gppCni = None,
     gppApportionmentMethod = Some("METHOD")
   )
 
-  val viewModel = GroupPaymentArrangementViewModel(
-    arrangementReference = "12",
-    accountEnding = Some(LocalDate.of(2026, 1, 1)),
-    accountStatus = "Earlier Cleared",
-    paymentTotal = BigDecimal(1125017),
-    taxTotal = BigDecimal(1125012),
-    records = List(
-      GroupPaymentRecord(
-        date = Some(LocalDate.of(2025, 1, 1)),
-        description = "Payslip",
-        amount = BigDecimal(17.01)
+  def viewModelResponseRfrReallocation(implicit messages: Messages): GroupPaymentArrangementViewModel     =
+    GroupPaymentArrangementViewModel(
+      arrangementReference = "12",
+      accountEnding = Some(LocalDate.of(2026, 1, 1)),
+      accountStatus = messages("groupPaymentsArrangements.status.open"),
+      paymentTotal = BigDecimal(1125017),
+      taxTotal = BigDecimal(1125012),
+      records = List(
+        GroupPaymentRecord(
+          date = Some(LocalDate.of(2025, 1, 1)),
+          description = "Miscellaneous Transfer",
+          amount = BigDecimal(17.01)
+        )
       )
     )
-  )
+  def viewModelResponseRtoReallocation(implicit messages: Messages): GroupPaymentArrangementViewModel     =
+    GroupPaymentArrangementViewModel(
+      arrangementReference = "12",
+      accountEnding = Some(LocalDate.of(2026, 1, 1)),
+      accountStatus = messages("groupPaymentsArrangements.status.earlierCleared"),
+      paymentTotal = BigDecimal(1125017),
+      taxTotal = BigDecimal(1125012),
+      records = List(
+        GroupPaymentRecord(
+          date = Some(LocalDate.of(2025, 1, 1)),
+          description = "Reallocation FROM 99, AP ending 2026-01-01",
+          amount = BigDecimal(17.01)
+        )
+      )
+    )
+  def viewModelResponsePayslipReallocation(implicit messages: Messages): GroupPaymentArrangementViewModel =
+    GroupPaymentArrangementViewModel(
+      arrangementReference = "12",
+      accountEnding = Some(LocalDate.of(2026, 1, 1)),
+      accountStatus = messages("groupPaymentsArrangements.status.cleared"),
+      paymentTotal = BigDecimal(1125017),
+      taxTotal = BigDecimal(1125012),
+      records = List(
+        GroupPaymentRecord(
+          date = Some(LocalDate.of(2025, 1, 1)),
+          description = "HMRC Credit",
+          amount = BigDecimal(17.01)
+        )
+      )
+    )
+  def viewModelRepaymentReallocation(implicit messages: Messages): GroupPaymentArrangementViewModel       =
+    GroupPaymentArrangementViewModel(
+      arrangementReference = "12",
+      accountEnding = Some(LocalDate.of(2026, 1, 1)),
+      accountStatus = messages("groupPaymentsArrangements.status.earlierExempt"),
+      paymentTotal = BigDecimal(1125017),
+      taxTotal = BigDecimal(1125012),
+      records = List(
+        GroupPaymentRecord(
+          date = Some(LocalDate.of(2025, 1, 1)),
+          description = emptyString,
+          amount = BigDecimal(17.01)
+        )
+      )
+    )
 
 }

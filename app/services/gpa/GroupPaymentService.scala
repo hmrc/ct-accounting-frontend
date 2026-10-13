@@ -14,16 +14,16 @@
  * limitations under the License.
  */
 
-package services
+package services.gpa
 
 import connectors.gpa.GroupPaymentsConnector
 import models.gpa.GpaPaymentDetails
 import play.api.Logging
 import play.api.i18n.Messages
-import services.gpa.GpaPaymentDetailsService
 import uk.gov.hmrc.http.HeaderCarrier
 import utils.Constants.emptyString
-import viewmodels.{GroupPaymentArrangementViewModel, GroupPaymentRecord}
+import utils.gpa.StatusHelper
+import viewmodels.gpa.{GroupPaymentArrangementViewModel, GroupPaymentRecord}
 
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
@@ -31,30 +31,24 @@ import scala.concurrent.{ExecutionContext, Future}
 class GroupPaymentService @Inject() (
   connector: GroupPaymentsConnector,
   service: GpaPaymentDetailsService
-)(implicit ec: ExecutionContext, messages: Messages)
+)(implicit ec: ExecutionContext)
     extends Logging {
 
-  private def getStatus(s: String): String = s.trim match {
-    case "O" | "S" => "Open"
-    case "C"       => "Earlier Cleared"
-    case "L"       => "Cleared"
-    case "E"       => "Earlier Exempt"
-    case _         => emptyString
-  }
-
-  private def transform(record: GpaPaymentDetails, taxRef: Long): GroupPaymentArrangementViewModel = {
-    val records = record.gpaPayments.map(gpaPayments =>
+  private def toViewModel(record: GpaPaymentDetails, taxRef: Long)(implicit
+    messages: Messages
+  ): GroupPaymentArrangementViewModel = {
+    val normalisedGppEndDate: String = record.gppEndDate.getOrElse(emptyString).toString
+    val records                      = record.gpaPayments.map(gpaPayments =>
       GroupPaymentRecord(
         date = gpaPayments.displayDate,
-        description =
-          service.gpaPaymentDescription(gpaPayments, taxRef, record.gppEndDate.getOrElse(emptyString).toString),
+        description = service.gpaPaymentDescription(gpaPayments, taxRef, normalisedGppEndDate),
         amount = gpaPayments.total
       )
     )
     GroupPaymentArrangementViewModel(
       arrangementReference = taxRef.toString,
       accountEnding = record.gppEndDate,
-      accountStatus = getStatus(record.gppStatus),
+      accountStatus = StatusHelper.getStatus(record.gppStatus),
       paymentTotal = record.gppTotalGroupPayment,
       taxTotal = record.gppTotalGroupTax,
       records = records
@@ -62,13 +56,14 @@ class GroupPaymentService @Inject() (
   }
 
   def getViewModel(taxRef: Long, accPeriod: Long, startIndex: Int, count: Int)(implicit
-    hc: HeaderCarrier
+    hc: HeaderCarrier,
+    messages: Messages
   ): Future[GroupPaymentArrangementViewModel] = {
     logger.info(
       s"Get Group Payment Arrangement ViewModel for taxRef: $taxRef"
     )
     connector
       .getPaymentDetails(taxRef, accPeriod, startIndex, count)
-      .map(response => transform(response, taxRef))
+      .map(response => toViewModel(response, taxRef))
   }
 }

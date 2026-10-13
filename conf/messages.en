@@ -217,11 +217,15 @@ groupPaymentsArrangements.records.date = Date
 groupPaymentsArrangements.heading2 = Group payment records
 
 groupPaymentsArrangements.heading1 = Group payment records
-groupPaymentsArrangements.ArrangementReference = Group Payment Arrangement reference
-groupPaymentsArrangements.PeriodAccountEnding = Period of account ending
-groupPaymentsArrangements.PeriodAccountStatus = Group period of account status
-groupPaymentsArrangements.PaymentTotal = Group payment total
-groupPaymentsArrangements.TaxTotal = Group tax total
+groupPaymentsArrangements.arrangementReference = Group Payment Arrangement reference
+groupPaymentsArrangements.periodAccountEnding = Period of account ending
+groupPaymentsArrangements.periodAccountStatus = Group period of account status
+groupPaymentsArrangements.paymentTotal = Group payment total
+groupPaymentsArrangements.taxTotal = Group tax total
+groupPaymentsArrangements.status.open = Open
+groupPaymentsArrangements.status.earlierCleared = Earlier Cleared
+groupPaymentsArrangements.status.cleared = Cleared
+groupPaymentsArrangements.status.earlierExempt = Earlier Exempt
 
 groupPaymentsArrangements.heading = Group payments
 groupPaymentsArrangements.title   = Group payments – Group Payment Arrangement

@@ -19,10 +19,10 @@ package controllers.gpa
 import controllers.Execution.trampoline
 import controllers.actions.*
 import controllers.routes.JourneyRecoveryController
-import play.api.i18n.Lang.logger
+import play.api.Logging
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import services.GroupPaymentService
+import services.gpa.GroupPaymentService
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.GroupPaymentArrangementsView
 
@@ -35,17 +35,19 @@ class GroupPaymentController @Inject() (
   view: GroupPaymentArrangementsView,
   service: GroupPaymentService
 ) extends FrontendBaseController
-    with I18nSupport {
+    with I18nSupport
+    with Logging {
+
+  // TODO Retrieve these values from Session Repository
+  private val taxRef: Long   = 2L
+  private val accPeriod: Int = 1
+
+  private val startIndex: Int = 0
+  private val count: Int      = 20
 
   def onPageLoad: Action[AnyContent] = identify.async { implicit request =>
-    val taxRef          = 1111444444L // 2L
-    val accPeriod: Long = 1
-    // Pagination params
-    val startIndex: Int = 0
-    val count: Int      = 20
-
     service
-      .getViewModel(taxRef, accPeriod: Long, startIndex, count)
+      .getViewModel(taxRef, accPeriod, startIndex, count)
       .map { viewModel =>
         Ok(view(viewModel))
       }

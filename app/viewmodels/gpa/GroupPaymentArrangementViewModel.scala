@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package viewmodels
+package viewmodels.gpa
 
 import play.api.i18n.Messages
 import uk.gov.hmrc.govukfrontend.views.Aliases.Text
@@ -36,23 +36,23 @@ case class GroupPaymentArrangementViewModel(
   def summary(implicit messages: Messages): SummaryList = SummaryListViewModel(
     rows = Seq(
       SummaryListRowViewModel(
-        key = "groupPaymentsArrangements.ArrangementReference",
+        key = "groupPaymentsArrangements.arrangementReference",
         value = ValueViewModel(Text(this.arrangementReference))
       ),
       SummaryListRowViewModel(
-        key = "groupPaymentsArrangements.PeriodAccountEnding",
+        key = "groupPaymentsArrangements.periodAccountEnding",
         value = ValueViewModel(Text(this.accountEnding.map(d => formatDate(d, messages.lang)).getOrElse("")))
       ),
       SummaryListRowViewModel(
-        key = "groupPaymentsArrangements.PeriodAccountStatus",
+        key = "groupPaymentsArrangements.periodAccountStatus",
         value = ValueViewModel(Text(this.accountStatus))
       ),
       SummaryListRowViewModel(
-        key = "groupPaymentsArrangements.PaymentTotal",
+        key = "groupPaymentsArrangements.paymentTotal",
         value = ValueViewModel(Text(formatCurrency(paymentTotal)))
       ),
       SummaryListRowViewModel(
-        key = "groupPaymentsArrangements.TaxTotal",
+        key = "groupPaymentsArrangements.taxTotal",
         value = ValueViewModel(Text(formatCurrency(taxTotal)))
       )
     )
