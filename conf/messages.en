@@ -207,3 +207,24 @@ gpaPayment.Description.rfr.taxRef = Reallocation TO {0}, AP ending {1}
 gpaPayment.Description.rfr.date = Reallocation TO AP ending {0}
 gpaPayment.Description.rto.taxRef = Reallocation FROM {0}, AP ending {1}
 gpaPayment.Description.rto.date = Reallocation FROM AP ending {0}
+
+
+# GPA Messages
+
+paymentAllocationDetails.title = Payment allocated – Group taxes –
+paymentAllocationDetails.section = Group Payment Arrangement
+paymentAllocationDetails.heading = Allocated payment
+paymentAllocationDetails.p1 = Money applied by the nominated company against this company's tax liabilities once they are confirmed.
+paymentAllocationDetails.p2 = There is no data for this Group Payment Arrangement.
+
+
+paymentAllocationDetails.gpaReference = Group Payment Arrangement reference
+paymentAllocationDetails.participatingCompany = Participating company
+paymentAllocationDetails.accountingPeriodEnding = Accounting period ending
+paymentAllocationDetails.periodAccountEnding = Period of account ending
+paymentAllocationDetails.groupPeriodAccountStatus = Group period of account status
+paymentAllocationDetails.taxCharge = Tax charge as of Cleared status
+paymentAllocationDetails.paymentAllocatedBy = Payment allocated by
+paymentAllocationDetails.paymentAllocated = Payment allocated
+paymentAllocationDetails.groupTaxTotal = Group tax total
+

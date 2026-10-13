@@ -39,7 +39,7 @@ class CreditInterestController @Inject() (
 ) extends FrontendBaseController
     with I18nSupport {
 
-  def onPageLoad: Action[AnyContent] = identify.async { implicit request =>
+  def onPageLoad(page: Option[Int]): Action[AnyContent] = identify.async { implicit request =>
 
     val accountPeriodEndDate = LocalDate.of(2026, 1, 1) // TODO: This needs to comes from sessionDataRepository
     val taxRef               = 1L
@@ -49,7 +49,7 @@ class CreditInterestController @Inject() (
     service
       .getCreditInterest(taxRef, accPeriod, "ICR", accountPeriodEndDate)
       .map { creditInterestResponse =>
-        val viewModel = CreditInterestRow.toViewModel(accountPeriodEndDate, creditInterestResponse)
+        val viewModel = CreditInterestRow.toViewModel(accountPeriodEndDate, creditInterestResponse, page, pageUrl = pageNumber => routes.CreditInterestController.onPageLoad(Some(pageNumber)).url)
         Ok(view(viewModel))
       }
       .recover { case ex =>

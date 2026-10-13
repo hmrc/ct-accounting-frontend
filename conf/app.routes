@@ -36,5 +36,8 @@ GET         /accounting-period-overview/repayments-and-reallocations       contr
 GET         /accounting-period-overview/interest/debit-interest   controllers.DebitInterestAccountingPeriodController.onPageLoad()
 GET         /accounting-period-overview/interest/late-payment-interest       controllers.LatePaymentInterestStillAccruingController.onPageLoad()
 GET         /accounting-period-overview/interest/repayment-interest controllers.RepaymentInterestController.onPageLoad()
-GET         /accounting-period-overview/interest/credit-interest controllers.CreditInterestController.onPageLoad()
+GET         /accounting-period-overview/interest/credit-interest controllers.CreditInterestController.onPageLoad(page: Option[Int])
+
+# GPA
+GET         /group-payment-arrangement/group-taxes/payment-allocated        controllers.gpa.PaymentAllocationDetailsController.onPageLoad(page: Option[Int])
 

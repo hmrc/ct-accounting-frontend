@@ -24,7 +24,8 @@
 @this(
         layout: templates.Layout,
         heading: h1,
-        govukTable: GovukTable
+        govukTable: GovukTable,
+        govukPagination: GovukPagination
 )
 
 @(viewModel: CreditInterestViewModel)(implicit request: Request[_], messages: Messages)
@@ -33,8 +34,14 @@
 
     @heading(messages("creditInterest.heading"))
 
+    @if(viewModel.page.needsPagination) {
+        <p class = "govuk-body">
+            SOMETHING
+        </p>
+    }
+
     @govukTable(Table(
-      rows = viewModel.rows.map { row =>
+      rows = viewModel.page.items.map { row =>
       Seq(
       TableRow(content = Text(formatCurrency(row.amountSubjectToInterest))),
       TableRow(content = Text(formatDate(row.toDate, messages.lang))),
@@ -64,4 +71,6 @@
     caption = Some(messages("creditInterest.table.header", formatDate(viewModel.accountingPeriodEndDate, messages.lang))),
     captionClasses = "govuk-table__caption--m"
     ))
+
+    @viewModel.pagination.map(govukPagination(_))
 }
