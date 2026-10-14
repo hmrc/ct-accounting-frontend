@@ -41,7 +41,8 @@ case class PaymentAllocationDetailsViewModel(
   rows: List[PaymentAllocationDetailsViewModelRow],
   allocRows: List[AllocationDetailsViewModelRow],
   page: Paginated[AllocationDetailsViewModelRow],
-  pagination: Option[Pagination]
+  pagination: Option[Pagination],
+  paginationInfo: Option[String]
 )
 
 object PaymentAllocationDetailsViewModel {
@@ -120,7 +121,8 @@ object PaymentAllocationDetailsViewModel {
       ),
       allocRows = allocRows,
       page = page,
-      pagination = PaginationHelper.toPagination(page, pageUrl)
+      pagination = PaginationHelper.toPagination(page, pageUrl),
+      paginationInfo = PaginationHelper.paginationText(page)
     )
   }
 
