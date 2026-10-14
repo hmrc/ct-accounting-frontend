@@ -21,6 +21,7 @@ import play.api.mvc.Call
 import views.ViewUtils.formatCurrency
 import models.gpa.GroupSummaryDetailsResponse
 import play.api.i18n.Messages
+import utils.gpa.StatusHelper
 
 import java.time.LocalDate
 
@@ -61,7 +62,7 @@ object GroupPaymentArrangementViewModel {
             isLink = true,
             href = routes.GroupPaymentArrangementController.onPageLoad()
           ),
-          status = groupSummaryDetailsResponse.contractStatus
+          status = StatusHelper.getStatus(groupSummaryDetailsResponse.contractStatus.toUpperCase())
         )
       }
     )

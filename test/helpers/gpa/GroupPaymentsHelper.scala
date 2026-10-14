@@ -29,7 +29,7 @@ trait GroupPaymentsHelper {
     groupTaxCharge = BigDecimal(-11.01),
     groupPayment = BigDecimal(-13.02),
     groupPaymentRecordCount = 2,
-    contractStatus = "ACTIVE",
+    contractStatus = "O",
     contractVersion = 2
   )
 
@@ -38,7 +38,7 @@ trait GroupPaymentsHelper {
     groupTaxCharge = BigDecimal(-532.86),
     groupPayment = BigDecimal(742.16),
     groupPaymentRecordCount = 2,
-    contractStatus = "CLOSED",
+    contractStatus = "C",
     contractVersion = 1
   )
 
@@ -47,7 +47,7 @@ trait GroupPaymentsHelper {
     groupTaxCharge = BigDecimal(-384.09),
     groupPayment = BigDecimal(-217.62),
     groupPaymentRecordCount = 2,
-    contractStatus = "CLOSED",
+    contractStatus = "C",
     contractVersion = 1
   )
 
@@ -56,7 +56,7 @@ trait GroupPaymentsHelper {
     groupTaxCharge = BigDecimal(832.52),
     groupPayment = BigDecimal(12.73),
     groupPaymentRecordCount = 2,
-    contractStatus = "CLOSED",
+    contractStatus = "C",
     contractVersion = 1
   )
 
@@ -65,7 +65,7 @@ trait GroupPaymentsHelper {
     groupTaxCharge = BigDecimal(743.32),
     groupPayment = BigDecimal(-431.56),
     groupPaymentRecordCount = 2,
-    contractStatus = "CLOSED",
+    contractStatus = "C",
     contractVersion = 1
   )
 

@@ -75,11 +75,15 @@ class GroupPaymentArrangementViewModelSpec extends AnyWordSpec with Matchers wit
     "get the correct status" in {
       val viewModel = GroupPaymentArrangementViewModel.toViewModel(groupPaymentDetailsResponse)
 
-      viewModel.rows(0).status mustBe "ACTIVE"
+      viewModel.rows(0).status mustBe messages("groupPaymentsArrangements.status.open")
 
-      viewModel.rows(1).status mustBe "CLOSED"
+      viewModel.rows(1).status mustBe messages("groupPaymentsArrangements.status.earlierCleared")
 
-      viewModel.rows(2).status mustBe "CLOSED"
+      viewModel.rows(2).status mustBe messages("groupPaymentsArrangements.status.earlierCleared")
+
+      viewModel.rows(3).status mustBe messages("groupPaymentsArrangements.status.earlierCleared")
+
+      viewModel.rows(4).status mustBe messages("groupPaymentsArrangements.status.earlierCleared")
     }
 
   }
