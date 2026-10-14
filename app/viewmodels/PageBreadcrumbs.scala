@@ -206,4 +206,11 @@ object PageBreadcrumbs {
       BreadcrumbsItem(content = Text(messages("breadcrumbs.home")), href = Some("/"))
     )
   )
+
+  def groupPaymentArrangementPage(implicit messages: Messages): Breadcrumbs = Breadcrumbs(
+    // TODO: Add hrefs
+    items = Seq(
+      BreadcrumbsItem(content = Text(messages("breadcrumbs.home")), href = Some("/"))
+    )
+  )
 }
