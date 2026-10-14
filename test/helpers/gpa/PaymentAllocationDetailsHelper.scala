@@ -172,7 +172,8 @@ trait PaymentAllocationDetailsHelper {
     ),
     page = page,
     pagination = PaginationHelper
-      .toPagination(page, _ => s"/ct-accounting/group-payment-arrangement/group-taxes/payment-allocated?page=1")(msgs)
+      .toPagination(page, _ => s"/ct-accounting/group-payment-arrangement/group-taxes/payment-allocated?page=1")(msgs),
+    paginationInfo = Some("PaginationInfo")
   )
 
 }
