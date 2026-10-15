@@ -30,7 +30,13 @@ case class Paginated[A](
 }
 
 object Paginated {
-  val defaultPageSize = 2 // TODO get from config
+  val defaultPageSize = 10 // TODO get from config
+
+  def paginate[A](items: Seq[A], requestedPage: Option[Int], pageSize: Int = defaultPageSize): Paginated[A] = {
+    val totalPages = math.max(1, (items.size + pageSize - 1) / pageSize)
+    val page       = requestedPage.getOrElse(1).max(1).min(totalPages)
+    Paginated(items.slice((page - 1) * pageSize, page * pageSize), page, pageSize, items.size)
+  }
 
   def alreadyPaginated[A](
     items: Seq[A],

@@ -43,3 +43,5 @@ GET         /accounting-period-overview/interest/credit-interest controllers.Cre
 GET         /group-payment-arrangement controllers.gpa.GroupPaymentArrangementController.onPageLoad()
 GET         /group-payment-arrangement/group-taxes/payment-allocated        controllers.gpa.PaymentAllocationDetailsController.onPageLoad(page: Option[Int])
 
+#Group Payments
+GET        /group-payment-arrangement/group-payments                controllers.gpa.GroupPaymentController.onPageLoad(paginationIndex: Option[Int])

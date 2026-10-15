@@ -22,6 +22,9 @@ import viewmodels.Paginated
 
 object PaginationHelper {
 
+  def startIndexCountHelper(pageNumber: Option[Int], count: Int): Int =
+    (pageNumber.getOrElse(1) - 1) * count
+
   def toPagination(paginated: Paginated[_], pageUrl: Int => String)(implicit messages: Messages): Option[Pagination] =
     if (!paginated.needsPagination) None
     else

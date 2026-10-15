@@ -19,7 +19,7 @@ package utils
 object Constants {
 
   val emptyString = ""
-  val ZERO        = 0
   val utrRegex = "^[0-9]{10}$"
+  val ZERO: Int   = 0
 
 }
