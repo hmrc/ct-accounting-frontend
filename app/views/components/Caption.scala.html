@@ -16,8 +16,8 @@
 
 @this()
 
-@(msg: String, prefixKey: String = "site.section.prefix")(implicit messages: Messages)
-<h2 class="govuk-caption-l hmrc-caption-l">
+@(msg: String, prefixKey: String = "site.section.prefix", extraClasses: String)(implicit messages: Messages)
+<caption class="govuk-caption-l hmrc-caption-l">
     <span class="govuk-visually-hidden">@messages(prefixKey)</span>
     @msg
-</h2>
+</caption>

@@ -53,6 +53,8 @@ breadcrumbs.accountingPeriods = Accounting periods
 breadcrumbs.accountingPeriodEnding = Accounting period ending
 breadcrumbs.interest = Interest
 breadcrumbs.accountingPeriods = Accounting periods
+breadcrumbs.gpa = Group Payment Arrangement
+breadcrumbs.groupTaxes = Group taxes
 
 accountingPeriodOverview.title = Accounting period overview
 accountingPeriodOverview.heading = Accounting period ending {0}
@@ -222,6 +224,7 @@ accountingPeriods.status.description.SUPERSEDED = Superseded
 accountingPeriods.status.description.DORMANT = Dormant
 accountingPeriods.status.description.EXEMPT = Exempt
 
+# GPA Messages
 groupPaymentArrangement.title = Group Payment Arrangement
 groupPaymentArrangement.heading = Group Payment Arrangement
 groupPaymentArrangement.summaryText.firstline = It is an optional agreement with HMRC. Your company can participate only if it is a member of a group that meets HMRC’s conditions.
@@ -239,3 +242,30 @@ groupPaymentsArrangements.status.open = Open
 groupPaymentsArrangements.status.earlierCleared = Earlier Cleared
 groupPaymentsArrangements.status.cleared = Cleared
 groupPaymentsArrangements.status.earlierExempt = Earlier Exempt
+
+paymentAllocationDetails.title = Payment allocated – Group taxes –
+paymentAllocationDetails.section = Group Payment Arrangement
+paymentAllocationDetails.heading = Payment Allocated
+paymentAllocationDetails.p1 = Money applied by the nominated company against this company`s tax liabilities once they are confirmed.
+paymentAllocationDetails.p2 = There is no data for this Group Payment Arrangement.
+
+paymentAllocationDetails.gpaReference = Group Payment Arrangement reference
+paymentAllocationDetails.participatingCompany = Participating company
+paymentAllocationDetails.accountingPeriodEnding = Accounting period ending
+paymentAllocationDetails.periodAccountEnding = Period of account ending
+paymentAllocationDetails.groupPeriodAccountStatus = Group period of account status
+paymentAllocationDetails.taxCharge = Tax charge as of Cleared status
+paymentAllocationDetails.paymentAllocatedBy = Payment allocated by
+paymentAllocationDetails.paymentAllocated = Payment allocated
+paymentAllocationDetails.groupTaxTotal = Group tax total
+
+paymentAllocationDetails.paymentAllocationRecords = Payment allocation records
+paymentAllocationDetails.paymentDate = Payment date
+paymentAllocationDetails.allocatedPaymentAmount = Allocated Payment Amount
+
+groupPaymentsArrangements.status.open = Open
+groupPaymentsArrangements.status.earlierCleared = Earlier Cleared
+groupPaymentsArrangements.status.cleared = Cleared
+groupPaymentsArrangements.status.earlierExempt = Earlier Exempt
+
+gpa.paginationInfo = Displaying <b>{0}</b> to <b>{1}</b> of <b>{2}</b> records
