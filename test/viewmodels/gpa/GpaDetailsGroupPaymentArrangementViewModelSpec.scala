@@ -26,7 +26,7 @@ import views.ViewUtils.{formatCurrency, formatDate}
 
 class GpaDetailsGroupPaymentArrangementViewModelSpec extends AnyWordSpec with Matchers with GroupPaymentHelper {
 
-  "GroupPaymentArrangementViewModel.summary" should {
+  "GpaDetailsGroupPaymentArrangementViewModel.summary" should {
     implicit val messages: Messages = stubMessages()
     val groupSummaryList            = viewModelResponseRfrReallocation.summary
     "create GroupSummaryList containing 5 rows with relevant row name " in {

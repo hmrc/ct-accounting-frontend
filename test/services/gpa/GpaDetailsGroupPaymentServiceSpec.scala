@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package services
+package services.gpa
 
 import connectors.gpa.GpaDetailsGroupPaymentsConnector
 import helpers.gpa.GroupPaymentHelper
@@ -27,7 +27,6 @@ import org.scalatestplus.mockito.MockitoSugar
 import play.api.i18n.Messages
 import play.api.mvc.ControllerComponents
 import play.api.test.Helpers.{stubControllerComponents, stubMessages}
-import services.gpa.{GpaPaymentDetailsService, GpaDetailsGroupPaymentService}
 import uk.gov.hmrc.http.HeaderCarrier
 import utils.Constants.emptyString
 import viewmodels.gpa.GpaDetailsGroupPaymentArrangementViewModel
@@ -56,7 +55,7 @@ class GpaDetailsGroupPaymentServiceSpec
     val accPeriod: Long                                     = 2L
   }
 
-  "GroupPaymentService.getViewModel" should {
+  "GpaDetailsGroupPaymentService.getViewModel" should {
     "delegate to connector and successfully return GroupPaymentArrangementViewModel with appropriate description for RFRReallocation, status for O and S" in new BaseSetup {
       when(mockConnector.getPaymentDetails(any(), any(), any(), any())(any[HeaderCarrier]))
         .thenReturn(Future.successful(responseRfrReallocation))

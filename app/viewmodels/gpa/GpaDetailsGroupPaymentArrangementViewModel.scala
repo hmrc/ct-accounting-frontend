@@ -26,7 +26,7 @@ import views.ViewUtils.{formatCurrency, formatDate}
 
 import java.time.LocalDate
 
-case class GroupPaymentArrangementViewModel(
+case class GpaDetailsGroupPaymentArrangementViewModel(
   arrangementReference: String,
   accountEnding: Option[LocalDate],
   accountStatus: String,

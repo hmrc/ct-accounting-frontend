@@ -28,7 +28,7 @@ import viewmodels.gpa.{GpaDetailsGroupPaymentArrangementViewModel, GroupPaymentR
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
-class GpaDetailsGroupPaymentService @Inject()(
+class GpaDetailsGroupPaymentService @Inject() (
   connector: GpaDetailsGroupPaymentsConnector,
   service: GpaPaymentDetailsService
 )(implicit ec: ExecutionContext)

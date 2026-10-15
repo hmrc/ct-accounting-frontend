@@ -24,9 +24,9 @@ import play.api.Application
 import play.api.i18n.{Lang, Messages, MessagesApi, MessagesImpl}
 import play.api.test.FakeRequest
 import viewmodels.gpa.GpaDetailsGroupPaymentArrangementPageViewModel
-import views.html.gpa.GroupPaymentArrangementsView
+import views.html.gpa.GpaDetailsGroupPaymentArrangementsView
 
-class GroupPaymentArrangementsViewSpec extends SpecBase with GroupPaymentHelper {
+class GpaDetailsGroupPaymentArrangementsViewSpec extends SpecBase with GroupPaymentHelper {
 
   val application: Application = applicationBuilder().build()
 
@@ -37,7 +37,8 @@ class GroupPaymentArrangementsViewSpec extends SpecBase with GroupPaymentHelper 
 
   val paginationIndex: Option[Int] = Some(1)
 
-  val view: GroupPaymentArrangementsView = application.injector.instanceOf[GroupPaymentArrangementsView]
+  val view: GpaDetailsGroupPaymentArrangementsView =
+    application.injector.instanceOf[GpaDetailsGroupPaymentArrangementsView]
 
   implicit val messagesApi: MessagesApi = application.injector.instanceOf[MessagesApi]
   implicit val messages: Messages       = MessagesImpl(Lang.defaultLang, messagesApi)

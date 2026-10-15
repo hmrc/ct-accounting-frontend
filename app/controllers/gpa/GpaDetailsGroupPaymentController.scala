@@ -26,15 +26,15 @@ import services.gpa.GpaDetailsGroupPaymentService
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import utils.PaginationHelper
 import viewmodels.gpa.GpaDetailsGroupPaymentArrangementPageViewModel
-import views.html.gpa.GroupPaymentArrangementsView
+import views.html.gpa.GpaDetailsGroupPaymentArrangementsView
 
 import javax.inject.Inject
 
-class GroupPaymentController @Inject() (
+class GpaDetailsGroupPaymentController @Inject() (
   override val messagesApi: MessagesApi,
   identify: IdentifierAction,
   val controllerComponents: MessagesControllerComponents,
-  view: GroupPaymentArrangementsView,
+  view: GpaDetailsGroupPaymentArrangementsView,
   service: GpaDetailsGroupPaymentService
 ) extends FrontendBaseController
     with I18nSupport
@@ -44,14 +44,15 @@ class GroupPaymentController @Inject() (
   private val taxRef: Long           = 8L
   private val accPeriod: Int         = 1
   private val count: Int             = 10
-  private val pageUrl: Int => String = p => routes.GroupPaymentController.onPageLoad(Some(p)).url
+  private val pageUrl: Int => String = p => routes.GpaDetailsGroupPaymentController.onPageLoad(Some(p)).url
 
   def onPageLoad(paginationIndex: Option[Int]): Action[AnyContent] = identify.async { implicit request =>
     val startIndex: Int = PaginationHelper.startIndexCountHelper(paginationIndex, count)
     service
       .getViewModel(taxRef, accPeriod, startIndex, count)
       .map { viewModel =>
-        val paginatedVm = GpaDetailsGroupPaymentArrangementPageViewModel.toPageViewModel(viewModel, paginationIndex, pageUrl)
+        val paginatedVm =
+          GpaDetailsGroupPaymentArrangementPageViewModel.toPageViewModel(viewModel, paginationIndex, pageUrl)
         Ok(view(paginatedVm))
       }
       .recover { case ex =>

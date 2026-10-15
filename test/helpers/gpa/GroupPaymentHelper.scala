@@ -19,7 +19,9 @@ package helpers.gpa
 import models.gpa.{GpaPaymentDetails, GpaPayments}
 import play.api.i18n.Messages
 import utils.Constants.emptyString
-import viewmodels.gpa.{GroupPaymentArrangementPageViewModel, GroupPaymentArrangementViewModel, GroupPaymentRecord}
+import viewmodels.gpa.{
+  GpaDetailsGroupPaymentArrangementPageViewModel, GpaDetailsGroupPaymentArrangementViewModel, GroupPaymentRecord
+}
 
 import java.time.LocalDate
 
@@ -118,8 +120,8 @@ trait GroupPaymentHelper {
     gppApportionmentMethod = Some("METHOD")
   )
 
-  def viewModelResponseRfrReallocation(implicit messages: Messages): GroupPaymentArrangementViewModel     =
-    GroupPaymentArrangementViewModel(
+  def viewModelResponseRfrReallocation(implicit messages: Messages): GpaDetailsGroupPaymentArrangementViewModel     =
+    GpaDetailsGroupPaymentArrangementViewModel(
       arrangementReference = "12",
       accountEnding = Some(LocalDate.of(2026, 1, 1)),
       accountStatus = messages("groupPaymentsArrangements.status.open"),
@@ -134,8 +136,8 @@ trait GroupPaymentHelper {
         )
       )
     )
-  def viewModelResponseRtoReallocation(implicit messages: Messages): GroupPaymentArrangementViewModel     =
-    GroupPaymentArrangementViewModel(
+  def viewModelResponseRtoReallocation(implicit messages: Messages): GpaDetailsGroupPaymentArrangementViewModel     =
+    GpaDetailsGroupPaymentArrangementViewModel(
       arrangementReference = "12",
       accountEnding = Some(LocalDate.of(2026, 1, 1)),
       accountStatus = messages("groupPaymentsArrangements.status.earlierCleared"),
@@ -150,8 +152,8 @@ trait GroupPaymentHelper {
         )
       )
     )
-  def viewModelResponsePayslipReallocation(implicit messages: Messages): GroupPaymentArrangementViewModel =
-    GroupPaymentArrangementViewModel(
+  def viewModelResponsePayslipReallocation(implicit messages: Messages): GpaDetailsGroupPaymentArrangementViewModel =
+    GpaDetailsGroupPaymentArrangementViewModel(
       arrangementReference = "12",
       accountEnding = Some(LocalDate.of(2026, 1, 1)),
       accountStatus = messages("groupPaymentsArrangements.status.cleared"),
@@ -166,8 +168,8 @@ trait GroupPaymentHelper {
         )
       )
     )
-  def viewModelRepaymentReallocation(implicit messages: Messages): GroupPaymentArrangementViewModel       =
-    GroupPaymentArrangementViewModel(
+  def viewModelRepaymentReallocation(implicit messages: Messages): GpaDetailsGroupPaymentArrangementViewModel       =
+    GpaDetailsGroupPaymentArrangementViewModel(
       arrangementReference = "12",
       accountEnding = Some(LocalDate.of(2026, 1, 1)),
       accountStatus = messages("groupPaymentsArrangements.status.earlierExempt"),
@@ -182,8 +184,8 @@ trait GroupPaymentHelper {
         )
       )
     )
-  def viewModelWithMultipleRecords(implicit messages: Messages): GroupPaymentArrangementViewModel         =
-    GroupPaymentArrangementViewModel(
+  def viewModelWithMultipleRecords(implicit messages: Messages): GpaDetailsGroupPaymentArrangementViewModel         =
+    GpaDetailsGroupPaymentArrangementViewModel(
       arrangementReference = "12",
       accountEnding = Some(LocalDate.of(2026, 1, 1)),
       accountStatus = messages("groupPaymentsArrangements.status.earlierExempt"),
@@ -255,10 +257,10 @@ trait GroupPaymentHelper {
     )
 
   def returnGroupPaymentPageViewModel(
-    viewModel: GroupPaymentArrangementViewModel,
+    viewModel: GpaDetailsGroupPaymentArrangementViewModel,
     requestedPage: Option[Int],
     pageUrl: Int => String
-  )(implicit messages: Messages): GroupPaymentArrangementPageViewModel =
-    GroupPaymentArrangementPageViewModel.toPageViewModel(viewModel, requestedPage, pageUrl)
+  )(implicit messages: Messages): GpaDetailsGroupPaymentArrangementPageViewModel =
+    GpaDetailsGroupPaymentArrangementPageViewModel.toPageViewModel(viewModel, requestedPage, pageUrl)
 
 }
