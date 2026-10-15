@@ -30,20 +30,20 @@ import views.html.gpa.GroupTaxChargesView
 import javax.inject.Inject
 
 class GroupTaxChargesController @Inject() (
-                                                     override val messagesApi: MessagesApi,
-                                                     identify: IdentifierAction,
-                                                     val controllerComponents: MessagesControllerComponents,
-                                                     view: GroupTaxChargesView,
-                                                     service: GroupTaxChargesService
-                                                   ) extends FrontendBaseController
-  with I18nSupport {
+  override val messagesApi: MessagesApi,
+  identify: IdentifierAction,
+  val controllerComponents: MessagesControllerComponents,
+  view: GroupTaxChargesView,
+  service: GroupTaxChargesService
+) extends FrontendBaseController
+    with I18nSupport {
 
   def onPageLoad: Action[AnyContent] = identify.async { implicit request =>
 
-    val pGpaUtr              = 1L // TODO: This needs to comes from sessionDataRepository
-    val pGppContractVersion  = 1
-    val pStartIndex          = 0
-    val pCount               = 10
+    val pGpaUtr             = 1L // TODO: This needs to comes from sessionDataRepository
+    val pGppContractVersion = 1
+    val pStartIndex         = 0
+    val pCount              = 10
 
     // TODO: Get taxRef + accPeriod from sessionDataRepositry
     service

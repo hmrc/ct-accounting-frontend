@@ -29,14 +29,11 @@ import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
 class GroupTaxChargesConnector @Inject() (http: HttpClientV2, config: ServicesConfig)(implicit
-                                                                                              ec: ExecutionContext
+  ec: ExecutionContext
 ) extends Logging {
 
-  def getGpaGroupTaxCharges( pGpaUtr: Long,
-                             pGppContractVersion: Int,
-                             pStartIndex: Int,
-                             pCount: Int)(implicit
-                                                                 hc: HeaderCarrier
+  def getGpaGroupTaxCharges(pGpaUtr: Long, pGppContractVersion: Int, pStartIndex: Int, pCount: Int)(implicit
+    hc: HeaderCarrier
   ): Future[GpaGroupTaxCharges] = {
     val baseUrl  = config.baseUrl("corporation-tax")
     val url: URL = url"$baseUrl/corporation-tax/group-tax-charges/$pGpaUtr/$pGppContractVersion"
