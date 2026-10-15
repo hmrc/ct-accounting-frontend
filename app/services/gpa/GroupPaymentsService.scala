@@ -16,7 +16,7 @@
 
 package services.gpa
 
-import connectors.gpa.GroupPaymentsConnector
+import connectors.gpa.GroupPaymentsConnectorSummary
 import models.gpa.GroupSummaryDetailsResponse
 import play.api.Logging
 import uk.gov.hmrc.http.HeaderCarrier
@@ -25,7 +25,7 @@ import javax.inject.Inject
 import scala.concurrent.Future
 
 class GroupPaymentsService @Inject() (
-  groupPaymentsConnector: GroupPaymentsConnector
+  groupPaymentsConnector: GroupPaymentsConnectorSummary
 ) extends Logging {
 
   def getGroupSummary(gpaUTR: Long, nomCompanyUTR: Long)(implicit

@@ -16,7 +16,7 @@
 
 package services.gpa
 
-import connectors.gpa.GroupPaymentsConnector
+import connectors.gpa.GroupPaymentsConnectorSummary
 import helpers.gpa.GroupPaymentsHelper
 import models.gpa.GroupSummaryDetailsResponse
 import org.mockito.ArgumentMatchers.{any, eq as eqTo}
@@ -44,7 +44,7 @@ class GroupPaymentsServiceSpec
     private val cc: ControllerComponents = stubControllerComponents()
     implicit val ec: ExecutionContext    = cc.executionContext
 
-    val mockConnector: GroupPaymentsConnector = mock[GroupPaymentsConnector]
+    val mockConnector: GroupPaymentsConnector = mock[GroupPaymentsConnectorSummary]
     val service                               = new GroupPaymentsService(mockConnector)
     val gpaUTR: Long                          = 1L
     val nomCompanyUtr: Long                   = 5L
