@@ -29,8 +29,8 @@ import java.net.URL
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
-class GroupPaymentsConnector @Inject() (http: HttpClientV2, config: ServicesConfig)(implicit
-  ec: ExecutionContext
+class GpaDetailsGroupPaymentsConnector @Inject()(http: HttpClientV2, config: ServicesConfig)(implicit
+                                                                                             ec: ExecutionContext
 ) extends Logging {
 
   def getPaymentDetails(taxRef: Long, accPeriod: Long, startIndex: Int, count: Int)(implicit

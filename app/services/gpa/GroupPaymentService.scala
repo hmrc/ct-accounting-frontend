@@ -16,7 +16,7 @@
 
 package services.gpa
 
-import connectors.gpa.GroupPaymentsConnector
+import connectors.gpa.GpaDetailsGroupPaymentsConnector
 import models.gpa.GpaPaymentDetails
 import play.api.Logging
 import play.api.i18n.Messages
@@ -29,8 +29,8 @@ import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
 class GroupPaymentService @Inject() (
-  connector: GroupPaymentsConnector,
-  service: GpaPaymentDetailsService
+                                      connector: GpaDetailsGroupPaymentsConnector,
+                                      service: GpaPaymentDetailsService
 )(implicit ec: ExecutionContext)
     extends Logging {
 

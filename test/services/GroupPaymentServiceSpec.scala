@@ -16,7 +16,7 @@
 
 package services
 
-import connectors.gpa.GroupPaymentsConnector
+import connectors.gpa.GpaDetailsGroupPaymentsConnector
 import helpers.gpa.GroupPaymentHelper
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.{times, verify, verifyNoInteractions, when}
@@ -49,7 +49,7 @@ class GroupPaymentServiceSpec
 
     implicit val messages: Messages = stubMessages()
 
-    val mockConnector: GroupPaymentsConnector               = mock[GroupPaymentsConnector]
+    val mockConnector: GpaDetailsGroupPaymentsConnector               = mock[GpaDetailsGroupPaymentsConnector]
     val mockGpaDescriptionService: GpaPaymentDetailsService = mock[GpaPaymentDetailsService]
     val service                                             = new GroupPaymentService(mockConnector, mockGpaDescriptionService)
     val taxPayerReference: Long                             = 12L

@@ -17,7 +17,7 @@
 package connectors
 
 import com.github.tomakehurst.wiremock.client.WireMock.*
-import connectors.gpa.GroupPaymentsConnector
+import connectors.gpa.GpaDetailsGroupPaymentsConnector
 import helpers.gpa.GroupPaymentHelper
 import itutils.ApplicationWithWiremock
 import org.scalatest.BeforeAndAfterEach
@@ -39,7 +39,7 @@ class GroupPaymentConnectorISpec
 
   implicit val hc: HeaderCarrier = HeaderCarrier()
 
-  private val connector: GroupPaymentsConnector = app.injector.instanceOf[GroupPaymentsConnector]
+  private val connector: GpaDetailsGroupPaymentsConnector = app.injector.instanceOf[GpaDetailsGroupPaymentsConnector]
 
   "getPaymentDetails" should {
 
