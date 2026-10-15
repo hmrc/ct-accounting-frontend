@@ -39,4 +39,4 @@ GET         /accounting-period-overview/interest/repayment-interest controllers.
 GET         /accounting-period-overview/interest/credit-interest controllers.CreditInterestController.onPageLoad()
 
 #Group Payments
-GET        /group-payment-arrangement/group-payments                controllers.gpa.GroupPaymentController.onPageLoad()
+GET        /group-payment-arrangement/group-payments                controllers.gpa.GroupPaymentController.onPageLoad(paginationIndex: Option[Int])

@@ -18,7 +18,7 @@ package connectors
 
 import com.github.tomakehurst.wiremock.client.WireMock.*
 import connectors.gpa.GroupPaymentsConnector
-import helpers.GroupPaymentHelper
+import helpers.gpa.GroupPaymentHelper
 import itutils.ApplicationWithWiremock
 import org.scalatest.BeforeAndAfterEach
 import org.scalatest.concurrent.{IntegrationPatience, ScalaFutures}
@@ -65,7 +65,7 @@ class GroupPaymentConnectorISpec
                    |     "targetApNo":7,
                    |     "participatorPresent":true
                    |   }],
-                   |   "totalNumOfRecords":17,
+                   |   "totalNumOfRecords":1,
                    |   "gppEndDate":"2026-01-01",
                    |   "gppTotalGroupPayment":1125017,
                    |   "gppTotalGroupTax":1125012,

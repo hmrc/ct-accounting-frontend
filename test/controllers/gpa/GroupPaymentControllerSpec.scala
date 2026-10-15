@@ -18,7 +18,7 @@ package controllers.gpa
 
 import base.SpecBase
 import controllers.routes
-import helpers.GroupPaymentHelper
+import helpers.gpa.GroupPaymentHelper
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
@@ -29,7 +29,8 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import services.gpa.GroupPaymentService
 import uk.gov.hmrc.http.HeaderCarrier
-import views.html.GroupPaymentArrangementsView
+import viewmodels.gpa.GroupPaymentArrangementPageViewModel
+import views.html.gpa.GroupPaymentArrangementsView
 
 import scala.concurrent.Future
 
@@ -43,22 +44,28 @@ class GroupPaymentControllerSpec extends SpecBase with MockitoSugar with GroupPa
       .overrides(bind[GroupPaymentService].toInstance(mockService))
       .build()
 
+    val pageUrl: Int => String       = page => s"/group-payment-arrangement?page=$page"
+    val paginationIndex: Option[Int] = Some(1)
+
     implicit val msgs: Messages = messages(application)
   }
 
   "GroupPaymentController" - {
-    "must return OK on GET" in new Fixture {
+    "must return OK on GET with correct view " in new Fixture {
       when(mockService.getViewModel(any(), any(), any(), any())(any[HeaderCarrier], any[Messages]))
         .thenReturn(Future.successful(viewModelResponseRfrReallocation))
 
+      val pageViewModel: GroupPaymentArrangementPageViewModel =
+        returnGroupPaymentPageViewModel(viewModelResponseRfrReallocation, paginationIndex, pageUrl)
+
       running(application) {
-        val request = FakeRequest(GET, controllers.gpa.routes.GroupPaymentController.onPageLoad().url)
+        val request = FakeRequest(GET, controllers.gpa.routes.GroupPaymentController.onPageLoad(paginationIndex).url)
         val result  = route(application, request).value
         val view    = application.injector.instanceOf[GroupPaymentArrangementsView]
 
         status(result) mustEqual OK
         contentAsString(result) mustEqual
-          view(viewModelResponseRfrReallocation)(
+          view(pageViewModel)(
             request,
             messages(application)
           ).toString
@@ -71,7 +78,7 @@ class GroupPaymentControllerSpec extends SpecBase with MockitoSugar with GroupPa
         .thenReturn(Future.failed(RuntimeException("Error")))
 
       running(application) {
-        val request = FakeRequest(GET, controllers.gpa.routes.GroupPaymentController.onPageLoad().url)
+        val request = FakeRequest(GET, controllers.gpa.routes.GroupPaymentController.onPageLoad(paginationIndex).url)
         val result  = route(application, request).value
 
         status(result) mustEqual SEE_OTHER

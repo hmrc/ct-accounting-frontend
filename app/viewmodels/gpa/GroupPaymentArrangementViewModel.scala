@@ -16,6 +16,7 @@
 
 package viewmodels.gpa
 
+import controllers.gpa.routes.*
 import play.api.i18n.Messages
 import uk.gov.hmrc.govukfrontend.views.Aliases.Text
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryList
@@ -31,8 +32,10 @@ case class GroupPaymentArrangementViewModel(
   accountStatus: String,
   paymentTotal: BigDecimal,
   taxTotal: BigDecimal,
+  totalNumberOfRecords: Int,
   records: List[GroupPaymentRecord]
 ) {
+
   def summary(implicit messages: Messages): SummaryList = SummaryListViewModel(
     rows = Seq(
       SummaryListRowViewModel(
@@ -49,14 +52,19 @@ case class GroupPaymentArrangementViewModel(
       ),
       SummaryListRowViewModel(
         key = "groupPaymentsArrangements.paymentTotal",
-        value = ValueViewModel(Text(formatCurrency(paymentTotal)))
+        value = ValueViewModel(Text(formatCurrency(this.paymentTotal)))
       ),
       SummaryListRowViewModel(
         key = "groupPaymentsArrangements.taxTotal",
-        value = ValueViewModel(Text(formatCurrency(taxTotal)))
+        value = ValueViewModel(
+          LinkViewModel.toHtmlContent(
+            LinkViewModel(
+              text = formatCurrency(this.taxTotal),
+              href = "#" // TODO To point this to Group tax total
+            )
+          )
+        )
       )
     )
   )
 }
-
-case class GroupPaymentRecord(date: Option[LocalDate], description: String, amount: BigDecimal)

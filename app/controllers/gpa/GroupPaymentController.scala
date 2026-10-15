@@ -24,7 +24,9 @@ import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import services.gpa.GroupPaymentService
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
-import views.html.GroupPaymentArrangementsView
+import utils.PaginationHelper
+import viewmodels.gpa.GroupPaymentArrangementPageViewModel
+import views.html.gpa.GroupPaymentArrangementsView
 
 import javax.inject.Inject
 
@@ -39,17 +41,18 @@ class GroupPaymentController @Inject() (
     with Logging {
 
   // TODO Retrieve these values from Session Repository
-  private val taxRef: Long   = 2L
-  private val accPeriod: Int = 1
+  private val taxRef: Long           = 8L
+  private val accPeriod: Int         = 1
+  private val count: Int             = 10
+  private val pageUrl: Int => String = p => routes.GroupPaymentController.onPageLoad(Some(p)).url
 
-  private val startIndex: Int = 0
-  private val count: Int      = 20
-
-  def onPageLoad: Action[AnyContent] = identify.async { implicit request =>
+  def onPageLoad(paginationIndex: Option[Int]): Action[AnyContent] = identify.async { implicit request =>
+    val startIndex: Int = PaginationHelper.startIndexCountHelper(paginationIndex, count)
     service
       .getViewModel(taxRef, accPeriod, startIndex, count)
       .map { viewModel =>
-        Ok(view(viewModel))
+        val paginatedVm = GroupPaymentArrangementPageViewModel.toPageViewModel(viewModel, paginationIndex, pageUrl)
+        Ok(view(paginatedVm))
       }
       .recover { case ex =>
         logger.error(s"Unexpected failure in Group Payment Arrangement: ${ex.getMessage}")

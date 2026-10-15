@@ -19,6 +19,6 @@ package utils
 object Constants {
 
   val emptyString = ""
-  val ZERO        = 0
+  val ZERO: Int   = 0
 
 }

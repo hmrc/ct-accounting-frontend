@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-package helpers
+package helpers.gpa
 
 import models.gpa.{GpaPaymentDetails, GpaPayments}
 import play.api.i18n.Messages
 import utils.Constants.emptyString
-import viewmodels.gpa.{GroupPaymentArrangementViewModel, GroupPaymentRecord}
+import viewmodels.gpa.{GroupPaymentArrangementPageViewModel, GroupPaymentArrangementViewModel, GroupPaymentRecord}
 
 import java.time.LocalDate
 
@@ -40,7 +40,7 @@ trait GroupPaymentHelper {
         participatorPresent = Some(false)
       )
     ),
-    totalNumOfRecords = Some(17),
+    totalNumOfRecords = Some(1),
     gppEndDate = Some(LocalDate.of(2026, 1, 1)),
     gppTotalGroupPayment = BigDecimal(1125017),
     gppTotalGroupTax = BigDecimal(1125012),
@@ -63,7 +63,7 @@ trait GroupPaymentHelper {
         participatorPresent = Some(true)
       )
     ),
-    totalNumOfRecords = Some(17),
+    totalNumOfRecords = Some(1),
     gppEndDate = Some(LocalDate.of(2026, 1, 1)),
     gppTotalGroupPayment = BigDecimal(1125017),
     gppTotalGroupTax = BigDecimal(1125012),
@@ -86,7 +86,7 @@ trait GroupPaymentHelper {
         participatorPresent = Some(true)
       )
     ),
-    totalNumOfRecords = Some(17),
+    totalNumOfRecords = Some(1),
     gppEndDate = Some(LocalDate.of(2026, 1, 1)),
     gppTotalGroupPayment = BigDecimal(1125017),
     gppTotalGroupTax = BigDecimal(1125012),
@@ -109,7 +109,7 @@ trait GroupPaymentHelper {
         participatorPresent = Some(true)
       )
     ),
-    totalNumOfRecords = Some(17),
+    totalNumOfRecords = Some(1),
     gppEndDate = Some(LocalDate.of(2026, 1, 1)),
     gppTotalGroupPayment = BigDecimal(1125017),
     gppTotalGroupTax = BigDecimal(1125012),
@@ -125,6 +125,7 @@ trait GroupPaymentHelper {
       accountStatus = messages("groupPaymentsArrangements.status.open"),
       paymentTotal = BigDecimal(1125017),
       taxTotal = BigDecimal(1125012),
+      totalNumberOfRecords = 1,
       records = List(
         GroupPaymentRecord(
           date = Some(LocalDate.of(2025, 1, 1)),
@@ -140,6 +141,7 @@ trait GroupPaymentHelper {
       accountStatus = messages("groupPaymentsArrangements.status.earlierCleared"),
       paymentTotal = BigDecimal(1125017),
       taxTotal = BigDecimal(1125012),
+      totalNumberOfRecords = 1,
       records = List(
         GroupPaymentRecord(
           date = Some(LocalDate.of(2025, 1, 1)),
@@ -155,6 +157,7 @@ trait GroupPaymentHelper {
       accountStatus = messages("groupPaymentsArrangements.status.cleared"),
       paymentTotal = BigDecimal(1125017),
       taxTotal = BigDecimal(1125012),
+      totalNumberOfRecords = 1,
       records = List(
         GroupPaymentRecord(
           date = Some(LocalDate.of(2025, 1, 1)),
@@ -170,6 +173,7 @@ trait GroupPaymentHelper {
       accountStatus = messages("groupPaymentsArrangements.status.earlierExempt"),
       paymentTotal = BigDecimal(1125017),
       taxTotal = BigDecimal(1125012),
+      totalNumberOfRecords = 1,
       records = List(
         GroupPaymentRecord(
           date = Some(LocalDate.of(2025, 1, 1)),
@@ -178,5 +182,83 @@ trait GroupPaymentHelper {
         )
       )
     )
+  def viewModelWithMultipleRecords(implicit messages: Messages): GroupPaymentArrangementViewModel         =
+    GroupPaymentArrangementViewModel(
+      arrangementReference = "12",
+      accountEnding = Some(LocalDate.of(2026, 1, 1)),
+      accountStatus = messages("groupPaymentsArrangements.status.earlierExempt"),
+      paymentTotal = BigDecimal(1125017),
+      taxTotal = BigDecimal(1125012),
+      totalNumberOfRecords = 12,
+      records = List(
+        GroupPaymentRecord(
+          date = Some(LocalDate.of(2025, 1, 1)),
+          description = emptyString,
+          amount = BigDecimal(17.01)
+        ),
+        GroupPaymentRecord(
+          date = Some(LocalDate.of(2026, 1, 1)),
+          description = "HMRC Credit",
+          amount = BigDecimal(180.01)
+        ),
+        GroupPaymentRecord(
+          date = Some(LocalDate.of(2027, 1, 1)),
+          description = "Reallocation FROM 99, AP ending 2026-01-01",
+          amount = BigDecimal(20.01)
+        ),
+        GroupPaymentRecord(
+          date = Some(LocalDate.of(2025, 1, 1)),
+          description = "Miscellaneous Transfer",
+          amount = BigDecimal(17.01)
+        ),
+        GroupPaymentRecord(
+          date = Some(LocalDate.of(2025, 1, 1)),
+          description = "Miscellaneous Transfer",
+          amount = BigDecimal(17.01)
+        ),
+        GroupPaymentRecord(
+          date = Some(LocalDate.of(2025, 1, 1)),
+          description = "Miscellaneous Transfer",
+          amount = BigDecimal(17.01)
+        ),
+        GroupPaymentRecord(
+          date = Some(LocalDate.of(2025, 1, 1)),
+          description = "Miscellaneous Transfer",
+          amount = BigDecimal(17.01)
+        ),
+        GroupPaymentRecord(
+          date = Some(LocalDate.of(2025, 1, 1)),
+          description = "Miscellaneous Transfer",
+          amount = BigDecimal(17.01)
+        ),
+        GroupPaymentRecord(
+          date = Some(LocalDate.of(2025, 1, 1)),
+          description = "Miscellaneous Transfer",
+          amount = BigDecimal(17.01)
+        ),
+        GroupPaymentRecord(
+          date = Some(LocalDate.of(2025, 1, 1)),
+          description = "Miscellaneous Transfer",
+          amount = BigDecimal(17.01)
+        ),
+        GroupPaymentRecord(
+          date = Some(LocalDate.of(2025, 1, 1)),
+          description = "Miscellaneous Transfer",
+          amount = BigDecimal(17.01)
+        ),
+        GroupPaymentRecord(
+          date = Some(LocalDate.of(2025, 1, 1)),
+          description = "Miscellaneous Transfer",
+          amount = BigDecimal(17.01)
+        )
+      )
+    )
+
+  def returnGroupPaymentPageViewModel(
+    viewModel: GroupPaymentArrangementViewModel,
+    requestedPage: Option[Int],
+    pageUrl: Int => String
+  )(implicit messages: Messages): GroupPaymentArrangementPageViewModel =
+    GroupPaymentArrangementPageViewModel.toPageViewModel(viewModel, requestedPage, pageUrl)
 
 }

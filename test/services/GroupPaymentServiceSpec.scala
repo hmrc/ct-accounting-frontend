@@ -17,7 +17,7 @@
 package services
 
 import connectors.gpa.GroupPaymentsConnector
-import helpers.GroupPaymentHelper
+import helpers.gpa.GroupPaymentHelper
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.{times, verify, verifyNoInteractions, when}
 import org.scalatest.concurrent.ScalaFutures
