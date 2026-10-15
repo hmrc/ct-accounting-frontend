@@ -239,6 +239,7 @@ groupPaymentsArrangements.status.open = Open
 groupPaymentsArrangements.status.earlierCleared = Earlier Cleared
 groupPaymentsArrangements.status.cleared = Cleared
 groupPaymentsArrangements.status.earlierExempt = Earlier Exempt
+groupPaymentsArrangements.status.fstatus = Status F
 
 groupTaxCharges.title = Group taxes – Group Payment Arrangement
 groupTaxCharges.heading = Group taxes
