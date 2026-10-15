@@ -17,7 +17,7 @@
 @import config.FrontendAppConfig
 @import views.html.components.*
 @import viewmodels._
-@import viewmodels.gpa.GroupPaymentArrangementPageViewModel
+@import viewmodels.gpa.GpaDetailsGroupPaymentArrangementPageViewModel
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukPagination
 
@@ -33,7 +33,7 @@
 )
 
 
-@(viewModel: GroupPaymentArrangementPageViewModel)(implicit request: Request[_], messages: Messages)
+@(viewModel: GpaDetailsGroupPaymentArrangementPageViewModel)(implicit request: Request[_], messages: Messages)
 
 @layout(pageTitle = titleNoForm(messages("groupPaymentsArrangements.title")),
     breadcrumbs = Some(PageBreadcrumbs.groupPaymentArrangementPage)) {

@@ -42,7 +42,7 @@ class GpaPaymentDetailsServiceSpec
 
   }
 
-  "GpaPaymentDetailsService.GpaPaymentDescription" should {
+  "GpaDetailsGpaPaymentDetailsService.GpaPaymentDescription" should {
 
     "Return miscellaneous transfer when tax reference and gpaUtr not equal && participator is false for rfr and rto payments" in new BaseSetup {
 

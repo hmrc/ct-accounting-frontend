@@ -27,14 +27,14 @@ import org.scalatestplus.mockito.MockitoSugar
 import play.api.i18n.Messages
 import play.api.mvc.ControllerComponents
 import play.api.test.Helpers.{stubControllerComponents, stubMessages}
-import services.gpa.{GpaPaymentDetailsService, GroupPaymentService}
+import services.gpa.{GpaPaymentDetailsService, GpaDetailsGroupPaymentService}
 import uk.gov.hmrc.http.HeaderCarrier
 import utils.Constants.emptyString
-import viewmodels.gpa.GroupPaymentArrangementViewModel
+import viewmodels.gpa.GpaDetailsGroupPaymentArrangementViewModel
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class GroupPaymentServiceSpec
+class GpaDetailsGroupPaymentServiceSpec
     extends AnyWordSpec
     with Matchers
     with ScalaFutures
@@ -49,9 +49,9 @@ class GroupPaymentServiceSpec
 
     implicit val messages: Messages = stubMessages()
 
-    val mockConnector: GpaDetailsGroupPaymentsConnector               = mock[GpaDetailsGroupPaymentsConnector]
+    val mockConnector: GpaDetailsGroupPaymentsConnector     = mock[GpaDetailsGroupPaymentsConnector]
     val mockGpaDescriptionService: GpaPaymentDetailsService = mock[GpaPaymentDetailsService]
-    val service                                             = new GroupPaymentService(mockConnector, mockGpaDescriptionService)
+    val service                                             = new GpaDetailsGroupPaymentService(mockConnector, mockGpaDescriptionService)
     val taxPayerReference: Long                             = 12L
     val accPeriod: Long                                     = 2L
   }
@@ -64,7 +64,7 @@ class GroupPaymentServiceSpec
       when(mockGpaDescriptionService.gpaPaymentDescription(any(), any(), any())(any[Messages]))
         .thenReturn("Miscellaneous Transfer")
 
-      val result: GroupPaymentArrangementViewModel =
+      val result: GpaDetailsGroupPaymentArrangementViewModel =
         service.getViewModel(taxPayerReference, accPeriod, 0, 20).futureValue
 
       result shouldBe viewModelResponseRfrReallocation
@@ -86,7 +86,7 @@ class GroupPaymentServiceSpec
       when(mockGpaDescriptionService.gpaPaymentDescription(any(), any(), any())(any[Messages]))
         .thenReturn("Reallocation FROM 99, AP ending 2026-01-01")
 
-      val result: GroupPaymentArrangementViewModel =
+      val result: GpaDetailsGroupPaymentArrangementViewModel =
         service.getViewModel(taxPayerReference, accPeriod, 0, 20).futureValue
 
       result shouldBe viewModelResponseRtoReallocation
@@ -107,7 +107,7 @@ class GroupPaymentServiceSpec
       when(mockGpaDescriptionService.gpaPaymentDescription(any(), any(), any())(any[Messages]))
         .thenReturn("HMRC Credit")
 
-      val result: GroupPaymentArrangementViewModel =
+      val result: GpaDetailsGroupPaymentArrangementViewModel =
         service.getViewModel(taxPayerReference, accPeriod, 0, 20).futureValue
 
       result shouldBe viewModelResponsePayslipReallocation
@@ -128,7 +128,7 @@ class GroupPaymentServiceSpec
       when(mockGpaDescriptionService.gpaPaymentDescription(any(), any(), any())(any[Messages]))
         .thenReturn(emptyString)
 
-      val result: GroupPaymentArrangementViewModel =
+      val result: GpaDetailsGroupPaymentArrangementViewModel =
         service.getViewModel(taxPayerReference, accPeriod, 0, 20).futureValue
 
       result shouldBe viewModelRepaymentReallocation

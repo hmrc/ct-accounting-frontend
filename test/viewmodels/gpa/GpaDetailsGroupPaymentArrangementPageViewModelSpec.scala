@@ -35,14 +35,14 @@ class GroupPaymentArrangementPageViewModelSpec extends AnyWordSpec with Matchers
 
     "create a page viewModel whose summaryList matches the GroupPaymentArrangementViewModel" in {
       val result =
-        GroupPaymentArrangementPageViewModel.toPageViewModel(viewModelResponseRfrReallocation, Some(1), pageUrl)
+        GpaDetailsGroupPaymentArrangementPageViewModel.toPageViewModel(viewModelResponseRfrReallocation, Some(1), pageUrl)
 
       result.summaryList mustEqual viewModelResponseRfrReallocation.summary
     }
 
     "create a page view model with paginated records built from the view model records and total" in {
       val result =
-        GroupPaymentArrangementPageViewModel.toPageViewModel(viewModelResponseRfrReallocation, Some(1), pageUrl)
+        GpaDetailsGroupPaymentArrangementPageViewModel.toPageViewModel(viewModelResponseRfrReallocation, Some(1), pageUrl)
 
       result.paginatedRecords mustEqual
         Paginated.alreadyPaginated(
@@ -54,14 +54,14 @@ class GroupPaymentArrangementPageViewModelSpec extends AnyWordSpec with Matchers
 
     "create a page view model with pagination built from the paginated records and page url" in {
       val result =
-        GroupPaymentArrangementPageViewModel.toPageViewModel(viewModelResponseRfrReallocation, Some(1), pageUrl)
+        GpaDetailsGroupPaymentArrangementPageViewModel.toPageViewModel(viewModelResponseRfrReallocation, Some(1), pageUrl)
 
       result.pagination mustEqual PaginationHelper.toPagination(result.paginatedRecords, pageUrl)
     }
 
     "create a page view model using the requested page when a page is provided" in {
       val result =
-        GroupPaymentArrangementPageViewModel.toPageViewModel(viewModelResponseRfrReallocation, Some(2), pageUrl)
+        GpaDetailsGroupPaymentArrangementPageViewModel.toPageViewModel(viewModelResponseRfrReallocation, Some(2), pageUrl)
 
       result.paginatedRecords mustEqual
         Paginated.alreadyPaginated(
@@ -72,7 +72,7 @@ class GroupPaymentArrangementPageViewModelSpec extends AnyWordSpec with Matchers
     }
 
     "create a page view model using the default page when no page is requested" in {
-      val result = GroupPaymentArrangementPageViewModel.toPageViewModel(viewModelResponseRfrReallocation, None, pageUrl)
+      val result = GpaDetailsGroupPaymentArrangementPageViewModel.toPageViewModel(viewModelResponseRfrReallocation, None, pageUrl)
 
       result.paginatedRecords mustEqual
         Paginated.alreadyPaginated(
@@ -87,7 +87,7 @@ class GroupPaymentArrangementPageViewModelSpec extends AnyWordSpec with Matchers
     "create a page view model with no records when the view model has none" in {
       val emptyViewModel = viewModelResponseRfrReallocation.copy(records = List.empty, totalNumberOfRecords = 0)
 
-      val result = GroupPaymentArrangementPageViewModel.toPageViewModel(emptyViewModel, None, pageUrl)
+      val result = GpaDetailsGroupPaymentArrangementPageViewModel.toPageViewModel(emptyViewModel, None, pageUrl)
 
       result.paginatedRecords mustEqual Paginated.alreadyPaginated(List.empty, None, 0)
       result.pagination mustEqual PaginationHelper.toPagination(result.paginatedRecords, pageUrl)

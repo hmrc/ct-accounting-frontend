@@ -24,7 +24,7 @@ import play.api.test.Helpers.stubMessages
 import uk.gov.hmrc.govukfrontend.views.viewmodels.content.{HtmlContent, Text}
 import views.ViewUtils.{formatCurrency, formatDate}
 
-class GroupPaymentArrangementViewModelSpec extends AnyWordSpec with Matchers with GroupPaymentHelper {
+class GpaDetailsGroupPaymentArrangementViewModelSpec extends AnyWordSpec with Matchers with GroupPaymentHelper {
 
   "GroupPaymentArrangementViewModel.summary" should {
     implicit val messages: Messages = stubMessages()

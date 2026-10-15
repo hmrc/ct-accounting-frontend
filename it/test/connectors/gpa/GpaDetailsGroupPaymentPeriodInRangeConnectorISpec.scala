@@ -28,7 +28,7 @@ import org.scalatest.wordspec.AnyWordSpec
 import play.api.http.Status.{INTERNAL_SERVER_ERROR, OK}
 import uk.gov.hmrc.http.HeaderCarrier
 
-class GroupPaymentPeriodInRangeConnectorISpec
+class GpaDetailsGroupPaymentPeriodInRangeConnectorISpec
     extends AnyWordSpec
     with Matchers
     with ScalaFutures

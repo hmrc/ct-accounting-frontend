@@ -23,7 +23,7 @@ import org.jsoup.nodes.Document
 import play.api.Application
 import play.api.i18n.{Lang, Messages, MessagesApi, MessagesImpl}
 import play.api.test.FakeRequest
-import viewmodels.gpa.GroupPaymentArrangementPageViewModel
+import viewmodels.gpa.GpaDetailsGroupPaymentArrangementPageViewModel
 import views.html.gpa.GroupPaymentArrangementsView
 
 class GroupPaymentArrangementsViewSpec extends SpecBase with GroupPaymentHelper {
@@ -32,7 +32,7 @@ class GroupPaymentArrangementsViewSpec extends SpecBase with GroupPaymentHelper 
 
   val pageUrl: Int => String = page => s"/group-payment-arrangement?page=$page"
 
-  def viewModel(paginationIndex: Option[Int]): GroupPaymentArrangementPageViewModel =
+  def viewModel(paginationIndex: Option[Int]): GpaDetailsGroupPaymentArrangementPageViewModel =
     returnGroupPaymentPageViewModel(viewModelWithMultipleRecords, paginationIndex, pageUrl)
 
   val paginationIndex: Option[Int] = Some(1)
@@ -44,7 +44,7 @@ class GroupPaymentArrangementsViewSpec extends SpecBase with GroupPaymentHelper 
 
   implicit val request: FakeRequest[_] = FakeRequest()
 
-  def render(viewModel: GroupPaymentArrangementPageViewModel): Document =
+  def render(viewModel: GpaDetailsGroupPaymentArrangementPageViewModel): Document =
     Jsoup.parse(view(viewModel)(request, messages(application)).toString)
 
   "GroupPaymentArrangementView" - {

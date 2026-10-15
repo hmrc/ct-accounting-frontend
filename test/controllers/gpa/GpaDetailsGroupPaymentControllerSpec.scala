@@ -27,9 +27,9 @@ import play.api.i18n.Messages
 import play.api.inject.bind
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import services.gpa.GroupPaymentService
+import services.gpa.GpaDetailsGroupPaymentService
 import uk.gov.hmrc.http.HeaderCarrier
-import viewmodels.gpa.GroupPaymentArrangementPageViewModel
+import viewmodels.gpa.GpaDetailsGroupPaymentArrangementPageViewModel
 import views.html.gpa.GroupPaymentArrangementsView
 
 import scala.concurrent.Future
@@ -38,10 +38,10 @@ class GroupPaymentControllerSpec extends SpecBase with MockitoSugar with GroupPa
 
   private trait Fixture {
     implicit val hc: HeaderCarrier       = HeaderCarrier()
-    val mockService: GroupPaymentService = mock[GroupPaymentService]
+    val mockService: GpaDetailsGroupPaymentService = mock[GpaDetailsGroupPaymentService]
 
     val application: Application = applicationBuilder()
-      .overrides(bind[GroupPaymentService].toInstance(mockService))
+      .overrides(bind[GpaDetailsGroupPaymentService].toInstance(mockService))
       .build()
 
     val pageUrl: Int => String       = page => s"/group-payment-arrangement?page=$page"
@@ -55,7 +55,7 @@ class GroupPaymentControllerSpec extends SpecBase with MockitoSugar with GroupPa
       when(mockService.getViewModel(any(), any(), any(), any())(any[HeaderCarrier], any[Messages]))
         .thenReturn(Future.successful(viewModelResponseRfrReallocation))
 
-      val pageViewModel: GroupPaymentArrangementPageViewModel =
+      val pageViewModel: GpaDetailsGroupPaymentArrangementPageViewModel =
         returnGroupPaymentPageViewModel(viewModelResponseRfrReallocation, paginationIndex, pageUrl)
 
       running(application) {

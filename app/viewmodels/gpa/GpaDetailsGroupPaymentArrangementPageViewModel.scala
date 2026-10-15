@@ -22,22 +22,22 @@ import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryList
 import utils.PaginationHelper
 import viewmodels.Paginated
 
-case class GroupPaymentArrangementPageViewModel(
+case class GpaDetailsGroupPaymentArrangementPageViewModel(
   summaryList: SummaryList,
   paginatedRecords: Paginated[GroupPaymentRecord],
   pagination: Option[Pagination]
 )
 
-object GroupPaymentArrangementPageViewModel {
+object GpaDetailsGroupPaymentArrangementPageViewModel {
 
   def toPageViewModel(
-    viewModel: GroupPaymentArrangementViewModel,
+    viewModel: GpaDetailsGroupPaymentArrangementViewModel,
     requestedPage: Option[Int],
     pageUrl: Int => String
-  )(implicit messages: Messages): GroupPaymentArrangementPageViewModel = {
+  )(implicit messages: Messages): GpaDetailsGroupPaymentArrangementPageViewModel = {
 
     val paginated = getPaginationRecord(viewModel, requestedPage)
-    GroupPaymentArrangementPageViewModel(
+    GpaDetailsGroupPaymentArrangementPageViewModel(
       summaryList = viewModel.summary,
       paginatedRecords = paginated,
       pagination = PaginationHelper.toPagination(paginated, pageUrl)
@@ -45,7 +45,7 @@ object GroupPaymentArrangementPageViewModel {
   }
 
   private def getPaginationRecord(
-    gpaViewModel: GroupPaymentArrangementViewModel,
+    gpaViewModel: GpaDetailsGroupPaymentArrangementViewModel,
     requestedPage: Option[Int]
   ): Paginated[GroupPaymentRecord] =
     Paginated.alreadyPaginated(gpaViewModel.records, requestedPage, gpaViewModel.totalNumberOfRecords)

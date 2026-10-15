@@ -23,20 +23,20 @@ import play.api.i18n.Messages
 import uk.gov.hmrc.http.HeaderCarrier
 import utils.Constants.{ZERO, emptyString}
 import utils.gpa.StatusHelper
-import viewmodels.gpa.{GroupPaymentArrangementViewModel, GroupPaymentRecord}
+import viewmodels.gpa.{GpaDetailsGroupPaymentArrangementViewModel, GroupPaymentRecord}
 
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
-class GroupPaymentService @Inject() (
-                                      connector: GpaDetailsGroupPaymentsConnector,
-                                      service: GpaPaymentDetailsService
+class GpaDetailsGroupPaymentService @Inject()(
+  connector: GpaDetailsGroupPaymentsConnector,
+  service: GpaPaymentDetailsService
 )(implicit ec: ExecutionContext)
     extends Logging {
 
   private def toViewModel(record: GpaPaymentDetails, taxRef: Long)(implicit
     messages: Messages
-  ): GroupPaymentArrangementViewModel = {
+  ): GpaDetailsGroupPaymentArrangementViewModel = {
     val normalisedGppEndDate: String = record.gppEndDate.map(_.toString).getOrElse(emptyString)
     val records                      = record.gpaPayments.map(gpaPayments =>
       GroupPaymentRecord(
@@ -45,7 +45,7 @@ class GroupPaymentService @Inject() (
         amount = gpaPayments.total
       )
     )
-    GroupPaymentArrangementViewModel(
+    GpaDetailsGroupPaymentArrangementViewModel(
       arrangementReference = taxRef.toString,
       accountEnding = record.gppEndDate,
       accountStatus = StatusHelper.getStatus(record.gppStatus),
@@ -59,7 +59,7 @@ class GroupPaymentService @Inject() (
   def getViewModel(taxRef: Long, accPeriod: Long, startIndex: Int, count: Int)(implicit
     hc: HeaderCarrier,
     messages: Messages
-  ): Future[GroupPaymentArrangementViewModel] = {
+  ): Future[GpaDetailsGroupPaymentArrangementViewModel] = {
     logger.info(
       s"Get Group Payment Arrangement ViewModel for taxRef: $taxRef"
     )

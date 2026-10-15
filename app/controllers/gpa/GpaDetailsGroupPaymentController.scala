@@ -22,10 +22,10 @@ import controllers.routes.JourneyRecoveryController
 import play.api.Logging
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import services.gpa.GroupPaymentService
+import services.gpa.GpaDetailsGroupPaymentService
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import utils.PaginationHelper
-import viewmodels.gpa.GroupPaymentArrangementPageViewModel
+import viewmodels.gpa.GpaDetailsGroupPaymentArrangementPageViewModel
 import views.html.gpa.GroupPaymentArrangementsView
 
 import javax.inject.Inject
@@ -35,7 +35,7 @@ class GroupPaymentController @Inject() (
   identify: IdentifierAction,
   val controllerComponents: MessagesControllerComponents,
   view: GroupPaymentArrangementsView,
-  service: GroupPaymentService
+  service: GpaDetailsGroupPaymentService
 ) extends FrontendBaseController
     with I18nSupport
     with Logging {
@@ -51,7 +51,7 @@ class GroupPaymentController @Inject() (
     service
       .getViewModel(taxRef, accPeriod, startIndex, count)
       .map { viewModel =>
-        val paginatedVm = GroupPaymentArrangementPageViewModel.toPageViewModel(viewModel, paginationIndex, pageUrl)
+        val paginatedVm = GpaDetailsGroupPaymentArrangementPageViewModel.toPageViewModel(viewModel, paginationIndex, pageUrl)
         Ok(view(paginatedVm))
       }
       .recover { case ex =>
