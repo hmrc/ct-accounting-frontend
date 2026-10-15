@@ -24,7 +24,7 @@ import play.api.test.Helpers.stubMessages
 
 import java.time.LocalDate
 
-class GroupPaymentArrangementViewModelSpec extends AnyWordSpec with Matchers with GroupPaymentsHelper {
+class GroupPaymentArrangementSummaryViewModelSpec extends AnyWordSpec with Matchers with GroupPaymentsHelper {
   implicit val messages: Messages = stubMessages()
 
   "GroupPaymentArrangementViewModel.toViewModel" should {
