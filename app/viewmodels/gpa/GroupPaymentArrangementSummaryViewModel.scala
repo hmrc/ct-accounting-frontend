@@ -54,7 +54,7 @@ object GroupPaymentArrangementSummaryViewModel {
             description = formatCurrency(groupSummaryDetailsResponse.groupPayment),
             amount = groupSummaryDetailsResponse.groupPayment,
             isLink = true,
-            href = routes.GroupPaymentArrangementController.onPageLoad()
+            href = routes.GroupPaymentController.onPageLoad(None)
           ),
           groupTaxes = GroupPaymentArrangementSummaryPaymentRow(
             description = formatCurrency(groupSummaryDetailsResponse.groupTaxCharge),
