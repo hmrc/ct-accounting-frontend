@@ -44,7 +44,7 @@ class GroupPaymentsServiceSpec
     private val cc: ControllerComponents = stubControllerComponents()
     implicit val ec: ExecutionContext    = cc.executionContext
 
-    val mockConnector: GroupPaymentsConnector = mock[GroupPaymentsConnectorSummary]
+    val mockConnector: GroupPaymentsConnectorSummary = mock[GroupPaymentsConnectorSummary]
     val service                               = new GroupPaymentsService(mockConnector)
     val gpaUTR: Long                          = 1L
     val nomCompanyUtr: Long                   = 5L

@@ -25,38 +25,38 @@ import utils.gpa.StatusHelper
 
 import java.time.LocalDate
 
-case class GroupPaymentArrangementViewModel(
+case class GroupPaymentArrangementSummaryViewModel(
   taxPayerReference: Long,
-  rows: Seq[GroupPaymentArrangementViewRow]
+  rows: Seq[GroupPaymentArrangementSummaryViewRow]
 )
 
-case class GroupPaymentArrangementViewRow(
+case class GroupPaymentArrangementSummaryViewRow(
   periodOfAccountEnding: LocalDate,
-  groupPayments: GroupPaymentArrangementPaymentRow,
-  groupTaxes: GroupPaymentArrangementPaymentRow,
+  groupPayments: GroupPaymentArrangementSummaryPaymentRow,
+  groupTaxes: GroupPaymentArrangementSummaryPaymentRow,
   status: String
 )
 
-case class GroupPaymentArrangementPaymentRow(description: String, amount: BigDecimal, isLink: Boolean, href: Call) {
+case class GroupPaymentArrangementSummaryPaymentRow(description: String, amount: BigDecimal, isLink: Boolean, href: Call) {
   val amountAsString: String = formatCurrency(amount)
 }
 
-object GroupPaymentArrangementViewModel {
+object GroupPaymentArrangementSummaryViewModel {
   def toViewModel(
     groupSummaryDetailsResponse: GroupSummaryDetailsResponse
-  )(implicit messages: Messages): GroupPaymentArrangementViewModel =
-    GroupPaymentArrangementViewModel(
+  )(implicit messages: Messages): GroupPaymentArrangementSummaryViewModel =
+    GroupPaymentArrangementSummaryViewModel(
       taxPayerReference = groupSummaryDetailsResponse.gpaReferenceNumberLst.head.taxpayerReference,
       rows = groupSummaryDetailsResponse.gpaGrpSummaryDetails.map { groupSummaryDetailsResponse =>
-        GroupPaymentArrangementViewRow(
+        GroupPaymentArrangementSummaryViewRow(
           periodOfAccountEnding = groupSummaryDetailsResponse.contractEndDate,
-          groupPayments = GroupPaymentArrangementPaymentRow(
+          groupPayments = GroupPaymentArrangementSummaryPaymentRow(
             description = formatCurrency(groupSummaryDetailsResponse.groupPayment),
             amount = groupSummaryDetailsResponse.groupPayment,
             isLink = true,
             href = routes.GroupPaymentArrangementController.onPageLoad()
           ),
-          groupTaxes = GroupPaymentArrangementPaymentRow(
+          groupTaxes = GroupPaymentArrangementSummaryPaymentRow(
             description = formatCurrency(groupSummaryDetailsResponse.groupTaxCharge),
             amount = groupSummaryDetailsResponse.groupTaxCharge,
             isLink = true,

@@ -24,7 +24,7 @@ import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import services.gpa.GroupPaymentsService
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
-import viewmodels.gpa.GroupPaymentArrangementViewModel
+import viewmodels.gpa.GroupPaymentArrangementSummaryViewModel
 import views.html.gpa.GroupPaymentArrangementView
 
 import javax.inject.Inject
@@ -48,7 +48,7 @@ class GroupPaymentArrangementController @Inject() (
       .getGroupSummary(taxRef, nomCompanyUtr)
       .map { groupPaymentsResponse =>
         val viewModel =
-          GroupPaymentArrangementViewModel.toViewModel(groupPaymentsResponse)
+          GroupPaymentArrangementSummaryViewModel.toViewModel(groupPaymentsResponse)
         Ok(view(viewModel))
       }
       .recover { case ex =>

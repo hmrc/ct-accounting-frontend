@@ -28,7 +28,7 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import services.gpa.GroupPaymentsService
 import uk.gov.hmrc.http.HeaderCarrier
-import viewmodels.gpa.GroupPaymentArrangementViewModel
+import viewmodels.gpa.GroupPaymentArrangementSummarViewModel
 import views.html.gpa.GroupPaymentArrangementView
 
 import scala.concurrent.Future
@@ -59,7 +59,7 @@ class GroupPaymentArrangementControllerSpec
       running(application) {
         val request   = FakeRequest(GET, routes.GroupPaymentArrangementController.onPageLoad().url)
         val result    = route(application, request).value
-        val viewModel = GroupPaymentArrangementViewModel.toViewModel(groupPaymentDetailsResponse)
+        val viewModel = GroupPaymentArrangementSummarViewModel.toViewModel(groupPaymentDetailsResponse)
         val view      = application.injector.instanceOf[GroupPaymentArrangementView]
 
         status(result) mustEqual OK
