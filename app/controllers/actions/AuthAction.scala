@@ -1,0 +1,64 @@
+/*
+ * Copyright 2026 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package controllers.actions
+
+import com.google.inject.Inject
+import config.FrontendAppConfig
+import play.api.mvc.{ActionBuilder, ActionRefiner, AnyContent, Request, Result}
+import uk.gov.hmrc.auth.core.{AuthConnector, AuthorisedFunctions, InsufficientEnrolments, NoActiveSession}
+import uk.gov.hmrc.auth.core.retrieve.v2.Retrievals
+import uk.gov.hmrc.http.HeaderCarrier
+import uk.gov.hmrc.play.http.HeaderCarrierConverter
+import utils.Constants.utrRegex
+import controllers.routes
+import play.api.mvc.Results.Redirect
+
+import scala.concurrent.{ExecutionContext, Future}
+
+
+trait IdentifierAction
+  extends ActionBuilder[AuthenticatedRequest, AnyContent]
+    with ActionRefiner[Request, AuthenticatedRequest]
+
+class AuthAction @Inject() (
+                             val authConnector: AuthConnector,
+                             appConfig: FrontendAppConfig
+
+                           )(implicit val executionContext: ExecutionContext) extends IdentifierAction
+  with AuthorisedFunctions  {
+  
+   def refine[A](request: Request[A]): Future[Either[Result, AuthenticatedRequest[A]]] = {
+     implicit val hc: HeaderCarrier = HeaderCarrierConverter.fromRequestAndSession(request, request.session)
+
+     authorised().retrieve(Retrievals.allEnrolments) { allEnrolments =>
+       allEnrolments.getEnrolment("IR-CT").flatMap(_.getIdentifier("UTR")) match {
+         case Some(utr) if utr.value.matches(utrRegex) => Future.successful(Right(AuthenticatedRequest(request, utr.value)))
+         case _ => Future.successful(Left(Redirect(routes.UnauthorisedController.onPageLoad())))
+       }
+     }
+     
+   } recover {
+     case _: NoActiveSession =>
+       Left(Redirect(appConfig.loginUrl, Map("continue_url" -> Seq(appConfig.loginContinueUrl))))
+
+     case _: InsufficientEnrolments =>
+       Left(Redirect(routes.UnauthorisedController.onPageLoad()))
+
+     case _ =>
+       Left(Redirect(routes.UnauthorisedController.onPageLoad()))
+   }
+}

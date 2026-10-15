@@ -14,8 +14,11 @@
  * limitations under the License.
  *@
 
+@import views.html.components.*
+
 @this(
-    layout: templates.Layout
+    layout: templates.Layout,
+    link: Link
 )
 
 @()(implicit request: Request[_], messages: Messages)
@@ -27,5 +30,7 @@
 
     <h1 class="govuk-heading-xl">@messages("index.heading")</h1>
 
-    <p class="govuk-body">@messages("index.guidance")</p>
+    @link("Accounting Period Journey", "/ct-accounting/accounting-periods", true, extraClasses = "govuk-heading-m")
+    @link("GPA Journey", "/ct-accounting/group-payment-arrangement ", true, extraClasses = "govuk-heading-m")
+
 }
