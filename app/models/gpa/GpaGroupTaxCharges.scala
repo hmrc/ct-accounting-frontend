@@ -20,35 +20,34 @@ import play.api.libs.json.{Json, OFormat}
 
 import java.time.LocalDate
 
-
 case class GpaGroupTaxCharges(
-                               pGppEndDate: Option[LocalDate],
-                               pGppTotalGroupPayment: Option[BigDecimal],
-                               pGppTotalGroupTax: Option[BigDecimal],
-                               pGppStatus: Option[String],
-                               pGppCni: Option[LocalDate],
-                               pGppApportionmentMethod: Option[String],
-                               pGpaUtr2: Long,
-                               pTotalNumOfRecords: Option[Int],
-                               pGroupPaymentRecordCount: Option[Int],
-                               pCurGroupTaxCharges: List[ParticipatorDetails]
-                             )
+  pGppEndDate: Option[LocalDate],
+  pGppTotalGroupPayment: Option[BigDecimal],
+  pGppTotalGroupTax: Option[BigDecimal],
+  pGppStatus: Option[String],
+  pGppCni: Option[LocalDate],
+  pGppApportionmentMethod: Option[String],
+  pGpaUtr2: Long,
+  pTotalNumOfRecords: Option[Int],
+  pGroupPaymentRecordCount: Option[Int],
+  pCurGroupTaxCharges: List[ParticipatorDetails]
+)
 
 object GpaGroupTaxCharges {
   implicit val format: OFormat[GpaGroupTaxCharges] = Json.format[GpaGroupTaxCharges]
 }
 
 case class ParticipatorDetails(
-                                participatorName: String,
-                                participatorReference: Long,
-                                participatorApEndDate: LocalDate,
-                                participatorTaxCharge: Option[BigDecimal],
-                                participatorTaxChargePrsnt: String,
-                                participatorAccountingPeriod: Long,
-                                contractVersion: Long,
-                                allocatedPayment: Option[BigDecimal],
-                                allocatedPaymentRecordCount: Int
-                              )
+  participatorName: String,
+  participatorReference: Long,
+  participatorApEndDate: LocalDate,
+  participatorTaxCharge: Option[BigDecimal],
+  participatorTaxChargePrsnt: String,
+  participatorAccountingPeriod: Long,
+  contractVersion: Long,
+  allocatedPayment: Option[BigDecimal],
+  allocatedPaymentRecordCount: Int
+)
 
 object ParticipatorDetails {
   implicit val format: OFormat[ParticipatorDetails] = Json.format[ParticipatorDetails]

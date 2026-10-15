@@ -36,8 +36,8 @@ case class GroupTaxRecordRow(
 )
 
 case class GroupTaxChargesViewModel(
-                                     summaryList: SummaryList,
-                                     groupTaxRecordsRows: Seq[GroupTaxRecordRow]
+  summaryList: SummaryList,
+  groupTaxRecordsRows: Seq[GroupTaxRecordRow]
 )
 
 case class AmountRow(description: String, amount: BigDecimal, isLink: Boolean, href: Call) {
@@ -47,7 +47,7 @@ case class AmountRow(description: String, amount: BigDecimal, isLink: Boolean, h
 object GroupTaxChargesViewModel {
   def toViewModel(
     gpaGroupTaxCharges: GpaGroupTaxCharges
-  )(implicit messages: Messages): GroupTaxChargesViewModel = {
+  )(implicit messages: Messages): GroupTaxChargesViewModel =
     GroupTaxChargesViewModel(
       summaryList = SummaryListViewModel(rows =
         Seq(
@@ -57,7 +57,9 @@ object GroupTaxChargesViewModel {
           ),
           SummaryListRowViewModel(
             key = Key(content = Text(messages("groupTaxCharges.summaryHeader.periodOfAccountEnding"))),
-            value = ValueViewModel(Text(formatDate(gpaGroupTaxCharges.pGppEndDate.getOrElse(LocalDate.of(2026, 1, 1)), messages.lang)))
+            value = ValueViewModel(
+              Text(formatDate(gpaGroupTaxCharges.pGppEndDate.getOrElse(LocalDate.of(2026, 1, 1)), messages.lang))
+            )
           ),
           SummaryListRowViewModel(
             key = Key(content = Text(messages("groupTaxCharges.summaryHeader.groupPeriodOfAccountStatus"))),
@@ -70,7 +72,7 @@ object GroupTaxChargesViewModel {
           SummaryListRowViewModel(
             key = Key(content = Text(messages("groupTaxCharges.summaryHeader.groupTaxTotal"))),
             value = ValueViewModel(Text(formatCurrency(gpaGroupTaxCharges.pGppTotalGroupTax.getOrElse(0.00))))
-          ),
+          )
         )
       ),
       groupTaxRecordsRows = gpaGroupTaxCharges.pCurGroupTaxCharges.map { groupTaxCharge =>
@@ -93,6 +95,5 @@ object GroupTaxChargesViewModel {
         )
       }
     )
-  }
 
 }

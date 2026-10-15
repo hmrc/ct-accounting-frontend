@@ -16,7 +16,6 @@
 
 package services.gpa
 
-
 import connectors.gpa.GroupTaxChargesConnector
 import models.gpa.GpaGroupTaxCharges
 import play.api.Logging
@@ -25,15 +24,12 @@ import uk.gov.hmrc.http.HeaderCarrier
 import javax.inject.Inject
 import scala.concurrent.Future
 
-class GroupTaxChargesService @Inject()(
-                                                 connector: GroupTaxChargesConnector
-                                               ) extends Logging {
+class GroupTaxChargesService @Inject() (
+  connector: GroupTaxChargesConnector
+) extends Logging {
 
-  def getGpaGroupTaxCharges(pGpaUtr: Long,
-                            pGppContractVersion: Int,
-                            pStartIndex: Int,
-                            pCount: Int)(implicit
-                                                                 hc: HeaderCarrier
+  def getGpaGroupTaxCharges(pGpaUtr: Long, pGppContractVersion: Int, pStartIndex: Int, pCount: Int)(implicit
+    hc: HeaderCarrier
   ): Future[GpaGroupTaxCharges] = {
     logger.info(
       s"Calling GroupTaxChargesConnector for pGpaUtr: $pGpaUtr, pGppContractVersion: $pGppContractVersion, pStartIndex: $pStartIndex, pCount: $pCount"
