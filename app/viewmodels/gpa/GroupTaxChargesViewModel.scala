@@ -23,6 +23,7 @@ import models.gpa.GpaGroupTaxCharges
 import uk.gov.hmrc.govukfrontend.views.Aliases.Text
 import controllers.gpa.routes
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.{Key, SummaryList}
+import utils.gpa.StatusHelper
 import viewmodels.govuk.summarylist.*
 
 import java.time.LocalDate
@@ -63,7 +64,7 @@ object GroupTaxChargesViewModel {
           ),
           SummaryListRowViewModel(
             key = Key(content = Text(messages("groupTaxCharges.summaryHeader.groupPeriodOfAccountStatus"))),
-            value = ValueViewModel(Text(gpaGroupTaxCharges.pGppStatus.getOrElse("")))
+            value = ValueViewModel(Text(messages(StatusHelper.getStatus(gpaGroupTaxCharges.pGppStatus.getOrElse("")))))
           ),
           SummaryListRowViewModel(
             key = Key(content = Text(messages("groupTaxCharges.summaryHeader.groupPaymentTotal"))),
