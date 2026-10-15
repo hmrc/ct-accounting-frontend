@@ -51,7 +51,6 @@ class PaymentAllocationDetailsController @Inject() (
           pageUrl = pageNumber => routes.PaymentAllocationDetailsController.onPageLoad(Some(pageNumber)).url,
           page
         )
-        println("TEST: " + vm.paginationInfo)
         Ok(view(vm, paymentAllocationDetails.totalNumOfRecords))
     } recover { case ex =>
       logger.error(s"Unexpected failure: ${ex.getMessage}")

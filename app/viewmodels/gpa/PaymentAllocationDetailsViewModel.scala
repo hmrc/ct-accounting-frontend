@@ -21,7 +21,7 @@ import models.AdjustmentTransactionType.*
 import models.gpa.PaymentAllocationDetails
 import play.api.i18n.Messages
 import play.api.mvc.Call
-import utils.PaginationHelper
+import utils.{PaginationHelper, StatusHelper}
 import viewmodels.Paginated
 import views.ViewUtils.*
 
@@ -90,7 +90,7 @@ object PaymentAllocationDetailsViewModel {
         ),
         PaymentAllocationDetailsViewModelRow(
           rowName = messages("paymentAllocationDetails.groupPeriodAccountStatus"),
-          content = paymentAllocationDetails.gppStatus,
+          content = StatusHelper.getStatus(paymentAllocationDetails.gppStatus),
           isLink = false,
           href = None
         ),
