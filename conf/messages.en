@@ -293,3 +293,7 @@ groupTaxCharges.tableHeader.accountingPeriodEnding = Accounting period ending
 groupTaxCharges.tableHeader.taxLiability = Tax liability
 groupTaxCharges.tableHeader.paymentAllocated = Payment allocated
 
+
+
+findYourPayment.title = Find your payment – GOV.UK
+findYourPayment.heading = Find your payment
