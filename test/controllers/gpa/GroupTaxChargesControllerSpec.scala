@@ -53,9 +53,13 @@ class GroupTaxChargesControllerSpec extends SpecBase with MockitoSugar with Grou
         .thenReturn(Future.successful(gpaGroupTaxChargesWithTwoParticipators))
 
       running(application) {
-        val request   = FakeRequest(GET, routes.GroupTaxChargesController.onPageLoad().url)
+        val request   = FakeRequest(GET, routes.GroupTaxChargesController.onPageLoad(None).url)
         val result    = route(application, request).value
-        val viewModel = GroupTaxChargesViewModel.toViewModel(gpaGroupTaxChargesWithTwoParticipators)
+        val viewModel = GroupTaxChargesViewModel.toViewModel(
+          gpaGroupTaxChargesWithTwoParticipators,
+          Some(0),
+          pageUrl = pageNumber => routes.GroupTaxChargesController.onPageLoad(Some(0)).url
+        )
         val view      = application.injector.instanceOf[GroupTaxChargesView]
 
         status(result) mustEqual OK
@@ -72,7 +76,7 @@ class GroupTaxChargesControllerSpec extends SpecBase with MockitoSugar with Grou
         .thenReturn(Future.failed(new RuntimeException("Error")))
 
       running(application) {
-        val request = FakeRequest(GET, routes.GroupTaxChargesController.onPageLoad().url)
+        val request = FakeRequest(GET, routes.GroupTaxChargesController.onPageLoad(None).url)
         val result  = route(application, request).value
 
         status(result) mustEqual SEE_OTHER

@@ -36,7 +36,11 @@ class GroupTaxChargesViewModelSpec extends AnyWordSpec with Matchers with GroupT
   "GroupTaxChargesViewModel.toViewModel" should {
 
     "check summary list rows from the response" in {
-      val viewModel = GroupTaxChargesViewModel.toViewModel(gpaGroupTaxChargesWithTwoParticipators)
+      val viewModel = GroupTaxChargesViewModel.toViewModel(
+        gpaGroupTaxChargesWithTwoParticipators,
+        Some(0),
+        pageUrl = pageNumber => routes.GroupTaxChargesController.onPageLoad(Some(0)).url
+      )
 
       viewModel.summaryList.rows mustBe Seq(
         SummaryListRowViewModel(
@@ -76,7 +80,11 @@ class GroupTaxChargesViewModelSpec extends AnyWordSpec with Matchers with GroupT
     }
 
     "check group tax charges from the response" in {
-      val viewModel = GroupTaxChargesViewModel.toViewModel(gpaGroupTaxChargesWithTwoParticipators)
+      val viewModel = GroupTaxChargesViewModel.toViewModel(
+        gpaGroupTaxChargesWithTwoParticipators,
+        Some(0),
+        pageUrl = pageNumber => routes.GroupTaxChargesController.onPageLoad(Some(0)).url
+      )
 
       viewModel.groupTaxRecordsRows mustBe Seq(
         GroupTaxRecordRow(
@@ -90,7 +98,7 @@ class GroupTaxChargesViewModelSpec extends AnyWordSpec with Matchers with GroupT
             amount =
               gpaGroupTaxChargesWithTwoParticipators.pCurGroupTaxCharges(0).participatorTaxCharge.getOrElse(0.00),
             isLink = false,
-            href = routes.GroupTaxChargesController.onPageLoad()
+            href = routes.GroupTaxChargesController.onPageLoad(None)
           ),
           paymentAllocated = AmountRow(
             description = formatCurrency(
@@ -98,7 +106,7 @@ class GroupTaxChargesViewModelSpec extends AnyWordSpec with Matchers with GroupT
             ),
             amount = gpaGroupTaxChargesWithTwoParticipators.pCurGroupTaxCharges(0).allocatedPayment.getOrElse(0.00),
             isLink = true,
-            href = routes.GroupTaxChargesController.onPageLoad()
+            href = routes.GroupTaxChargesController.onPageLoad(None)
           )
         ),
         GroupTaxRecordRow(
@@ -112,7 +120,7 @@ class GroupTaxChargesViewModelSpec extends AnyWordSpec with Matchers with GroupT
             amount =
               gpaGroupTaxChargesWithTwoParticipators.pCurGroupTaxCharges(1).participatorTaxCharge.getOrElse(0.00),
             isLink = false,
-            href = routes.GroupTaxChargesController.onPageLoad()
+            href = routes.GroupTaxChargesController.onPageLoad(None)
           ),
           paymentAllocated = AmountRow(
             description = formatCurrency(
@@ -120,7 +128,7 @@ class GroupTaxChargesViewModelSpec extends AnyWordSpec with Matchers with GroupT
             ),
             amount = gpaGroupTaxChargesWithTwoParticipators.pCurGroupTaxCharges(1).allocatedPayment.getOrElse(0.00),
             isLink = true,
-            href = routes.GroupTaxChargesController.onPageLoad()
+            href = routes.GroupTaxChargesController.onPageLoad(None)
           )
         )
       )
