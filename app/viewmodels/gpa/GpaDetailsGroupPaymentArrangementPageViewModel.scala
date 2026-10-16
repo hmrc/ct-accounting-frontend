@@ -25,7 +25,8 @@ import viewmodels.Paginated
 case class GpaDetailsGroupPaymentArrangementPageViewModel(
   summaryList: SummaryList,
   paginatedRecords: Paginated[GroupPaymentRecord],
-  pagination: Option[Pagination]
+  pagination: Option[Pagination],
+  paginationInfo: Option[String]
 )
 
 object GpaDetailsGroupPaymentArrangementPageViewModel {
@@ -40,7 +41,8 @@ object GpaDetailsGroupPaymentArrangementPageViewModel {
     GpaDetailsGroupPaymentArrangementPageViewModel(
       summaryList = viewModel.summary,
       paginatedRecords = paginated,
-      pagination = PaginationHelper.toPagination(paginated, pageUrl)
+      pagination = PaginationHelper.toPagination(paginated, pageUrl),
+      paginationInfo = PaginationHelper.paginationText(paginated)
     )
   }
 

@@ -43,6 +43,7 @@
     @govukSummaryList(viewModel.summaryList)
 
     @if(viewModel.paginatedRecords.items.nonEmpty){
+        @viewModel.paginationInfo.map(paragraph(_))
         @govukTable(
             Table(
                 caption = Some(messages("groupPaymentsArrangements.heading2")),
