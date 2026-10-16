@@ -38,7 +38,7 @@ class GroupTaxChargesController @Inject() (
 ) extends FrontendBaseController
     with I18nSupport {
 
-  def onPageLoad: Action[AnyContent] = identify.async { implicit request =>
+  def onPageLoad(): Action[AnyContent] = identify.async { implicit request =>
 
     val pGpaUtr             = 1L // TODO: This needs to comes from sessionDataRepository
     val pGppContractVersion = 1
