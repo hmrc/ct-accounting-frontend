@@ -19,15 +19,13 @@ package services.gpa
 import models.gpa.GpaPayments
 import play.api.Logging
 import play.api.i18n.Messages
-import utils.PaymentsDescriptionHelper
 import utils.Constants.{ZERO, emptyString}
-
-import java.time.LocalDate
+import utils.PaymentsDescriptionHelper
 
 class GpaPaymentDetailsService(
 ) extends Logging {
 
-  def gpaPaymentDescription(gpaPayment: GpaPayments, gpaUtr: Long, accountingPeriodEndDate: LocalDate)(implicit
+  def gpaPaymentDescription(gpaPayment: GpaPayments, gpaUtr: Long, accountingPeriodEndDate: String)(implicit
     messages: Messages
   ): String =
     gpaPayment.tablename match {
@@ -44,7 +42,7 @@ class GpaPaymentDetailsService(
   private def reallocationDescription(
     gpaPayment: GpaPayments,
     gpaUtr: Long,
-    accountingPeriodEndDate: LocalDate,
+    accountingPeriodEndDate: String,
     isRto: Boolean
   )(implicit
     messages: Messages
