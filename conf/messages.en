@@ -243,7 +243,7 @@ groupPaymentsArrangements.status.earlierCleared = Earlier Cleared
 groupPaymentsArrangements.status.cleared = Cleared
 groupPaymentsArrangements.status.earlierExempt = Earlier Exempt
 
-paymentAllocationDetails.title = Payment allocated – Group taxes –
+paymentAllocationDetails.title = Payment allocated – Group taxes
 paymentAllocationDetails.section = Group Payment Arrangement
 paymentAllocationDetails.heading = Payment allocated
 paymentAllocationDetails.p1 = Money applied by the nominated company against this company`s tax liabilities once they are confirmed.
