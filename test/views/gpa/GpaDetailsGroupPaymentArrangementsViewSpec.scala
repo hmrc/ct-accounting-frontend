@@ -61,6 +61,12 @@ class GpaDetailsGroupPaymentArrangementsViewSpec extends SpecBase with GpaDetail
         .select("h1.govuk-heading-l")
         .text() mustBe s"Group payments"
     }
+    "render the correct heading2" in {
+      val doc = render(viewModel(paginationIndex))
+      doc
+        .select("h2.govuk-heading-m")
+        .text() mustBe s"Group payment records"
+    }
 
     "render the correct breadcrumbs" in {
       val doc         = render(viewModel(paginationIndex))
@@ -106,16 +112,6 @@ class GpaDetailsGroupPaymentArrangementsViewSpec extends SpecBase with GpaDetail
     "render pagination when all records doesn't fit on one page" in {
       val doc = render(viewModel(Some(2)))
       doc.select("nav.govuk-pagination").isEmpty mustBe false
-    }
-
-    "render correct table with no links where amount equals 0" in {
-      val paginationIndex = Some(1)
-      val doc             = render(viewModel(paginationIndex))
-      val text            = doc
-        .getElementsByClass("govuk-table__caption govuk-table__caption govuk-table__caption--m")
-        .select("caption")
-        .text()
-      text mustBe "Group payment records"
     }
 
   }
