@@ -278,3 +278,7 @@ paymentAllocationDetails.allocatedPaymentAmount = Allocated Payment Amount
 
 gpa.paginationInfo = Displaying <b>{0}</b> to <b>{1}</b> of <b>{2}</b> records
 
+
+
+findYourPayment.title = Find your payment – GOV.UK
+findYourPayment.heading = Find your payment

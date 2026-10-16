@@ -46,3 +46,7 @@ GET         /group-payment-arrangement controllers.gpa.GroupPaymentArrangementCo
 GET        /group-payment-arrangement/group-payments                controllers.gpa.GpaDetailsGroupPaymentController.onPageLoad(paginationIndex: Option[Int])
 GET         /group-payment-arrangement/group-taxes/payment-allocated        controllers.gpa.PaymentAllocationDetailsController.onPageLoad(page: Option[Int])
 
+
+
+# Payments Journey
+GET         /find-your-payment  controllers.payments.FindYourPaymentController.onPageLoad()
