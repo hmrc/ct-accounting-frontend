@@ -16,15 +16,17 @@
 
 package viewmodels.gpa
 
+import controllers.gpa.routes
+import models.gpa.GpaGroupTaxCharges
 import play.api.i18n.Messages
 import play.api.mvc.Call
-import views.ViewUtils.{formatCurrency, formatDate}
-import models.gpa.GpaGroupTaxCharges
-import uk.gov.hmrc.govukfrontend.views.Aliases.Text
-import controllers.gpa.routes
+import uk.gov.hmrc.govukfrontend.views.Aliases.{Pagination, Text}
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.{Key, SummaryList}
+import utils.PaginationHelper
 import utils.gpa.StatusHelper
+import viewmodels.Paginated
 import viewmodels.govuk.summarylist.*
+import views.ViewUtils.{formatCurrency, formatDate}
 
 import java.time.LocalDate
 
@@ -38,7 +40,9 @@ case class GroupTaxRecordRow(
 
 case class GroupTaxChargesViewModel(
   summaryList: SummaryList,
-  groupTaxRecordsRows: Seq[GroupTaxRecordRow]
+  groupTaxRecordsRows: Seq[GroupTaxRecordRow],
+  page: Paginated[GroupTaxRecordRow],
+  pagination: Option[Pagination]
 )
 
 case class AmountRow(description: String, amount: BigDecimal, isLink: Boolean, href: Call) {
@@ -47,8 +51,32 @@ case class AmountRow(description: String, amount: BigDecimal, isLink: Boolean, h
 
 object GroupTaxChargesViewModel {
   def toViewModel(
-    gpaGroupTaxCharges: GpaGroupTaxCharges
-  )(implicit messages: Messages): GroupTaxChargesViewModel =
+    gpaGroupTaxCharges: GpaGroupTaxCharges,
+    requestedPage: Option[Int],
+    pageUrl: Int => String
+  )(implicit messages: Messages): GroupTaxChargesViewModel = {
+    val rows = gpaGroupTaxCharges.pCurGroupTaxCharges.map { groupTaxCharge =>
+      GroupTaxRecordRow(
+        participatingCompany = groupTaxCharge.participatorName,
+        uniqueTaxpayerReference = groupTaxCharge.participatorReference,
+        accountingPeriodEnding = groupTaxCharge.participatorApEndDate,
+        taxLiability = AmountRow(
+          description = formatCurrency(groupTaxCharge.participatorTaxCharge.getOrElse(0.00)),
+          amount = groupTaxCharge.participatorTaxCharge.getOrElse(0.00),
+          isLink = false,
+          href = routes.GroupTaxChargesController.onPageLoad(None)
+        ),
+        paymentAllocated = AmountRow(
+          description = formatCurrency(groupTaxCharge.allocatedPayment.getOrElse(0.00)),
+          amount = groupTaxCharge.allocatedPayment.getOrElse(0.00),
+          isLink = true,
+          href = routes.GroupTaxChargesController.onPageLoad(None)
+        )
+      )
+    }
+
+    val page = Paginated.paginate(rows, requestedPage)
+
     GroupTaxChargesViewModel(
       summaryList = SummaryListViewModel(rows =
         Seq(
@@ -76,25 +104,9 @@ object GroupTaxChargesViewModel {
           )
         )
       ),
-      groupTaxRecordsRows = gpaGroupTaxCharges.pCurGroupTaxCharges.map { groupTaxCharge =>
-        GroupTaxRecordRow(
-          participatingCompany = groupTaxCharge.participatorName,
-          uniqueTaxpayerReference = groupTaxCharge.participatorReference,
-          accountingPeriodEnding = groupTaxCharge.participatorApEndDate,
-          taxLiability = AmountRow(
-            description = formatCurrency(groupTaxCharge.participatorTaxCharge.getOrElse(0.00)),
-            amount = groupTaxCharge.participatorTaxCharge.getOrElse(0.00),
-            isLink = false,
-            href = routes.GroupTaxChargesController.onPageLoad()
-          ),
-          paymentAllocated = AmountRow(
-            description = formatCurrency(groupTaxCharge.allocatedPayment.getOrElse(0.00)),
-            amount = groupTaxCharge.allocatedPayment.getOrElse(0.00),
-            isLink = true,
-            href = routes.GroupTaxChargesController.onPageLoad()
-          )
-        )
-      }
+      groupTaxRecordsRows = rows,
+      page = page,
+      pagination = PaginationHelper.toPagination(page, pageUrl)
     )
-
+  }
 }

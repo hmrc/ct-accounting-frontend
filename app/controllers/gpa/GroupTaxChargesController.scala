@@ -38,7 +38,7 @@ class GroupTaxChargesController @Inject() (
 ) extends FrontendBaseController
     with I18nSupport {
 
-  def onPageLoad(): Action[AnyContent] = identify.async { implicit request =>
+  def onPageLoad(page: Option[Int]): Action[AnyContent] = identify.async { implicit request =>
 
     val pGpaUtr             = 1L // TODO: This needs to comes from sessionDataRepository
     val pGppContractVersion = 1
@@ -50,7 +50,11 @@ class GroupTaxChargesController @Inject() (
       .getGpaGroupTaxCharges(pGpaUtr, pGppContractVersion, pStartIndex, pCount)
       .map { groupTaxChargesResponse =>
         val viewModel =
-          GroupTaxChargesViewModel.toViewModel(groupTaxChargesResponse)
+          GroupTaxChargesViewModel.toViewModel(
+            groupTaxChargesResponse,
+            page,
+            pageUrl = pageNumber => routes.GroupTaxChargesController.onPageLoad(Some(pageNumber)).url
+          )
         Ok(view(viewModel))
       }
       .recover { case ex =>
