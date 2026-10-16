@@ -25,6 +25,10 @@ object PaginationHelper {
   def startIndexCountHelper(pageNumber: Option[Int], count: Int): Int =
     (pageNumber.getOrElse(1) - 1) * count
 
+  def paginationText(paginated: Paginated[_])(implicit messages: Messages): Option[String] =
+    if (!paginated.needsPagination) None
+    else Some(messages("gpa.paginationInfo", paginated.firstItemNumber, paginated.lastItemNumber, paginated.totalItems))
+
   def toPagination(paginated: Paginated[_], pageUrl: Int => String)(implicit messages: Messages): Option[Pagination] =
     if (!paginated.needsPagination) None
     else
