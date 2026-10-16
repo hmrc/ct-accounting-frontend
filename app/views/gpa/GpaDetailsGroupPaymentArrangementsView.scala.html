@@ -25,6 +25,7 @@
         layout: templates.Layout,
         govukTable: GovukTable,
         h1: h1,
+        h2: h2,
         paragraph: Paragraph,
         link: Link,
         appConfig: FrontendAppConfig,
@@ -42,12 +43,11 @@
 
     @govukSummaryList(viewModel.summaryList)
 
-    @if(viewModel.paginatedRecords.items.nonEmpty){
+    @if(viewModel.paginatedRecords.items.nonEmpty) {
+        @h2(messages("groupPaymentsArrangements.heading1"))
         @viewModel.paginationInfo.map(paragraph(_))
         @govukTable(
             Table(
-                caption = Some(messages("groupPaymentsArrangements.heading2")),
-                captionClasses = "govuk-table__caption govuk-table__caption--m",
                 head = Some(
                     Seq(
                         HeadCell(content = Text(messages("groupPaymentsArrangements.records.date"))),
@@ -70,7 +70,6 @@
             )
         )
     }
-
 
     @viewModel.pagination.map(govukPagination(_))
 

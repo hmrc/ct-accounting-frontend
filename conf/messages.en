@@ -242,7 +242,6 @@ groupPaymentArrangement.insetText = Any changes to the Group Payment Arrangement
 groupPaymentsArrangements.records.description = Description
 groupPaymentsArrangements.records.amount = Amount
 groupPaymentsArrangements.records.date = Date
-groupPaymentsArrangements.heading2 = Group payment records
 groupPaymentsArrangements.heading1 = Group payment records
 groupPaymentsArrangements.arrangementReference = Group Payment Arrangement reference
 groupPaymentsArrangements.periodAccountEnding = Period of account ending
