@@ -43,7 +43,10 @@ case class GroupTaxChargesViewModel(
   groupTaxRecordsRows: Seq[GroupTaxRecordRow],
   page: Paginated[GroupTaxRecordRow],
   pagination: Option[Pagination]
-)
+) {
+  val totalTaxLiability: BigDecimal = groupTaxRecordsRows.map(_.taxLiability.amount).sum
+  val totalPaymentAllocated: BigDecimal = groupTaxRecordsRows.map(_.paymentAllocated.amount).sum
+}
 
 case class AmountRow(description: String, amount: BigDecimal, isLink: Boolean, href: Call) {
   val amountAsString: String = formatCurrency(amount)
