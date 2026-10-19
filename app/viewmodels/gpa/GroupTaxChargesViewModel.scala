@@ -78,7 +78,8 @@ object GroupTaxChargesViewModel {
       )
     }
 
-    val page = Paginated.paginate(rows, requestedPage)
+    val page = Paginated.alreadyPaginated(rows, requestedPage, gpaGroupTaxCharges.pGroupPaymentRecordCount.getOrElse(0))
+    //val page = Paginated.paginate(rows, requestedPage)
 
     GroupTaxChargesViewModel(
       summaryList = SummaryListViewModel(rows =

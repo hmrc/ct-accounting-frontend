@@ -26,6 +26,7 @@ import services.gpa.GroupTaxChargesService
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import viewmodels.gpa.GroupTaxChargesViewModel
 import views.html.gpa.GroupTaxChargesView
+import utils.PaginationHelper.startIndexCountHelper
 
 import javax.inject.Inject
 
@@ -42,8 +43,8 @@ class GroupTaxChargesController @Inject() (
 
     val pGpaUtr             = 45678901233L // TODO: This needs to comes from sessionDataRepository
     val pGppContractVersion = 5
-    val pStartIndex         = 0
-    val pCount              = 10
+    val pCount = 10
+    val pStartIndex         = startIndexCountHelper(page, pCount)
 
     // TODO: Get taxRef + accPeriod from sessionDataRepositry
     service
