@@ -17,6 +17,7 @@
 package viewmodels
 
 import controllers.routes
+import controllers.gpa.routes.GroupPaymentArrangementController
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 import uk.gov.hmrc.govukfrontend.views.viewmodels.breadcrumbs.BreadcrumbsItem
@@ -246,7 +247,10 @@ class PageBreadcrumbsSpec extends AnyWordSpec with Matchers {
     "have the correct items in order" in {
       PageBreadcrumbs.paymentAllocationDetailsPage.items shouldBe Seq(
         BreadcrumbsItem(content = Text(messages("breadcrumbs.home")), href = Some("/")),
-        BreadcrumbsItem(content = Text(messages("breadcrumbs.gpa")), href = Some("/")),
+        BreadcrumbsItem(
+          content = Text(messages("breadcrumbs.gpa")),
+          href = Some(GroupPaymentArrangementController.onPageLoad().url)
+        ),
         BreadcrumbsItem(content = Text(messages("breadcrumbs.groupTaxes")), href = Some("/"))
       )
     }
