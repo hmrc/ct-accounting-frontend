@@ -60,11 +60,15 @@ case class GpaDetailsGroupPaymentArrangementViewModel(
           LinkViewModel.toHtmlContent(
             LinkViewModel(
               text = formatCurrency(this.taxTotal),
-              href = "#" // TODO To point this to Group tax total
+              href = "#", // TODO To point this to Group tax total,
+              isLink = isHyperLink(this.taxTotal)
             )
           )
         )
       )
     )
   )
+
+  private def isHyperLink(amount: BigDecimal): Boolean =
+    amount != BigDecimal(0.00)
 }

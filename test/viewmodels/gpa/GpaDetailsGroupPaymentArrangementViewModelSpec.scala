@@ -30,12 +30,15 @@ class GpaDetailsGroupPaymentArrangementViewModelSpec
     with GpaDetailsGroupPaymentHelper {
 
   "GpaDetailsGroupPaymentArrangementViewModel.summary" should {
-    implicit val messages: Messages = stubMessages()
-    val groupSummaryList            = viewModelResponseRfrReallocation.summary
+    implicit val messages: Messages      = stubMessages()
+    val groupSummaryList                 = viewModelResponseRfrReallocation.summary
+    val groupSummaryListWithTaxTotalZero = viewModelResponseRfrReallocationWithTaxTotalZero.summary
+
     "create GroupSummaryList containing 5 rows with relevant row name " in {
       groupSummaryList.rows.size mustEqual 5
     }
-    "create GroupSummaryList containing first row with agentReference key and relevant value" in {
+
+    "create GroupSummaryList containing first row with arrangementReference key and relevant value" in {
       groupSummaryList.rows.head.key.content mustEqual Text(messages("groupPaymentsArrangements.arrangementReference"))
       groupSummaryList.rows.head.value.content mustEqual Text(viewModelResponseRfrReallocation.arrangementReference)
 
@@ -60,7 +63,7 @@ class GpaDetailsGroupPaymentArrangementViewModelSpec
       )
 
     }
-    "create GroupSummaryList containing fifth row with taxTotal key and value with hyperlink" in {
+    "create GroupSummaryList containing fifth row with taxTotal key and value with hyperlink if taxTotal > 0" in {
       groupSummaryList.rows(4).key.content mustEqual Text(messages("groupPaymentsArrangements.taxTotal"))
 
       val value = groupSummaryList.rows(4).value.content
@@ -69,6 +72,18 @@ class GpaDetailsGroupPaymentArrangementViewModelSpec
       val html = value.asHtml.toString
       html must include(formatCurrency(viewModelResponseRfrReallocation.taxTotal))
       html must include("href=\"#\"")
+
+    }
+    "create GroupSummaryList containing fifth row with taxTotal key and value without hyperlink if taxTotal = 0" in {
+      groupSummaryListWithTaxTotalZero.rows(4).key.content mustEqual Text(
+        messages("groupPaymentsArrangements.taxTotal")
+      )
+
+      val value = groupSummaryListWithTaxTotalZero.rows(4).value.content
+      value mustBe a[HtmlContent]
+
+      val html = value.asHtml.toString
+      html mustNot include("href=\"#\"")
 
     }
   }

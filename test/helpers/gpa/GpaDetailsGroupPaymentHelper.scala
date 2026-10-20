@@ -136,6 +136,24 @@ trait GpaDetailsGroupPaymentHelper {
         )
       )
     )
+  def viewModelResponseRfrReallocationWithTaxTotalZero(implicit
+    messages: Messages
+  ): GpaDetailsGroupPaymentArrangementViewModel =
+    GpaDetailsGroupPaymentArrangementViewModel(
+      arrangementReference = "12",
+      accountEnding = Some(LocalDate.of(2026, 1, 1)),
+      accountStatus = messages("groupPaymentsArrangements.status.open"),
+      paymentTotal = BigDecimal(1125017),
+      taxTotal = BigDecimal(0.00),
+      totalNumberOfRecords = 1,
+      records = List(
+        GroupPaymentRecord(
+          date = Some(LocalDate.of(2025, 1, 1)),
+          description = "Miscellaneous Transfer",
+          amount = BigDecimal(17.01)
+        )
+      )
+    )
   def viewModelResponseRtoReallocation(implicit messages: Messages): GpaDetailsGroupPaymentArrangementViewModel     =
     GpaDetailsGroupPaymentArrangementViewModel(
       arrangementReference = "12",

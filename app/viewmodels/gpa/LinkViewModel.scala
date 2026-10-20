@@ -19,13 +19,19 @@ package viewmodels.gpa
 import play.twirl.api.HtmlFormat
 import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
 
-case class LinkViewModel(text: String, href: String, classes: String = "govuk-link")
+case class LinkViewModel(text: String, href: String, classes: String = "govuk-link", isLink: Boolean)
 object LinkViewModel {
 
-  def toHtmlContent(link: LinkViewModel): HtmlContent =
-    HtmlContent(
-      s"""<a href="${HtmlFormat.escape(link.href)}" class="${HtmlFormat.escape(link.classes)}">
-         |${HtmlFormat.escape(link.text)}
-         |</a>""".stripMargin
-    )
+  def toHtmlContent(linkViewModel: LinkViewModel): HtmlContent =
+    if (linkViewModel.isLink) {
+      HtmlContent(
+        s"""<a href="${HtmlFormat.escape(linkViewModel.href)}" class="${HtmlFormat.escape(linkViewModel.classes)}">
+           |${HtmlFormat.escape(linkViewModel.text)}
+           |</a>""".stripMargin
+      )
+    } else {
+      HtmlContent(
+        s"<span>${linkViewModel.text}</span>"
+      )
+    }
 }

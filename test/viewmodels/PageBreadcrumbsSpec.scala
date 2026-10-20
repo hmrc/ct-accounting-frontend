@@ -146,6 +146,7 @@ class PageBreadcrumbsSpec extends AnyWordSpec with Matchers {
     }
 
   }
+
   "PageBreadcrumbs.interestStillAccruingPage" should {
 
     "contain exactly four breadcrumb items" in {
@@ -252,6 +253,24 @@ class PageBreadcrumbsSpec extends AnyWordSpec with Matchers {
           href = Some(GroupPaymentArrangementController.onPageLoad().url)
         ),
         BreadcrumbsItem(content = Text(messages("breadcrumbs.groupTaxes")), href = Some("/"))
+      )
+    }
+
+  }
+
+  "PageBreadcrumbs.GpaDetailsGroupPaymentArrangementsView" should {
+
+    "contain exactly three breadcrumb items" in {
+      PageBreadcrumbs.gpaDetailsGroupPaymentArrangementPage.items.size shouldBe 2
+    }
+
+    "have the correct items in order" in {
+      PageBreadcrumbs.gpaDetailsGroupPaymentArrangementPage.items shouldBe Seq(
+        BreadcrumbsItem(content = Text(messages("breadcrumbs.home")), href = Some("/")),
+        BreadcrumbsItem(
+          content = Text(messages("breadcrumbs.groupPaymentArrangements")),
+          href = Some(controllers.gpa.routes.GroupPaymentArrangementController.onPageLoad().url)
+        )
       )
     }
 

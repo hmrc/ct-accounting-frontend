@@ -36,41 +36,45 @@
 
 @(viewModel: GpaDetailsGroupPaymentArrangementPageViewModel)(implicit request: Request[_], messages: Messages)
 
-@layout(pageTitle = titleNoForm(messages("groupPaymentsArrangements.title")),
-    breadcrumbs = Some(PageBreadcrumbs.gpaDetailsGroupPaymentArrangementPage)) {
+    @layout(pageTitle = titleNoForm(messages("groupPaymentsArrangements.title")),
+        breadcrumbs = Some(PageBreadcrumbs.gpaDetailsGroupPaymentArrangementPage)) {
 
-    @h1(messages("groupPaymentsArrangements.heading"))
+        @h1(messages("groupPaymentsArrangements.heading"))
 
-    @govukSummaryList(viewModel.summaryList)
+        @govukSummaryList(viewModel.summaryList)
 
-    @if(viewModel.paginatedRecords.items.nonEmpty) {
-        @h2(messages("groupPaymentsArrangements.heading1"))
-        @viewModel.paginationInfo.map(paragraph(_))
-        @govukTable(
-            Table(
-                head = Some(
-                    Seq(
-                        HeadCell(content = Text(messages("groupPaymentsArrangements.records.date"))),
-                        HeadCell(content = Text(messages("groupPaymentsArrangements.records.description"))),
-                        HeadCell(content = Text(messages("groupPaymentsArrangements.records.amount"))),
-                    )),
-                rows = viewModel.paginatedRecords.items.map { record =>
-                    Seq(
-                        TableRow(
-                            content = Text(record.date.map(d => formatDate(d, messages.lang)).getOrElse(""))
-                        ),
-                        TableRow(
-                            content = Text(record.description)
-                        ),
-                        TableRow(
-                            content = Text(formatCurrency(record.amount))
-                        ),
-                    )
-                }
+        @if(viewModel.paginatedRecords.items.nonEmpty) {
+            @h2(messages("groupPaymentsArrangements.heading1"))
+            @viewModel.paginationInfo.map(paragraph(_))
+            @govukTable(
+                Table(
+                    head = Some(
+                        Seq(
+                            HeadCell(content = Text(messages("groupPaymentsArrangements.records.date"))),
+                            HeadCell(content = Text(messages("groupPaymentsArrangements.records.description"))),
+                            HeadCell(
+                                content = Text(messages("groupPaymentsArrangements.records.amount")),
+                                classes = "govuk-table__header--numeric"
+                            ),
+                        )),
+                    rows = viewModel.paginatedRecords.items.map { record =>
+                        Seq(
+                            TableRow(
+                                content = Text(record.date.map(d => formatDate(d, messages.lang)).getOrElse(""))
+                            ),
+                            TableRow(
+                                content = Text(record.description)
+                            ),
+                            TableRow(
+                                content = Text(formatCurrency(record.amount)),
+                                classes = "govuk-table__header--numeric"
+                            ),
+                        )
+                    }
+                )
             )
-        )
+        }
+
+        @viewModel.pagination.map(govukPagination(_))
+
     }
-
-    @viewModel.pagination.map(govukPagination(_))
-
-}
