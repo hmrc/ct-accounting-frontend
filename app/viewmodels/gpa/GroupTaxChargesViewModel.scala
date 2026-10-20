@@ -44,7 +44,7 @@ case class GroupTaxChargesViewModel(
   page: Paginated[GroupTaxRecordRow],
   pagination: Option[Pagination]
 ) {
-  val totalTaxLiability: BigDecimal = groupTaxRecordsRows.map(_.taxLiability.amount).sum
+  val totalTaxLiability: BigDecimal     = groupTaxRecordsRows.map(_.taxLiability.amount).sum
   val totalPaymentAllocated: BigDecimal = groupTaxRecordsRows.map(_.paymentAllocated.amount).sum
 }
 

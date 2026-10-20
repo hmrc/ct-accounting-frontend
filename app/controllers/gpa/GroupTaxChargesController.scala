@@ -43,13 +43,17 @@ class GroupTaxChargesController @Inject() (
 
     val pGpaUtr             = 45678901233L // TODO: This needs to comes from sessionDataRepository
     val pGppContractVersion = 5
-    val pCount = 10
+    val pCount              = 10
     val pStartIndex         = startIndexCountHelper(page, pCount)
 
     // TODO: Get taxRef + accPeriod from sessionDataRepositry
     service
       .getGpaGroupTaxCharges(pGpaUtr, pGppContractVersion, pStartIndex, pCount)
       .map { groupTaxChargesResponse =>
+        logger.info(
+          s"Controller: pGpaUtr: $pGpaUtr, pGppContractVersion: $pGpaUtr, pStartIndex: $pStartIndex, pCount: $pCount"
+        )
+
         val viewModel =
           GroupTaxChargesViewModel.toViewModel(
             groupTaxChargesResponse,

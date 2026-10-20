@@ -36,7 +36,11 @@ class GroupTaxChargesConnector @Inject() (http: HttpClientV2, config: ServicesCo
     hc: HeaderCarrier
   ): Future[GpaGroupTaxCharges] = {
     val baseUrl  = config.baseUrl("corporation-tax")
-    val url: URL = url"$baseUrl/corporation-tax/group-tax-charges/$pGpaUtr/$pGppContractVersion"
+    val url: URL =
+      url"$baseUrl/corporation-tax/group-tax-charges/$pGpaUtr/$pGppContractVersion?pStartIndex=$pStartIndex&pCount=$pCount"
+    logger.info(
+      s"Connector: pGpaUtr: $pGpaUtr, pGppContractVersion: $pGpaUtr, pStartIndex: $pStartIndex, pCount: $pCount"
+    )
 
     http
       .get(url)
@@ -44,12 +48,12 @@ class GroupTaxChargesConnector @Inject() (http: HttpClientV2, config: ServicesCo
       .recover {
         case u: UpstreamErrorResponse =>
           logger.error(
-            s"Upstream error: $pGpaUtr :: $pGppContractVersion - ${u.getMessage}"
+            s"Upstream error: $pGpaUtr :: $pGppContractVersion :: $pStartIndex :: $pCount - ${u.getMessage}"
           )
           throw u
         case ex: Throwable            =>
           logger.error(
-            s"Unexpected Error: $pGpaUtr :: $pGppContractVersion - ${ex.getMessage}"
+            s"Unexpected Error: $pGpaUtr :: $pGppContractVersion :: $pStartIndex :: $pCount - ${ex.getMessage}"
           )
           throw new RuntimeException(ex.getMessage)
       }
