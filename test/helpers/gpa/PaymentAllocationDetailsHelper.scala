@@ -18,16 +18,11 @@ package helpers.gpa
 
 import models.gpa.{AllocationDetails, PaymentAllocationDetails}
 import play.api.i18n.Messages
-import utils.PaginationHelper
-import viewmodels.Paginated
-import viewmodels.gpa.{
-  AllocationDetailsViewModelRow, PaymentAllocationDetailsViewModel, PaymentAllocationDetailsViewModelRow
-}
+import viewmodels.gpa.{AllocationDetailsViewModelRow, PaymentAllocationDetailsViewModel}
 
 import java.time.LocalDate
 
 trait PaymentAllocationDetailsHelper {
-  implicit val msgs: Messages
 
   val fullPaymentAllocationDetails: PaymentAllocationDetails =
     PaymentAllocationDetails(
@@ -48,7 +43,7 @@ trait PaymentAllocationDetailsHelper {
           paymentAmount = BigDecimal(10)
         )
       ),
-      totalNumOfRecords = BigDecimal(10)
+      totalNumOfRecords = BigDecimal(1)
     )
 
   val paymentAllocationDetailsWithMultipleAllocationDetails: PaymentAllocationDetails =
@@ -90,90 +85,21 @@ trait PaymentAllocationDetailsHelper {
       participatorAllocPayments = BigDecimal(30),
       gpaUtr = BigDecimal(30),
       gppContractVersionOut = BigDecimal(30),
-      allocationDetails = List(
-        AllocationDetails(
-          effectivePaymentDate = LocalDate.of(2026, 7, 24),
-          paymentAmount = BigDecimal(30)
-        )
-      ),
+      allocationDetails = List(),
       totalNumOfRecords = BigDecimal(30)
     )
 
   val allocRows = List(
     AllocationDetailsViewModelRow(
-      paymentDate = "24 Jul 2024",
-      allocatedPaymentAmount = "£10.00"
+      paymentDate = "24 Jul 2025",
+      allocatedPaymentAmount = "£20.00"
+    ),
+    AllocationDetailsViewModelRow(
+      paymentDate = "24 Jul 2025",
+      allocatedPaymentAmount = "£20.00"
     )
   )
-  val page      = Paginated.alreadyPaginated(allocRows, Some(1), fullPaymentAllocationDetails.totalNumOfRecords.toInt)
 
-  val fullPaymentAllocationDetailsVM: PaymentAllocationDetailsViewModel = PaymentAllocationDetailsViewModel(
-    rows = List(
-      PaymentAllocationDetailsViewModelRow(
-        rowName = "Group Payment Arrangement reference",
-        content = "10",
-        isLink = false,
-        href = None
-      ),
-      PaymentAllocationDetailsViewModelRow(
-        rowName = "Participating company",
-        content = "ABC Limited",
-        isLink = false,
-        href = None
-      ),
-      PaymentAllocationDetailsViewModelRow(
-        rowName = "Accounting period ending",
-        content = "24 Jul 2024",
-        isLink = false,
-        href = None
-      ),
-      PaymentAllocationDetailsViewModelRow(
-        rowName = "Period of account ending",
-        content = "24 Jul 2024",
-        isLink = false,
-        href = None
-      ),
-      PaymentAllocationDetailsViewModelRow(
-        rowName = "Group period of account status",
-        content = "O",
-        isLink = false,
-        href = None
-      ),
-      PaymentAllocationDetailsViewModelRow(
-        rowName = "Tax charge as of Cleared status",
-        content = "£10.00",
-        isLink = false,
-        href = None
-      ),
-      PaymentAllocationDetailsViewModelRow(
-        rowName = "Payment allocated by",
-        content = "O",
-        isLink = false,
-        href = None
-      ),
-      PaymentAllocationDetailsViewModelRow(
-        rowName = "Payment allocated",
-        content = "£10.00",
-        isLink = false,
-        href = None
-      ),
-      PaymentAllocationDetailsViewModelRow(
-        rowName = "Group tax total",
-        content = "£10.00",
-        isLink = true,
-        href = None
-      )
-    ),
-    allocRows = List(
-      AllocationDetailsViewModelRow(
-        paymentDate = "24 Jul 2024",
-        allocatedPaymentAmount = "£10.00"
-      )
-    ),
-    page = page,
-    pagination = PaginationHelper
-      .toPagination(page, _ => s"/ct-accounting/group-payment-arrangement/group-taxes/payment-allocated?page=1")(msgs),
-    paginationInfo = Some("PaginationInfo")
-  )
-
+  def paymentAllocationDetailsToVM(pad: PaymentAllocationDetails, pageUrl: Int => String)(implicit messages: Messages) =
+    PaymentAllocationDetailsViewModel.convertToViewModel(pad, pageUrl, Some(1))
 }

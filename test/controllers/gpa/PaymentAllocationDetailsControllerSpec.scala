@@ -14,71 +14,76 @@
  * limitations under the License.
  */
 
-//package controllers.gpa
-//
-//import base.SpecBase
-//import helpers.gpa.PaymentAllocationDetailsHelper
-////import org.mockito.ArgumentMatchers.any
-////import org.mockito.Mockito.when
-//import org.scalatestplus.mockito.MockitoSugar
-//import play.api.i18n.Messages
-//import play.api.inject.bind
-//import play.api.test.FakeRequest
-//import play.api.test.Helpers.*
-//import services.gpa.PaymentAllocationDetailsService
-//import uk.gov.hmrc.http.HeaderCarrier
-//import views.html.gpa.PaymentAllocationDetailsView
+package controllers.gpa
 
-//import scala.concurrent.Future
+import base.SpecBase
+import helpers.gpa.PaymentAllocationDetailsHelper
+import org.mockito.ArgumentMatchers.any
+import org.mockito.Mockito.when
+import org.scalatestplus.mockito.MockitoSugar
+import play.api.i18n.Messages
+import play.api.inject.bind
+import play.api.test.FakeRequest
+import play.api.test.Helpers.*
+import services.gpa.PaymentAllocationDetailsService
+import uk.gov.hmrc.http.HeaderCarrier
+import views.html.gpa.PaymentAllocationDetailsView
 
-//class PaymentAllocationDetailsControllerSpec extends SpecBase with MockitoSugar with PaymentAllocationDetailsHelper {
+import scala.concurrent.Future
 
-//  private trait Setup {
-//    val mockService: PaymentAllocationDetailsService = mock[PaymentAllocationDetailsService]
-//    implicit val hc: HeaderCarrier                   = HeaderCarrier()
-//
-//    val application = applicationBuilder()
-//      .overrides(bind[PaymentAllocationDetailsService].toInstance(mockService))
-//      .build()
-//
-//    implicit override val msgs: Messages                 = messages(application)
-//  }
-//
-//  "PaymentAllocationDetailsController" - {
-//
-//    "return 200 and a successful response for payment allocation details" in new Setup {
-//      when(
-//        mockService.getGPAPaymentAllocationDetail(any(), any(), any(), any(), any(), any())(
-//          any[HeaderCarrier]
-//        )
-//      )
-//        .thenReturn(Future.successful(fullPaymentAllocationDetails))
-//
-//      running(application) {
-//        val request = FakeRequest(GET, routes.PaymentAllocationDetailsController.onPageLoad(None).url)
-//        val result  = route(application, request).value
-//        val view    = application.injector.instanceOf[PaymentAllocationDetailsView]
-//
-//        status(result) mustEqual OK
-//        contentAsString(result) mustEqual view(fullPaymentAllocationDetailsVM, BigDecimal(1))(request, messages(application)).toString
-//      }
-//    }
-//
-//    "return 303 and redirect to Journey recovery" in new Setup {
-//      when(
-//        mockService.getGPAPaymentAllocationDetail(any(), any(), any(), any(), any(), any())(
-//          any[HeaderCarrier]
-//        )
-//      )
-//        .thenReturn(Future.failed(new RuntimeException("error")))
-//
-//      running(application) {
-//        val request = FakeRequest(GET, routes.PaymentAllocationDetailsController.onPageLoad(None).url)
-//        val result  = route(application, request).value
-//
-//        status(result) mustEqual SEE_OTHER
-//        redirectLocation(result).value mustEqual controllers.routes.JourneyRecoveryController.onPageLoad().url
-//      }
-//    }
-//  }
-//}
+class PaymentAllocationDetailsControllerSpec extends SpecBase with MockitoSugar with PaymentAllocationDetailsHelper {
+
+  private trait Setup {
+    val mockService: PaymentAllocationDetailsService = mock[PaymentAllocationDetailsService]
+    implicit val hc: HeaderCarrier                   = HeaderCarrier()
+
+    val application = applicationBuilder()
+      .overrides(bind[PaymentAllocationDetailsService].toInstance(mockService))
+      .build()
+
+    val page                   = 1
+    val pageUrl: Int => String = page =>
+      s"/ct-accounting/group-payment-arrangement/group-taxes/payment-allocated?page=$page"
+
+    implicit val msgs: Messages = messages(application)
+  }
+
+  "PaymentAllocationDetailsController" - {
+
+    "return 200 and a successful response for payment allocation details" in new Setup {
+      when(
+        mockService.getGPAPaymentAllocationDetail(any(), any(), any(), any(), any(), any())(
+          any[HeaderCarrier]
+        )
+      )
+        .thenReturn(Future.successful(fullPaymentAllocationDetails))
+
+      running(application) {
+        val request = FakeRequest(GET, routes.PaymentAllocationDetailsController.onPageLoad(None).url)
+        val result  = route(application, request).value
+        val view    = application.injector.instanceOf[PaymentAllocationDetailsView]
+        val vm      = paymentAllocationDetailsToVM(fullPaymentAllocationDetails, pageUrl)(msgs)
+
+        status(result) mustEqual OK
+        contentAsString(result) mustEqual view(vm, BigDecimal(1))(request, messages(application)).toString
+      }
+    }
+
+    "return 303 and redirect to Journey recovery" in new Setup {
+      when(
+        mockService.getGPAPaymentAllocationDetail(any(), any(), any(), any(), any(), any())(
+          any[HeaderCarrier]
+        )
+      )
+        .thenReturn(Future.failed(new RuntimeException("error")))
+
+      running(application) {
+        val request = FakeRequest(GET, routes.PaymentAllocationDetailsController.onPageLoad(None).url)
+        val result  = route(application, request).value
+
+        status(result) mustEqual SEE_OTHER
+        redirectLocation(result).value mustEqual controllers.routes.JourneyRecoveryController.onPageLoad().url
+      }
+    }
+  }
+}
