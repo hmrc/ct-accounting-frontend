@@ -56,7 +56,4 @@ object PaginationHelper {
       )
     }
   }
-  def paginationText(paginated: Paginated[_])(implicit messages: Messages): Option[String]    =
-    if (!paginated.needsPagination) None
-    else Some(messages("gpa.paginationInfo", paginated.firstItemNumber, paginated.lastItemNumber, paginated.totalItems))
 }

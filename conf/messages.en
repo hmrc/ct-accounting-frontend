@@ -49,7 +49,6 @@ unauthorised.title = You can’t access this service with this account
 unauthorised.heading = You can’t access this service with this account
 
 breadcrumbs.home = Home
-breadcrumbs.accountingPeriods = Accounting periods
 breadcrumbs.accountingPeriodEnding = Accounting period ending
 breadcrumbs.interest = Interest
 breadcrumbs.accountingPeriods = Accounting periods
@@ -276,13 +275,6 @@ paymentAllocationDetails.groupTaxTotal = Group tax total
 paymentAllocationDetails.paymentAllocationRecords = Payment allocation records
 paymentAllocationDetails.paymentDate = Payment date
 paymentAllocationDetails.allocatedPaymentAmount = Allocated Payment Amount
-
-groupPaymentsArrangements.status.open = Open
-groupPaymentsArrangements.status.earlierCleared = Earlier Cleared
-groupPaymentsArrangements.status.cleared = Cleared
-groupPaymentsArrangements.status.earlierExempt = Earlier Exempt
-
-gpa.paginationInfo = Displaying <b>{0}</b> to <b>{1}</b> of <b>{2}</b> records
 
 gpa.paginationInfo = Displaying <b>{0}</b> to <b>{1}</b> of <b>{2}</b> records
 
