@@ -50,10 +50,6 @@ class GroupTaxChargesController @Inject() (
     service
       .getGpaGroupTaxCharges(pGpaUtr, pGppContractVersion, pStartIndex, pCount)
       .map { groupTaxChargesResponse =>
-        logger.info(
-          s"Controller: pGpaUtr: $pGpaUtr, pGppContractVersion: $pGpaUtr, pStartIndex: $pStartIndex, pCount: $pCount"
-        )
-
         val viewModel =
           GroupTaxChargesViewModel.toViewModel(
             groupTaxChargesResponse,

@@ -47,7 +47,7 @@ class GroupTaxChargesConnector @Inject() (http: HttpClientV2, config: ServicesCo
       .execute[GpaGroupTaxCharges]
       .recover {
         case u: UpstreamErrorResponse =>
-          logger.error(
+          logger.info(
             s"Upstream error: $pGpaUtr :: $pGppContractVersion :: $pStartIndex :: $pCount - ${u.getMessage}"
           )
           throw u
