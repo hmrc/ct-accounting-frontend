@@ -94,7 +94,7 @@ class PaymentAllocationDetailsViewSpec
       paragraphs.text() must include(messages("paymentAllocationDetails.p2"))
     }
 
-    "render the page with correct table contents for Allocated Payment" in new Setup {
+    "render the page with correct table contents for Payment allocated" in new Setup {
       val vm   = paymentAllocationDetailsToVM(fullPaymentAllocationDetails, pageUrl)
       val html = view(vm, BigDecimal(1))
       val doc  = htmlDoc(html)
@@ -109,13 +109,16 @@ class PaymentAllocationDetailsViewSpec
 
     }
 
-    "render the page with correct table header and contents for Payment Allocation Records" in new Setup {
+    "render the page with correct table header and contents for Allocation Records without pagination" in new Setup {
       val vm   = paymentAllocationDetailsToVM(fullPaymentAllocationDetails, pageUrl)
       val html = view(vm, BigDecimal(1))
       val doc  = htmlDoc(html)
 
-      val headers  = doc.select("th.govuk-table__header")
-      val contents = doc.select("td.govuk-table__cell")
+      val headers    = doc.select("th.govuk-table__header")
+      val contents   = doc.select("td.govuk-table__cell")
+      val pagination = doc.select("ul.govuk-pagination__list")
+
+      pagination.size mustBe 0
 
       headers.text()  must include(messages("paymentAllocationDetails.paymentDate"))
       contents.text() must include("24 Jul 2024")
@@ -125,7 +128,7 @@ class PaymentAllocationDetailsViewSpec
 
     }
 
-    "render the page with pagination for multiple Allocation Records" in new Setup {
+    "render the page with pagination for Allocation Records > 10" in new Setup {
       val vm   = paymentAllocationDetailsToVM(paymentAllocationDetailsWithMultipleAllocationDetails, pageUrl)
       val html = view(vm, BigDecimal(1))
       val doc  = htmlDoc(html)
@@ -135,6 +138,19 @@ class PaymentAllocationDetailsViewSpec
 
       pagination.size mustBe 1
       paginationInfo.attr("href") mustBe "/ct-accounting/group-payment-arrangement/group-taxes/payment-allocated?page=2"
+
+    }
+
+    "render the page without pagination when there are no Allocation Records" in new Setup {
+      val vm   = paymentAllocationDetailsToVM(minimalPaymentAllocationDetails, pageUrl)
+      val html = view(vm, BigDecimal(1))
+      val doc  = htmlDoc(html)
+
+      val pagination = doc.select("ul.govuk-pagination__list")
+      val paragraphs = doc.select("p.govuk-body")
+
+      pagination.size mustBe 0
+      paragraphs.text() must include(messages("paymentAllocationDetails.p2"))
 
     }
 
