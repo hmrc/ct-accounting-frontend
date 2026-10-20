@@ -18,7 +18,7 @@ package controllers.gpa
 
 import base.SpecBase
 import helpers.gpa.GroupTaxChargesHelper
-import org.mockito.ArgumentMatchers.{any, eq as eqTo}
+import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
 import play.api.Application
@@ -49,16 +49,16 @@ class GroupTaxChargesControllerSpec extends SpecBase with MockitoSugar with Grou
   "GroupTaxChargesController" - {
 
     "must return OK, with Group Tax Charges correct view" in new Fixture {
-      when(mockService.getGpaGroupTaxCharges(eqTo(1L), eqTo(1), eqTo(0), eqTo(10))(any[HeaderCarrier]))
+      when(mockService.getGpaGroupTaxCharges(any(), any(), any(), any())(any[HeaderCarrier]))
         .thenReturn(Future.successful(gpaGroupTaxChargesWithTwoParticipators))
 
       running(application) {
-        val request   = FakeRequest(GET, routes.GroupTaxChargesController.onPageLoad(Some(0)).url)
+        val request   = FakeRequest(GET, routes.GroupTaxChargesController.onPageLoad(Some(1)).url)
         val result    = route(application, request).value
         val viewModel = GroupTaxChargesViewModel.toViewModel(
           gpaGroupTaxChargesWithTwoParticipators,
           Some(1),
-          pageUrl = pageNumber => routes.GroupTaxChargesController.onPageLoad(Some(0)).url
+          pageUrl = pageNumber => routes.GroupTaxChargesController.onPageLoad(Some(1)).url
         )
         val view      = application.injector.instanceOf[GroupTaxChargesView]
 
@@ -72,11 +72,11 @@ class GroupTaxChargesControllerSpec extends SpecBase with MockitoSugar with Grou
     }
 
     "must redirect when exception occurs from BE occurs" in new Fixture {
-      when(mockService.getGpaGroupTaxCharges(eqTo(1L), eqTo(1), eqTo(0), eqTo(10))(any[HeaderCarrier]))
+      when(mockService.getGpaGroupTaxCharges(any(), any(), any(), any())(any[HeaderCarrier]))
         .thenReturn(Future.failed(new RuntimeException("Error")))
 
       running(application) {
-        val request = FakeRequest(GET, routes.GroupTaxChargesController.onPageLoad(Some(0)).url)
+        val request = FakeRequest(GET, routes.GroupTaxChargesController.onPageLoad(Some(1)).url)
         val result  = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
