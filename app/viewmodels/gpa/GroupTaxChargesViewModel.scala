@@ -100,10 +100,15 @@ object GroupTaxChargesViewModel {
           SummaryListRowViewModel(
             key = Key(content = Text(messages("groupTaxCharges.summaryHeader.groupPaymentTotal"))),
             value = ValueViewModel(
-              LinkViewModel.toHtmlContent(LinkViewModel(text = formatCurrency(gpaGroupTaxCharges.pGppTotalGroupPayment.getOrElse(0.00)),
-                href = routes.GroupTaxChargesController.onPageLoad(None).url,
-                classes = "govuk-table__cell govuk-table__cell--numeric",
-                isLink = true)))
+              LinkViewModel.toHtmlContent(
+                LinkViewModel(
+                  text = formatCurrency(gpaGroupTaxCharges.pGppTotalGroupPayment.getOrElse(0.00)),
+                  href = routes.GroupTaxChargesController.onPageLoad(None).url,
+                  classes = "govuk-table__cell govuk-table__cell--numeric",
+                  isLink = true
+                )
+              )
+            )
           ),
           SummaryListRowViewModel(
             key = Key(content = Text(messages("groupTaxCharges.summaryHeader.groupTaxTotal"))),

@@ -67,7 +67,14 @@ class GroupTaxChargesViewModelSpec extends AnyWordSpec with Matchers with GroupT
         SummaryListRowViewModel(
           key = Key(content = Text(messages("groupTaxCharges.summaryHeader.groupPaymentTotal"))),
           value = ValueViewModel(
-            Text(formatCurrency(gpaGroupTaxChargesWithTwoParticipators.pGppTotalGroupPayment.getOrElse(0.00)))
+            LinkViewModel.toHtmlContent(
+              LinkViewModel(
+                text = formatCurrency(gpaGroupTaxChargesWithTwoParticipators.pGppTotalGroupPayment.getOrElse(0.00)),
+                href = routes.GroupTaxChargesController.onPageLoad(None).url,
+                classes = "govuk-table__cell govuk-table__cell--numeric",
+                isLink = true
+              )
+            )
           )
         ),
         SummaryListRowViewModel(
