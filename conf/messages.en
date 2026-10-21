@@ -279,3 +279,17 @@ paymentAllocationDetails.allocatedPaymentAmount = Allocated Payment Amount
 
 gpa.paginationInfo = Displaying <b>{0}</b> to <b>{1}</b> of <b>{2}</b> records
 
+groupTaxCharges.title = Group taxes – Group Payment Arrangement
+groupTaxCharges.heading = Group taxes
+groupTaxCharges.summaryHeader.groupArrangementReference = Group Payment Arrangement reference
+groupTaxCharges.summaryHeader.periodOfAccountEnding = Period of account ending
+groupTaxCharges.summaryHeader.groupPeriodOfAccountStatus = Group period of account status
+groupTaxCharges.summaryHeader.groupPaymentTotal = Group payment total
+groupTaxCharges.summaryHeader.groupTaxTotal = Group tax total
+groupTaxCharges.subheading = Group tax records
+groupTaxCharges.tableHeader.participatingCompany = Participating company
+groupTaxCharges.tableHeader.utr = Unique Taxpayer Reference
+groupTaxCharges.tableHeader.accountingPeriodEnding = Accounting period ending
+groupTaxCharges.tableHeader.taxLiability = Tax Liability
+groupTaxCharges.tableHeader.paymentAllocated = Payment Allocated
+
