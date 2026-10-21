@@ -42,7 +42,8 @@ case class GroupTaxChargesViewModel(
   summaryList: SummaryList,
   groupTaxRecordsRows: Seq[GroupTaxRecordRow],
   page: Paginated[GroupTaxRecordRow],
-  pagination: Option[Pagination]
+  pagination: Option[Pagination],
+  paginationInfo: Option[String]
 ) {
   val totalTaxLiability: BigDecimal     = groupTaxRecordsRows.map(_.taxLiability.amount).sum
   val totalPaymentAllocated: BigDecimal = groupTaxRecordsRows.map(_.paymentAllocated.amount).sum
@@ -78,7 +79,7 @@ object GroupTaxChargesViewModel {
       )
     }
 
-    val page = Paginated.alreadyPaginated(rows, requestedPage, gpaGroupTaxCharges.pGroupPaymentRecordCount.getOrElse(0))
+    val page = Paginated.alreadyPaginated(rows, requestedPage, gpaGroupTaxCharges.pTotalNumOfRecords.getOrElse(0))
 
     GroupTaxChargesViewModel(
       summaryList = SummaryListViewModel(rows =
@@ -118,7 +119,8 @@ object GroupTaxChargesViewModel {
       ),
       groupTaxRecordsRows = rows,
       page = page,
-      pagination = PaginationHelper.toPagination(page, pageUrl)
+      pagination = PaginationHelper.toPagination(page, pageUrl),
+      paginationInfo = PaginationHelper.paginationText(page)
     )
   }
 }

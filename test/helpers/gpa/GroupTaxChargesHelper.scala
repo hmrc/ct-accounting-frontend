@@ -17,6 +17,9 @@
 package helpers.gpa
 
 import models.gpa.{GpaGroupTaxCharges, ParticipatorDetails}
+import play.api.i18n.Messages
+import viewmodels.gpa.GroupTaxChargesViewModel
+
 import java.time.LocalDate
 
 trait GroupTaxChargesHelper {
@@ -127,4 +130,12 @@ trait GroupTaxChargesHelper {
       )
     )
   )
+
+  def returnGroupTaxChargesViewModel(
+    taxCharges: GpaGroupTaxCharges,
+    requestedPage: Option[Int],
+    pageUrl: Int => String
+  )(implicit messages: Messages): GroupTaxChargesViewModel =
+    GroupTaxChargesViewModel.toViewModel(taxCharges, requestedPage, pageUrl)
+
 }

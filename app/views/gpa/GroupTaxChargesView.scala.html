@@ -25,19 +25,22 @@
         h1: h1,
         link:Link,
         govukSummaryList: GovukSummaryList,
-        govukPagination: GovukPagination
+        govukPagination: GovukPagination,
+        paragraph: Paragraph,
 )
 
 
 @(viewModel: GroupTaxChargesViewModel)(implicit request: Request[_], messages: Messages)
 
-    @layout(pageTitle = titleNoForm(messages("groupTaxCharges.title"), Some(messages("groupTaxCharges.section"))), breadcrumbs = Some(PageBreadcrumbs.groupTaxChargesPage)) {
+    @layout(pageTitle = titleNoForm(messages("groupTaxCharges.title")), breadcrumbs = Some(PageBreadcrumbs.groupTaxChargesPage)) {
 
         @h1(messages("groupTaxCharges.heading"))
 
         @govukSummaryList(viewModel.summaryList)
 
         @h1(messages("groupTaxCharges.subheading"))
+
+        @viewModel.paginationInfo.map(paragraph(_))
         @govukTable(
             Table(
                 head = Some(Seq(

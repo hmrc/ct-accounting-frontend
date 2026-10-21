@@ -290,6 +290,6 @@ groupTaxCharges.subheading = Group tax records
 groupTaxCharges.tableHeader.participatingCompany = Participating company
 groupTaxCharges.tableHeader.utr = Unique Taxpayer Reference
 groupTaxCharges.tableHeader.accountingPeriodEnding = Accounting period ending
-groupTaxCharges.tableHeader.taxLiability = Tax Liability
-groupTaxCharges.tableHeader.paymentAllocated = Payment Allocated
+groupTaxCharges.tableHeader.taxLiability = Tax liability
+groupTaxCharges.tableHeader.paymentAllocated = Payment allocated
 
