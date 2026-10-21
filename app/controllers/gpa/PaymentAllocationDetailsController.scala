@@ -23,6 +23,7 @@ import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import services.gpa.PaymentAllocationDetailsService
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
+import utils.PaginationHelper
 import viewmodels.gpa.PaymentAllocationDetailsViewModel
 import views.html.gpa.PaymentAllocationDetailsView
 
@@ -41,7 +42,8 @@ class PaymentAllocationDetailsController @Inject() (
     with Logging {
 
   def onPageLoad(page: Option[Int]): Action[AnyContent] = identify.async { implicit request =>
-    paymentAllocationDetailsService.getGPAPaymentAllocationDetail(1L, 2L, 3L, 4L, 0, 10).map {
+    val startIndex: Int = PaginationHelper.startIndexCountHelper(page, 10)
+    paymentAllocationDetailsService.getGPAPaymentAllocationDetail(1L, 2L, 3L, 4L, startIndex, 10).map {
       paymentAllocationDetails =>
         logger.info(
           s"Successfully retrieved payment allocation details"
