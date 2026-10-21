@@ -1,0 +1,79 @@
+@*
+ * Copyright 2026 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import views.html.components.*
+@import viewmodels._
+@import viewmodels.gpa.GroupTaxChargesViewModel
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
+
+@this(
+        layout: templates.Layout,
+        govukTable: GovukTable,
+        h1: h1,
+        link:Link,
+        govukSummaryList: GovukSummaryList,
+        govukPagination: GovukPagination,
+        paragraph: Paragraph,
+)
+
+
+@(viewModel: GroupTaxChargesViewModel)(implicit request: Request[_], messages: Messages)
+
+    @layout(pageTitle = titleNoForm(messages("groupTaxCharges.title")), breadcrumbs = Some(PageBreadcrumbs.groupTaxChargesPage)) {
+
+        @h1(messages("groupTaxCharges.heading"))
+
+        @govukSummaryList(viewModel.summaryList)
+
+        @h1(messages("groupTaxCharges.subheading"))
+
+        @viewModel.paginationInfo.map(paragraph(_))
+        @govukTable(
+            Table(
+                head = Some(Seq(
+                    HeadCell(content = Text(messages("groupTaxCharges.tableHeader.participatingCompany"))),
+                    HeadCell(content = Text(messages("groupTaxCharges.tableHeader.utr"))),
+                    HeadCell(content = Text(messages("groupTaxCharges.tableHeader.accountingPeriodEnding"))),
+                    HeadCell(content = Text(messages("groupTaxCharges.tableHeader.taxLiability")), classes = "govuk-table__cell govuk-table__cell--numeric"),
+                    HeadCell(content = Text(messages("groupTaxCharges.tableHeader.paymentAllocated")), classes = "govuk-table__cell govuk-table__cell--numeric")
+                    )),
+                    rows = viewModel.groupTaxRecordsRows.map { row =>
+                        Seq(
+                            TableRow(
+                                content = Text(row.participatingCompany),
+                                classes = s"govuk-table__cell"
+                            ),
+                            TableRow(
+                                content = Text(row.uniqueTaxpayerReference.toString()),
+                                classes = s"govuk-table__cell"
+                            ),
+                            TableRow(
+                                content = Text(formatDate(row.accountingPeriodEnding, messages.lang)),
+                                classes = s"govuk-table__cell"
+                            ),
+                            TableRow(content = HtmlContent(link(row.taxLiability.description,
+                                                                row.taxLiability.href.url,
+                                                                row.taxLiability.isLink)), classes = "govuk-table__cell govuk-table__cell--numeric"),
+                            TableRow(content = HtmlContent(link(row.paymentAllocated.description,
+                                        row.paymentAllocated.href.url,
+                                        row.paymentAllocated.isLink)), classes = "govuk-table__cell govuk-table__cell--numeric")
+                        )
+                    }
+                )
+            )
+
+            @viewModel.pagination.map(govukPagination(_))
+    }
