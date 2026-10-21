@@ -17,20 +17,166 @@
 @import views.html.components.*
 @import views.ViewUtils._
 @import viewmodels.PageBreadcrumbs
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.input.PrefixOrSuffix
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.label.Label
+@import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
+@import play.api.data.Form
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukErrorSummary
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukFieldset
+@import play.twirl.api.HtmlFormat
+@import forms.payments.FindYourPaymentFormData
 
 @this(
-layout: templates.Layout,
-h1: h1
+   layout: templates.Layout,
+   h1: h1,
+   formHelper: FormWithCSRF,
+   govukInput: GovukInput,
+   govukButton: GovukButton,
+   govukFieldset: GovukFieldset,
+   govukDateInput: GovukDateInput,
+   govukErrorSummary: GovukErrorSummary
 )
 
-@()(implicit request: Request[_], messages: Messages)
+
+@(form: Form[FindYourPaymentFormData])(implicit request: Request[_], messages: Messages)
 
 @layout(
-pageTitle = titleNoForm(messages("findYourPayment.title"), None),
-breadcrumbs = Some(PageBreadcrumbs.findYourPaymentPage)
+   pageTitle = titleNoForm(messages("findYourPayment.title"), None),
+   breadcrumbs = Some(PageBreadcrumbs.findYourPaymentPage)
 ) {
 
-@h1(messages("findYourPayment.heading"))
+ @formHelper(action = controllers.payments.routes.FindYourPaymentController.onSubmit()){
 
-}
+
+  @if(form.hasErrors) {
+   @govukErrorSummary(ErrorSummary(
+    errorList = form.errors.map { error =>
+     val href = error.key match {
+      case "amount"    => "#amount"
+      case "startDate" => "#startDate-day"
+      case "endDate"   => "#endDate-day"
+      case _           => "#startDate-day"
+     }
+
+     ErrorLink(
+      href = Some(href),
+      content = Text(messages(error.message, error.args: _*))
+     )
+    },
+    title = Text(messages("error.summary.title"))
+   ))
+  }
+
+
+  @h1(messages("findYourPayment.heading"))
+
+    @govukInput(Input(
+     id = "amount",
+     name = "amount",
+     label = Label(
+      content = Text(messages("findYourPayment.amount")),
+      classes = "govuk-label--m"
+     ),
+     hint = Some(Hint(
+      content = HtmlContent(
+       Html(s"""
+      <p class="govuk-hint">
+        ${messages("findYourPayment.amountHint")}
+      </p>
+      <ul class="govuk-list govuk-list--bullet govuk-hint">
+        <li>${messages("findYourPayment.amountHintBullet1")}</li>
+        <li>${messages("findYourPayment.amountHintBullet2")}</li>
+      </ul>
+    """)
+      )
+     )),
+     errorMessage = form("amount").error.map { error =>
+      ErrorMessage(
+       content = Text(messages(error.message, error.args: _*))
+      )
+     },
+     prefix = Some(PrefixOrSuffix(
+      content = Text("£")
+     )),
+     classes = "govuk-input--width-5",
+     spellcheck = Some(false)
+    ))
+
+  @govukFieldset(Fieldset(
+   legend = Some(Legend(
+    content = Text(messages("findYourPayment.dateRange")),
+    classes = "govuk-fieldset__legend--m"
+   )),
+   html = HtmlFormat.fill(Seq(
+    govukDateInput(DateInput(
+     id = "startDate",
+     fieldset = Some(Fieldset(
+      legend = Some(Legend(
+       content = Text(messages("findYourPayment.startDate")),
+       classes = "govuk-fieldset__legend--s"
+      ))
+     )),
+     hint = Some(Hint(
+      content = Text(messages("findYourPayment.dateHint"))
+     )),
+     items = Seq(
+      InputItem(
+       id = "startDate-day",
+       name = "startDate.day",
+       label = Some(messages("findYourPayment.day")),
+       classes = "govuk-input govuk-date-input__input govuk-input--width-2"
+      ),
+      InputItem(
+       id = "startDate-month",
+       name = "startDate.month",
+       label = Some(messages("findYourPayment.month")),
+       classes = "govuk-input govuk-date-input__input govuk-input--width-2"
+      ),
+      InputItem(
+       id = "startDate-year",
+       name = "startDate.year",
+       label = Some(messages("findYourPayment.year")),
+       classes = "govuk-input govuk-date-input__input govuk-input--width-4"
+      )
+     )
+    )),
+    govukDateInput(DateInput(
+     id = "endDate",
+     fieldset = Some(Fieldset(
+      legend = Some(Legend(
+       content = Text(messages("findYourPayment.endDate")),
+       classes = "govuk-fieldset__legend--s"
+      ))
+     )),
+     hint = Some(Hint(
+      content = Text(messages("findYourPayment.dateHint"))
+     )),
+     items = Seq(
+      InputItem(
+       id = "endDate-day",
+       name = "endDate.day",
+       label = Some(messages("findYourPayment.day")),
+       classes = "govuk-input govuk-date-input__input govuk-input--width-2"
+      ),
+      InputItem(
+       id = "endDate-month",
+       name = "endDate.month",
+       label = Some(messages("findYourPayment.month")),
+       classes = "govuk-input govuk-date-input__input govuk-input--width-2"
+      ),
+      InputItem(
+       id = "endDate-year",
+       name = "endDate.year",
+       label = Some(messages("findYourPayment.year")),
+       classes = "govuk-input govuk-date-input__input govuk-input--width-4"
+      )
+     )
+    ))
+   )))
+  )
+  @govukButton(Button(
+   content = Text(messages("findYourPayment.submit"))
+  ))
+   }
+ }
 
