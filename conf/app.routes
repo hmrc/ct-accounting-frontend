@@ -50,3 +50,4 @@ GET         /group-payment-arrangement/group-taxes/payment-allocated        cont
 
 # Payments Journey
 GET         /find-your-payment  controllers.payments.FindYourPaymentController.onPageLoad()
+POST        /find-your-payment  controllers.payments.FindYourPaymentController.onSubmit()
