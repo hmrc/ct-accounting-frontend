@@ -38,16 +38,15 @@ class FindYourPaymentController @Inject() (
     Ok(view(findYourPaymentForm.form))
   }
 
-
   def onSubmit: Action[AnyContent] = identify { implicit request =>
-    findYourPaymentForm.form.bindFromRequest().fold(
-      formWithErrors =>
-        BadRequest(view(formWithErrors)),
-
-      data =>
-        //TODO: Change to payment results route after implementation
-        Redirect("/find-your-payment/payment-results")
-    )
+    findYourPaymentForm.form
+      .bindFromRequest()
+      .fold(
+        formWithErrors => BadRequest(view(formWithErrors)),
+        data =>
+          // TODO: Change to payment results route after implementation
+          Redirect("/find-your-payment/payment-results")
+      )
   }
 
 }
