@@ -278,3 +278,27 @@ paymentAllocationDetails.allocatedPaymentAmount = Allocated Payment Amount
 
 gpa.paginationInfo = Displaying <b>{0}</b> to <b>{1}</b> of <b>{2}</b> records
 
+
+# Payments Messages
+findYourPayment.title = Find your payment – GOV.UK
+findYourPayment.heading = Find your payment
+findYourPayment.amount=Amount
+findYourPayment.amountHint=Enter the exact amount, including pence. For example, 2020.67
+findYourPayment.amountHintBullet1=Include the pence value exactly as it appears.
+findYourPayment.amountHintBullet2=Do not include the currency symbol.
+findYourPayment.startDate=Start date (optional)
+findYourPayment.endDate=End date (optional)
+findYourPayment.dateHint=For example, 27 3 2007
+findYourPayment.day=Day
+findYourPayment.month=Month
+findYourPayment.year=Year
+findYourPayment.submit=Find payment
+findYourPayment.dateRange = Select date range
+findYourPayment.error.dateRange = Enter an End date that is later than the Start date
+findYourPayment.error.invalidDate = Enter a valid date
+findYourPayment.error.allDateFieldsRequired = Enter a valid date
+findYourPayment.error.twoDateFieldsRequired = Enter a valid date
+findYourPayment.error.requiredDate = Enter a valid date
+findYourPayment.error.amountRequired = Enter your payment amount in the correct format, like 1570.67 or 1500.00
+findYourPayment.error.amountFormat = Enter your payment amount in the correct format, like 1570.67 or 1500.00
+
