@@ -54,6 +54,12 @@ class FindYourPaymentFormProviderSpec extends AnyWordSpec with Matchers {
       result.hasErrors mustBe false
     }
 
+    "reject an empty amount" in {
+      val result = formProvider.form.bind(formData(amount = ""))
+
+      result.errors.map(_.message) must contain("findYourPayment.error.amountRequired")
+    }
+
     "accept a whole number amount" in {
       val result = formProvider.form.bind(formData(amount = "1500"))
 
@@ -63,19 +69,19 @@ class FindYourPaymentFormProviderSpec extends AnyWordSpec with Matchers {
     "reject an amount with one decimal place" in {
       val result = formProvider.form.bind(formData(amount = "1500.5"))
 
-      result.hasErrors mustBe true
+      result.errors.map(_.message) must contain("findYourPayment.error.amountFormat")
     }
 
     "reject an amount with three decimal places" in {
       val result = formProvider.form.bind(formData(amount = "1500.567"))
 
-      result.hasErrors mustBe true
+      result.errors.map(_.message) must contain("findYourPayment.error.amountFormat")
     }
 
     "reject an amount containing a currency symbol" in {
       val result = formProvider.form.bind(formData(amount = "£1500.00"))
 
-      result.hasErrors mustBe true
+      result.errors.map(_.message) must contain("findYourPayment.error.amountFormat")
     }
 
     "accept a valid start and end date when the end date is later" in {
@@ -105,7 +111,7 @@ class FindYourPaymentFormProviderSpec extends AnyWordSpec with Matchers {
         )
       )
 
-      result.hasErrors mustBe true
+      result.errors.map(_.message) must contain("findYourPayment.error.dateRange")
     }
 
     "reject an end date equal to the start date" in {
@@ -120,7 +126,7 @@ class FindYourPaymentFormProviderSpec extends AnyWordSpec with Matchers {
         )
       )
 
-      result.hasErrors mustBe true
+      result.errors.map(_.message) must contain("findYourPayment.error.dateRange")
     }
 
     "reject an invalid calendar date" in {
@@ -132,7 +138,18 @@ class FindYourPaymentFormProviderSpec extends AnyWordSpec with Matchers {
         )
       )
 
-      result.hasErrors mustBe true
+      result.errors.map(_.message) must contain("findYourPayment.error.invalidDate")
+    }
+
+    "reject a partially completed start date" in {
+      val result = formProvider.form.bind(
+        formData(
+          startDay = "1",
+          startMonth = "3"
+        )
+      )
+
+      result.errors.map(_.message) must contain("findYourPayment.error.requiredDate")
     }
 
     "allow only a start date when it is valid" in {
