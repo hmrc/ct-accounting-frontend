@@ -30,14 +30,13 @@ class FindYourPaymentControllerSpec extends SpecBase {
 
       running(application) {
         val request = FakeRequest(GET, routes.FindYourPaymentController.onPageLoad().url)
-        val result = route(application, request).value
-        val page = contentAsString(result)
+        val result  = route(application, request).value
+        val page    = contentAsString(result)
 
         status(result) mustEqual OK
         page must include("Find your payment")
       }
     }
-
 
     "must display the amount field and its hint for a GET" in {
       val application = applicationBuilder().build()
@@ -46,7 +45,7 @@ class FindYourPaymentControllerSpec extends SpecBase {
         val request = FakeRequest(GET, routes.FindYourPaymentController.onPageLoad().url)
 
         val result = route(application, request).value
-        val page = contentAsString(result)
+        val page   = contentAsString(result)
 
         status(result) mustEqual OK
         page must include("Amount")
@@ -66,13 +65,13 @@ class FindYourPaymentControllerSpec extends SpecBase {
         val request =
           FakeRequest(POST, routes.FindYourPaymentController.onSubmit().url)
             .withFormUrlEncodedBody(
-              "amount" -> "1570.67",
-              "startDate.day" -> "",
+              "amount"          -> "1570.67",
+              "startDate.day"   -> "",
               "startDate.month" -> "",
-              "startDate.year" -> "",
-              "endDate.day" -> "",
-              "endDate.month" -> "",
-              "endDate.year" -> ""
+              "startDate.year"  -> "",
+              "endDate.day"     -> "",
+              "endDate.month"   -> "",
+              "endDate.year"    -> ""
             )
 
         val result = route(application, request).value
@@ -90,17 +89,17 @@ class FindYourPaymentControllerSpec extends SpecBase {
         val request =
           FakeRequest(POST, routes.FindYourPaymentController.onSubmit().url)
             .withFormUrlEncodedBody(
-              "amount" -> "",
-              "startDate.day" -> "",
+              "amount"          -> "",
+              "startDate.day"   -> "",
               "startDate.month" -> "",
-              "startDate.year" -> "",
-              "endDate.day" -> "",
-              "endDate.month" -> "",
-              "endDate.year" -> ""
+              "startDate.year"  -> "",
+              "endDate.day"     -> "",
+              "endDate.month"   -> "",
+              "endDate.year"    -> ""
             )
 
         val result = route(application, request).value
-        val page = contentAsString(result)
+        val page   = contentAsString(result)
 
         status(result) mustEqual BAD_REQUEST
         page must include(
