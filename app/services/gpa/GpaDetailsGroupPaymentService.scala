@@ -21,9 +21,10 @@ import models.gpa.GpaPaymentDetails
 import play.api.Logging
 import play.api.i18n.Messages
 import uk.gov.hmrc.http.HeaderCarrier
-import utils.Constants.{ZERO, emptyString}
+import utils.Constants.ZERO
 import utils.gpa.StatusHelper
 import viewmodels.gpa.{GpaDetailsGroupPaymentArrangementViewModel, GroupPaymentRecord}
+import views.ViewUtils.formatDate
 
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
@@ -37,7 +38,7 @@ class GpaDetailsGroupPaymentService @Inject() (
   private def toViewModel(record: GpaPaymentDetails, taxRef: Long)(implicit
     messages: Messages
   ): GpaDetailsGroupPaymentArrangementViewModel = {
-    val normalisedGppEndDate: String = record.gppEndDate.map(_.toString).getOrElse(emptyString)
+    val normalisedGppEndDate: String = record.gppEndDate.fold("")(date => formatDate(date, messages.lang))
     val records                      = record.gpaPayments.map(gpaPayments =>
       GroupPaymentRecord(
         date = gpaPayments.displayDate,
