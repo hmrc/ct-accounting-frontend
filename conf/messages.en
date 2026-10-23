@@ -131,9 +131,9 @@ payments.table.total = Total
 payments.description.IRC = HMRC Credit
 payments.description.IRC.partPayment = HMRC Credit part payment
 payments.description.CP = Cheque payment
-payments.description.CP.partPayment = Cheque payment part payment
+payments.description.CP.partPayment = Cheque part payment
 payments.description.EP = Electronic payment
-payments.description.EP.partPayment = Electronic payment part payment
+payments.description.EP.partPayment = Electronic part payment
 
 interest.title                          = Interest
 interest.section                        = Accounting period overview

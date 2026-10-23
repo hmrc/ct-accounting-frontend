@@ -30,11 +30,11 @@ object PaymentsDescriptionHelper {
       case "BLP" | "LOP" | "NGP" | "BGT" =>
         messages("payments.description.CP") // Cheque payment
       case "BLPPP" | "LOPPP" | "NGPPP" | "BGTPP" =>
-        messages("payments.description.CP.partPayment") // Cheque payment part payment
+        messages("payments.description.CP.partPayment") // Cheque part payment
       case "BAC" | "BGP" | "CHP"         =>
         messages("payments.description.EP") // Electronic payment
       case "BACPP" | "BGPPP" | "CHPPP"         =>
-        messages("payments.description.EP.partPayment") // Electronic payment part payment
+        messages("payments.description.EP.partPayment") // Electronic part payment
       case _                             =>
         emptyString
     }
