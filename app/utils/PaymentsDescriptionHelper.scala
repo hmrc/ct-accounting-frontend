@@ -23,19 +23,19 @@ object PaymentsDescriptionHelper {
 
   def getPaymentsDescription(paymentTransactions: String)(implicit messages: Messages): String =
     paymentTransactions match {
-      case "DSO" | "IRP"                 =>
+      case "DSO" | "IRP"                         =>
         messages("payments.description.IRC") // HMRC Credit
-      case "DSOPP" | "IRPPP"                 =>
+      case "DSOPP" | "IRPPP"                     =>
         messages("payments.description.IRC.partPayment") // HMRC Credit part payment
-      case "BLP" | "LOP" | "NGP" | "BGT" =>
+      case "BLP" | "LOP" | "NGP" | "BGT"         =>
         messages("payments.description.CP") // Cheque payment
       case "BLPPP" | "LOPPP" | "NGPPP" | "BGTPP" =>
         messages("payments.description.CP.partPayment") // Cheque part payment
-      case "BAC" | "BGP" | "CHP"         =>
+      case "BAC" | "BGP" | "CHP"                 =>
         messages("payments.description.EP") // Electronic payment
-      case "BACPP" | "BGPPP" | "CHPPP"         =>
+      case "BACPP" | "BGPPP" | "CHPPP"           =>
         messages("payments.description.EP.partPayment") // Electronic part payment
-      case _                             =>
+      case _                                     =>
         emptyString
     }
 }

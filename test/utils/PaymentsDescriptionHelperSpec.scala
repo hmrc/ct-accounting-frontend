@@ -48,28 +48,28 @@ class PaymentsDescriptionHelperSpec extends SpecBase {
       result mustBe expectedResult
     }
   }
-    s"Payment Type is an IRC part payment, it should return correct Payments Description" - {
+  s"Payment Type is an IRC part payment, it should return correct Payments Description" - {
 
-      "when paymentType is DSOPP" in {
-        val paymentType = "DSOPP"
+    "when paymentType is DSOPP" in {
+      val paymentType = "DSOPP"
 
-        val result: String = messages(PaymentsDescriptionHelper.getPaymentsDescription(paymentType))
+      val result: String = messages(PaymentsDescriptionHelper.getPaymentsDescription(paymentType))
 
-        val expectedResult = "HMRC Credit part payment"
+      val expectedResult = "HMRC Credit part payment"
 
-        result mustBe expectedResult
-      }
-
-      "when paymentType is IRPPP" in {
-        val paymentType = "IRPPP"
-
-        val result: String = messages(PaymentsDescriptionHelper.getPaymentsDescription(paymentType))
-
-        val expectedResult = "HMRC Credit part payment"
-
-        result mustBe expectedResult
-      }
+      result mustBe expectedResult
     }
+
+    "when paymentType is IRPPP" in {
+      val paymentType = "IRPPP"
+
+      val result: String = messages(PaymentsDescriptionHelper.getPaymentsDescription(paymentType))
+
+      val expectedResult = "HMRC Credit part payment"
+
+      result mustBe expectedResult
+    }
+  }
 
   s"Payment Type is an CP payment, it should return correct Payments Description" - {
 
@@ -92,7 +92,7 @@ class PaymentsDescriptionHelperSpec extends SpecBase {
 
       result mustBe expectedResult
     }
-    
+
     "when paymentType is NGP" in {
       val paymentType = "NGP"
 
@@ -102,7 +102,7 @@ class PaymentsDescriptionHelperSpec extends SpecBase {
 
       result mustBe expectedResult
     }
-    
+
     "when paymentType is BGT" in {
       val paymentType = "BGT"
 
