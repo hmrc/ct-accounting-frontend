@@ -21,6 +21,7 @@ import play.api.Logging
 import play.api.i18n.Messages
 import utils.Constants.{ZERO, emptyString}
 import utils.PaymentsDescriptionHelper
+import views.ViewUtils.formatDate
 
 class GpaPaymentDetailsService(
 ) extends Logging {
@@ -52,12 +53,16 @@ class GpaPaymentDetailsService(
     val isRtoWithZeroAp    = isRto && gpaPayment.targetApNo.getOrElse(ZERO) == ZERO
     val participantPresent = gpaPayment.participatorPresent.getOrElse(false)
 
+    val maybeContractEndDate: String = gpaPayment.contractEndDate
+      .map(formatDate(_, messages.lang))
+      .getOrElse(accountingPeriodEndDate)
+
     gpaPayment.targetTaxpayerReference match {
       case Some(reallocationTaxRef) if reallocationTaxRef == gpaUtr.toString =>
         if (isRtoWithZeroAp)
           miscellaneous
         else
-          messages(s"$keyPrefix.date", gpaPayment.contractEndDate.getOrElse(accountingPeriodEndDate))
+          messages(s"$keyPrefix.date", maybeContractEndDate)
 
       case Some(reallocationTaxRef) =>
         if (!participantPresent || isRtoWithZeroAp)
