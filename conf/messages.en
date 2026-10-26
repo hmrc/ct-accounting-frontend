@@ -295,12 +295,12 @@ groupTaxCharges.tableHeader.paymentAllocated = Payment allocated
 
 
 # Payments Messages
-findYourPayment.title = Find your payment – GOV.UK
+findYourPayment.title = Find your payment
 findYourPayment.heading = Find your payment
 findYourPayment.amount=Amount
 findYourPayment.amountHint=Enter the exact amount, including pence. For example, 2020.67
-findYourPayment.amountHintBullet1=Include the pence value exactly as it appears.
-findYourPayment.amountHintBullet2=Do not include the currency symbol.
+findYourPayment.amountHintBullet1=include the pence value exactly as it appears
+findYourPayment.amountHintBullet2=do not include the currency symbol
 findYourPayment.startDate=Start date (optional)
 findYourPayment.endDate=End date (optional)
 findYourPayment.dateHint=For example, 27 3 2007
