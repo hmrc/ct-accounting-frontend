@@ -36,7 +36,7 @@
 
         @govukTable(
             Table(
-                caption = Some(messages("interest.caption")),
+                caption = Some(messages("interest.caption", formatDate(viewModel.accountingPeriodEndDate, messages.lang))),
                 captionClasses = "govuk-table__caption govuk-table__caption--m",
                 head = Some(Seq(
                     HeadCell(content = Text(messages("interest.description"))),

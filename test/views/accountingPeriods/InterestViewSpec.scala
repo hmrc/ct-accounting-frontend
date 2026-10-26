@@ -25,6 +25,7 @@ import play.api.Application
 import play.api.i18n.{Lang, Messages, MessagesApi, MessagesImpl}
 import play.api.test.FakeRequest
 import viewmodels.accountingPeriods.InterestViewModel
+import views.ViewUtils.formatDate
 import views.html.accountingPeriods.InterestView
 
 class InterestViewSpec extends SpecBase with InterestViewModelHelper {
@@ -56,7 +57,10 @@ class InterestViewSpec extends SpecBase with InterestViewModelHelper {
 
     "render the table caption" in {
       val doc = render(interestViewModelForAccruing)
-      doc.select("caption.govuk-table__caption").text() mustBe messages("interest.caption")
+      doc.select("caption.govuk-table__caption").text() mustBe messages(
+        "interest.caption",
+        formatDate(accountingPeriodEndDate, messages.lang)
+      )
     }
 
     "render the table headers" in {
