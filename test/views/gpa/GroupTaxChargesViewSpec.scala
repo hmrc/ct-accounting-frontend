@@ -50,7 +50,7 @@ class GroupTaxChargesViewSpec extends SpecBase with GroupTaxChargesHelper {
 
     "render the correct page title" in {
       val doc = render(viewModel)
-      doc.title() mustBe "Group taxes – Group Payment Arrangement - GOV.UK"
+      doc.title() mustBe "Group taxes - Group Payment Arrangement - GOV.UK"
     }
 
     "render the correct heading" in {
