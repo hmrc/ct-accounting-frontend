@@ -242,7 +242,10 @@ object PageBreadcrumbs {
     // TODO: Add hrefs
     items = Seq(
       BreadcrumbsItem(content = Text(messages("breadcrumbs.home")), href = Some("/")),
-      BreadcrumbsItem(content = Text(messages("breadcrumbs.groupPaymentArrangements")), href = Some("/"))
+      BreadcrumbsItem(
+        content = Text(messages("breadcrumbs.groupPaymentArrangements")),
+        href = Some(controllers.gpa.routes.GroupPaymentArrangementController.onPageLoad().url)
+      )
     )
   )
 
