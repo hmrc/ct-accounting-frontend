@@ -14,18 +14,16 @@
  * limitations under the License.
  */
 
-package utils.gpa
+package utils
 
 import play.api.i18n.Messages
 import utils.Constants.emptyString
 
-object StatusHelper {
+object ApportionmentHelper {
 
-  def getStatus(s: String)(implicit messages: Messages): String = s.trim match {
-    case "O" | "S" => messages("groupPaymentsArrangements.status.open")
-    case "C"       => messages("groupPaymentsArrangements.status.earlierCleared")
-    case "L"       => messages("groupPaymentsArrangements.status.cleared")
-    case "E"       => messages("groupPaymentsArrangements.status.earlierExempt")
-    case _         => emptyString
+  def getApportionmentMethod(s: String)(implicit messages: Messages): String = s.trim match {
+    case "R" => messages("groupPaymentsArrangements.apportionment.hmrc")
+    case "C" => messages("groupPaymentsArrangements.apportionment.group")
+    case _   => emptyString
   }
 }

@@ -158,7 +158,7 @@ trait GpaDetailsGroupPaymentHelper {
     GpaDetailsGroupPaymentArrangementViewModel(
       arrangementReference = "12",
       accountEnding = Some(LocalDate.of(2026, 1, 1)),
-      accountStatus = messages("groupPaymentsArrangements.status.earlierCleared"),
+      accountStatus = messages(""),
       paymentTotal = BigDecimal(1125017),
       taxTotal = BigDecimal(1125012),
       totalNumberOfRecords = 1,
@@ -190,7 +190,7 @@ trait GpaDetailsGroupPaymentHelper {
     GpaDetailsGroupPaymentArrangementViewModel(
       arrangementReference = "12",
       accountEnding = Some(LocalDate.of(2026, 1, 1)),
-      accountStatus = messages("groupPaymentsArrangements.status.earlierExempt"),
+      accountStatus = messages(""),
       paymentTotal = BigDecimal(1125017),
       taxTotal = BigDecimal(1125012),
       totalNumberOfRecords = 1,

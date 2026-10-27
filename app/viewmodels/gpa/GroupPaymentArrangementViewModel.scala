@@ -21,7 +21,7 @@ import play.api.mvc.Call
 import views.ViewUtils.formatCurrency
 import models.gpa.GroupSummaryDetailsResponse
 import play.api.i18n.Messages
-import utils.gpa.StatusHelper
+import utils.StatusHelper
 
 import java.time.LocalDate
 

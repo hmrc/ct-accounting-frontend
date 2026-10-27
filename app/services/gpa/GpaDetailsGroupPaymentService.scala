@@ -22,7 +22,7 @@ import play.api.Logging
 import play.api.i18n.Messages
 import uk.gov.hmrc.http.HeaderCarrier
 import utils.Constants.{ZERO, emptyString}
-import utils.gpa.StatusHelper
+import utils.StatusHelper
 import viewmodels.gpa.{GpaDetailsGroupPaymentArrangementViewModel, GroupPaymentRecord}
 
 import javax.inject.Inject

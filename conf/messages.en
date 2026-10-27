@@ -252,10 +252,10 @@ groupPaymentsArrangements.heading = Group payments
 groupPaymentsArrangements.title   = Group payments - Group Payment Arrangement
 
 groupPaymentsArrangements.status.open = Open
-groupPaymentsArrangements.status.earlierCleared = Earlier Cleared
 groupPaymentsArrangements.status.cleared = Cleared
-groupPaymentsArrangements.status.earlierExempt = Earlier Exempt
-groupPaymentsArrangements.status.fstatus = Status F
+
+groupPaymentsArrangements.apportionment.hmrc = HMRC
+groupPaymentsArrangements.apportionment.group = Group
 
 paymentAllocationDetails.title = Payment allocated - Group taxes
 paymentAllocationDetails.section = Group Payment Arrangement

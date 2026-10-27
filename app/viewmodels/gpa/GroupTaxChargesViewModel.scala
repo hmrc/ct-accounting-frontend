@@ -23,7 +23,7 @@ import play.api.mvc.Call
 import uk.gov.hmrc.govukfrontend.views.Aliases.{Pagination, Text}
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.{Key, SummaryList}
 import utils.PaginationHelper
-import utils.gpa.StatusHelper
+import utils.StatusHelper
 import viewmodels.Paginated
 import viewmodels.govuk.summarylist.*
 import views.ViewUtils.{formatCurrency, formatDate}
