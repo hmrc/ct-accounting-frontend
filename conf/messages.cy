@@ -56,7 +56,7 @@ breadcrumbs.gpa = Group Payment Arrangement
 breadcrumbs.groupTaxes = Group taxes
 breadcrumbs.groupPaymentArrangements  = Group Payment Arrangement
 
-accountingPeriodOverview.title = Trosolwg o’r cyfnod cyfrifyddu - GOV.UK
+accountingPeriodOverview.title = Trosolwg o’r cyfnod cyfrifyddu
 accountingPeriodOverview.heading = Cyfnod cyfrifyddu sy’n dod i ben ar {0}
 
 accountingPeriodOverview.paragraph = Pan fyddwch yn talu am y cyfnod cyfrifyddu hwn, defnyddiwch y cyfeirnod {0}
@@ -97,7 +97,7 @@ penaltiesAccountingPeriod.section           = Trosolwg o’r cyfnod cyfrifyddu
 adjustmentsAccountingPeriod.title          = Addasiadau
 adjustmentsAccountingPeriod.section        = Trosolwg o’r cyfnod cyfrifyddu
 adjustmentsAccountingPeriod.heading        = Addasiadau
-adjustmentsAccountingPeriod.caption        = Cyfnod cyfrifyddu sy’n dod i ben ar 30 Sep 2025
+adjustmentsAccountingPeriod.caption        = Cyfnod cyfrifyddu sy’n dod i ben ar {0}
 adjustmentsAccountingPeriod.description    = Disgrifiad
 adjustmentsAccountingPeriod.amount         = Swm
 adjustmentsAccountingPeriod.total          = Cyfanswm
@@ -134,7 +134,7 @@ payments.description.EP = Taliad electronig
 
 interest.title                          = Llog
 interest.section                        = Trosolwg o’r cyfnod cyfrifyddu
-interest.caption                        = Cyfnod cyfrifyddu sy’n dod i ben ar 30 Sep 2025
+interest.caption                        = Cyfnod cyfrifyddu sy’n dod i ben ar {0}
 interest.heading                        = Llog
 interest.description                    = Disgrifiad
 interest.amount                         = Swm
@@ -160,7 +160,7 @@ creditInterest.interest = Llog sydd wedi cronni
 creditInterest.table.total = Cyfanswm
 
 latePaymentInterest.stillAccruing.title                   = Llog am dalu’n hwyr - Llog - Trosolwg o’r cyfnod cyfrifyddu
-latePaymentInterest.stillAccruing.caption                 = Cyfnod cyfrifyddu sy’n dod i ben ar 30 Sep 2025
+latePaymentInterest.stillAccruing.caption                 = Cyfnod cyfrifyddu sy’n dod i ben ar {0}
 latePaymentInterest.stillAccruing.heading                 = Llog am dalu’n hwyr
 latePaymentInterest.stillAccruing.amountSubjectToInterest = Swm sy’n agored i log
 latePaymentInterest.stillAccruing.toDate                  = Dyddiad dod i ben
