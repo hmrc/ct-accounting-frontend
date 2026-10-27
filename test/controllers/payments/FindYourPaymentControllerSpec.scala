@@ -50,8 +50,8 @@ class FindYourPaymentControllerSpec extends SpecBase {
         status(result) mustEqual OK
         page must include("Amount")
         page must include("Enter the exact amount, including pence. For example, 2020.67")
-        page must include("Include the pence value exactly as it appears.")
-        page must include("Do not include the currency symbol.")
+        page must include("include the pence value exactly as it appears")
+        page must include("do not include the currency symbol")
         page must include("Start date (optional)")
         page must include("End date (optional)")
         page must include("Find payment")
