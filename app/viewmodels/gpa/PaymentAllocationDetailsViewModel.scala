@@ -21,7 +21,7 @@ import models.AdjustmentTransactionType.*
 import models.gpa.PaymentAllocationDetails
 import play.api.i18n.Messages
 import play.api.mvc.Call
-import utils.{PaginationHelper, StatusHelper}
+import utils.{ApportionmentHelper, PaginationHelper, StatusHelper}
 import viewmodels.Paginated
 import views.ViewUtils.*
 
@@ -102,7 +102,7 @@ object PaymentAllocationDetailsViewModel {
         ),
         PaymentAllocationDetailsViewModelRow(
           rowName = messages("paymentAllocationDetails.paymentAllocatedBy"),
-          content = paymentAllocationDetails.gppApportionmentMethod,
+          content = ApportionmentHelper.getApportionmentMethod(paymentAllocationDetails.gppApportionmentMethod),
           isLink = false,
           href = None
         ),

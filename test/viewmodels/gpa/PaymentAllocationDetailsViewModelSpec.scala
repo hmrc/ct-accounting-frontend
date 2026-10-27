@@ -76,7 +76,7 @@ class PaymentAllocationDetailsViewModelSpec extends AnyWordSpec with PaymentAllo
           ),
           PaymentAllocationDetailsViewModelRow(
             rowName = messages("paymentAllocationDetails.paymentAllocatedBy"),
-            content = "O",
+            content = "",
             isLink = false,
             href = None
           ),

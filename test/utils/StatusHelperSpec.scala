@@ -19,7 +19,7 @@ package utils
 import base.SpecBase
 import play.api.Application
 import play.api.i18n.{Lang, Messages, MessagesApi, MessagesImpl}
-import utils.gpa.StatusHelper
+import utils.StatusHelper.getStatus
 
 class StatusHelperSpec extends SpecBase {
 
@@ -29,38 +29,32 @@ class StatusHelperSpec extends SpecBase {
   implicit val messages: Messages       = MessagesImpl(Lang.defaultLang, messagesApi)
 
   "return Open when the status is O" in {
-    val status         = "Open"
-    val result: String = messages(StatusHelper.getStatus("O"))
-    result mustBe status
+    val result: String = messages(getStatus("O"))
+    result mustBe "Open"
   }
 
   "return Open when the status is S" in {
-    val status         = "Open"
-    val result: String = messages(StatusHelper.getStatus("O"))
-    result mustBe status
+    val result: String = messages(getStatus("O"))
+    result mustBe "Open"
   }
 
-  "return Earlier Cleared when status is L" in {
-    val status         = "Earlier Cleared"
-    val result: String = messages(StatusHelper.getStatus("C"))
-    result mustBe status
+  "return empty string when status is L" in {
+    val result: String = messages(getStatus("C"))
+    result mustBe ""
   }
 
   "return Cleared when the status is E" in {
-    val status         = "Cleared"
-    val result: String = messages(StatusHelper.getStatus("L"))
-    result mustBe status
+    val result: String = messages(getStatus("L"))
+    result mustBe "Cleared"
 
   }
   "return Earlier Exempt when the status is Z" in {
-    val status         = "Earlier Exempt"
-    val result: String = messages(StatusHelper.getStatus("E"))
-    result mustBe status
+    val result: String = messages(getStatus("E"))
+    result mustBe ""
 
   }
   "return emptyString for all other status" in {
-    val status         = ""
-    val result: String = messages(StatusHelper.getStatus("Z"))
-    result mustBe status
+    val result: String = messages(getStatus("Z"))
+    result mustBe ""
   }
 }

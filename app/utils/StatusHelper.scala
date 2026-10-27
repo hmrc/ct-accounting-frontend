@@ -23,9 +23,8 @@ object StatusHelper {
 
   def getStatus(s: String)(implicit messages: Messages): String = s.trim match {
     case "O" | "S" => messages("groupPaymentsArrangements.status.open")
-    case "C"       => messages("groupPaymentsArrangements.status.earlierCleared")
     case "L"       => messages("groupPaymentsArrangements.status.cleared")
-    case "E"       => messages("groupPaymentsArrangements.status.earlierExempt")
+    case "E" | "C" => messages("")
     case _         => emptyString
   }
 
