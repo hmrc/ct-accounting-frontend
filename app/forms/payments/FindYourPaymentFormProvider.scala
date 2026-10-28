@@ -23,6 +23,8 @@ import play.api.data.Form
 import play.api.data.Forms.*
 import play.api.i18n.Messages
 
+import java.time.LocalDate
+
 @Singleton
 class FindYourPaymentFormProvider @Inject() () extends Mappings {
 
@@ -55,13 +57,13 @@ class FindYourPaymentFormProvider @Inject() () extends Mappings {
         "startDate" -> optionalDate,
         "endDate"   -> optionalDate
       )(FindYourPaymentFormData.apply)(data => Some((data.amount, data.startDate, data.endDate)))
-        .verifying(
-          "findYourPayment.error.dateRange",
-          data =>
-            (data.startDate, data.endDate) match {
-              case (Some(start), Some(end)) => end.isAfter(start)
-              case _                        => true
-            }
-        )
+    )
+
+  def datesForm(implicit messages: Messages): Form[(Option[LocalDate], Option[LocalDate])] =
+    Form(
+      mapping(
+        "startDate" -> optionalDate,
+        "endDate"   -> optionalDate
+      )((startDate, endDate) => (startDate, endDate))(Some(_))
     )
 }

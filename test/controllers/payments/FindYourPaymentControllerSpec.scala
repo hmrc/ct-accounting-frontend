@@ -108,4 +108,78 @@ class FindYourPaymentControllerSpec extends SpecBase {
       }
     }
   }
+
+  "must reject an end date earlier than the start date" in {
+    val application = applicationBuilder().build()
+
+    running(application) {
+      val request =
+        FakeRequest(POST, routes.FindYourPaymentController.onSubmit().url)
+          .withFormUrlEncodedBody(
+            "amount"          -> "1570.67",
+            "startDate.day"   -> "31",
+            "startDate.month" -> "3",
+            "startDate.year"  -> "2025",
+            "endDate.day"     -> "1",
+            "endDate.month"   -> "3",
+            "endDate.year"    -> "2025"
+          )
+
+      val result = route(application, request).value
+      val page   = contentAsString(result)
+
+      status(result) mustEqual BAD_REQUEST
+      page must include("Enter an End date that is later than the Start date")
+      page must include("The start date must be before the end date")
+      page must include("The end date must be after the start date")
+    }
+  }
+
+  "must reject an end date equal to the start date" in {
+    val application = applicationBuilder().build()
+
+    running(application) {
+      val request =
+        FakeRequest(POST, routes.FindYourPaymentController.onSubmit().url)
+          .withFormUrlEncodedBody(
+            "amount"          -> "1570.67",
+            "startDate.day"   -> "1",
+            "startDate.month" -> "3",
+            "startDate.year"  -> "2025",
+            "endDate.day"     -> "1",
+            "endDate.month"   -> "3",
+            "endDate.year"    -> "2025"
+          )
+
+      val result = route(application, request).value
+      val page   = contentAsString(result)
+
+      status(result) mustEqual BAD_REQUEST
+      page must include("Enter an End date that is later than the Start date")
+    }
+  }
+
+  "must show the date-range error when the amount is empty" in {
+    val application = applicationBuilder().build()
+
+    running(application) {
+      val request =
+        FakeRequest(POST, routes.FindYourPaymentController.onSubmit().url)
+          .withFormUrlEncodedBody(
+            "amount"          -> "",
+            "startDate.day"   -> "31",
+            "startDate.month" -> "3",
+            "startDate.year"  -> "2025",
+            "endDate.day"     -> "1",
+            "endDate.month"   -> "3",
+            "endDate.year"    -> "2025"
+          )
+
+      val result = route(application, request).value
+      val page   = contentAsString(result)
+
+      status(result) mustEqual BAD_REQUEST
+      page must include("Enter an End date that is later than the Start date")
+    }
+  }
 }

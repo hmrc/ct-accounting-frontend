@@ -310,10 +310,12 @@ findYourPayment.year=Year
 findYourPayment.submit=Find payment
 findYourPayment.dateRange = Select date range
 findYourPayment.error.dateRange = Enter an End date that is later than the Start date
-findYourPayment.error.invalidDate = Enter a valid date
+findYourPayment.error.invalidDate = Must be a valid date in dd/MM/yyyy format
 findYourPayment.error.allDateFieldsRequired = Enter a valid date
 findYourPayment.error.twoDateFieldsRequired = Enter a valid date
 findYourPayment.error.requiredDate = Enter a valid date
 findYourPayment.error.amountRequired = Enter your payment amount in the correct format, like 1570.67 or 1500.00
 findYourPayment.error.amountFormat = Enter your payment amount in the correct format, like 1570.67 or 1500.00
+findYourPayment.error.startDateRange = The start date must be before the end date
+findYourPayment.error.endDateRange = The end date must be after the start date
 

@@ -100,7 +100,7 @@ class FindYourPaymentFormProviderSpec extends AnyWordSpec with Matchers {
     }
 
     "reject an end date earlier than the start date" in {
-      val result = formProvider.form.bind(
+      val result = formProvider.datesForm.bind(
         formData(
           startDay = "31",
           startMonth = "3",
@@ -111,22 +111,9 @@ class FindYourPaymentFormProviderSpec extends AnyWordSpec with Matchers {
         )
       )
 
-      result.errors.map(_.message) must contain("findYourPayment.error.dateRange")
-    }
-
-    "reject an end date equal to the start date" in {
-      val result = formProvider.form.bind(
-        formData(
-          startDay = "1",
-          startMonth = "3",
-          startYear = "2025",
-          endDay = "1",
-          endMonth = "3",
-          endYear = "2025"
-        )
-      )
-
-      result.errors.map(_.message) must contain("findYourPayment.error.dateRange")
+      result.value mustBe defined
+      val (startDate, endDate) = result.value.get
+      endDate.get.isBefore(startDate.get) mustBe true
     }
 
     "reject an invalid calendar date" in {

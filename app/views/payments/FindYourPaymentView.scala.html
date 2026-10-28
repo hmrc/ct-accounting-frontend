@@ -40,6 +40,10 @@
 
 @(form: Form[FindYourPaymentFormData])(implicit request: Request[_], messages: Messages)
 
+@hasDateRangeError = @{
+ form.errors.exists(_.message == "findYourPayment.error.dateRange")
+}
+
 @layout(
    pageTitle = titleNoForm(messages("findYourPayment.title"), None),
    breadcrumbs = Some(PageBreadcrumbs.findYourPaymentPage)
@@ -58,9 +62,23 @@
       case _           => "#startDate-day"
      }
 
+     val summaryMessage =
+      error.message match {
+       case "findYourPayment.error.invalidDate" |
+               "findYourPayment.error.allDateFieldsRequired" |
+               "findYourPayment.error.twoDateFieldsRequired" |
+               "findYourPayment.error.requiredDate" =>
+        "findYourPayment.error.allDateFieldsRequired"
+
+       case _ => error.message
+      }
+     (summaryMessage, href, error.args)
+    }
+    .distinctBy(_._1)
+    .map { case (summaryMessage, href, args) =>
      ErrorLink(
       href = Some(href),
-      content = Text(messages(error.message, error.args: _*))
+      content = Text(messages(summaryMessage, args*))
      )
     },
     title = Text(messages("error.summary.title"))
@@ -73,6 +91,7 @@
     @govukInput(Input(
      id = "amount",
      name = "amount",
+     value = form("amount").value,
      label = Label(
       content = Text(messages("findYourPayment.amount")),
       classes = "govuk-label--m"
@@ -119,24 +138,58 @@
      hint = Some(Hint(
       content = Text(messages("findYourPayment.dateHint"))
      )),
+     errorMessage =
+      if (hasDateRangeError) {
+       Some(ErrorMessage(
+        content = Text(messages("findYourPayment.error.startDateRange"))
+       ))
+      } else {
+       form("startDate").errors.headOption.map { error =>
+        ErrorMessage(content = Text(messages(error.message, error.args*)))
+       }
+      },
      items = Seq(
       InputItem(
        id = "startDate-day",
        name = "startDate.day",
+       value = form("startDate.day").value,
        label = Some(messages("findYourPayment.day")),
-       classes = "govuk-input govuk-date-input__input govuk-input--width-2"
+       classes = s"govuk-input govuk-date-input__input govuk-input--width-2 ${
+        if (
+         form("startDate").hasErrors ||
+                 form("startDate.day").hasErrors ||
+                 form.errors.exists(_.message == "findYourPayment.error.dateRange")
+        ) "govuk-input--error"
+        else ""
+       }"
       ),
       InputItem(
        id = "startDate-month",
        name = "startDate.month",
+       value = form("startDate.month").value,
        label = Some(messages("findYourPayment.month")),
-       classes = "govuk-input govuk-date-input__input govuk-input--width-2"
+       classes = s"govuk-input govuk-date-input__input govuk-input--width-2 ${
+        if (
+         form("startDate").hasErrors ||
+                 form("startDate.month").hasErrors ||
+                 form.errors.exists(_.message == "findYourPayment.error.dateRange")
+        ) "govuk-input--error"
+        else ""
+       }"
       ),
       InputItem(
        id = "startDate-year",
        name = "startDate.year",
+       value = form("startDate.year").value,
        label = Some(messages("findYourPayment.year")),
-       classes = "govuk-input govuk-date-input__input govuk-input--width-4"
+       classes = s"govuk-input govuk-date-input__input govuk-input--width-2 ${
+        if (
+         form("startDate").hasErrors ||
+                 form("startDate.year").hasErrors ||
+                 form.errors.exists(_.message == "findYourPayment.error.dateRange")
+        ) "govuk-input--error"
+        else ""
+       }"
       )
      )
     )),
@@ -151,25 +204,59 @@
      hint = Some(Hint(
       content = Text(messages("findYourPayment.dateHint"))
      )),
+     errorMessage =
+      if (hasDateRangeError) {
+       Some(ErrorMessage(
+        content = Text(messages("findYourPayment.error.endDateRange"))
+       ))
+      } else {
+       form("endDate").errors.headOption.map { error =>
+        ErrorMessage(content = Text(messages(error.message, error.args*)))
+       }
+      },
      items = Seq(
       InputItem(
        id = "endDate-day",
        name = "endDate.day",
+       value = form("endDate.day").value,
        label = Some(messages("findYourPayment.day")),
-       classes = "govuk-input govuk-date-input__input govuk-input--width-2"
+       classes = s"govuk-input govuk-date-input__input govuk-input--width-2 ${
+        if (
+         form("endDate").hasErrors ||
+                 form("endDate.day").hasErrors ||
+                 form.errors.exists(_.message == "findYourPayment.error.dateRange")
+        ) "govuk-input--error"
+        else ""
+       }"
       ),
       InputItem(
        id = "endDate-month",
        name = "endDate.month",
+       value = form("endDate.month").value,
        label = Some(messages("findYourPayment.month")),
-       classes = "govuk-input govuk-date-input__input govuk-input--width-2"
+       classes = s"govuk-input govuk-date-input__input govuk-input--width-2 ${
+        if (
+         form("endDate").hasErrors ||
+                 form("endDate.month").hasErrors ||
+                 form.errors.exists(_.message == "findYourPayment.error.dateRange")
+        ) "govuk-input--error"
+        else ""
+       }"
       ),
       InputItem(
        id = "endDate-year",
        name = "endDate.year",
+       value = form("endDate.year").value,
        label = Some(messages("findYourPayment.year")),
-       classes = "govuk-input govuk-date-input__input govuk-input--width-4"
-      )
+       classes = s"govuk-input govuk-date-input__input govuk-input--width-2 ${
+        if (
+         form("endDate").hasErrors ||
+                 form("endDate.year").hasErrors ||
+                 form.errors.exists(_.message == "findYourPayment.error.dateRange")
+        ) "govuk-input--error"
+        else ""
+       }"
+      ),
      )
     ))
    )))

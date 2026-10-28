@@ -39,14 +39,26 @@ class FindYourPaymentController @Inject() (
   }
 
   def onSubmit: Action[AnyContent] = identify { implicit request =>
-    findYourPaymentForm.form
-      .bindFromRequest()
-      .fold(
-        formWithErrors => BadRequest(view(formWithErrors)),
-        data =>
-          // TODO: Change to payment results route after implementation
-          Redirect("/find-your-payment/payment-results")
-      )
+    val boundForm  = findYourPaymentForm.form.bindFromRequest()
+    val boundDates = findYourPaymentForm.datesForm.bindFromRequest()
+
+    val formWithDateRangeError = boundDates.fold(
+      _ => boundForm,
+      {
+        case (Some(start), Some(end)) if !end.isAfter(start) =>
+          boundForm
+            .withError("startDate", "findYourPayment.error.dateRange")
+            .withError("endDate", "findYourPayment.error.dateRange")
+
+        case _ => boundForm
+      }
+    )
+
+    formWithDateRangeError.fold(
+      formWithErrors => BadRequest(view(formWithErrors)),
+      // TODO: replace hardcoded redirect path when payment-results route is implemented
+      _ => Redirect("/find-your-payment/payment-results")
+    )
   }
 
 }
