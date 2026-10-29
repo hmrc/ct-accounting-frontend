@@ -23,6 +23,7 @@ import org.jsoup.nodes.Document
 import play.api.i18n.{Lang, Messages, MessagesApi, MessagesImpl}
 import play.api.test.FakeRequest
 import viewmodels.accountingPeriods.PenaltiesAccountingPeriodViewModel
+import views.ViewUtils.formatDate
 import views.html.accountingPeriods.PenaltiesAccountingPeriodView
 
 class PenaltiesAccountingPeriodViewSpec extends SpecBase with PenaltiesDataHelper {
@@ -49,13 +50,25 @@ class PenaltiesAccountingPeriodViewSpec extends SpecBase with PenaltiesDataHelpe
 
     "render the correct heading" in {
       val doc = render(viewModelWithTwoRows)
-      doc.select("caption").text() must include(messages("penaltiesAccountingPeriod.caption"))
+      doc.select("h1").text() must include(messages("penaltiesAccountingPeriod.heading"))
     }
 
-    "render the table caption with the formatted account period" in {
+    "render the table caption with the formatted account period date" in {
+      val doc          = render(viewModelWithTwoRows)
+      val expectedDate = formatDate(viewModelWithTwoRows.accountingPeriodEnd, messages.lang)
+      doc.select(".govuk-table__caption").text() mustBe messages("penaltiesAccountingPeriod.caption", expectedDate)
+    }
+
+    "render the correct number of table rows" in {
       val doc = render(viewModelWithTwoRows)
       doc.select("tbody.govuk-table__body tr.govuk-table__row").size() mustBe 3
-      doc.select(".govuk-table__caption").text() must include(messages("penaltiesAccountingPeriod.caption"))
+    }
+
+    "render the accounting period dates in the table" in {
+      val doc           = render(viewModelWithTwoRows)
+      val expectedDates = viewModelWithTwoRows.rows.map(row => formatDate(row.date, messages.lang))
+      val actualDates   = doc.select("tbody tr.govuk-table__row td:first-child").eachText().toArray.toSeq
+      actualDates.take(expectedDates.size) mustBe expectedDates
     }
 
     "render the correct table headers" in {

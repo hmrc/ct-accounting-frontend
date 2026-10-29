@@ -82,7 +82,7 @@ taxTransactions.amount = Swm
 taxTransactions.table.total = Cyfanswm
 
 penaltiesAccountingPeriod.heading           = Cosbau
-penaltiesAccountingPeriod.caption           = Cyfnod cyfrifyddu sy’n dod i ben ar
+penaltiesAccountingPeriod.caption           = Cyfnod cyfrifyddu sy’n dod i ben ar {0}
 penaltiesAccountingPeriod.date              = Dyddiad
 penaltiesAccountingPeriod.description       = Disgrifiad
 penaltiesAccountingPeriod.description.FX    = Cosb ar gyfradd sefydlog
@@ -105,7 +105,7 @@ adjustmentsAccountingPeriod.description.n  = Ddim yn cael ei adennill ar hyn o b
 adjustmentsAccountingPeriod.description.o  = Gordaliad parhaol
 adjustmentsAccountingPeriod.description.p  = Gohiriad
 
-debitInterestAccountingPeriod.caption      = Cyfnod cyfrifyddu sy’n dod i ben ar
+debitInterestAccountingPeriod.caption      = Cyfnod cyfrifyddu sy’n dod i ben ar {0}
 debitInterestAccountingPeriod.section      = Cyfnod cyfrifyddu sy’n dod i ben ar
 debitInterestAccountingPeriod.title        = Llog ar ddebyd - Llog - Trosolwg o’r cyfnod cyfrifyddu
 debitInterestAccountingPeriod.heading      = Llog ar ddebyd

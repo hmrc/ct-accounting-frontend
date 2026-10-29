@@ -82,7 +82,7 @@ taxTransactions.amount = Amount
 taxTransactions.table.total = Total
 
 penaltiesAccountingPeriod.heading           = Penalties
-penaltiesAccountingPeriod.caption           = Accounting period ending
+penaltiesAccountingPeriod.caption           = Accounting period ending {0}
 penaltiesAccountingPeriod.date              = Date
 penaltiesAccountingPeriod.description       = Description
 penaltiesAccountingPeriod.description.FX    = Fixed rate penalty
@@ -105,7 +105,7 @@ adjustmentsAccountingPeriod.description.n  = Not currently being pursued
 adjustmentsAccountingPeriod.description.o  = Permanent overpayment
 adjustmentsAccountingPeriod.description.p  = Postponement
 
-debitInterestAccountingPeriod.caption      = Accounting period ending
+debitInterestAccountingPeriod.caption      = Accounting period ending {0}
 debitInterestAccountingPeriod.section      = Accounting period ending
 debitInterestAccountingPeriod.title        = Debit interest - Interest - Accounting period overview
 debitInterestAccountingPeriod.heading      = Debit interest
