@@ -55,7 +55,7 @@ class PaymentsDescriptionHelperSpec extends SpecBase {
 
       val result: String = messages(PaymentsDescriptionHelper.getPaymentsDescription(paymentType))
 
-      val expectedResult = "HMRC Credit part payment"
+      val expectedResult = "HMRC credit part payment"
 
       result mustBe expectedResult
     }
@@ -65,7 +65,7 @@ class PaymentsDescriptionHelperSpec extends SpecBase {
 
       val result: String = messages(PaymentsDescriptionHelper.getPaymentsDescription(paymentType))
 
-      val expectedResult = "HMRC Credit part payment"
+      val expectedResult = "HMRC credit part payment"
 
       result mustBe expectedResult
     }
