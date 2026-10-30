@@ -19,14 +19,17 @@ package helpers
 import models.AdjustmentTransactionType.{N, O, P}
 import models.{AdjustmentTransactions, AdjustmentTransactionsList}
 import viewmodels.accountingPeriods.{AdjustmentsAccountingPeriodViewModel, AdjustmentsAccountingPeriodViewModelRow}
+import java.time.LocalDate
 
 trait AdjustmentsDataHelper {
+
+  val accountingPeriodEndDate: LocalDate = LocalDate.of(2026, 1, 1)
 
   val emptyAdjustmentTransactionsList: AdjustmentTransactionsList =
     AdjustmentTransactionsList(adjustmentTransactionsList = List.empty)
 
   val emptyAdjustmentsViewModel: AdjustmentsAccountingPeriodViewModel =
-    AdjustmentsAccountingPeriodViewModel(rows = List.empty)
+    AdjustmentsAccountingPeriodViewModel(rows = List.empty, accountingPeriodEndDate = accountingPeriodEndDate)
 
   val adjustmentTransactionsListWithOneItem: AdjustmentTransactionsList =
     AdjustmentTransactionsList(
@@ -40,12 +43,13 @@ trait AdjustmentsDataHelper {
 
   val adjustmentsViewModelWithOneItem: AdjustmentsAccountingPeriodViewModel =
     AdjustmentsAccountingPeriodViewModel(
-      List(
+      rows = List(
         AdjustmentsAccountingPeriodViewModelRow(
           description = "Not currently being pursued",
           amount = BigDecimal(50.00)
         )
-      )
+      ),
+      accountingPeriodEndDate = accountingPeriodEndDate
     )
 
   val adjustmentTransactionsListWithMultipleItems: AdjustmentTransactionsList =
@@ -64,7 +68,7 @@ trait AdjustmentsDataHelper {
 
   val adjustmentsViewModelWithMultipleItems: AdjustmentsAccountingPeriodViewModel =
     AdjustmentsAccountingPeriodViewModel(
-      List(
+      rows = List(
         AdjustmentsAccountingPeriodViewModelRow(
           description = "Permanent overpayment",
           amount = BigDecimal(60.00)
@@ -73,6 +77,7 @@ trait AdjustmentsDataHelper {
           description = "Postponement",
           amount = BigDecimal(190.00)
         )
-      )
+      ),
+      accountingPeriodEndDate = accountingPeriodEndDate
     )
 }

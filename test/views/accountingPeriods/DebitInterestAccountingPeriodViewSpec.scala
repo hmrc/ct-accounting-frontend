@@ -28,6 +28,7 @@ import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.mvc.AnyContentAsEmpty
 import play.api.test.FakeRequest
 import play.twirl.api.Html
+import views.ViewUtils.formatDate
 import views.html.accountingPeriods.DebitInterestAccountingPeriodView
 
 class DebitInterestAccountingPeriodViewSpec
@@ -58,10 +59,12 @@ class DebitInterestAccountingPeriodViewSpec
       val heading = doc.select("h1.govuk-heading-l")
       val caption = doc.select("caption.govuk-table__caption")
 
+      val expectedDate = formatDate(defaultViewModel.accPeriodEndDate, messages.lang)
+
       heading.size() mustBe 1
       heading.text() mustBe messages("debitInterestAccountingPeriod.heading")
 
-      caption.text() must startWith(messages("debitInterestAccountingPeriod.caption"))
+      caption.text() must startWith(messages("debitInterestAccountingPeriod.caption", expectedDate))
       doc.title()    must startWith(messages("debitInterestAccountingPeriod.title"))
     }
 

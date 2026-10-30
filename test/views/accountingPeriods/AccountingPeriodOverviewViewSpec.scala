@@ -59,7 +59,7 @@ class AccountingPeriodOverviewViewSpec extends SpecBase with AccountingPeriodOve
       doc
         .getElementsByClass("govuk-body")
         .get(0)
-        .text() mustBe s"When paying for this accounting period, use reference number $taxReference."
+        .text() mustBe s"When paying for this accounting period, use reference number $taxReference"
     }
 
     "render the link with correct text and href" in {

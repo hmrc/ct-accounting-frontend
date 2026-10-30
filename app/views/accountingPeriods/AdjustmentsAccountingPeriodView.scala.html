@@ -32,7 +32,7 @@
 
     @govukTable(
         Table(
-            caption = Some(messages("adjustmentsAccountingPeriod.caption")),
+            caption = Some(messages("adjustmentsAccountingPeriod.caption", formatDate(viewModel.accountingPeriodEndDate, messages.lang))),
             captionClasses = "govuk-table__caption govuk-table__caption--m",
             head = Some(Seq(
                 HeadCell(content = Text(messages("adjustmentsAccountingPeriod.description"))),

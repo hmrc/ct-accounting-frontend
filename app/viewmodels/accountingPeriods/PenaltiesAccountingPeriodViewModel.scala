@@ -26,7 +26,6 @@ import java.time.LocalDate
 
 case class PenaltiesAccountingPeriodViewModelRow(date: LocalDate, description: String, amount: BigDecimal) {
 
-  val dateAsString: String   = formatDate(date, Lang.defaultLang)
   val amountAsString: String = formatCurrency(amount)
 }
 

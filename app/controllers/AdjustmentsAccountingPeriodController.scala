@@ -19,6 +19,7 @@ package controllers
 import controllers.actions.IdentifierAction
 import play.api.Logging
 import play.api.i18n.I18nSupport
+
 import scala.concurrent.ExecutionContext
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
@@ -27,6 +28,7 @@ import services.AdjustmentsAccountingPeriodService
 import viewmodels.accountingPeriods.AdjustmentsAccountingPeriodViewModel
 import views.html.accountingPeriods.AdjustmentsAccountingPeriodView
 
+import java.time.LocalDate
 import javax.inject.Inject
 
 class AdjustmentsAccountingPeriodController @Inject() (
@@ -40,11 +42,12 @@ class AdjustmentsAccountingPeriodController @Inject() (
     with Logging {
 
   def onPageLoad(): Action[AnyContent] = identify.async { implicit request =>
+    val accountPeriodEndDate = LocalDate.of(2026, 1, 1)
     adjustmentsAccountingPeriodService.getAdjustmentTransactions(3060600983L, 4L).map { response =>
       logger.info(
         s"[AdjustmentsAccountingPeriodController][onPageLoad] - successfully retrieved AdjustmentTransactionsList"
       )
-      val vm = AdjustmentsAccountingPeriodViewModel.convertToViewModel(response)
+      val vm = AdjustmentsAccountingPeriodViewModel.convertToViewModel(response, accountPeriodEndDate)
       Ok(view(vm))
     } recover { case ex =>
       logger.error(s"[AdjustmentsAccountingPeriodController][onPageLoad] - Unexpected failure: ${ex.getMessage}")
