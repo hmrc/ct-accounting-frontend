@@ -60,7 +60,7 @@ class GpaDetailsGroupPaymentServiceSpec
       when(mockConnector.getPaymentDetails(any(), any(), any(), any())(any[HeaderCarrier]))
         .thenReturn(Future.successful(responseRfrReallocation))
 
-      when(mockGpaDescriptionService.gpaPaymentDescription(any(), any(), any())(any[Messages]))
+      when(mockGpaDescriptionService.gpaPaymentDescription(any(), any())(any[Messages]))
         .thenReturn("Miscellaneous Transfer")
 
       val result: GpaDetailsGroupPaymentArrangementViewModel =
@@ -72,7 +72,7 @@ class GpaDetailsGroupPaymentServiceSpec
 
       verify(mockConnector).getPaymentDetails(any(), any(), any(), any())(any[HeaderCarrier])
 
-      verify(mockGpaDescriptionService, times(1)).gpaPaymentDescription(any(), any(), any())(any[Messages])
+      verify(mockGpaDescriptionService, times(1)).gpaPaymentDescription(any(), any())(any[Messages])
 
       verify(mockConnector, times(1)).getPaymentDetails(any(), any(), any(), any())(any[HeaderCarrier])
 
@@ -82,7 +82,7 @@ class GpaDetailsGroupPaymentServiceSpec
       when(mockConnector.getPaymentDetails(any(), any(), any(), any())(any[HeaderCarrier]))
         .thenReturn(Future.successful(responseRtoReallocation))
 
-      when(mockGpaDescriptionService.gpaPaymentDescription(any(), any(), any())(any[Messages]))
+      when(mockGpaDescriptionService.gpaPaymentDescription(any(), any())(any[Messages]))
         .thenReturn("Reallocation FROM 99, AP ending 2026-01-01")
 
       val result: GpaDetailsGroupPaymentArrangementViewModel =
@@ -94,7 +94,7 @@ class GpaDetailsGroupPaymentServiceSpec
 
       verify(mockConnector).getPaymentDetails(any(), any(), any(), any())(any[HeaderCarrier])
 
-      verify(mockGpaDescriptionService, times(1)).gpaPaymentDescription(any(), any(), any())(any[Messages])
+      verify(mockGpaDescriptionService, times(1)).gpaPaymentDescription(any(), any())(any[Messages])
 
       verify(mockConnector, times(1)).getPaymentDetails(any(), any(), any(), any())(any[HeaderCarrier])
 
@@ -103,7 +103,7 @@ class GpaDetailsGroupPaymentServiceSpec
       when(mockConnector.getPaymentDetails(any(), any(), any(), any())(any[HeaderCarrier]))
         .thenReturn(Future.successful(responsePayslipReallocation))
 
-      when(mockGpaDescriptionService.gpaPaymentDescription(any(), any(), any())(any[Messages]))
+      when(mockGpaDescriptionService.gpaPaymentDescription(any(), any())(any[Messages]))
         .thenReturn("HMRC Credit")
 
       val result: GpaDetailsGroupPaymentArrangementViewModel =
@@ -115,7 +115,7 @@ class GpaDetailsGroupPaymentServiceSpec
 
       verify(mockConnector).getPaymentDetails(any(), any(), any(), any())(any[HeaderCarrier])
 
-      verify(mockGpaDescriptionService, times(1)).gpaPaymentDescription(any(), any(), any())(any[Messages])
+      verify(mockGpaDescriptionService, times(1)).gpaPaymentDescription(any(), any())(any[Messages])
 
       verify(mockConnector, times(1)).getPaymentDetails(any(), any(), any(), any())(any[HeaderCarrier])
 
@@ -124,7 +124,7 @@ class GpaDetailsGroupPaymentServiceSpec
       when(mockConnector.getPaymentDetails(any(), any(), any(), any())(any[HeaderCarrier]))
         .thenReturn(Future.successful(responseRepaymentReallocation))
 
-      when(mockGpaDescriptionService.gpaPaymentDescription(any(), any(), any())(any[Messages]))
+      when(mockGpaDescriptionService.gpaPaymentDescription(any(), any())(any[Messages]))
         .thenReturn(emptyString)
 
       val result: GpaDetailsGroupPaymentArrangementViewModel =
@@ -136,7 +136,7 @@ class GpaDetailsGroupPaymentServiceSpec
 
       verify(mockConnector).getPaymentDetails(any(), any(), any(), any())(any[HeaderCarrier])
 
-      verify(mockGpaDescriptionService, times(1)).gpaPaymentDescription(any(), any(), any())(any[Messages])
+      verify(mockGpaDescriptionService, times(1)).gpaPaymentDescription(any(), any())(any[Messages])
 
       verify(mockConnector, times(1)).getPaymentDetails(any(), any(), any(), any())(any[HeaderCarrier])
 
@@ -145,7 +145,7 @@ class GpaDetailsGroupPaymentServiceSpec
       when(mockConnector.getPaymentDetails(any(), any(), any(), any())(any[HeaderCarrier]))
         .thenReturn(Future.failed(new RuntimeException("Boom")))
 
-      when(mockGpaDescriptionService.gpaPaymentDescription(any(), any(), any())(any[Messages]))
+      when(mockGpaDescriptionService.gpaPaymentDescription(any(), any())(any[Messages]))
         .thenReturn(emptyString)
 
       val exception: Exception = intercept[Exception] {

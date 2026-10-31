@@ -49,8 +49,7 @@ class GpaPaymentDetailsServiceSpec
       val resultRFR: String =
         service.gpaPaymentDescription(
           gpaPaymentsDefault.copy(participatorPresent = Some(false), targetTaxpayerReference = Some("99")),
-          gpaUtr,
-          contractEndDate
+          gpaUtr
         )
 
       val resultRTO: String =
@@ -60,8 +59,7 @@ class GpaPaymentDetailsServiceSpec
             participatorPresent = Some(false),
             targetTaxpayerReference = Some("99")
           ),
-          gpaUtr,
-          contractEndDate
+          gpaUtr
         )
 
       resultRFR shouldBe "gpaPayment.Description.miscellaneous"
@@ -75,8 +73,7 @@ class GpaPaymentDetailsServiceSpec
       val resultRFR: String =
         service.gpaPaymentDescription(
           gpaPaymentsDefault.copy(participatorPresent = None, targetTaxpayerReference = Some("99")),
-          gpaUtr,
-          contractEndDate
+          gpaUtr
         )
 
       val resultRTO: String =
@@ -86,8 +83,7 @@ class GpaPaymentDetailsServiceSpec
             participatorPresent = None,
             targetTaxpayerReference = Some("99")
           ),
-          gpaUtr,
-          contractEndDate
+          gpaUtr
         )
 
       resultRFR shouldBe "gpaPayment.Description.miscellaneous"
@@ -101,8 +97,7 @@ class GpaPaymentDetailsServiceSpec
       val result: String =
         service.gpaPaymentDescription(
           gpaPaymentsDefault.copy(tablename = Some("RTOReallocation"), targetApNo = Some(0)),
-          gpaUtr,
-          contractEndDate
+          gpaUtr
         )
 
       result shouldBe "gpaPayment.Description.miscellaneous"
@@ -114,8 +109,7 @@ class GpaPaymentDetailsServiceSpec
       val result: String =
         service.gpaPaymentDescription(
           gpaPaymentsDefault.copy(tablename = Some("RTOReallocation"), targetApNo = None),
-          gpaUtr,
-          contractEndDate
+          gpaUtr
         )
 
       result shouldBe "gpaPayment.Description.miscellaneous"
@@ -128,8 +122,7 @@ class GpaPaymentDetailsServiceSpec
         service.gpaPaymentDescription(
           gpaPaymentsDefault
             .copy(tablename = Some("RTOReallocation"), targetApNo = Some(0), targetTaxpayerReference = Some("99")),
-          gpaUtr,
-          contractEndDate
+          gpaUtr
         )
 
       result shouldBe "gpaPayment.Description.miscellaneous"
@@ -142,8 +135,7 @@ class GpaPaymentDetailsServiceSpec
         service.gpaPaymentDescription(
           gpaPaymentsDefault
             .copy(tablename = Some("RTOReallocation"), targetApNo = None, targetTaxpayerReference = Some("99")),
-          gpaUtr,
-          contractEndDate
+          gpaUtr
         )
 
       result shouldBe "gpaPayment.Description.miscellaneous"
@@ -155,8 +147,7 @@ class GpaPaymentDetailsServiceSpec
       val result: String =
         service.gpaPaymentDescription(
           gpaPaymentsDefault.copy(targetTaxpayerReference = Some("99")),
-          gpaUtr,
-          contractEndDate
+          gpaUtr
         )
 
       result shouldBe "gpaPayment.Description.rfr.taxRef"
@@ -166,7 +157,7 @@ class GpaPaymentDetailsServiceSpec
     "Return Reallocation TO AP ending accountingPeriodEndDate for rfr payments when contractDate is not present" in new BaseSetup {
 
       val result: String =
-        service.gpaPaymentDescription(gpaPaymentsDefault.copy(contractEndDate = None), gpaUtr, contractEndDate)
+        service.gpaPaymentDescription(gpaPaymentsDefault.copy(contractEndDate = None), gpaUtr)
 
       result shouldBe "gpaPayment.Description.rfr.date"
 
@@ -175,7 +166,7 @@ class GpaPaymentDetailsServiceSpec
     "Return Reallocation TO AP ending contractDate for rfr payments when contractDate is present" in new BaseSetup {
 
       val result: String =
-        service.gpaPaymentDescription(gpaPaymentsDefault, gpaUtr, contractEndDate)
+        service.gpaPaymentDescription(gpaPaymentsDefault, gpaUtr)
 
       result shouldBe "gpaPayment.Description.rfr.date"
 
@@ -186,8 +177,7 @@ class GpaPaymentDetailsServiceSpec
       val result: String =
         service.gpaPaymentDescription(
           gpaPaymentsDefault.copy(tablename = Some("RTOReallocation"), targetTaxpayerReference = Some("99")),
-          gpaUtr,
-          contractEndDate
+          gpaUtr
         )
 
       result shouldBe "gpaPayment.Description.rto.taxRef"
@@ -199,8 +189,7 @@ class GpaPaymentDetailsServiceSpec
       val result: String =
         service.gpaPaymentDescription(
           gpaPaymentsDefault.copy(tablename = Some("RTOReallocation"), contractEndDate = None),
-          gpaUtr,
-          contractEndDate
+          gpaUtr
         )
 
       result shouldBe "gpaPayment.Description.rto.date"
@@ -212,8 +201,7 @@ class GpaPaymentDetailsServiceSpec
       val result: String =
         service.gpaPaymentDescription(
           gpaPaymentsDefault.copy(tablename = Some("RTOReallocation")),
-          gpaUtr,
-          contractEndDate
+          gpaUtr
         )
 
       result shouldBe "gpaPayment.Description.rto.date"
@@ -223,7 +211,7 @@ class GpaPaymentDetailsServiceSpec
     "Return payment description when tableName is Payslip" in new BaseSetup {
 
       val result: String =
-        service.gpaPaymentDescription(gpaPaymentsDefault.copy(tablename = Some("Payslip")), gpaUtr, contractEndDate)
+        service.gpaPaymentDescription(gpaPaymentsDefault.copy(tablename = Some("Payslip")), gpaUtr)
 
       result shouldBe "payments.description.IRC"
 
@@ -232,12 +220,11 @@ class GpaPaymentDetailsServiceSpec
     "Return empty string Repayment or CancelledRepayment" in new BaseSetup {
 
       val resultRepayment: String          =
-        service.gpaPaymentDescription(gpaPaymentsDefault.copy(tablename = Some("Repayment")), gpaUtr, contractEndDate)
+        service.gpaPaymentDescription(gpaPaymentsDefault.copy(tablename = Some("Repayment")), gpaUtr)
       val resultCancelledRepayment: String =
         service.gpaPaymentDescription(
           gpaPaymentsDefault.copy(tablename = Some("CancelledRepayment")),
-          gpaUtr,
-          contractEndDate
+          gpaUtr
         )
 
       resultRepayment          shouldBe ""
