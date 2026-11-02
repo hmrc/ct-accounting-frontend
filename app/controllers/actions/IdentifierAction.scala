@@ -63,11 +63,13 @@ class AuthenticatedIdentifierAction @Inject() (
           Retrievals.affinityGroup and
           Retrievals.credentialRole
       ) {
-        case Some(internalId) ~ Enrolments(enrolments) ~ Some(Organisation) ~ Some(User) if enrolments.exists(_.key == orgEnrolment) =>
+        case Some(internalId) ~ Enrolments(enrolments) ~ Some(Organisation) ~ Some(User)
+            if enrolments.exists(_.key == orgEnrolment) =>
           logger.info(s"Authorisation requested as Organisation")
           validateOrganisation(enrolments)(request, internalId, block)
 
-        case Some(internalId) ~ Enrolments(enrolments) ~ Some(Agent) ~ Some(User) if enrolments.exists(_.key == agentEnrolment) =>
+        case Some(internalId) ~ Enrolments(enrolments) ~ Some(Agent) ~ Some(User)
+            if enrolments.exists(_.key == agentEnrolment) =>
           logger.info(s"Authorisation requested as Agent")
           validateAgent(enrolments)(request, internalId, block)
 
@@ -112,8 +114,8 @@ class AuthenticatedIdentifierAction @Inject() (
         Future.successful(Redirect(routes.UnauthorisedController.onPageLoad()))
     }
   }
-  
-  //TODO Add Business function F2 - Agent Service Guard
+
+  // TODO Add Business function F2 - Agent Service Guard
   private def validateAgent[A](
     enrolment: Set[Enrolment]
   )(request: Request[A], internalId: String, block: IdentifierRequest[A] => Future[Result]) = {
@@ -124,10 +126,10 @@ class AuthenticatedIdentifierAction @Inject() (
     } yield identifier.value
 
     validIRAgentReference match {
-      case Some(utr) =>
+      case Some(agentReference) =>
         logger.info("Authentication successful: Authorised as an agent")
         block(IdentifierRequest(request, internalId, None, validIRAgentReference))
-      case None      =>
+      case None                 =>
         logger.info("Authentication failed: Attempted login as an agent")
         Future.successful(Redirect(routes.UnauthorisedController.onPageLoad()))
     }

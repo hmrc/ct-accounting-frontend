@@ -32,7 +32,7 @@ import controllers.actions.TestAuthRetrievals.~
 import org.mockito.ArgumentMatchers.any
 import org.scalatestplus.mockito.MockitoSugar.mock
 import play.api.{Application, inject}
-import uk.gov.hmrc.auth.core.AffinityGroup.Organisation
+import uk.gov.hmrc.auth.core.AffinityGroup.{Agent, Individual, Organisation}
 
 import java.util.UUID
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -124,45 +124,254 @@ class AuthActionSpec extends SpecBase {
 
         }
       }
-      "must redirect to UnauthorisedController with inactive Enrolment, enrolment key = IR-CT and identifier key = UTR, identifier value matching the Regex([0-9]{10}$)" in {}
+      "must redirect to UnauthorisedController with inactive Enrolment, enrolment key = IR-CT and identifier key = UTR, identifier value matching the Regex([0-9]{10}$)" in new Fixture {
+        val invalidOrgEnrolment: Enrolments = createEnrolment("IR-CT", "UTR", "1234567890", inActivateState)
+        when(mockAuthConnector.authorise[RetrievalsType](any(), any())(any(), any())).thenReturn(
+          Future.successful(Some(id) ~ invalidOrgEnrolment ~ Some(Organisation) ~ Some(User))
+        )
+        running(application) {
 
-      "must redirect to UnauthorisedController with active Enrolment, with incorrect enrolment key and identifier key = UTR, identifier value matching the Regex([0-9]{10}$)" in {}
+          val authAction = new AuthenticatedIdentifierAction(mockAuthConnector, appConfig, bodyParsers)
+          val controller = new Harness(authAction)
+          val result     = controller.onPageLoad()(FakeRequest())
 
-      "must redirect to UnauthorisedController with active Enrolment, enrolment key = IR-CT, incorrect identifier key and identifier value matching the Regex([0-9]{10}$)" in {}
+          status(result) mustBe SEE_OTHER
 
-      "must redirect to UnauthorisedController with active Enrolment, correct identifier key and identifier value not-matching the Regex([0-9]{10}$)" in {}
+          redirectLocation(result) mustBe Some(routes.UnauthorisedController.onPageLoad().url)
 
-      "must redirect to UnauthorisedController with incorrect and inactive Enrolments, incorrect enrolment key, incorrect identifier key and identifier value not-matching the Regex([0-9]{10}$)" in {}
+        }
+      }
 
-      "must redirect to UnauthorisedController with no defined enrolments and identifiers" in {}
+      "must redirect to UnauthorisedController with active Enrolment, with incorrect enrolment key and identifier key = UTR, identifier value matching the Regex([0-9]{10}$)" in new Fixture {
+        val invalidOrgEnrolment: Enrolments = createEnrolment("IR-CT-AGENT", "UTR", "1234567890", activatedState)
+        when(mockAuthConnector.authorise[RetrievalsType](any(), any())(any(), any())).thenReturn(
+          Future.successful(Some(id) ~ invalidOrgEnrolment ~ Some(Organisation) ~ Some(User))
+        )
+        running(application) {
+
+          val authAction = new AuthenticatedIdentifierAction(mockAuthConnector, appConfig, bodyParsers)
+          val controller = new Harness(authAction)
+          val result     = controller.onPageLoad()(FakeRequest())
+
+          status(result) mustBe SEE_OTHER
+
+          redirectLocation(result) mustBe Some(routes.UnauthorisedController.onPageLoad().url)
+        }
+      }
+
+      "must redirect to UnauthorisedController with active Enrolment, enrolment key = IR-CT, incorrect identifier key and identifier value matching the Regex([0-9]{10}$)" in new Fixture {
+        val invalidOrgEnrolment: Enrolments = createEnrolment("IR-CT", "UTRNO", "1234567890", activatedState)
+        when(mockAuthConnector.authorise[RetrievalsType](any(), any())(any(), any())).thenReturn(
+          Future.successful(Some(id) ~ invalidOrgEnrolment ~ Some(Organisation) ~ Some(User))
+        )
+        running(application) {
+
+          val authAction = new AuthenticatedIdentifierAction(mockAuthConnector, appConfig, bodyParsers)
+          val controller = new Harness(authAction)
+          val result     = controller.onPageLoad()(FakeRequest())
+
+          status(result) mustBe SEE_OTHER
+
+          redirectLocation(result) mustBe Some(routes.UnauthorisedController.onPageLoad().url)
+        }
+      }
+
+      "must redirect to UnauthorisedController with active Enrolment, correct identifier key and identifier value not-matching the Regex([0-9]{10}$)" in new Fixture {
+        val invalidOrgEnrolment: Enrolments = createEnrolment("IR-CT", "UTR", "1234567", activatedState)
+        when(mockAuthConnector.authorise[RetrievalsType](any(), any())(any(), any())).thenReturn(
+          Future.successful(Some(id) ~ invalidOrgEnrolment ~ Some(Organisation) ~ Some(User))
+        )
+        running(application) {
+
+          val authAction = new AuthenticatedIdentifierAction(mockAuthConnector, appConfig, bodyParsers)
+          val controller = new Harness(authAction)
+          val result     = controller.onPageLoad()(FakeRequest())
+
+          status(result) mustBe SEE_OTHER
+
+          redirectLocation(result) mustBe Some(routes.UnauthorisedController.onPageLoad().url)
+        }
+      }
+
+      "must redirect to UnauthorisedController with incorrect and inactive Enrolments, incorrect enrolment key, incorrect identifier key and identifier value not-matching the Regex([0-9]{10}$)" in new Fixture {
+        val invalidOrgEnrolment: Enrolments = createEnrolment("IR-CT-AGENT", "UTRN", "1234567890", activatedState)
+        when(mockAuthConnector.authorise[RetrievalsType](any(), any())(any(), any())).thenReturn(
+          Future.successful(Some(id) ~ invalidOrgEnrolment ~ Some(Organisation) ~ Some(User))
+        )
+        running(application) {
+
+          val authAction = new AuthenticatedIdentifierAction(mockAuthConnector, appConfig, bodyParsers)
+          val controller = new Harness(authAction)
+          val result     = controller.onPageLoad()(FakeRequest())
+
+          status(result) mustBe SEE_OTHER
+
+          redirectLocation(result) mustBe Some(routes.UnauthorisedController.onPageLoad().url)
+        }
+      }
 
     }
     "when the user tries to log in as an Agent" - {
-      "must allow into the service with correct and active Enrolment, enrolment key = IR-CT-AGENT and identifier key = IRAgentReference, identifier value matching the Regex(^[A-Za-z0-9]{6}$)" in {}
+      "must allow into the service with correct and active Enrolment, enrolment key = IR-CT-AGENT and identifier key = IRAgentReference, identifier value matching the Regex(^[A-Za-z0-9]{6}$)" in new Fixture {
+        val validAgentEnrolment: Enrolments =
+          createEnrolment("IR-CT-AGENT", "IRAgentReference", "N12A36", activatedState)
+        when(mockAuthConnector.authorise[RetrievalsType](any(), any())(any(), any())).thenReturn(
+          Future.successful(Some(id) ~ validAgentEnrolment ~ Some(Agent) ~ Some(User))
+        )
+        running(application) {
 
-      "must redirect to UnauthorisedController with inactive Enrolment, enrolment key = IR-CT-AGENT and identifier key = IRAgentReference, identifier value matching the Regex(^[A-Za-z0-9]{6}$)" in {}
+          val authAction = new AuthenticatedIdentifierAction(mockAuthConnector, appConfig, bodyParsers)
+          val controller = new Harness(authAction)
+          val result     = controller.onPageLoad()(FakeRequest())
 
-      "must redirect to UnauthorisedController with active Enrolment, with incorrect enrolment key and identifier key = IRAgentReference, identifier value matching the Regex(^[A-Za-z0-9]{6}$)" in {}
+          status(result) mustBe OK
+        }
+      }
 
-      "must redirect to UnauthorisedController with active Enrolment, enrolment key = IR-CT-AGENT, incorrect identifier key and identifier value matching the Regex(^[A-Za-z0-9]{6}$)" in {}
+      "must redirect to UnauthorisedController with inactive Enrolment, enrolment key = IR-CT-AGENT and identifier key = IRAgentReference, identifier value matching the Regex(^[A-Za-z0-9]{6}$)" in new Fixture {
+        val invalidAgentEnrolment: Enrolments =
+          createEnrolment("IR-CT-AGENT", "IRAgentReference", "N12A36", inActivateState)
+        when(mockAuthConnector.authorise[RetrievalsType](any(), any())(any(), any())).thenReturn(
+          Future.successful(Some(id) ~ invalidAgentEnrolment ~ Some(Agent) ~ Some(User))
+        )
+        running(application) {
 
-      "must redirect to UnauthorisedController with active Enrolment, correct identifier key and identifier value not-matching the Regex([0-9]{10}$)" in {}
+          val authAction = new AuthenticatedIdentifierAction(mockAuthConnector, appConfig, bodyParsers)
+          val controller = new Harness(authAction)
+          val result     = controller.onPageLoad()(FakeRequest())
 
-      "must redirect to UnauthorisedController with incorrect and inactive Enrolments, incorrect enrolment key, incorrect identifier key and identifier value not-matching the Regex(^[A-Za-z0-9]{6}$)" in {}
+          status(result) mustBe SEE_OTHER
 
-      "must redirect to UnauthorisedController with no defined enrolments and identifiers" in {}
+          redirectLocation(result) mustBe Some(routes.UnauthorisedController.onPageLoad().url)
+        }
+      }
+
+      "must redirect to UnauthorisedController with active Enrolment, with incorrect enrolment key and identifier key = IRAgentReference, identifier value matching the Regex(^[A-Za-z0-9]{6}$)" in new Fixture {
+        val invalidAgentEnrolment: Enrolments = createEnrolment("IR", "IRAgentReference", "N12A36", activatedState)
+        when(mockAuthConnector.authorise[RetrievalsType](any(), any())(any(), any())).thenReturn(
+          Future.successful(Some(id) ~ invalidAgentEnrolment ~ Some(Agent) ~ Some(User))
+        )
+        running(application) {
+
+          val authAction = new AuthenticatedIdentifierAction(mockAuthConnector, appConfig, bodyParsers)
+          val controller = new Harness(authAction)
+          val result     = controller.onPageLoad()(FakeRequest())
+
+          status(result) mustBe SEE_OTHER
+
+          redirectLocation(result) mustBe Some(routes.UnauthorisedController.onPageLoad().url)
+        }
+      }
+
+      "must redirect to UnauthorisedController with active Enrolment, enrolment key = IR-CT-AGENT, incorrect identifier key and identifier value matching the Regex(^[A-Za-z0-9]{6}$)" in new Fixture {
+        val invalidAgentEnrolment: Enrolments = createEnrolment("IR-CT-AGENT", "Agent", "N12A36", activatedState)
+        when(mockAuthConnector.authorise[RetrievalsType](any(), any())(any(), any())).thenReturn(
+          Future.successful(Some(id) ~ invalidAgentEnrolment ~ Some(Agent) ~ Some(User))
+        )
+        running(application) {
+
+          val authAction = new AuthenticatedIdentifierAction(mockAuthConnector, appConfig, bodyParsers)
+          val controller = new Harness(authAction)
+          val result     = controller.onPageLoad()(FakeRequest())
+
+          status(result) mustBe SEE_OTHER
+
+          redirectLocation(result) mustBe Some(routes.UnauthorisedController.onPageLoad().url)
+        }
+      }
+
+      "must redirect to UnauthorisedController with active Enrolment, correct identifier key and identifier value not-matching the Regex([0-9]{10}$)" in new Fixture {
+        val invalidAgentEnrolment: Enrolments =
+          createEnrolment("IR-CT-AGENT", "IRAgentReference", "11241", activatedState)
+        when(mockAuthConnector.authorise[RetrievalsType](any(), any())(any(), any())).thenReturn(
+          Future.successful(Some(id) ~ invalidAgentEnrolment ~ Some(Agent) ~ Some(User))
+        )
+        running(application) {
+
+          val authAction = new AuthenticatedIdentifierAction(mockAuthConnector, appConfig, bodyParsers)
+          val controller = new Harness(authAction)
+          val result     = controller.onPageLoad()(FakeRequest())
+
+          status(result) mustBe SEE_OTHER
+
+          redirectLocation(result) mustBe Some(routes.UnauthorisedController.onPageLoad().url)
+        }
+      }
+
+      "must redirect to UnauthorisedController with incorrect and inactive Enrolments, incorrect enrolment key, incorrect identifier key and identifier value not-matching the Regex(^[A-Za-z0-9]{6}$)" in new Fixture {
+        val invalidAgentEnrolment: Enrolments = createEnrolment("IR-CT", "NINO", "11241", activatedState)
+        when(mockAuthConnector.authorise[RetrievalsType](any(), any())(any(), any())).thenReturn(
+          Future.successful(Some(id) ~ invalidAgentEnrolment ~ Some(Agent) ~ Some(User))
+        )
+        running(application) {
+
+          val authAction = new AuthenticatedIdentifierAction(mockAuthConnector, appConfig, bodyParsers)
+          val controller = new Harness(authAction)
+          val result     = controller.onPageLoad()(FakeRequest())
+
+          status(result) mustBe SEE_OTHER
+
+          redirectLocation(result) mustBe Some(routes.UnauthorisedController.onPageLoad().url)
+        }
+      }
 
     }
     "when the user tries to login in as an Individual" - {
-      "must redirect to UnauthorisedController" in {}
+      "must redirect to UnauthorisedController" in new Fixture {
+        val validEnrolment: Enrolments = createEnrolment("IR-CT-AGENT", "IRAgentReference", "N12A36", activatedState)
+        when(mockAuthConnector.authorise[RetrievalsType](any(), any())(any(), any())).thenReturn(
+          Future.successful(Some(id) ~ validEnrolment ~ Some(Individual) ~ Some(User))
+        )
+        running(application) {
+
+          val authAction = new AuthenticatedIdentifierAction(mockAuthConnector, appConfig, bodyParsers)
+          val controller = new Harness(authAction)
+          val result     = controller.onPageLoad()(FakeRequest())
+
+          status(result) mustBe SEE_OTHER
+
+          redirectLocation(result) mustBe Some(routes.UnauthorisedController.onPageLoad().url)
+        }
+
+      }
 
     }
     "when the user tries to login in as an Assistant for Organisation or Individual" - {
-      "must redirect to UnauthorisedController" in {}
+      "must redirect to UnauthorisedController" in new Fixture {
+        val validEnrolment: Enrolments = createEnrolment("IR-CT", "UTR", "1234567890", activatedState)
+        when(mockAuthConnector.authorise[RetrievalsType](any(), any())(any(), any())).thenReturn(
+          Future.successful(Some(id) ~ validEnrolment ~ Some(Organisation) ~ Some(Assistant))
+        )
+        running(application) {
+
+          val authAction = new AuthenticatedIdentifierAction(mockAuthConnector, appConfig, bodyParsers)
+          val controller = new Harness(authAction)
+          val result     = controller.onPageLoad()(FakeRequest())
+
+          status(result) mustBe SEE_OTHER
+
+          redirectLocation(result) mustBe Some(routes.UnauthorisedController.onPageLoad().url)
+        }
+      }
     }
 
     "when not any Enrolment, identifier key and values are not provided" - {
-      "must redirect to UnauthorisedController" in {}
+      "must redirect to UnauthorisedController" in new Fixture {
+        val emptyEnrolment: Enrolments = Enrolments(Set.empty)
+        when(mockAuthConnector.authorise[RetrievalsType](any(), any())(any(), any())).thenReturn(
+          Future.successful(Some(id) ~ emptyEnrolment ~ Some(Organisation) ~ Some(Assistant))
+        )
+        running(application) {
+
+          val authAction = new AuthenticatedIdentifierAction(mockAuthConnector, appConfig, bodyParsers)
+          val controller = new Harness(authAction)
+          val result     = controller.onPageLoad()(FakeRequest())
+
+          status(result) mustBe SEE_OTHER
+
+          redirectLocation(result) mustBe Some(routes.UnauthorisedController.onPageLoad().url)
+        }
+      }
     }
 
     "the user's session has expired" - {
