@@ -27,8 +27,10 @@ import java.time.LocalDate
 class LatePaymentInterestRowSpec extends AnyWordSpec with Matchers with InterestAccrualListHelper {
 
   "LatePaymentInterestRow.toViewModel" should {
+    val accountingPeriodEndDate = LocalDate.of(2026, 1, 1)
+
     "create the expected rows in LatePaymentInterestViewModel from InterestAccrualListWithInterestAccruedDays" in {
-      val viewModel = toViewModel(interestAccrualMultipleObjects)
+      val viewModel = toViewModel(interestAccrualMultipleObjects, accountingPeriodEndDate)
 
       viewModel.rows mustBe Seq(
         LatePaymentInterestRow(
@@ -48,17 +50,19 @@ class LatePaymentInterestRowSpec extends AnyWordSpec with Matchers with Interest
           interestAccrued = BigDecimal("208.02")
         )
       )
+
+      viewModel.accountingPeriodEndDate mustBe accountingPeriodEndDate
     }
 
     "calculate the total and format correctly" in {
       val totalInterestAccrued = interestAccrualMultipleObjects.interestAccruals.map(_.interestAmount).sum
-      val viewModel            = toViewModel(interestAccrualMultipleObjects)
+      val viewModel            = toViewModel(interestAccrualMultipleObjects, accountingPeriodEndDate)
       viewModel.total mustBe totalInterestAccrued
       viewModel.totalAsString mustBe formatCurrency(totalInterestAccrued)
     }
 
     "create the total row with six rows" in {
-      val viewModel = toViewModel(interestAccrualMultipleObjects)
+      val viewModel = toViewModel(interestAccrualMultipleObjects, accountingPeriodEndDate)
       val result    = viewModel.totalRow("label", "value")
       result.size mustBe 6
     }

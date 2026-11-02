@@ -23,6 +23,8 @@ import uk.gov.hmrc.govukfrontend.views.Aliases.TableRow
 import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 import views.ViewUtils.*
 
+import java.time.LocalDate
+
 case class AdjustmentsAccountingPeriodViewModelRow(
   description: String,
   amount: BigDecimal
@@ -32,7 +34,10 @@ case class AdjustmentsAccountingPeriodViewModelRow(
 
 }
 
-case class AdjustmentsAccountingPeriodViewModel(rows: List[AdjustmentsAccountingPeriodViewModelRow]) {
+case class AdjustmentsAccountingPeriodViewModel(
+  accountingPeriodEndDate: LocalDate,
+  rows: List[AdjustmentsAccountingPeriodViewModelRow]
+) {
 
   val total: BigDecimal = rows.map(_.amount).sum
 
@@ -48,7 +53,8 @@ case class AdjustmentsAccountingPeriodViewModel(rows: List[AdjustmentsAccounting
 object AdjustmentsAccountingPeriodViewModel {
 
   def convertToViewModel(
-    adjustmentTransactions: AdjustmentTransactionsList
+    adjustmentTransactions: AdjustmentTransactionsList,
+    accountingPeriodEndDate: LocalDate
   )(implicit messages: Messages): AdjustmentsAccountingPeriodViewModel =
     AdjustmentsAccountingPeriodViewModel(
       rows = adjustmentTransactions.adjustmentTransactionsList.map { adjustment =>
@@ -56,7 +62,8 @@ object AdjustmentsAccountingPeriodViewModel {
           description = getDescription(adjustment.`type`),
           amount = adjustment.amount
         )
-      }
+      },
+      accountingPeriodEndDate = accountingPeriodEndDate
     )
 
   def getDescription(adjustmentTransactionType: AdjustmentTransactionType)(implicit messages: Messages): String =

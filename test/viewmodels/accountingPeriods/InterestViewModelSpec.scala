@@ -26,17 +26,24 @@ import play.api.mvc.Call
 import play.api.test.Helpers.stubMessages
 import views.ViewUtils.formatCurrency
 
+import java.time.LocalDate
+
 class InterestViewModelSpec extends AnyWordSpec with Matchers with AccountingPeriodResponseHelper {
 
-  implicit val messages: Messages    = stubMessages()
-  val latePaymentInterestRoute: Call = controllers.routes.LatePaymentInterestStillAccruingController.onPageLoad()
+  val accountingPeriodEndDate: LocalDate = LocalDate.of(2026, 1, 1)
+  implicit val messages: Messages        = stubMessages()
+  val latePaymentInterestRoute: Call     = controllers.routes.LatePaymentInterestStillAccruingController.onPageLoad()
 
   "InterestViewModel.toViewModel" should {
 
     "create the expected rows and descriptions when LpiCalcFlag, creditDebitCalcFlag and clericalCalculationFlag are true " in {
       val clericalCalculationFlag: Boolean = true
 
-      val viewModel = InterestViewModel.toViewModel(accountingPeriodResponseWithAllFlagsTrue, clericalCalculationFlag)
+      val viewModel = InterestViewModel.toViewModel(
+        accountingPeriodResponseWithAllFlagsTrue,
+        clericalCalculationFlag,
+        accountingPeriodEndDate
+      )
 
       viewModel.rows mustBe Seq(
         InterestRow(
@@ -68,7 +75,11 @@ class InterestViewModelSpec extends AnyWordSpec with Matchers with AccountingPer
     "create the expected rows and descriptions when LpiCalcFlag, creditDebitCalcFlag and clericalCalculationFlag are false " in {
       val clericalCalculationFlag: Boolean = false
 
-      val viewModel = InterestViewModel.toViewModel(accountingPeriodResponseWithAllFlagsFalse, clericalCalculationFlag)
+      val viewModel = InterestViewModel.toViewModel(
+        accountingPeriodResponseWithAllFlagsFalse,
+        clericalCalculationFlag,
+        accountingPeriodEndDate
+      )
 
       viewModel.rows mustBe Seq(
         InterestRow(
@@ -100,7 +111,11 @@ class InterestViewModelSpec extends AnyWordSpec with Matchers with AccountingPer
     "create the expected rows and descriptions without hyperlink when LpiCalcFlag, creditDebitCalcFlag and clericalCalculationFlag are true all amounts are zero" in {
       val clericalCalculationFlag: Boolean = true
       val viewModel                        =
-        InterestViewModel.toViewModel(accountingPeriodResponseWithAllFlagsTrueAmountZero, clericalCalculationFlag)
+        InterestViewModel.toViewModel(
+          accountingPeriodResponseWithAllFlagsTrueAmountZero,
+          clericalCalculationFlag,
+          accountingPeriodEndDate
+        )
 
       viewModel.rows mustBe Seq(
         InterestRow(
@@ -131,7 +146,11 @@ class InterestViewModelSpec extends AnyWordSpec with Matchers with AccountingPer
     }
     "calculate the total correctly" in {
       val clericalCalculationFlag: Boolean = false
-      val viewModel                        = InterestViewModel.toViewModel(accountingPeriodResponseWithAllFlagsTrue, clericalCalculationFlag)
+      val viewModel                        = InterestViewModel.toViewModel(
+        accountingPeriodResponseWithAllFlagsTrue,
+        clericalCalculationFlag,
+        accountingPeriodEndDate
+      )
 
       viewModel.total mustBe BigDecimal("41.25")
     }
@@ -139,13 +158,21 @@ class InterestViewModelSpec extends AnyWordSpec with Matchers with AccountingPer
 
       val clericalCalculationFlag: Boolean = false
 
-      val viewModel = InterestViewModel.toViewModel(accountingPeriodResponseWithAllFlagsTrue, clericalCalculationFlag)
+      val viewModel = InterestViewModel.toViewModel(
+        accountingPeriodResponseWithAllFlagsTrue,
+        clericalCalculationFlag,
+        accountingPeriodEndDate
+      )
 
       viewModel.totalAsString mustBe formatCurrency(BigDecimal("41.25"))
     }
     "format each row amount correctly" in {
       val clericalCalculationFlag: Boolean = false
-      val viewModel                        = InterestViewModel.toViewModel(accountingPeriodResponseWithAllFlagsTrue, clericalCalculationFlag)
+      val viewModel                        = InterestViewModel.toViewModel(
+        accountingPeriodResponseWithAllFlagsTrue,
+        clericalCalculationFlag,
+        accountingPeriodEndDate
+      )
       viewModel.rows.map(_.amountAsString) mustBe Seq(
         formatCurrency(BigDecimal("25.50")),
         formatCurrency(BigDecimal("0.00")),

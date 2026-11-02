@@ -27,6 +27,7 @@ import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import viewmodels.accountingPeriods.LatePaymentInterestRow
 import views.html.accountingPeriods.LatePaymentInterestStillAccruingView
 
+import java.time.LocalDate
 import javax.inject.Inject
 
 class LatePaymentInterestStillAccruingController @Inject() (
@@ -45,11 +46,13 @@ class LatePaymentInterestStillAccruingController @Inject() (
   private val accountingPeriodFromSession: Long = 1L
   private val interestType: String              = "IDE"
 
+  private val accountingPeriodEndDate = LocalDate.of(2026, 1, 1)
+
   def onPageLoad: Action[AnyContent] = identify.async { implicit request =>
     service
       .getInterestAccrualList(taxRefFromSession, accountingPeriodFromSession, interestType)
       .map { interestAccrualResponse =>
-        val viewModel = LatePaymentInterestRow.toViewModel(interestAccrualResponse)
+        val viewModel = LatePaymentInterestRow.toViewModel(interestAccrualResponse, accountingPeriodEndDate)
         Ok(view(viewModel))
       }
       .recover { case ex =>

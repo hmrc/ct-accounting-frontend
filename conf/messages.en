@@ -59,7 +59,7 @@ breadcrumbs.groupPaymentArrangements  = Group Payment Arrangement
 accountingPeriodOverview.title = Accounting period overview
 accountingPeriodOverview.heading = Accounting period ending {0}
 
-accountingPeriodOverview.paragraph = When paying for this accounting period, use reference number {0}.
+accountingPeriodOverview.paragraph = When paying for this accounting period, use reference number {0}
 accountingPeriodOverview.howToPay = How to pay (opens in new tab)
 accountingPeriodOverview.description = Description
 accountingPeriodOverview.amount = Amount
@@ -82,7 +82,7 @@ taxTransactions.amount = Amount
 taxTransactions.table.total = Total
 
 penaltiesAccountingPeriod.heading           = Penalties
-penaltiesAccountingPeriod.caption           = Accounting period ending
+penaltiesAccountingPeriod.caption           = Accounting period ending {0}
 penaltiesAccountingPeriod.date              = Date
 penaltiesAccountingPeriod.description       = Description
 penaltiesAccountingPeriod.description.FX    = Fixed rate penalty
@@ -97,7 +97,7 @@ penaltiesAccountingPeriod.section           = Accounting period overview
 adjustmentsAccountingPeriod.title          = Adjustments – Accounting period overview
 adjustmentsAccountingPeriod.section        = Accounting period overview
 adjustmentsAccountingPeriod.heading        = Adjustments
-adjustmentsAccountingPeriod.caption        = Accounting period ending 30 Sep 2025
+adjustmentsAccountingPeriod.caption        = Accounting period ending {0}
 adjustmentsAccountingPeriod.description    = Description
 adjustmentsAccountingPeriod.amount         = Amount
 adjustmentsAccountingPeriod.total          = Total
@@ -105,7 +105,7 @@ adjustmentsAccountingPeriod.description.n  = Not currently being pursued
 adjustmentsAccountingPeriod.description.o  = Permanent overpayment
 adjustmentsAccountingPeriod.description.p  = Postponement
 
-debitInterestAccountingPeriod.caption      = Accounting period ending
+debitInterestAccountingPeriod.caption      = Accounting period ending {0}
 debitInterestAccountingPeriod.section      = Accounting period ending
 debitInterestAccountingPeriod.title        = Debit interest - Interest - Accounting period overview
 debitInterestAccountingPeriod.heading      = Debit interest
@@ -137,7 +137,7 @@ payments.description.EP.partPayment = Electronic part payment
 
 interest.title                          = Interest
 interest.section                        = Accounting period overview
-interest.caption                        = Accounting period ending 30 Sep 2025
+interest.caption                        = Accounting period ending {0}
 interest.heading                        = Interest
 interest.description                    = Description
 interest.amount                         = Amount
@@ -163,8 +163,8 @@ creditInterest.interest = Interest accrued
 creditInterest.table.total = Total
 
 latePaymentInterest.stillAccruing.title                   = Late payment interest - Interest - Accounting period overview
-latePaymentInterest.stillAccruing.caption                 = Accounting period ending 30 Sep 2025
-latePaymentInterest.stillAccruing.heading                 = Late payment interest (still accruing)
+latePaymentInterest.stillAccruing.caption                 = Accounting period ending {0}
+latePaymentInterest.stillAccruing.heading                 = Late payment interest
 latePaymentInterest.stillAccruing.amountSubjectToInterest = Amount subject to interest
 latePaymentInterest.stillAccruing.toDate                  = To date
 latePaymentInterest.stillAccruing.fromDate                = From date

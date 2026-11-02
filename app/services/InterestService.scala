@@ -42,7 +42,7 @@ class InterestService @Inject() (
       .toRight(MissingAccountingPeriodError(s"Cannot find the matching accounting period for taxRef:$taxRef"))
       .map { accPeriodWithValue =>
         val clericalCalculationFlag = findClericalFlag(accPeriodWithValue)
-        InterestViewModel.toViewModel(accountingPeriodsDetails, clericalCalculationFlag)
+        InterestViewModel.toViewModel(accountingPeriodsDetails, clericalCalculationFlag, accPeriodWithValue.apEndDate)
       }
 
   private def findClericalFlag(accPeriodRowResponse: AccountingPeriodsRowResponse): Boolean =

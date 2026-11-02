@@ -32,7 +32,7 @@ case class LatePaymentInterestRow(
   interestAccrued: BigDecimal
 )
 
-case class LatePaymentInterestViewModel(rows: Seq[LatePaymentInterestRow]) {
+case class LatePaymentInterestViewModel(rows: Seq[LatePaymentInterestRow], accountingPeriodEndDate: LocalDate) {
   val total: BigDecimal = rows.map(_.interestAccrued).sum
 
   val totalAsString: String = formatCurrency(total)
@@ -49,7 +49,10 @@ case class LatePaymentInterestViewModel(rows: Seq[LatePaymentInterestRow]) {
 }
 
 object LatePaymentInterestRow {
-  def toViewModel(interestAccrualList: InterestAccrualListWithInterestAccruedDays): LatePaymentInterestViewModel =
+  def toViewModel(
+    interestAccrualList: InterestAccrualListWithInterestAccruedDays,
+    accountingPeriodEndDate: LocalDate
+  ): LatePaymentInterestViewModel =
     LatePaymentInterestViewModel(
       interestAccrualList.interestAccruals.map { value =>
         LatePaymentInterestRow(
@@ -60,6 +63,7 @@ object LatePaymentInterestRow {
           annualPercentageRate = value.interestRate,
           interestAccrued = value.interestAmount
         )
-      }
+      },
+      accountingPeriodEndDate = accountingPeriodEndDate
     )
 }

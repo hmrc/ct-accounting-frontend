@@ -38,7 +38,7 @@
         @heading(messages("latePaymentInterest.stillAccruing.heading"))
     @govukTable(
         Table(
-            caption = Some(messages("latePaymentInterest.stillAccruing.caption")),
+            caption = Some(messages("latePaymentInterest.stillAccruing.caption", formatDate(viewModel.accountingPeriodEndDate, messages.lang))),
             captionClasses = "govuk-table__caption--m",
             head = Some(Seq(
                 HeadCell(content = Text(messages("latePaymentInterest.stillAccruing.amountSubjectToInterest"))),

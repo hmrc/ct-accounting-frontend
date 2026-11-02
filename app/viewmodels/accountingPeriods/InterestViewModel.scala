@@ -25,11 +25,13 @@ import uk.gov.hmrc.govukfrontend.views.viewmodels.table.*
 import uk.gov.hmrc.http.HttpVerbs.GET
 import views.ViewUtils.formatCurrency
 
+import java.time.LocalDate
+
 case class InterestRow(description: String, amount: BigDecimal, isLink: Boolean, href: Call) {
   val amountAsString: String = formatCurrency(amount)
 }
 
-case class InterestViewModel(rows: Seq[InterestRow]) {
+case class InterestViewModel(accountingPeriodEndDate: LocalDate, rows: Seq[InterestRow]) {
   val total: BigDecimal = rows.map(_.amount).sum
 
   val totalAsString: String = formatCurrency(total)
@@ -46,10 +48,12 @@ object InterestViewModel {
   val dummyCall: Call = Call(GET, "/")
   def toViewModel(
     response: AccountingPeriodDetailsResponse,
-    clericalCalculationFlag: Boolean
+    clericalCalculationFlag: Boolean,
+    accountingPeriodEndDate: LocalDate
   )(implicit messages: Messages): InterestViewModel =
     val accDetails = response.accountingPeriodDetails
     InterestViewModel(
+      accountingPeriodEndDate = accountingPeriodEndDate,
       rows = Seq(
         InterestRow(
           description = deriveDescription("interest.table.latePayment", accDetails.lpiCalcFlag),

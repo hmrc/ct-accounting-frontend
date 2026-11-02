@@ -62,7 +62,9 @@ trait LatePaymentInterestViewModelHelper {
     )
 
   val eqvViewModelOfInterestAccrualMultipleObjects: LatePaymentInterestViewModel =
-    LatePaymentInterestRow.toViewModel(interestAccrualMultipleObjects)
-  val viewModel: LatePaymentInterestViewModel                                    = LatePaymentInterestRow.toViewModel(interestAccrualWithSingleObject)
+    LatePaymentInterestRow.toViewModel(interestAccrualMultipleObjects, LocalDate.of(2026, 1, 1))
+
+  val viewModel: LatePaymentInterestViewModel =
+    LatePaymentInterestRow.toViewModel(interestAccrualWithSingleObject, LocalDate.of(2026, 1, 1))
 
 }

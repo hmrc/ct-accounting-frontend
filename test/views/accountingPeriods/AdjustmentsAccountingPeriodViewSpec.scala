@@ -28,6 +28,7 @@ import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.mvc.AnyContentAsEmpty
 import play.api.test.FakeRequest
 import play.twirl.api.Html
+import views.ViewUtils.formatDate
 import views.html.accountingPeriods.AdjustmentsAccountingPeriodView
 
 class AdjustmentsAccountingPeriodViewSpec
@@ -61,7 +62,11 @@ class AdjustmentsAccountingPeriodViewSpec
       heading.size() mustBe 1
       heading.text() mustBe messages("adjustmentsAccountingPeriod.heading")
 
-      caption.text() mustBe messages("adjustmentsAccountingPeriod.caption")
+      caption.text() mustBe messages(
+        "adjustmentsAccountingPeriod.caption",
+        formatDate(accountingPeriodEndDate, messages.lang)
+      )
+
       doc.title() must include(messages("adjustmentsAccountingPeriod.title"))
     }
 
