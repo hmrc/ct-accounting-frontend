@@ -322,3 +322,11 @@ findYourPayment.error.amountFormat = Enter your payment amount in the correct fo
 findYourPayment.error.startDateRange = The start date must be before the end date
 findYourPayment.error.endDateRange = The end date must be after the start date
 
+paymentsOnAccount.title = Payments on account
+paymentsOnAccount.heading = Payments on account
+paymentsOnAccount.paragraph = The payment shown below have been received by HMRC. They either relate to future Corporation Tax liabilities or have been allocated to an accounting period.
+paymentsOnAccount.caption = Payment history
+paymentsOnAccount.tableHeader.paymentDate = Payment date
+paymentsOnAccount.tableHeader.paymentAllocationDate = Payment allocation date
+paymentsOnAccount.tableHeader.description = Description
+paymentsOnAccount.tableHeader.amount = Amount
