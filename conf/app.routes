@@ -52,3 +52,6 @@ GET         /group-payment-arrangement/group-taxes controllers.gpa.GroupTaxCharg
 # Payments Journey
 GET         /find-your-payment  controllers.payments.FindYourPaymentController.onPageLoad()
 POST        /find-your-payment  controllers.payments.FindYourPaymentController.onSubmit()
+
+# Payments on account
+GET         /payments-on-account  controllers.payments.PaymentsOnAccountController.onPageLoad(page: Option[Int])
