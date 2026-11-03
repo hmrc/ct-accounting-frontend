@@ -60,7 +60,7 @@ accountingPeriodOverview.title = Trosolwg o’r cyfnod cyfrifyddu
 accountingPeriodOverview.heading = Cyfnod cyfrifyddu sy’n dod i ben ar {0}
 
 accountingPeriodOverview.paragraph = Pan fyddwch yn talu am y cyfnod cyfrifyddu hwn, defnyddiwch y cyfeirnod {0}
-accountingPeriodOverview.howToPay = Sut i dalu
+accountingPeriodOverview.howToPay = Sut i dalu (yn agor tab newydd)
 accountingPeriodOverview.description = Disgrifiad
 accountingPeriodOverview.amount = Swm
 accountingPeriodOverview.taxes = Trethi
@@ -129,8 +129,11 @@ payments.amount = Swm
 payments.table.total = Cyfanswm
 
 payments.description.IRC = Credyd CThEF
+payments.description.IRC.partPayment = HMRC credit part payment
 payments.description.CP = Taliad drwy siec
+payments.description.CP.partPayment = Cheque part payment
 payments.description.EP = Taliad electronig
+payments.description.EP.partPayment = Electronic part payment
 
 interest.title                          = Llog
 interest.section                        = Trosolwg o’r cyfnod cyfrifyddu
