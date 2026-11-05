@@ -129,11 +129,11 @@ payments.amount = Swm
 payments.table.total = Cyfanswm
 
 payments.description.IRC = Credyd CThEF
-payments.description.IRC.partPayment = HMRC credit part payment
+payments.description.IRC.partPayment = Taliad rhannol drwy gredyd CThEF
 payments.description.CP = Taliad drwy siec
-payments.description.CP.partPayment = Cheque part payment
+payments.description.CP.partPayment = Taliad rhannol drwy siec
 payments.description.EP = Taliad electronig
-payments.description.EP.partPayment = Electronic part payment
+payments.description.EP.partPayment = Taliad rhannol drwy ddull electronig
 
 interest.title                          = Llog
 interest.section                        = Trosolwg o’r cyfnod cyfrifyddu
