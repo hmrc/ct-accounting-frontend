@@ -215,17 +215,17 @@ gpaPayment.Description.rto.taxRef = Reallocation FROM {0}, AP ending {1}
 gpaPayment.Description.rto.date = Reallocation FROM AP ending {0}
 
 
-accountingPeriods.title = Accounting periods
-accountingPeriods.heading = Accounting periods
-accountingPeriods.p1 = Your Corporation Tax balance is {0}. This amount is based on the accounting periods currently shown.
-accountingPeriods.p2 = There is no data for any accounting periods yet.
-accountingPeriods.accountingPeriodEnding = Accounting period ending
-accountingPeriods.accountingPeriodStatus = Status
-accountingPeriods.accountingPeriodAmount = Amount
-accountingPeriods.status.description.LIVE = Live
-accountingPeriods.status.description.SUPERSEDED = Superseded
-accountingPeriods.status.description.DORMANT = Dormant
-accountingPeriods.status.description.EXEMPT = Exempt
+accountingPeriods.title = Cyfnodau cyfrifyddu
+accountingPeriods.heading = Cyfnodau cyfrifyddu
+accountingPeriods.p1 = Balans eich Treth Gorfforaeth yw {0}. Mae’r swm hwn yn seiliedig ar y cyfnodau cyfrifyddu a ddangosir ar hyn o bryd.
+accountingPeriods.p2 = Does dim data ar gyfer unrhyw gyfnodau cyfrifyddu eto.
+accountingPeriods.accountingPeriodEnding = Cyfnod cyfrifyddu sy’n dod i ben
+accountingPeriods.accountingPeriodStatus = Statws
+accountingPeriods.accountingPeriodAmount = Swm
+accountingPeriods.status.description.LIVE = Yn fyw
+accountingPeriods.status.description.SUPERSEDED = Disodlwyd
+accountingPeriods.status.description.DORMANT = Segur
+accountingPeriods.status.description.EXEMPT = Esempt
 
 # GPA Messages
 groupPaymentArrangement.title = Group Payment Arrangement
