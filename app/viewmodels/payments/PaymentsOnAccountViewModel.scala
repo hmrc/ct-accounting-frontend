@@ -1,13 +1,27 @@
+/*
+ * Copyright 2026 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package viewmodels.payments
 
-import controllers.payments.PaymentsOnAccountController
-import models.payments.{PaymentsOnAccountResponse, PaymentsOnAccountRow}
+import models.payments.PaymentsOnAccountResponse
 import play.api.i18n.Messages
-import uk.gov.hmrc.govukfrontend.views.Aliases.{Pagination, Text}
-import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.Key
-import utils.{PaginationHelper, StatusHelper}
+import uk.gov.hmrc.govukfrontend.views.Aliases.Pagination
+import utils.PaginationHelper
 import viewmodels.Paginated
-import views.ViewUtils.{formatCurrency, formatDate}
+import views.ViewUtils.formatDate
 
 import java.time.LocalDate
 
@@ -20,10 +34,14 @@ case class PaymentsOnAccountViewModel(
 
 case class PaymentsOnAccountRow(
   paymentDate: LocalDate,
-  paymentAllocationDate: LocalDate,
+  paymentAllocationDate: Option[LocalDate],
   description: String,
   amount: BigDecimal
-)
+)(implicit messages: Messages) {
+  val paymentDateAsString: String = formatDate(paymentDate, messages.lang)
+
+  val paymentAllocationDateAsString: String = paymentAllocationDate.map(formatDate(_, messages.lang)).getOrElse("")
+}
 
 object PaymentsOnAccountViewModel {
   def toViewModel(
@@ -33,14 +51,14 @@ object PaymentsOnAccountViewModel {
   )(implicit messages: Messages): PaymentsOnAccountViewModel = {
     val rows = paymentsOnAccountResponse.paymentsOnAccountRows.map { row =>
       PaymentsOnAccountRow(
-        paymentDate = row.paymentDate,
-        paymentAllocationDate = row.paymentAllocationDate,
-        description = row.description,
-        amount = row.amount
+        paymentDate = row.effectiveDateOfPayment,
+        paymentAllocationDate = row.apEndDate,
+        description = row.paymentType,
+        amount = row.postingAmount
       )
     }
 
-    val page = Paginated.alreadyPaginated(rows, requestedPage, paymentsOnAccountResponse.totalNumberRows.getOrElse(0))
+    val page = Paginated.alreadyPaginated(rows, requestedPage, paymentsOnAccountResponse.totalNumOfRecords)
 
     PaymentsOnAccountViewModel(
       paymentsOnAccountRows = rows,

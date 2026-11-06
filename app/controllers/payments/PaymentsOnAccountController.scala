@@ -1,18 +1,34 @@
+/*
+ * Copyright 2026 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package controllers.payments
 
-import controllers.actions.*
 import controllers.Execution.trampoline
-import controllers.payments.routes
-
-import javax.inject.Inject
+import controllers.actions.*
+import controllers.routes.JourneyRecoveryController
 import play.api.i18n.Lang.logger
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import services.payments.PaymentsOnAccountService
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import viewmodels.payments.PaymentsOnAccountViewModel
-import views.html.PaymentsOnAccountView
+import views.html.payments.PaymentsOnAccountView
 import utils.PaginationHelper.startIndexCountHelper
+
+import javax.inject.Inject
 
 class PaymentsOnAccountController @Inject() (
                                               override val messagesApi: MessagesApi,
@@ -31,7 +47,7 @@ class PaymentsOnAccountController @Inject() (
     val pStartIndex = startIndexCountHelper(page, pCount)
 
     service
-      .getPaymentsOnAccount(taxRef, 0, 10)
+      .getPaymentsOnAccount(taxRef, pStartIndex, pCount)
       .map { response =>
         val viewModel = PaymentsOnAccountViewModel.toViewModel(
           response,
@@ -42,7 +58,7 @@ class PaymentsOnAccountController @Inject() (
       }
       .recover { case ex =>
         logger.error(s"Unexpected failure while retrieving payments on account: ${ex.getMessage}")
-        Redirect(routes.JourneyRecoveryController.onPageLoad())
+        Redirect(JourneyRecoveryController.onPageLoad())
       }
   }
 }

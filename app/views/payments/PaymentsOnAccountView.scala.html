@@ -16,7 +16,8 @@
 
 @import views.html.components.*
 @import viewmodels._
-@import viewmodels.gpa.GroupTaxChargesViewModel
+@import java.time.LocalDate
+@import viewmodels.payments.PaymentsOnAccountViewModel
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
 
 @this(
@@ -35,38 +36,39 @@
 
         @h1(messages("paymentsOnAccount.heading"))
 
+        @paragraph(messages("paymentsOnAccount.paragraph"))
+
         @h1(messages("paymentsOnAccount.heading"))
 
         @viewModel.paginationInfo.map(paragraph(_))
         @govukTable(
             Table(
+                caption = Some(messages("paymentsOnAccount.caption")),
+                captionClasses = "govuk-table__caption govuk-table__caption--m",
                 head = Some(Seq(
-                    HeadCell(content = Text(messages("paymentsOnAccount.tableHeader.paymentAllocated"))),
-                    HeadCell(content = Text(messages("paymentsOnAccount.tableHeader.utr"))),
-                    HeadCell(content = Text(messages("paymentsOnAccount.tableHeader.accountingPeriodEnding"))),
-                    HeadCell(content = Text(messages("paymentsOnAccount.tableHeader.taxLiability")), classes = "govuk-!-text-align-left govuk-table__cell--numeric"),
-                    HeadCell(content = Text(messages("paymentsOnAccount.tableHeader.paymentAllocated")), classes = "govuk-table__cell govuk-table__cell--numeric")
+                    HeadCell(content = Text(messages("paymentsOnAccount.tableHeader.paymentDate"))),
+                    HeadCell(content = Text(messages("paymentsOnAccount.tableHeader.paymentAllocationDate"))),
+                    HeadCell(content = Text(messages("paymentsOnAccount.tableHeader.description"))),
+                    HeadCell(content = Text(messages("paymentsOnAccount.tableHeader.amount")), classes = "govuk-!-text-align-left govuk-table__cell--numeric")
                     )),
-                rows = viewModel.groupTaxRecordsRows.map { row =>
+                rows = viewModel.paymentsOnAccountRows.map { row =>
                     Seq(
                         TableRow(
-                            content = Text(row.participatingCompany),
+                            content = Text(row.paymentDateAsString),
                             classes = s"govuk-table__cell"
                         ),
                         TableRow(
-                            content = Text(row.uniqueTaxpayerReference.toString()),
+                            content = Text(row.paymentAllocationDateAsString),
                             classes = s"govuk-table__cell"
                         ),
                         TableRow(
-                            content = Text(formatDate(row.accountingPeriodEnding, messages.lang)),
+                            content = Text(row.description),
                             classes = s"govuk-table__cell"
                         ),
-                        TableRow(content = HtmlContent(link(row.taxLiability.description,
-                                                            row.taxLiability.href.url,
-                                                            row.taxLiability.isLink)), classes = "govuk-table__cell govuk-table__cell--numeric"),
-                        TableRow(content = HtmlContent(link(row.paymentAllocated.description,
-                                    row.paymentAllocated.href.url,
-                                    row.paymentAllocated.isLink)), classes = "govuk-table__cell govuk-table__cell--numeric")
+                        TableRow(
+                            content = Text(formatCurrency(row.amount)),
+                            classes = "govuk-table__header--numeric"
+                        )
                     )
                 }
                 )
