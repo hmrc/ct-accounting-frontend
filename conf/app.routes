@@ -54,4 +54,4 @@ GET         /find-your-payment  controllers.payments.FindYourPaymentController.o
 POST        /find-your-payment  controllers.payments.FindYourPaymentController.onSubmit()
 
 # Payments on account
-GET         /payments-on-account  controllers.payments.PaymentsOnAccountController.onPageLoad(page: Option[Int])
+GET         /payments-on-account                                    controllers.payments.PaymentsOnAccountController.onPageLoad(page: Option[Int])
