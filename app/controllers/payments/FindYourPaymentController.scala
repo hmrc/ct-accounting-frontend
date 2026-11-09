@@ -56,9 +56,9 @@ class FindYourPaymentController @Inject() (
 
     formWithDateRangeError.fold(
       formWithErrors => BadRequest(view(formWithErrors)),
-      // TODO: replace hardcoded redirect path when payment-results route is implemented
-      _ => Redirect("/find-your-payment/payment-results")
+
+      // TODO - add in session stuff to pass amount across
+      _ => Redirect(controllers.payments.routes.PaymentResultsController.onPageLoad())
     )
   }
-
 }

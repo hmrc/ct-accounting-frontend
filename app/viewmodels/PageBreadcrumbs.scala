@@ -256,4 +256,15 @@ object PageBreadcrumbs {
     )
   )
 
+  def paymentResultsPage(implicit messages: Messages): Breadcrumbs = Breadcrumbs(
+    // TODO: Add hrefs
+    items = Seq(
+      BreadcrumbsItem(content = Text(messages("breadcrumbs.home")), href = Some("/")),
+      BreadcrumbsItem(
+        content = Text(messages("breadcrumbs.findYourPayment")),
+        href = Some(controllers.payments.routes.FindYourPaymentController.onPageLoad().url)
+      )
+    )
+  )
+
 }
