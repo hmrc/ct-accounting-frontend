@@ -38,8 +38,6 @@
 
         @paragraph(messages("paymentsOnAccount.paragraph"))
 
-        @h1(messages("paymentsOnAccount.heading"))
-
         @viewModel.paginationInfo.map(paragraph(_))
         @govukTable(
             Table(

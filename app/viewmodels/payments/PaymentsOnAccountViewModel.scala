@@ -22,6 +22,7 @@ import uk.gov.hmrc.govukfrontend.views.Aliases.Pagination
 import utils.PaginationHelper
 import viewmodels.Paginated
 import views.ViewUtils.formatDate
+import utils.PaymentsDescriptionHelper.getPaymentsDescription;
 
 import java.time.LocalDate
 
@@ -29,7 +30,8 @@ case class PaymentsOnAccountViewModel(
   paymentsOnAccountRows: Seq[PaymentsOnAccountRow],
   page: Paginated[PaymentsOnAccountRow],
   pagination: Option[Pagination],
-  paginationInfo: Option[String]
+  paginationInfo: Option[String],
+  totalNumOfRecords: Int
 )
 
 case class PaymentsOnAccountRow(
@@ -53,7 +55,7 @@ object PaymentsOnAccountViewModel {
       PaymentsOnAccountRow(
         paymentDate = row.effectiveDateOfPayment,
         paymentAllocationDate = row.apEndDate,
-        description = row.paymentType,
+        description = getPaymentsDescription(row.paymentType),
         amount = row.postingAmount
       )
     }
@@ -61,10 +63,11 @@ object PaymentsOnAccountViewModel {
     val page = Paginated.alreadyPaginated(rows, requestedPage, paymentsOnAccountResponse.totalNumOfRecords)
 
     PaymentsOnAccountViewModel(
-      paymentsOnAccountRows = rows,
+      paymentsOnAccountRows = page.items,
       page = page,
       pagination = PaginationHelper.toPagination(page, pageUrl),
-      paginationInfo = PaginationHelper.paginationText(page)
+      paginationInfo = PaginationHelper.paginationText(page),
+      totalNumOfRecords = paymentsOnAccountResponse.totalNumOfRecords
     )
   }
 }

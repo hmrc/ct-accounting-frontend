@@ -42,7 +42,7 @@ class PaymentsOnAccountController @Inject() (
   def onPageLoad(page: Option[Int]): Action[AnyContent] = identify.async { implicit request =>
 
     // TODO update to retrieve from session
-    val taxRef = 5L
+    val taxRef = 999999L
     val pCount = 10
     val pStartIndex = startIndexCountHelper(page, pCount)
 
@@ -60,5 +60,6 @@ class PaymentsOnAccountController @Inject() (
         logger.error(s"Unexpected failure while retrieving payments on account: ${ex.getMessage}")
         Redirect(JourneyRecoveryController.onPageLoad())
       }
+
   }
 }
