@@ -32,10 +32,10 @@ class PaymentsOnAccountConnector @Inject() (http: HttpClientV2)(implicit
   ec: ExecutionContext
 ) extends Logging {
 
-  def getPaymentsOnAccount(taxRef: Long, startIndex: Int, count: Int)(implicit
+  def getPaymentsOnAccount(taxRef: Long)(implicit
     hc: HeaderCarrier
   ): Future[PaymentsOnAccountResponse] = {
-    //val baseUrl  = config.baseUrl("corporation-tax")
+    // val baseUrl  = config.baseUrl("corporation-tax")
 
     // todo: remove temporary url
     val baseUrl  = "http://localhost:11203/corporation-tax-stubs"

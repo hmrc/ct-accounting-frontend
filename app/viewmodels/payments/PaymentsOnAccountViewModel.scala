@@ -60,7 +60,7 @@ object PaymentsOnAccountViewModel {
       )
     }
 
-    val page = Paginated.alreadyPaginated(rows, requestedPage, paymentsOnAccountResponse.totalNumOfRecords)
+    val page = Paginated.paginate(rows, requestedPage)
 
     PaymentsOnAccountViewModel(
       paymentsOnAccountRows = page.items,

@@ -31,23 +31,23 @@ import utils.PaginationHelper.startIndexCountHelper
 import javax.inject.Inject
 
 class PaymentsOnAccountController @Inject() (
-                                              override val messagesApi: MessagesApi,
-                                              identify: IdentifierAction,
-                                              val controllerComponents: MessagesControllerComponents,
-                                              view: PaymentsOnAccountView,
-                                              service: PaymentsOnAccountService
-                                            ) extends FrontendBaseController
-  with I18nSupport {
+  override val messagesApi: MessagesApi,
+  identify: IdentifierAction,
+  val controllerComponents: MessagesControllerComponents,
+  view: PaymentsOnAccountView,
+  service: PaymentsOnAccountService
+) extends FrontendBaseController
+    with I18nSupport {
 
   def onPageLoad(page: Option[Int]): Action[AnyContent] = identify.async { implicit request =>
 
     // TODO update to retrieve from session
-    val taxRef = 999999L
+    val taxRef = 345678L
     val pCount = 10
-    val pStartIndex = startIndexCountHelper(page, pCount)
+    startIndexCountHelper(page, pCount)
 
     service
-      .getPaymentsOnAccount(taxRef, pStartIndex, pCount)
+      .getPaymentsOnAccount(taxRef)
       .map { response =>
         val viewModel = PaymentsOnAccountViewModel.toViewModel(
           response,
