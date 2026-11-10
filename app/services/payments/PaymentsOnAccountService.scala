@@ -25,16 +25,16 @@ import javax.inject.Inject
 import scala.concurrent.Future
 
 class PaymentsOnAccountService @Inject() (
-                                         connector: PaymentsOnAccountConnector
-                                       ) extends Logging {
+  connector: PaymentsOnAccountConnector
+) extends Logging {
 
-  def getPaymentsOnAccount(taxRef: Long, startIndex: Int, count: Int)(implicit
-                                                                                                    hc: HeaderCarrier
+  def getPaymentsOnAccount(taxRef: Long)(implicit
+    hc: HeaderCarrier
   ): Future[PaymentsOnAccountResponse] = {
     logger.info(
-      s"Calling PaymentsOnAccountConnector for taxRef: $taxRef, StartIndex: $startIndex, pCount: $count"
+      s"Calling PaymentsOnAccountConnector for taxRef: $taxRef"
     )
     connector
-      .getPaymentsOnAccount(taxRef, startIndex, count)
+      .getPaymentsOnAccount(taxRef)
   }
 }

@@ -21,7 +21,7 @@ import play.api.libs.json.{Json, OFormat}
 import java.time.LocalDate
 
 case class PaymentsOnAccountResponse(paymentsOnAccountRows: List[PaymentsOnAccountRow]) {
-   val totalNumOfRecords: Int = paymentsOnAccountRows.size
+  val totalNumOfRecords: Int = paymentsOnAccountRows.size
 }
 
 object PaymentsOnAccountResponse {
