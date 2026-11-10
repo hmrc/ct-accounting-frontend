@@ -72,6 +72,22 @@ class PaymentResultsServiceSpec
 
     }
 
+    "delegate to connector and successfully return an empty PaymentSearchResultResponse" in new BaseSetup {
+
+      when(mockConnector.getPaymentResults(any(), any(), any(), any())(any[HeaderCarrier]))
+        .thenReturn(Future.successful(emptyPaymentSearchResult))
+
+      val result: PaymentSearchResultResponse =
+        service.getPaymentSearchResult(taxRef, userEnteredPaymentAmount, fromDate, toDate).futureValue
+
+      result shouldBe emptyPaymentSearchResult
+
+      verify(mockConnector).getPaymentResults(taxRef, userEnteredPaymentAmount, fromDate, toDate)
+
+      verify(mockConnector, times(1)).getPaymentResults(taxRef, userEnteredPaymentAmount, fromDate, toDate)
+
+    }
+
     "propagate any errors or exceptions from connector" in new BaseSetup {
 
       when(mockConnector.getPaymentResults(any(), any(), any(), any())(any[HeaderCarrier]))

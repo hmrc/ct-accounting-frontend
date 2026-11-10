@@ -52,7 +52,7 @@
           head = Some(Seq(
               HeadCell(content = Text(messages("paymentResults.dateCol"))),
               HeadCell(content = Text(messages("paymentResults.descriptionCol"))),
-              HeadCell(content = Text(messages("paymentResults.amountCol")))
+              HeadCell(content = Text(messages("paymentResults.amountCol")), classes = "govuk-table__cell govuk-table__cell--numeric")
           )),
           rows = viewModel.rows.map { row =>
               Seq(
@@ -67,7 +67,8 @@
                       )
                   ),
                   TableRow(
-                      content = Text(row.amountString)
+                      content = Text(row.amountString),
+                      classes = s"govuk-table__cell govuk-table__cell--numeric"
                   )
               )
           }

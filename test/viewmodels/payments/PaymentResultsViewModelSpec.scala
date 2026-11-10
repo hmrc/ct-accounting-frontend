@@ -39,6 +39,12 @@ class PaymentResultsViewModelSpec extends AnyWordSpec with Matchers with Payment
       viewModel.rows.size mustBe 10
     }
 
+    "not create rows in PaymentResultsViewModel from empty Payment Search Results" in {
+      val viewModel = toViewModel(emptyPaymentSearchResult, taxRef, pageUrl, Some(1))
+
+      viewModel.rows.size mustBe 0
+    }
+
     "create the expected pagination for rows in PaymentResultsViewModel from Payment Search Result" in {
       val viewModel = toViewModel(multiplePaymentSearchResult, taxRef, pageUrl, Some(2))
 
