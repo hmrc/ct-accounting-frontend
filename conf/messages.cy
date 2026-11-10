@@ -52,9 +52,9 @@ breadcrumbs.home = Hafan
 breadcrumbs.accountingPeriodEnding = Diwedd y cyfnod cyfrifyddu
 breadcrumbs.interest = Llog
 breadcrumbs.accountingPeriods = Cyfnodau cyfrifyddu
-breadcrumbs.gpa = Group Payment Arrangement
-breadcrumbs.groupTaxes = Group taxes
-breadcrumbs.groupPaymentArrangements  = Group Payment Arrangement
+breadcrumbs.gpa = Trefniant Talu Grŵp
+breadcrumbs.groupTaxes = Trethi’r grŵp
+breadcrumbs.groupPaymentArrangements  = Trefniant Talu Grŵp
 
 accountingPeriodOverview.title = Trosolwg o’r cyfnod cyfrifyddu
 accountingPeriodOverview.heading = Cyfnod cyfrifyddu sy’n dod i ben ar {0}
@@ -208,11 +208,11 @@ repaymentReallocations.description.rto = Ailddyrannu i gyfnod cyfrifyddu {0}
 repaymentReallocations.description.rfr = Ailddyrannu o gyfnod cyfrifyddu sy’n dod i ben ar {0}
 repaymentReallocations.description.crt = Ailddyrannu o gyfnod cyfrifyddu {0}
 
-gpaPayment.Description.miscellaneous = Miscellaneous Transfer
-gpaPayment.Description.rfr.taxRef = Reallocation TO {0}, AP ending {1}
-gpaPayment.Description.rfr.date = Reallocation TO AP ending {0}
-gpaPayment.Description.rto.taxRef = Reallocation FROM {0}, AP ending {1}
-gpaPayment.Description.rto.date = Reallocation FROM AP ending {0}
+gpaPayment.Description.miscellaneous = Trosglwyddiad amrywiol
+gpaPayment.Description.rfr.taxRef = Ailddyrannu I {0}, Cyfnod Cyfrifyddu a ddaeth i ben {1}
+gpaPayment.Description.rfr.date = Ailddyrannu I Cyfnod Cyfrifyddu a ddaeth i ben {0}
+gpaPayment.Description.rto.taxRef = Ailddyrannu O {0}, Cyfnod Cyfrifyddu a ddaeth i ben {1}
+gpaPayment.Description.rto.date = Ailddyrannu O Cyfnod Cyfrifyddu a ddaeth i ben {0}
 
 
 accountingPeriods.title = Cyfnodau cyfrifyddu
@@ -228,52 +228,53 @@ accountingPeriods.status.description.DORMANT = Segur
 accountingPeriods.status.description.EXEMPT = Esempt
 
 # GPA Messages
-groupPaymentArrangement.title = Group Payment Arrangement
-groupPaymentArrangement.heading = Group Payment Arrangement
-groupPaymentArrangement.summaryText.firstline = It is an optional agreement with HMRC. Your company can participate only if it is a member of a group that meets HMRC’s conditions.
-groupPaymentArrangement.summaryText.secondline = Under a Group Payment Arrangement, your company can:
-groupPaymentArrangement.summaryText.bulletPoint1 = nominate one member of the group to make the payments on behalf of all the companies
-groupPaymentArrangement.summaryText.bulletPoint2 = reduce the administration when making many individual payments and might also reduce the group’s overall interest charges
-groupPaymentArrangement.summaryText.reference = Group Payment Arrangement reference {0}.
-groupPaymentArrangement.tableHeader.periodOfAccountEnding = Period of account ending
-groupPaymentArrangement.tableHeader.groupPayments = Group payments
-groupPaymentArrangement.tableHeader.groupTaxes = Group taxes
-groupPaymentArrangement.tableHeader.status = Status
-groupPaymentArrangement.insetText = Any changes to the Group Payment Arrangement that have not yet been approved and processed by HMRC will not be shown.
+groupPaymentArrangement.title = Trefniant Talu Grŵp
+groupPaymentArrangement.heading = Trefniant Talu Grŵp
+groupPaymentArrangement.summaryText.firstline = Cytundeb opsiynol â CThEF yw hwn. Gall eich cwmni ond cymryd rhan os yw’n aelod o grŵp sy’n bodloni amodau CThEF.
+groupPaymentArrangement.summaryText.secondline = O dan y Trefniant Talu Grŵp, gall eich cwmni wneud y canlynol:
+groupPaymentArrangement.summaryText.bulletPoint1 = enwebu un aelod o’r grŵp i wneud taliadau ar ran yr holl gwmnïau
+groupPaymentArrangement.summaryText.bulletPoint2 = lleihau’r gwaith gweinyddol wrth wneud nifer o daliadau unigol ac efallai hefyd leihau cyfanswm y llog a godir ar y grŵp
+groupPaymentArrangement.summaryText.reference = Cyfeirnod y Trefniant Talu Grŵp yw {0}.
+groupPaymentArrangement.tableHeader.periodOfAccountEnding = Cyfnod y cyfrif yn dod i ben
+groupPaymentArrangement.tableHeader.groupPayments = Taliadau’r grŵp
+groupPaymentArrangement.tableHeader.groupTaxes = Trethi’r grŵp
+groupPaymentArrangement.tableHeader.status = Statws
+groupPaymentArrangement.insetText = Ni fydd unrhyw newidiadau i’r Trefniant Talu Grŵp sydd heb gael eu cymeradwyo na’u prosesu gan CThEF yn cael eu dangos.
 
-groupPaymentsArrangements.records.description = Description
-groupPaymentsArrangements.records.amount = Amount
-groupPaymentsArrangements.records.date = Date
-groupPaymentsArrangements.heading1 = Group payment records
-groupPaymentsArrangements.arrangementReference = Group Payment Arrangement reference
-groupPaymentsArrangements.periodAccountEnding = Period of account ending
-groupPaymentsArrangements.periodAccountStatus = Group period of account status
-groupPaymentsArrangements.paymentTotal = Group payment total
-groupPaymentsArrangements.taxTotal = Group tax total
+groupPaymentsArrangements.records.description = Disgrifiad
+groupPaymentsArrangements.records.amount = Swm
+groupPaymentsArrangements.records.date = Dyddiad
+groupPaymentsArrangements.heading1 = Cofnodion talu’r grŵp
+groupPaymentsArrangements.arrangementReference = Cyfeirnod Trefniant Talu Grŵp
+groupPaymentsArrangements.periodAccountEnding = Cyfnod y cyfrif yn dod i ben
+groupPaymentsArrangements.periodAccountStatus = Statws cyfnod cyfrif y grŵp
+groupPaymentsArrangements.paymentTotal = Cyfanswm taliad y grŵp
+groupPaymentsArrangements.taxTotal = Cyfanswm treth y grŵp
 
-groupPaymentsArrangements.heading = Group payments
-groupPaymentsArrangements.title   = Group payments - Group Payment Arrangement
+groupPaymentsArrangements.heading = Taliadau’r grŵp
+groupPaymentsArrangements.title   = Taliadau’r grŵp - Trefniant Talu Grŵp
 
-groupPaymentsArrangements.status.open = Open
-groupPaymentsArrangements.status.earlierCleared = Earlier Cleared
-groupPaymentsArrangements.status.cleared = Cleared
-groupPaymentsArrangements.status.earlierExempt = Earlier Exempt
+groupPaymentsArrangements.status.open = Ar agor
+groupPaymentsArrangements.status.cleared = Wedi’u clirio
 
-paymentAllocationDetails.title = Payment allocated - Group taxes
-paymentAllocationDetails.section = Group Payment Arrangement
-paymentAllocationDetails.heading = Payment allocated
-paymentAllocationDetails.p1 = Money applied by the nominated company against this company`s tax liabilities once they are confirmed.
+groupPaymentsArrangements.apportionment.hmrc = CThEF
+groupPaymentsArrangements.apportionment.group = Grŵp
+
+paymentAllocationDetails.title = Taliad wedi’i ddyrannu – Trethi’r grŵp
+paymentAllocationDetails.section = Trefniant Talu Grŵp
+paymentAllocationDetails.heading = Taliad wedi’i ddyrannu
+paymentAllocationDetails.p1 = Arian a ddefnyddir gan y cwmni enwebedig tuag at rwymedigaethau treth y cwmni hwn ar ôl i’r rhwymedigaethau hyn gael eu cadarnhau.
 paymentAllocationDetails.p2 = There is no data for this Group Payment Arrangement.
 
 paymentAllocationDetails.gpaReference = Group Payment Arrangement reference
-paymentAllocationDetails.participatingCompany = Participating company
-paymentAllocationDetails.accountingPeriodEnding = Accounting period ending
-paymentAllocationDetails.periodAccountEnding = Period of account ending
-paymentAllocationDetails.groupPeriodAccountStatus = Group period of account status
-paymentAllocationDetails.taxCharge = Tax charge as of Cleared status
-paymentAllocationDetails.paymentAllocatedBy = Payment allocated by
-paymentAllocationDetails.paymentAllocated = Payment allocated
-paymentAllocationDetails.groupTaxTotal = Group tax total
+paymentAllocationDetails.participatingCompany = Cwmni sy’n cymryd rhan
+paymentAllocationDetails.accountingPeriodEnding = Cyfnod cyfrifyddu sy’n dod i ben
+paymentAllocationDetails.periodAccountEnding = Cyfnod y cyfrif yn dod i ben
+paymentAllocationDetails.groupPeriodAccountStatus = Statws cyfnod cyfrif y grŵp
+paymentAllocationDetails.taxCharge = Tâl treth ar adeg y statws Wedi’u clirio
+paymentAllocationDetails.paymentAllocatedBy = Dyrannwyd y taliad gan
+paymentAllocationDetails.paymentAllocated = Taliad wedi’i ddyrannu
+paymentAllocationDetails.groupTaxTotal = Cyfanswm treth y grŵp
 
 paymentAllocationDetails.paymentAllocationRecords = Payment allocation records
 paymentAllocationDetails.paymentDate = Payment date
@@ -281,3 +282,16 @@ paymentAllocationDetails.allocatedPaymentAmount = Allocated Payment Amount
 
 gpa.paginationInfo = Displaying <b>{0}</b> to <b>{1}</b> of <b>{2}</b> records
 
+groupTaxCharges.title = Trethi’r grŵp - Trefniant Talu Grŵp
+groupTaxCharges.heading = Trethi’r grŵp
+groupTaxCharges.summaryHeader.groupArrangementReference = Cyfeirnod Trefniant Talu Grŵp
+groupTaxCharges.summaryHeader.periodOfAccountEnding = Cyfnod y cyfrif yn dod i ben
+groupTaxCharges.summaryHeader.groupPeriodOfAccountStatus = Statws cyfnod cyfrif y grŵp
+groupTaxCharges.summaryHeader.groupPaymentTotal = Cyfanswm taliad y grŵp
+groupTaxCharges.summaryHeader.groupTaxTotal = Cyfanswm treth y grŵp
+groupTaxCharges.subheading = Cofnodion treth y grŵp
+groupTaxCharges.tableHeader.participatingCompany = Cwmni sy’n cymryd rhan
+groupTaxCharges.tableHeader.utr = Cyfeirnod Unigryw y Trethdalwr
+groupTaxCharges.tableHeader.accountingPeriodEnding = Cyfnod cyfrifyddu sy’n dod i ben
+groupTaxCharges.tableHeader.taxLiability = Rhwymedigaeth treth
+groupTaxCharges.tableHeader.paymentAllocated = Taliad wedi’i ddyrannu
