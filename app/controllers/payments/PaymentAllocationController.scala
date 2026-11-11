@@ -23,8 +23,6 @@ import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import services.payments.PaymentAllocationService
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
-import queryParams.PaymentSearchResultQueryParams
-import utils.PaginationHelper
 import viewmodels.payments.PaymentAllocationViewModel
 import views.html.payments.PaymentAllocationView
 
@@ -32,7 +30,7 @@ import java.time.LocalDate
 import javax.inject.Inject
 import scala.concurrent.ExecutionContext
 
-class PaymentAllocationController @Inject()(
+class PaymentAllocationController @Inject() (
   val controllerComponents: MessagesControllerComponents,
   override val messagesApi: MessagesApi,
   identify: IdentifierAction,
@@ -43,21 +41,24 @@ class PaymentAllocationController @Inject()(
     with I18nSupport
     with Logging {
 
-  val userEnteredPaymentAmount = 1000
-  
+  val userEnteredPaymentAmount = 38000
+
   def onPageLoad(page: Option[Int]): Action[AnyContent] = identify.async { implicit request =>
-    paymentAllocationService.getPaymentType(1L, Some(LocalDate.of(2024, 9, 30)), Some(LocalDate.of(2025, 9, 30)), userEnteredPaymentAmount).map {
-      paymentAllocation =>
-        logger.info(
-          s"Successfully retrieved payment type for payment allocation"
-        )
-        val vm = PaymentAllocationViewModel.convertToViewModel(
-          paymentAllocation,
-          pageUrl = pageNumber => routes.PaymentAllocationController.onPageLoad(Some(pageNumber)).url,
-          page
-        )
-        Ok(view(vm, paymentAllocation.totalNumOfRecords))
-    } recover { case ex =>
+    paymentAllocationService
+      .getPaymentType(4L, Some(LocalDate.of(2024, 9, 30)), Some(LocalDate.of(2025, 9, 30)), userEnteredPaymentAmount)
+      .map {
+        // TODO Values to come from session data
+        paymentAllocation =>
+          logger.info(
+            s"Successfully retrieved payment type for payment allocation"
+          )
+          val vm = PaymentAllocationViewModel.convertToViewModel(
+            paymentAllocation,
+            pageUrl = pageNumber => routes.PaymentAllocationController.onPageLoad(Some(pageNumber)).url,
+            page
+          )
+          Ok(view(vm))
+      } recover { case ex =>
       logger.error(s"Unexpected failure: ${ex.getMessage}")
       Redirect(JourneyRecoveryController.onPageLoad())
     }

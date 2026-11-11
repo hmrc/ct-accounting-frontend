@@ -25,14 +25,16 @@ import java.time.LocalDate
 import javax.inject.Inject
 import scala.concurrent.Future
 
-class PaymentAllocationService @Inject()(paymentAllocationConnector: PaymentAllocationConnector)
-    extends Logging {
+class PaymentAllocationService @Inject() (paymentAllocationConnector: PaymentAllocationConnector) extends Logging {
 
-  def getPaymentType(taxRef: Long,
-                     fromDate: Option[LocalDate],
-                     toDate: Option[LocalDate],
-                     userEnteredPaymentAmount: BigDecimal
-                    ): Future[List[Option[Either[ElectronicPaymentAllocationDetails, PaymentAllocationChequeDetails]]]] = {
+  def getPaymentType(
+    taxRef: Long,
+    fromDate: Option[LocalDate],
+    toDate: Option[LocalDate],
+    userEnteredPaymentAmount: BigDecimal
+  )(implicit
+    hc: HeaderCarrier
+  ): Future[List[PaymentAllocation]] = {
     logger.info(
       s"Calling connector for taxRef: $taxRef, fromDate: $fromDate, toDate: $toDate, userEnteredPaymentAmount: $userEnteredPaymentAmount"
     )

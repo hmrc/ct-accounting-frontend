@@ -16,9 +16,7 @@
 
 package connectors.payments
 
-import models.RepayReallocationSummary
-import models.payments.{ElectronicPaymentAllocationDetails, PaymentAllocationChequeDetails}
-import utils.DeterminePaymentAllocationSerializer._
+import models.payments.PaymentAllocation
 import play.api.Logging
 import uk.gov.hmrc.http.HttpReads.Implicits.*
 import uk.gov.hmrc.http.client.HttpClientV2
@@ -30,26 +28,28 @@ import java.time.LocalDate
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
-class PaymentAllocationConnector @Inject()(http: HttpClientV2, config: ServicesConfig)(implicit
-                                                                                       ec: ExecutionContext
+class PaymentAllocationConnector @Inject() (http: HttpClientV2, config: ServicesConfig)(implicit
+  ec: ExecutionContext
 ) extends Logging {
 
-  def getPaymentType(taxRef: Long,
-                     fromDate: Option[LocalDate],
-                     toDate: Option[LocalDate],
-                     userEnteredPaymentAmount: BigDecimal
-                    )(implicit
+  def getPaymentType(
+    taxRef: Long,
+    fromDate: Option[LocalDate],
+    toDate: Option[LocalDate],
+    userEnteredPaymentAmount: BigDecimal
+  )(implicit
     hc: HeaderCarrier
-  ): Future[List[Option[Either[ElectronicPaymentAllocationDetails, PaymentAllocationChequeDetails]]]] = {
+  ): Future[List[PaymentAllocation]] = {
     val baseUrl  = config.baseUrl("corporation-tax")
-    val url: URL = url"$baseUrl/corporation-tax/determine-payment-allocation/$taxRef?fromDate=$fromDate&toDate=$toDate"
+    val url: URL =
+      url"$baseUrl/corporation-tax/determine-payment-allocation/$taxRef?fromDate=$fromDate&toDate=$toDate&amount=$userEnteredPaymentAmount"
 
     http
       .get(url)
-      .execute[List[Option[Either[ElectronicPaymentAllocationDetails, PaymentAllocationChequeDetails]]]]
+      .execute[List[PaymentAllocation]]
       .recover { case ex: Throwable =>
         logger.error(
-          s"Unable to retrieve payment allocation for: $taxRef, $accPeriod:: - ${ex.getMessage}"
+          s"Unable to retrieve payment allocation for: $taxRef, $fromDate, $toDate, $userEnteredPaymentAmount :: - ${ex.getMessage}"
         )
         throw new RuntimeException(ex.getMessage)
       }

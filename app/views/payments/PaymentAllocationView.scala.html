@@ -1,0 +1,69 @@
+@*
+ * Copyright 2026 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import views.html.components.*
+@import viewmodels._
+@import viewmodels.payments.PaymentAllocationViewModel
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
+
+@this(
+        layout: templates.Layout,
+        govukTable: GovukTable,
+        h1: h1,
+        h2: h2,
+        p: Paragraph,
+        link: Link,
+        govukPagination: GovukPagination
+)
+
+
+@(viewModel: PaymentAllocationViewModel)(implicit request: Request[_], messages: Messages)
+
+    @layout(pageTitle = titleNoForm(messages("paymentAllocation.title"), Some(messages("paymentAllocation.section"))),
+        breadcrumbs = Some(PageBreadcrumbs.paymentAllocationPage)) {
+
+        @h1(messages("paymentAllocation.heading"))
+
+        @p(messages("paymentAllocation.p1"), extraClasses = "govuk-!-margin-bottom-6")
+
+        @if(viewModel.pagination.nonEmpty) {
+
+            @viewModel.paginationInfo.map(p(_))
+        }
+
+        @govukTable(
+            Table(
+                head = Some(Seq(
+                    HeadCell(content = Text(messages("paymentAllocation.paymentAllocationDate"))),
+                    HeadCell(content = Text(messages("paymentAllocation.accountingPeriodEnding")), classes = "govuk-table__cell govuk-table__cell--numeric"),
+                    HeadCell(content = Text(messages("paymentAllocation.amount")), classes = "govuk-table__cell govuk-table__cell--numeric")
+                )),
+                rows = viewModel.rows.map { row =>
+                    Seq(
+                        TableRow(content = HtmlContent(row.paymentAllocationDate)),
+                        TableRow(content = HtmlContent(link(row.accountingPeriodEnding, row.href.map(_.url).getOrElse("/"), row.isLink)), classes = "govuk-table__cell govuk-table__cell--numeric"),
+                        TableRow(content = HtmlContent(row.amount), classes = "govuk-table__cell govuk-table__cell--numeric")
+                    )
+                }
+            )
+        )
+
+        @if(viewModel.pagination.nonEmpty) {
+
+            @viewModel.pagination.map(govukPagination(_))
+        }
+    }
+

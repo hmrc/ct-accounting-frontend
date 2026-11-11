@@ -18,83 +18,55 @@ package viewmodels.payments
 
 import uk.gov.hmrc.govukfrontend.views.Aliases.Pagination
 import models.AdjustmentTransactionType.*
-import models.gpa.PaymentAllocationDetails
-import models.payments.{ElectronicPaymentAllocationDetails, PaymentAllocationChequeDetails}
+import models.payments.PaymentAllocation
 import play.api.i18n.Messages
 import play.api.mvc.Call
-import utils.{ApportionmentHelper, PaginationHelper, StatusHelper}
+import utils.PaginationHelper
 import viewmodels.Paginated
 import views.ViewUtils.*
 
-case class ElectronicPaymentAllocationViewModel(
-  rows: List[ElectronicPaymentAllocationDetailsViewModelRow],
-  page: Paginated[ElectronicPaymentAllocationDetailsViewModelRow],
+case class PaymentAllocationViewModel(
+  rows: List[PaymentAllocationViewModelRow],
+  page: Paginated[PaymentAllocationViewModelRow],
   pagination: Option[Pagination],
   paginationInfo: Option[String]
 )
 
-
-case class ElectronicPaymentAllocationViewModelRow(
+case class PaymentAllocationViewModelRow(
   paymentAllocationDate: String,
   accountingPeriodEnding: String,
   amount: String,
   isLink: Boolean,
   href: Option[Call]
-)
-
-
-case class ChequePaymentAllocationViewModelRow(
-  paymentAllocationDate: String,
-  accountingPeriodEnding: String,
-  amount: String,
-  isLink: Boolean,
-  href: Option[Call]
-)
-
-case class ChequePaymentAllocationViewModel(
-  rows: List[ChequePaymentAllocationViewModelRow],
-  page: Paginated[ChequePaymentAllocationViewModelRow],
-  pagination: Option[Pagination],
-  paginationInfo: Option[String]
 )
 
 object PaymentAllocationViewModel {
 
   def convertToViewModel(
-    paymentAllocation: List[Option[Either[ElectronicPaymentAllocationDetails, PaymentAllocationChequeDetails]]],
+    paymentAllocation: List[PaymentAllocation],
     pageUrl: Int => String,
     requestedPage: Option[Int]
-  )(implicit messages: Messages): List[Option[Either[ElectronicPaymentAllocationViewModel, ChequePaymentAllocationViewModel]]] = {
+  )(implicit messages: Messages): PaymentAllocationViewModel = {
 
-    paymentAllocation.map {
-      case Some(Left(electronic)) =>
-        Some(Left(ElectronicPaymentAllocationViewModel(
-          rows = electronic.electronicPaymentAllocationDetails.map { e =>
-            ElectronicPaymentAllocationViewModelRow(
-              paymentAllocationDate = formatDate(e.effectiveDateOfPayment, messages.lang),
-              accountingPeriodEnding = formatDate(e.apEndDate, messages.lang),
-              amount = formatCurrency(e.amount),
-              isLink = false,
-              href = None
-            )
-          }
-        )))
-      case Some(Right(cheque)) =>
-        Some(Right(ChequePaymentAllocationViewModel(
-          rows = cheque.paymentAllocationDetails.map { c =>
-            ChequePaymentAllocationViewModelRow(
-              paymentAllocationDate = formatDate(c.effectiveDateOfPayment, messages.lang),
-              accountingPeriodEnding = formatDate(c.apEndDate, messages.lang),
-              amount = formatCurrency(c.amount),
-              isLink = false,
-              href = None
-            )
-          }
-        )))
+    val paymentAllocationRows = paymentAllocation.flatMap { paymentAlloc =>
+      paymentAlloc.paymentAllocation.map { p =>
+        PaymentAllocationViewModelRow(
+          paymentAllocationDate = formatDate(p.effectiveDateOfPayment, messages.lang),
+          accountingPeriodEnding = formatDate(p.apEndDate, messages.lang),
+          amount = formatCurrency(p.amount),
+          isLink = true,
+          href = None // TODO Add link to accounting period page
+        )
+      }
     }
+
+    val page = Paginated.paginate(paymentAllocationRows, requestedPage)
+
+    PaymentAllocationViewModel(
+      rows = paymentAllocationRows,
+      page = Paginated.paginate(paymentAllocationRows, requestedPage),
+      pagination = PaginationHelper.toPagination(page, pageUrl),
+      paginationInfo = PaginationHelper.paginationText(page)
     )
   }
-
-  private def isHyperLink(amount: BigDecimal): Boolean =
-    amount != BigDecimal(0.00)
 }

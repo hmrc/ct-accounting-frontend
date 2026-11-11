@@ -20,19 +20,19 @@ import play.api.libs.json.{Json, OFormat}
 
 import java.time.LocalDate
 
-case class PaymentAllocationChequeDetails(paymentAllocationDetails: List[PaymentAllocationChequeRow])
+case class PaymentAllocation(paymentAllocation: List[PaymentAllocationInfo])
 
-object PaymentAllocationChequeDetails {
-  implicit val format: OFormat[PaymentAllocationChequeDetails] = Json.format[PaymentAllocationChequeDetails]
+object PaymentAllocation {
+  implicit val format: OFormat[PaymentAllocation] = Json.format[PaymentAllocation]
 }
 
-case class PaymentAllocationChequeRow(
-  accountingPeriod: Long,
+case class PaymentAllocationInfo(
+  accountingPeriod: BigDecimal,
   apEndDate: LocalDate,
   amount: BigDecimal,
   effectiveDateOfPayment: LocalDate
 )
 
-object PaymentAllocationChequeRow {
-  implicit val format: OFormat[PaymentAllocationChequeRow] = Json.format[PaymentAllocationChequeRow]
+object PaymentAllocationInfo {
+  implicit val format: OFormat[PaymentAllocationInfo] = Json.format[PaymentAllocationInfo]
 }
