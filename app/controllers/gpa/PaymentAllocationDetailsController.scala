@@ -43,8 +43,9 @@ class PaymentAllocationDetailsController @Inject() (
 
   def onPageLoad(page: Option[Int]): Action[AnyContent] = identify.async { implicit request =>
     val startIndex: Int = PaginationHelper.startIndexCountHelper(page, 10)
-    paymentAllocationDetailsService.getGPAPaymentAllocationDetail(8754000009L, 1L, 8754000009L, 1L, startIndex, 10).map {
-      paymentAllocationDetails =>
+    paymentAllocationDetailsService
+      .getGPAPaymentAllocationDetail(8754000009L, 1L, 8754000009L, 1L, startIndex, 10)
+      .map { paymentAllocationDetails =>
         logger.info(
           s"Successfully retrieved payment allocation details"
         )
@@ -54,7 +55,7 @@ class PaymentAllocationDetailsController @Inject() (
           page
         )
         Ok(view(vm, paymentAllocationDetails.totalNumOfRecords))
-    } recover { case ex =>
+      } recover { case ex =>
       logger.error(s"Unexpected failure: ${ex.getMessage}")
       Redirect(JourneyRecoveryController.onPageLoad())
     }
