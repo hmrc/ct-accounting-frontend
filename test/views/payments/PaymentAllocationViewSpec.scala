@@ -131,8 +131,6 @@ class PaymentAllocationViewSpec
       val pagination     = doc.select("ul.govuk-pagination__list")
       val paginationInfo = doc.select("div.govuk-pagination__next a")
 
-      println(doc)
-
       pagination.size mustBe 1
       paginationInfo.attr("href") mustBe s"/ct-accounting/find-your-payment/payment-results/payment-allocation?page=2"
 
