@@ -42,7 +42,7 @@ class PaymentsOnAccountController @Inject() (
   def onPageLoad(page: Option[Int]): Action[AnyContent] = identify.async { implicit request =>
 
     // TODO update to retrieve from session
-    val taxRef = 345678L
+    val taxRef = 999999L
     val pCount = 10
     startIndexCountHelper(page, pCount)
 
