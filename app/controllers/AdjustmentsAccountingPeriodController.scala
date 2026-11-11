@@ -42,8 +42,8 @@ class AdjustmentsAccountingPeriodController @Inject() (
     with Logging {
 
   def onPageLoad(): Action[AnyContent] = identify.async { implicit request =>
-    val accountPeriodEndDate = LocalDate.of(2026, 1, 1)
-    adjustmentsAccountingPeriodService.getAdjustmentTransactions(3060600983L, 4L).map { response =>
+    val accountPeriodEndDate = LocalDate.of(2016, 3, 31)
+    adjustmentsAccountingPeriodService.getAdjustmentTransactions(1003002190L, 4L).map { response =>
       logger.info(
         s"[AdjustmentsAccountingPeriodController][onPageLoad] - successfully retrieved AdjustmentTransactionsList"
       )

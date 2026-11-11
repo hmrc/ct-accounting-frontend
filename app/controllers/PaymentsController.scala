@@ -38,10 +38,10 @@ class PaymentsController @Inject() (
 
   def onPageLoad: Action[AnyContent] = identify.async { implicit request =>
 
-    val accountPeriod = LocalDate.of(2026, 1, 1) // TODO: This needs to comes from sessionDataRepository
+    val accountPeriod = LocalDate.of(2007, 12, 31) // TODO: This needs to comes from sessionDataRepository
 
     // TODO: Get taxRef + accPeriod from sessionDataRepositry
-    connector.getPayments(1L, 1L).map { paymentsResponse =>
+    connector.getPayments(8754000009L, 1L).map { paymentsResponse =>
       val total: BigDecimal = paymentsResponse.paymentTransactions.map(_.amount).sum
       Ok(view(paymentsResponse.paymentTransactions, accountPeriod, total))
     }

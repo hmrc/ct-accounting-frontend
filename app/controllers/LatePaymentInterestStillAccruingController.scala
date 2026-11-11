@@ -42,11 +42,11 @@ class LatePaymentInterestStillAccruingController @Inject() (
 
   // TODO: - 1 :: integrate auth then its ready
   // TODO: - 2 :: read taxRef and accPeriod and interestType from the userSession
-  private val taxRefFromSession: Long           = 1L
-  private val accountingPeriodFromSession: Long = 1L
-  private val interestType: String              = "IDE"
+  private val taxRefFromSession: Long           = 9369369363L
+  private val accountingPeriodFromSession: Long = 4L
+  private val interestType: String              = "ICR"
 
-  private val accountingPeriodEndDate = LocalDate.of(2026, 1, 1)
+  private val accountingPeriodEndDate = LocalDate.of(2005, 12, 31)
 
   def onPageLoad: Action[AnyContent] = identify.async { implicit request =>
     service

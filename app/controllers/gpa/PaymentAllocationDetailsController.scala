@@ -43,7 +43,7 @@ class PaymentAllocationDetailsController @Inject() (
 
   def onPageLoad(page: Option[Int]): Action[AnyContent] = identify.async { implicit request =>
     val startIndex: Int = PaginationHelper.startIndexCountHelper(page, 10)
-    paymentAllocationDetailsService.getGPAPaymentAllocationDetail(1L, 2L, 3L, 4L, startIndex, 10).map {
+    paymentAllocationDetailsService.getGPAPaymentAllocationDetail(8754000009L, 1L, 8754000009L, 1L, startIndex, 10).map {
       paymentAllocationDetails =>
         logger.info(
           s"Successfully retrieved payment allocation details"
