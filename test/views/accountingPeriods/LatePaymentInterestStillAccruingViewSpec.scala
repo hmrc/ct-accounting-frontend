@@ -57,7 +57,7 @@ class LatePaymentInterestStillAccruingViewSpec extends SpecBase with LatePayment
       val doc = render(viewModel)
       doc.select("caption.govuk-table__caption").text() mustBe messages(
         "latePaymentInterest.stillAccruing.caption",
-        "01 Jan 2026"
+        "31 Dec 2005"
       )
     }
 

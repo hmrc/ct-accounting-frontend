@@ -46,14 +46,14 @@ class InterestControllerSpec extends SpecBase with MockitoSugar with InterestVie
 
     implicit val msgs: Messages = messages(application)
 
-    val taxRef: Long           = 3100L
+    val taxRef: Long           = 9847519703L
     val accountingPeriod: Long = 4L
   }
 
   "InterestController" - {
 
     "must return OK and correct view for GET" in new Fixture {
-      when(mockService.getInterest(eqTo(3100L), eqTo(4L))(any(), any(), any()))
+      when(mockService.getInterest(eqTo(9847519703L), eqTo(4L))(any(), any(), any()))
         .thenReturn(Future.successful(Right(interestViewModelForAccruing)))
 
       running(application) {
@@ -71,7 +71,7 @@ class InterestControllerSpec extends SpecBase with MockitoSugar with InterestVie
 
     }
     "must redirect to JourneyRecoveryController when no matching accountingPeriod from session is found in AccountingPeriods " in new Fixture {
-      when(mockService.getInterest(eqTo(3100L), eqTo(4L))(any(), any(), any()))
+      when(mockService.getInterest(eqTo(9847519703L), eqTo(4L))(any(), any(), any()))
         .thenReturn(Future.successful(Left(MissingAccountingPeriodError("Missing accountingPeriod"))))
 
       running(application) {
@@ -85,7 +85,7 @@ class InterestControllerSpec extends SpecBase with MockitoSugar with InterestVie
     }
 
     "must redirect to JourneyRecoveryController when exception occurs from BE " in new Fixture {
-      when(mockService.getInterest(eqTo(3100L), eqTo(4L))(any(), any(), any()))
+      when(mockService.getInterest(eqTo(9847519703L), eqTo(4L))(any(), any(), any()))
         .thenReturn(Future.failed(new RuntimeException("Boom")))
 
       running(application) {

@@ -46,7 +46,7 @@ class AdjustmentsAccountingPeriodControllerSpec extends SpecBase with MockitoSug
   "AdjustmentsAccountingPeriodController" - {
 
     "return 200 and a successful response with one item" in new Setup {
-      when(mockService.getAdjustmentTransactions(eqTo(3060600983L), eqTo(4L))(any[HeaderCarrier]))
+      when(mockService.getAdjustmentTransactions(eqTo(1003002190L), eqTo(4L))(any[HeaderCarrier]))
         .thenReturn(Future.successful(adjustmentTransactionsListWithOneItem))
 
       running(application) {
@@ -60,7 +60,7 @@ class AdjustmentsAccountingPeriodControllerSpec extends SpecBase with MockitoSug
     }
 
     "return 200 and a successful response with multiple items" in new Setup {
-      when(mockService.getAdjustmentTransactions(eqTo(3060600983L), eqTo(4L))(any[HeaderCarrier]))
+      when(mockService.getAdjustmentTransactions(eqTo(1003002190L), eqTo(4L))(any[HeaderCarrier]))
         .thenReturn(Future.successful(adjustmentTransactionsListWithMultipleItems))
 
       running(application) {
@@ -77,7 +77,7 @@ class AdjustmentsAccountingPeriodControllerSpec extends SpecBase with MockitoSug
     }
 
     "return 303 and redirect to Journey recovery" in new Setup {
-      when(mockService.getAdjustmentTransactions(eqTo(3060600983L), eqTo(4L))(any[HeaderCarrier]))
+      when(mockService.getAdjustmentTransactions(eqTo(1003002190L), eqTo(4L))(any[HeaderCarrier]))
         .thenReturn(Future.failed(new RuntimeException("error")))
 
       running(application) {

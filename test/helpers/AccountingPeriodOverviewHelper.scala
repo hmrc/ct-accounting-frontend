@@ -90,9 +90,9 @@ trait AccountingPeriodOverviewHelper {
       repayReallocIsDisplayNeededFlag = true
     )
 
-  val accountingPeriodEndDate: LocalDate = LocalDate.of(2026, 1, 1)
+  val accountingPeriodEndDate: LocalDate = LocalDate.of(2005, 12, 31)
 
-  val taxReference: Long = 1L
+  val taxReference: Long = 6212811176L
 
   def viewModel(implicit messages: Messages): AccountingPeriodOverviewViewModel =
     AccountingPeriodOverviewViewModel.toViewModel(
