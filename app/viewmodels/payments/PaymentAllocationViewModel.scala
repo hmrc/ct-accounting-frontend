@@ -26,7 +26,7 @@ import viewmodels.Paginated
 import views.ViewUtils.*
 
 case class PaymentAllocationViewModel(
-  rows: List[PaymentAllocationViewModelRow],
+  rows: Seq[PaymentAllocationViewModelRow],
   page: Paginated[PaymentAllocationViewModelRow],
   pagination: Option[Pagination],
   paginationInfo: Option[String]
@@ -63,7 +63,7 @@ object PaymentAllocationViewModel {
     val page = Paginated.paginate(paymentAllocationRows, requestedPage)
 
     PaymentAllocationViewModel(
-      rows = paymentAllocationRows,
+      rows = page.items,
       page = Paginated.paginate(paymentAllocationRows, requestedPage),
       pagination = PaginationHelper.toPagination(page, pageUrl),
       paginationInfo = PaginationHelper.paginationText(page)
