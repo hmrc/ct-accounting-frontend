@@ -65,8 +65,6 @@ class PaymentsOnAccountServiceSpec
 
       result shouldBe paymentsOnAccountMultipleList
 
-      verify(mockConnector).getPaymentsOnAccount(taxRef)
-
       verify(mockConnector, times(1)).getPaymentsOnAccount(taxRef)
 
     }
