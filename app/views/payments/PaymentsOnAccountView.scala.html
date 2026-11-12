@@ -24,6 +24,7 @@
         layout: templates.Layout,
         govukTable: GovukTable,
         h1: h1,
+        h2: h2,
         link:Link,
         govukPagination: GovukPagination,
         paragraph: Paragraph,
@@ -38,16 +39,17 @@
 
         @paragraph(messages("paymentsOnAccount.paragraph"))
 
+        @h2(messages("paymentsOnAccount.caption"))
+
         @viewModel.paginationInfo.map(paragraph(_))
+
         @govukTable(
             Table(
-                caption = Some(messages("paymentsOnAccount.caption")),
-                captionClasses = "govuk-table__caption govuk-table__caption--m",
                 head = Some(Seq(
                     HeadCell(content = Text(messages("paymentsOnAccount.tableHeader.paymentDate"))),
                     HeadCell(content = Text(messages("paymentsOnAccount.tableHeader.paymentAllocationDate"))),
                     HeadCell(content = Text(messages("paymentsOnAccount.tableHeader.description"))),
-                    HeadCell(content = Text(messages("paymentsOnAccount.tableHeader.amount")), classes = "govuk-!-text-align-left govuk-table__cell--numeric")
+                    HeadCell(content = Text(messages("paymentsOnAccount.tableHeader.amount")), classes = "govuk-table__cell govuk-table__cell--numeric")
                     )),
                 rows = viewModel.paymentsOnAccountRows.map { row =>
                     Seq(

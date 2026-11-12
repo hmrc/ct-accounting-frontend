@@ -66,7 +66,7 @@ class PaymentsOnAccountViewSpec extends SpecBase with PaymentsOnAccountResponseH
       doc
         .select("p")
         .get(0)
-        .text() mustBe s"The payment shown below have been received by HMRC. They either relate to future Corporation Tax liabilities or have been allocated to an accounting period."
+        .text() mustBe s"The payments shown below have been received by HMRC. They either relate to future Corporation Tax liabilities or have been allocated to an accounting period."
     }
 
     "render the correct breadcrumbs" in {
@@ -78,10 +78,10 @@ class PaymentsOnAccountViewSpec extends SpecBase with PaymentsOnAccountResponseH
       doc.select(".govuk-breadcrumbs__list-item").size() mustBe 1
     }
 
-    "render the table caption heading" in {
+    "render the Payment history heading" in {
       val doc = render(viewModel)
       doc
-        .select("caption")
+        .select("h2")
         .get(0)
         .text() mustBe s"Payment history"
     }

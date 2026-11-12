@@ -26,7 +26,6 @@ import services.payments.PaymentsOnAccountService
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import viewmodels.payments.PaymentsOnAccountViewModel
 import views.html.payments.PaymentsOnAccountView
-import utils.PaginationHelper.startIndexCountHelper
 
 import javax.inject.Inject
 
@@ -43,8 +42,6 @@ class PaymentsOnAccountController @Inject() (
 
     // TODO update to retrieve from session
     val taxRef = 999999L
-    val pCount = 10
-    startIndexCountHelper(page, pCount)
 
     service
       .getPaymentsOnAccount(taxRef)
