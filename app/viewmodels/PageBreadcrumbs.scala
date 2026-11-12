@@ -256,4 +256,11 @@ object PageBreadcrumbs {
     )
   )
 
+  def paymentsOnAccountPage(implicit messages: Messages): Breadcrumbs = Breadcrumbs(
+    // TODO: Add hrefs
+    items = Seq(
+      BreadcrumbsItem(content = Text(messages("breadcrumbs.home")), href = Some("/"))
+    )
+  )
+
 }

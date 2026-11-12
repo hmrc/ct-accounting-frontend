@@ -35,8 +35,20 @@ object PaginationHelper {
       Some(
         Pagination(
           items = Some(pageItems(paginated, pageUrl)),
-          previous = Option.when(paginated.page > 1)(PaginationLink(href = pageUrl(paginated.page - 1))),
-          next = Option.when(paginated.page < paginated.totalPages)(PaginationLink(href = pageUrl(paginated.page + 1))),
+          previous = Option.when(paginated.page > 1)(
+            PaginationLink(
+              href = pageUrl(paginated.page - 1),
+              text = Some(messages("paginationInfo.text.previous")),
+              labelText = Some(messages("paginationInfo.labelText.previous"))
+            )
+          ),
+          next = Option.when(paginated.page < paginated.totalPages)(
+            PaginationLink(
+              href = pageUrl(paginated.page + 1),
+              text = Some(messages("paginationInfo.text.next")),
+              labelText = Some(messages("paginationInfo.labelText.next"))
+            )
+          ),
           landmarkLabel = Some(messages("pagination.landmarkLabel"))
         )
       )
