@@ -32,7 +32,7 @@ class ClientDeleteConfirmationControllerSpec extends SpecBase {
         val request = FakeRequest(GET, routes.ClientDeleteConfirmationController.onPageLoad("ACY-001").url)
 
         val result = route(application, request).value
-        val page = contentAsString(result)
+        val page   = contentAsString(result)
 
         status(result) mustEqual OK
         page must include("Client deleted")
