@@ -53,3 +53,7 @@ GET         /find-your-payment                                              cont
 POST        /find-your-payment                                              controllers.payments.FindYourPaymentController.onSubmit()
 GET         /find-your-payment/payment-results                              controllers.payments.PaymentResultsController.onPageLoad(page: Option[Int] ?= Some(1))
 GET         /find-your-payment/payment-results/payment-allocation           controllers.payments.PaymentAllocationController.onPageLoad(page: Option[Int])
+
+#Manage agent clients
+GET         /clients/:clientId/deleted   controllers.clients.ClientDeleteConfirmationController.onPageLoad(clientId: String)
+

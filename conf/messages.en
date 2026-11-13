@@ -343,6 +343,12 @@ paymentResults.dateCol = Date
 paymentResults.descriptionCol= Description
 paymentResults.amountCol = Amount
 
+clientDeleted.title=Client deleted
+clientDeleted.heading=Client deleted
+clientDeleted.panel.body=You have deleted the client {0}
+clientDeleted.whatHappensNext=What happens next
+clientDeleted.delay=It may take up to 4 days for the change to appear.
+clientDeleted.backToClients=Back to Clients
 
 paymentAllocation.title = Payment allocation - Payment results
 paymentAllocation.section = Find your payment
