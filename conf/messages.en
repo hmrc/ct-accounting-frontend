@@ -54,8 +54,9 @@ breadcrumbs.interest = Interest
 breadcrumbs.accountingPeriods = Accounting periods
 breadcrumbs.gpa = Group Payment Arrangement
 breadcrumbs.groupTaxes = Group taxes
-breadcrumbs.groupPaymentArrangements = Group Payment Arrangement
+breadcrumbs.groupPaymentArrangements  = Group Payment Arrangement
 breadcrumbs.findYourPayment = Find your payment
+breadcrumbs.paymentResults = Payment results
 
 accountingPeriodOverview.title = Accounting period overview
 accountingPeriodOverview.heading = Accounting period ending {0}
@@ -341,3 +342,12 @@ paymentResults.count = List count {0}
 paymentResults.dateCol = Date
 paymentResults.descriptionCol= Description
 paymentResults.amountCol = Amount
+
+
+paymentAllocation.title = Payment allocation - Payment results
+paymentAllocation.section = Find your payment
+paymentAllocation.heading = Payment allocation
+paymentAllocation.p1 = The payment date and payment allocation date may be different. The payment date is when the money was actually paid or received by HMRC. The payment allocation date is when the nominated company applied that money against a participating company’s tax liabilities.
+paymentAllocation.paymentAllocationDate = Payment allocation date
+paymentAllocation.accountingPeriodEnding = Accounting period ending
+paymentAllocation.amount = Amount
