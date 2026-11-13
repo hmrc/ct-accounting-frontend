@@ -63,7 +63,7 @@ trait CreditInterestHelper {
   val interestAccrualWithNoObject: InterestAccrualListWithInterestAccruedDays     =
     InterestAccrualListWithInterestAccruedDays(interestAccruals = List.empty)
 
-  val accountingPeriodEndDate: LocalDate = LocalDate.of(2026, 1, 1)
+  val accountingPeriodEndDate: LocalDate = LocalDate.of(2009, 2, 28)
 
   val eqvViewModelOfInterestAccrualMultipleObjects: CreditInterestViewModel =
     CreditInterestRow.toViewModel(accountingPeriodEndDate, interestAccrualMultipleObjects)

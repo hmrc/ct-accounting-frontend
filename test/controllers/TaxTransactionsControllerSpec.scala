@@ -60,14 +60,14 @@ class TaxTransactionsControllerSpec extends SpecBase with MockitoSugar {
     )
 
   // TODO: hardcoded value in the controller until it's wired up to session data
-  val expectedAccountPeriod: LocalDate = LocalDate.of(2026, 1, 1)
+  val expectedAccountPeriod: LocalDate = LocalDate.of(2009, 3, 31)
   val total: BigDecimal                = taxTransactionsResponse.taxTransactions.map(_.currentAmount).sum
 
   "TaxTransactions Controller" - {
 
     "must return OK and the correct view for a GET" in {
 
-      when(mockService.getTaxTransactions(eqTo(1L), eqTo(1L))(any[HeaderCarrier]))
+      when(mockService.getTaxTransactions(eqTo(8851208889L), eqTo(4L))(any[HeaderCarrier]))
         .thenReturn(Future.successful(taxTransactionsResponse))
 
       val application = applicationBuilder()

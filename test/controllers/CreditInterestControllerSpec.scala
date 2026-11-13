@@ -40,7 +40,7 @@ class CreditInterestControllerSpec extends SpecBase with MockitoSugar with Credi
 
     "must return OK and the correct credit interest view for a GET when interest type equals RIN" in {
 
-      when(mockConnector.getInterestAccrualList(eqTo(1L), eqTo(1L), eqTo("ICR"))(any[HeaderCarrier]))
+      when(mockConnector.getInterestAccrualList(eqTo(9847519703L), eqTo(4L), eqTo("IDB"))(any[HeaderCarrier]))
         .thenReturn(Future.successful(interestAccrualMultipleObjects))
 
       val application = applicationBuilder()
@@ -63,7 +63,7 @@ class CreditInterestControllerSpec extends SpecBase with MockitoSugar with Credi
 
     "must redirect when exception from BE occurs" in {
 
-      when(mockConnector.getInterestAccrualList(eqTo(1L), eqTo(1L), eqTo("ICR"))(any[HeaderCarrier]))
+      when(mockConnector.getInterestAccrualList(eqTo(9847519703L), eqTo(4L), eqTo("IDB"))(any[HeaderCarrier]))
         .thenReturn(Future.failed(RuntimeException("Error")))
 
       val application = applicationBuilder()

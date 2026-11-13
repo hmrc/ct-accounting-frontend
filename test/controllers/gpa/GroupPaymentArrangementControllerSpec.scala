@@ -53,7 +53,7 @@ class GroupPaymentArrangementControllerSpec
   "GroupPaymentArrangementController" - {
 
     "must return OK, with Group Payment Arrangement correct view" in new Fixture {
-      when(mockService.getGroupSummary(eqTo(1L), eqTo(1L))(any[HeaderCarrier]))
+      when(mockService.getGroupSummary(eqTo(1075806794L), eqTo(1075806794L))(any[HeaderCarrier]))
         .thenReturn(Future.successful(groupPaymentDetailsResponse))
 
       running(application) {
@@ -72,7 +72,7 @@ class GroupPaymentArrangementControllerSpec
     }
 
     "must redirect when exception occurs from BE occurs" in new Fixture {
-      when(mockService.getGroupSummary(eqTo(1L), eqTo(1L))(any[HeaderCarrier]))
+      when(mockService.getGroupSummary(eqTo(1075806794L), eqTo(1075806794L))(any[HeaderCarrier]))
         .thenReturn(Future.failed(new RuntimeException("Error")))
 
       running(application) {

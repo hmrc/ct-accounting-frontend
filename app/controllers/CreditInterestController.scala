@@ -41,13 +41,13 @@ class CreditInterestController @Inject() (
 
   def onPageLoad: Action[AnyContent] = identify.async { implicit request =>
 
-    val accountPeriodEndDate = LocalDate.of(2026, 1, 1) // TODO: This needs to comes from sessionDataRepository
-    val taxRef               = 1L
-    val accPeriod            = 1L
+    val accountPeriodEndDate = LocalDate.of(2009, 2, 28) // TODO: This needs to comes from sessionDataRepository
+    val taxRef               = 9847519703L
+    val accPeriod            = 4L
 
     // TODO: Get taxRef + accPeriod from sessionDataRepositry
     service
-      .getCreditInterest(taxRef, accPeriod, "ICR", accountPeriodEndDate)
+      .getCreditInterest(taxRef, accPeriod, "IDB", accountPeriodEndDate)
       .map { creditInterestResponse =>
         val viewModel = CreditInterestRow.toViewModel(accountPeriodEndDate, creditInterestResponse)
         Ok(view(viewModel))

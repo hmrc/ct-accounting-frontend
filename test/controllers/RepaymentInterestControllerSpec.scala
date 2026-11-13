@@ -40,7 +40,7 @@ class RepaymentInterestControllerSpec extends SpecBase with MockitoSugar with Re
 
     "must return OK and the correct repayment interest view for a GET when interest type equals RIN" in {
 
-      when(mockConnector.getInterestAccrualList(eqTo(1L), eqTo(1L), eqTo("RIN"))(any[HeaderCarrier]))
+      when(mockConnector.getInterestAccrualList(eqTo(8754000133L), eqTo(4L), eqTo("RIN"))(any[HeaderCarrier]))
         .thenReturn(Future.successful(interestAccrualMultipleObjects))
 
       val application = applicationBuilder()
@@ -63,7 +63,7 @@ class RepaymentInterestControllerSpec extends SpecBase with MockitoSugar with Re
 
     "must redirect when exception from BE occurs" in {
 
-      when(mockConnector.getInterestAccrualList(eqTo(1L), eqTo(1L), eqTo("RIN"))(any[HeaderCarrier]))
+      when(mockConnector.getInterestAccrualList(eqTo(8754000133L), eqTo(4L), eqTo("RIN"))(any[HeaderCarrier]))
         .thenReturn(Future.failed(RuntimeException("Error")))
 
       val application = applicationBuilder()

@@ -48,7 +48,7 @@ class AccountingPeriodOverviewControllerSpec extends SpecBase with MockitoSugar 
 
     "must return OK and the correct accounting period overview view for a GET" in {
 
-      when(mockConnector.getAccountingPeriodOverview(eqTo(1L), eqTo(1L))(any[HeaderCarrier]))
+      when(mockConnector.getAccountingPeriodOverview(eqTo(6212811176L), eqTo(4L))(any[HeaderCarrier]))
         .thenReturn(Future.successful(accountingPeriodOverviewResponse))
 
       val testApplication = applicationBuilder()
@@ -71,7 +71,7 @@ class AccountingPeriodOverviewControllerSpec extends SpecBase with MockitoSugar 
 
     "must redirect when exception from BE occurs" in {
 
-      when(mockConnector.getAccountingPeriodOverview(eqTo(1L), eqTo(1L))(any[HeaderCarrier]))
+      when(mockConnector.getAccountingPeriodOverview(eqTo(6212811176L), eqTo(4L))(any[HeaderCarrier]))
         .thenReturn(Future.failed(RuntimeException("Error")))
 
       val testApplication = applicationBuilder()

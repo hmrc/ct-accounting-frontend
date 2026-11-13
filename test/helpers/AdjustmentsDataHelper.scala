@@ -23,7 +23,7 @@ import java.time.LocalDate
 
 trait AdjustmentsDataHelper {
 
-  val accountingPeriodEndDate: LocalDate = LocalDate.of(2026, 1, 1)
+  val accountingPeriodEndDate: LocalDate = LocalDate.of(2016, 3, 31)
 
   val emptyAdjustmentTransactionsList: AdjustmentTransactionsList =
     AdjustmentTransactionsList(adjustmentTransactionsList = List.empty)
