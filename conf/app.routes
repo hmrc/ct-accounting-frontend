@@ -52,3 +52,6 @@ GET         /group-payment-arrangement/group-taxes                          cont
 GET         /find-your-payment                                              controllers.payments.FindYourPaymentController.onPageLoad()
 POST        /find-your-payment                                              controllers.payments.FindYourPaymentController.onSubmit()
 GET         /find-your-payment/payment-results                              controllers.payments.PaymentResultsController.onPageLoad(page: Option[Int] ?= Some(1))
+
+#Manage agent clients
+GET         /clients/:clientId/deleted   controllers.clients.ClientDeleteConfirmationController.onPageLoad(clientId: String)
