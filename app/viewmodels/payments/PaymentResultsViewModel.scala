@@ -77,8 +77,7 @@ object PaymentResultsViewModel {
         date = value.effectiveDateOfPayment,
         description = PaymentsDescriptionHelper.getPaymentsDescription(value.paymentType),
         amount = value.amount,
-        // TODO update to Payment Allocation Page DTR-6469
-        href = Some(controllers.payments.routes.PaymentResultsController.onPageLoad()),
+        href = Some(controllers.payments.routes.PaymentAllocationController.onPageLoad(Some(1))),
         isLink = Some(true)
       )
     }

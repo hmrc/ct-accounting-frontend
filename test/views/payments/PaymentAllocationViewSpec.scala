@@ -136,6 +136,19 @@ class PaymentAllocationViewSpec
 
     }
 
+    "render the page with navigation to Accounting Period Overview page" in new Setup {
+      val vm   = paymentAllocationToVM(nonPaginatedPaymentAllocation, pageUrl)
+      val html = view(vm)
+      val doc  = htmlDoc(html)
+
+      println(doc)
+
+      val link = doc.select("td a")
+
+      link.attr("href") mustBe s"/ct-accounting/accounting-period-overview"
+
+    }
+
     "render the page with welsh toggle translation" in new Setup {
       val vm   = paymentAllocationToVM(paymentAllocation, pageUrl)
       val html = view(vm)

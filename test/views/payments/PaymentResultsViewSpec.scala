@@ -233,6 +233,24 @@ class PaymentResultsViewSpec extends SpecBase with GuiceOneAppPerSuite with Paym
 
     }
 
+    "render the page with navigation to Payment Allocation page" in new Setup {
+      val vm: PaymentResultsViewModel =
+        paymentSearchResultToVM(multiplePaymentSearchResult, taxRef, pageUrl, Some(page))
+      val html: Html                  = view(
+        vm,
+        userEnteredPaymentAmountString,
+        multiplePaymentSearchResult.paymentSearchResult.size,
+        Some(fromDateString),
+        Some(toDateString)
+      )
+      val doc: Document               = htmlDoc(html)
+
+      val link = doc.select("td a")
+
+      link.attr("href") mustBe s"/ct-accounting/find-your-payment/payment-results/payment-allocation?page=1"
+
+    }
+
     "render the page with welsh toggle translation" in new Setup {
       val vm: PaymentResultsViewModel = paymentSearchResultToVM(emptyPaymentSearchResult, taxRef, pageUrl, Some(page))
       val html: Html                  = view(

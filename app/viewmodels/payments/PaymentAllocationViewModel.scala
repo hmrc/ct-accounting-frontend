@@ -55,7 +55,7 @@ object PaymentAllocationViewModel {
           accountingPeriodEnding = formatDate(p.apEndDate, messages.lang),
           amount = formatCurrency(p.amount),
           isLink = true,
-          href = None // TODO Add link to accounting period page
+          href = Some(controllers.routes.AccountingPeriodOverviewController.onPageLoad())
         )
       }
     }
