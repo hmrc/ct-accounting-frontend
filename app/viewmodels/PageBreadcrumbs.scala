@@ -267,7 +267,7 @@ object PageBreadcrumbs {
     )
   )
 
-  def clientDeleted(implicit messages: Messages): Breadcrumbs =
+  def clientDeleted(implicit messages: Messages): Breadcrumbs         =
     Breadcrumbs(
       items = Seq(
         BreadcrumbsItem(content = Text(messages("breadcrumbs.home")), href = Some("/")),
