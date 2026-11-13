@@ -275,5 +275,19 @@ object PageBreadcrumbs {
         BreadcrumbsItem(content = Text(messages("Your current client")), href = Some("/clients/current-client"))
       )
     )
+  def paymentAllocationPage(implicit messages: Messages): Breadcrumbs = Breadcrumbs(
+    // TODO: Add hrefs
+    items = Seq(
+      BreadcrumbsItem(content = Text(messages("breadcrumbs.home")), href = Some("/")),
+      BreadcrumbsItem(
+        content = Text(messages("breadcrumbs.findYourPayment")),
+        href = Some(controllers.payments.routes.FindYourPaymentController.onPageLoad().url)
+      ),
+      BreadcrumbsItem(
+        content = Text(messages("breadcrumbs.paymentResults")),
+        href = Some(controllers.payments.routes.PaymentResultsController.onPageLoad().url)
+      )
+    )
+  )
 
 }

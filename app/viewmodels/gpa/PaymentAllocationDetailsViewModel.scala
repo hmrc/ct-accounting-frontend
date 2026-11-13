@@ -39,7 +39,7 @@ case class AllocationDetailsViewModelRow(
 
 case class PaymentAllocationDetailsViewModel(
   rows: List[PaymentAllocationDetailsViewModelRow],
-  allocRows: List[AllocationDetailsViewModelRow],
+  allocRows: Seq[AllocationDetailsViewModelRow],
   page: Paginated[AllocationDetailsViewModelRow],
   pagination: Option[Pagination],
   paginationInfo: Option[String]
@@ -119,7 +119,7 @@ object PaymentAllocationDetailsViewModel {
           href = None // TODO Change to group taxes when implemented
         )
       ),
-      allocRows = allocRows,
+      allocRows = page.items,
       page = page,
       pagination = PaginationHelper.toPagination(page, pageUrl),
       paginationInfo = PaginationHelper.paginationText(page)

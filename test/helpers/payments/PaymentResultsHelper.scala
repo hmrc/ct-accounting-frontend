@@ -246,105 +246,105 @@ trait PaymentResultsHelper {
       date = Some(LocalDate.of(2007, 7, 14)),
       description = "payments.description.EP",
       amount = 37500,
-      href = Some(routes.PaymentResultsController.onPageLoad()),
+      href = Some(routes.PaymentAllocationController.onPageLoad(Some(1))),
       isLink = Some(true)
     ),
     PaymentResultsViewModelRow(
       date = Some(LocalDate.of(2007, 7, 14)),
       description = "payments.description.EP",
       amount = -37500,
-      href = Some(routes.PaymentResultsController.onPageLoad()),
+      href = Some(routes.PaymentAllocationController.onPageLoad(Some(1))),
       isLink = Some(true)
     ),
     PaymentResultsViewModelRow(
       date = Some(LocalDate.of(2007, 7, 14)),
       description = "payments.description.EP",
       amount = 37500,
-      href = Some(routes.PaymentResultsController.onPageLoad()),
+      href = Some(routes.PaymentAllocationController.onPageLoad(Some(1))),
       isLink = Some(true)
     ),
     PaymentResultsViewModelRow(
       date = Some(LocalDate.of(2007, 7, 14)),
       description = "payments.description.EP",
       amount = 37500,
-      href = Some(routes.PaymentResultsController.onPageLoad()),
+      href = Some(routes.PaymentAllocationController.onPageLoad(Some(1))),
       isLink = Some(true)
     ),
     PaymentResultsViewModelRow(
       date = Some(LocalDate.of(2007, 7, 14)),
       description = "payments.description.EP",
       amount = 37500,
-      href = Some(routes.PaymentResultsController.onPageLoad()),
+      href = Some(routes.PaymentAllocationController.onPageLoad(Some(1))),
       isLink = Some(true)
     ),
     PaymentResultsViewModelRow(
       date = Some(LocalDate.of(2007, 7, 14)),
       description = "payments.description.EP",
       amount = 37500,
-      href = Some(routes.PaymentResultsController.onPageLoad()),
+      href = Some(routes.PaymentAllocationController.onPageLoad(Some(1))),
       isLink = Some(true)
     ),
     PaymentResultsViewModelRow(
       date = Some(LocalDate.of(2007, 7, 14)),
       description = "payments.description.EP",
       amount = 37500,
-      href = Some(routes.PaymentResultsController.onPageLoad()),
+      href = Some(routes.PaymentAllocationController.onPageLoad(Some(1))),
       isLink = Some(true)
     ),
     PaymentResultsViewModelRow(
       date = Some(LocalDate.of(2007, 7, 14)),
       description = "payments.description.EP",
       amount = 37500,
-      href = Some(routes.PaymentResultsController.onPageLoad()),
+      href = Some(routes.PaymentAllocationController.onPageLoad(Some(1))),
       isLink = Some(true)
     ),
     PaymentResultsViewModelRow(
       date = Some(LocalDate.of(2007, 7, 14)),
       description = "payments.description.EP",
       amount = 37500,
-      href = Some(routes.PaymentResultsController.onPageLoad()),
+      href = Some(routes.PaymentAllocationController.onPageLoad(Some(1))),
       isLink = Some(true)
     ),
     PaymentResultsViewModelRow(
       date = Some(LocalDate.of(2007, 7, 14)),
       description = "payments.description.EP",
       amount = 37500,
-      href = Some(routes.PaymentResultsController.onPageLoad()),
+      href = Some(routes.PaymentAllocationController.onPageLoad(Some(1))),
       isLink = Some(true)
     ),
     PaymentResultsViewModelRow(
       date = Some(LocalDate.of(2007, 7, 14)),
       description = "payments.description.EP",
       amount = 37500,
-      href = Some(routes.PaymentResultsController.onPageLoad()),
+      href = Some(routes.PaymentAllocationController.onPageLoad(Some(1))),
       isLink = Some(true)
     ),
     PaymentResultsViewModelRow(
       date = Some(LocalDate.of(2007, 7, 14)),
       description = "payments.description.EP",
       amount = 37500,
-      href = Some(routes.PaymentResultsController.onPageLoad()),
+      href = Some(routes.PaymentAllocationController.onPageLoad(Some(1))),
       isLink = Some(true)
     ),
     PaymentResultsViewModelRow(
       date = Some(LocalDate.of(2007, 7, 14)),
       description = "payments.description.EP",
       amount = 37500,
-      href = Some(routes.PaymentResultsController.onPageLoad()),
+      href = Some(routes.PaymentAllocationController.onPageLoad(Some(1))),
       isLink = Some(true)
     ),
     PaymentResultsViewModelRow(
       date = Some(LocalDate.of(2007, 7, 14)),
       description = "payments.description.EP",
       amount = 37500,
-      href = Some(routes.PaymentResultsController.onPageLoad()),
+      href = Some(routes.PaymentAllocationController.onPageLoad(Some(1))),
       isLink = Some(true)
     ),
     PaymentResultsViewModelRow(
       date = Some(LocalDate.of(2007, 7, 14)),
       description = "payments.description.EP",
       amount = 37500,
-      href = Some(routes.PaymentResultsController.onPageLoad()),
+      href = Some(routes.PaymentAllocationController.onPageLoad(Some(1))),
       isLink = Some(true)
     )
   )
