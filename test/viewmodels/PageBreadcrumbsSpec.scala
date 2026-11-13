@@ -273,6 +273,23 @@ class PageBreadcrumbsSpec extends AnyWordSpec with Matchers {
         )
       )
     }
+  }
+
+  "PageBreadcrumbs.paymentResultsPage" should {
+
+    "contain exactly three breadcrumb items" in {
+      PageBreadcrumbs.paymentResultsPage.items.size shouldBe 2
+    }
+
+    "have the correct items in order" in {
+      PageBreadcrumbs.paymentResultsPage.items shouldBe Seq(
+        BreadcrumbsItem(content = Text(messages("breadcrumbs.home")), href = Some("/")),
+        BreadcrumbsItem(
+          content = Text(messages("breadcrumbs.findYourPayment")),
+          href = Some(controllers.payments.routes.FindYourPaymentController.onPageLoad().url)
+        )
+      )
+    }
 
   }
 }

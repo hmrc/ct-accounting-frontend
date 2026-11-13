@@ -54,7 +54,8 @@ breadcrumbs.interest = Interest
 breadcrumbs.accountingPeriods = Accounting periods
 breadcrumbs.gpa = Group Payment Arrangement
 breadcrumbs.groupTaxes = Group taxes
-breadcrumbs.groupPaymentArrangements  = Group Payment Arrangement
+breadcrumbs.groupPaymentArrangements = Group Payment Arrangement
+breadcrumbs.findYourPayment = Find your payment
 
 accountingPeriodOverview.title = Accounting period overview
 accountingPeriodOverview.heading = Accounting period ending {0}
@@ -322,3 +323,21 @@ findYourPayment.error.amountFormat = Enter your payment amount in the correct fo
 findYourPayment.error.startDateRange = The start date must be before the end date
 findYourPayment.error.endDateRange = The end date must be after the start date
 
+
+paymentResults.title = Payment results - Find your payment
+paymentResults.heading =  Payment results
+paymentResults.noResultsHeading =  No results found
+paymentResults.noResultsPara =  Try again with the exact amount, or use a different date range.
+paymentResults.singleResultPara = {0} result found for {1} between {2} and {3}
+paymentResults.multipleResultsPara = {0} results found for {1} between {2} and {3}
+paymentResults.singleResultFromDatePara = {0} result found for {1} since {2}
+paymentResults.multipleResultsFromDatePara = {0} results found for {1} since {2}
+paymentResults.singleResultToDatePara = {0} result found for {1} up to {2}
+paymentResults.multipleResultsToDatePara = {0} results found for {1} up to {2}
+paymentResults.singleResultNoDatesPara = {0} result found for {1}
+paymentResults.multipleResultsNoDatesPara = {0} results found for {1}
+paymentResults.amount = Amount {0}
+paymentResults.count = List count {0}
+paymentResults.dateCol = Date
+paymentResults.descriptionCol= Description
+paymentResults.amountCol = Amount

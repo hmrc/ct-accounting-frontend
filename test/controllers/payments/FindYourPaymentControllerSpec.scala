@@ -77,8 +77,7 @@ class FindYourPaymentControllerSpec extends SpecBase {
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        // TODO: replace hardcoded redirect path when payment-results route is implemented
-        redirectLocation(result).value mustEqual "/find-your-payment/payment-results"
+        redirectLocation(result).value mustEqual routes.PaymentResultsController.onPageLoad().url
       }
     }
 
