@@ -275,7 +275,10 @@ object PageBreadcrumbs {
         content = Text(messages("breadcrumbs.findYourPayment")),
         href = Some(controllers.payments.routes.FindYourPaymentController.onPageLoad().url)
       ),
-      BreadcrumbsItem(content = Text(messages("breadcrumbs.paymentResults")), href = Some("/"))
+      BreadcrumbsItem(
+        content = Text(messages("breadcrumbs.paymentResults")),
+        href = Some(controllers.payments.routes.PaymentResultsController.onPageLoad().url)
+      )
     )
   )
 
