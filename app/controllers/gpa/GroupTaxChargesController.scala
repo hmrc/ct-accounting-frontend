@@ -41,8 +41,8 @@ class GroupTaxChargesController @Inject() (
 
   def onPageLoad(page: Option[Int]): Action[AnyContent] = identify.async { implicit request =>
 
-    val pGpaUtr             = 45678901233L // TODO: This needs to comes from sessionDataRepository
-    val pGppContractVersion = 5
+    val pGpaUtr             = 8794925923L // TODO: This needs to comes from sessionDataRepository
+    val pGppContractVersion = 2
     val pCount              = 10
     val pStartIndex         = startIndexCountHelper(page, pCount)
 

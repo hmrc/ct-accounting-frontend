@@ -46,7 +46,7 @@ class AccountingPeriodsControllerSpec extends SpecBase with MockitoSugar with Ac
 
     "must return OK and the correct view for a GET" in {
 
-      when(mockConnector.getAccountPosition(eqTo(5L))(any[HeaderCarrier]))
+      when(mockConnector.getAccountPosition(eqTo(6212811176L))(any[HeaderCarrier]))
         .thenReturn(Future.successful(accountPositionResponse))
 
       running(application) {
@@ -63,7 +63,7 @@ class AccountingPeriodsControllerSpec extends SpecBase with MockitoSugar with Ac
 
     "must redirect when exception from BE occurs" in {
 
-      when(mockConnector.getAccountPosition(eqTo(5L))(any[HeaderCarrier]))
+      when(mockConnector.getAccountPosition(eqTo(6212811176L))(any[HeaderCarrier]))
         .thenReturn(Future.failed(RuntimeException("Error")))
 
       val testApplication = applicationBuilder()

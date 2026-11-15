@@ -37,7 +37,7 @@
 
         @h1(messages("accountingPeriodOverview.heading", formatDate(viewModel.accountingPeriodEndDate, messages.lang)))
 
-        @paragraph(messages("accountingPeriodOverview.paragraph", viewModel.taxReference))
+        @paragraph(messages("accountingPeriodOverview.paragraph", viewModel.taxReference.toString))
 
         <p class="govuk-body">
             @link(messages("accountingPeriodOverview.howToPay"), appConfig.howToPayUrl, true, true)

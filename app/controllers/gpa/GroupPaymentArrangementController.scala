@@ -41,8 +41,8 @@ class GroupPaymentArrangementController @Inject() (
   def onPageLoad: Action[AnyContent] = identify.async { implicit request =>
 
     // TODO: This needs to comes from sessionDataRepository
-    val taxRef        = 1L
-    val nomCompanyUtr = 1L
+    val taxRef        = 1075806794L
+    val nomCompanyUtr = 1075806794L
 
     service
       .getGroupSummary(taxRef, nomCompanyUtr)
