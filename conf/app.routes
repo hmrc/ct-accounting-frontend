@@ -53,3 +53,6 @@ GET         /find-your-payment                                              cont
 POST        /find-your-payment                                              controllers.payments.FindYourPaymentController.onSubmit()
 GET         /find-your-payment/payment-results                              controllers.payments.PaymentResultsController.onPageLoad(page: Option[Int] ?= Some(1))
 GET         /find-your-payment/payment-results/payment-allocation           controllers.payments.PaymentAllocationController.onPageLoad(page: Option[Int])
+
+# Payments on account
+GET         /payments-on-account                                    controllers.payments.PaymentsOnAccountController.onPageLoad(page: Option[Int])

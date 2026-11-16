@@ -1,0 +1,78 @@
+@*
+ * Copyright 2026 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import views.html.components.*
+@import viewmodels._
+@import java.time.LocalDate
+@import viewmodels.payments.PaymentsOnAccountViewModel
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
+
+@this(
+        layout: templates.Layout,
+        govukTable: GovukTable,
+        h1: h1,
+        h2: h2,
+        link:Link,
+        govukPagination: GovukPagination,
+        paragraph: Paragraph,
+)
+
+
+@(viewModel: PaymentsOnAccountViewModel)(implicit request: Request[_], messages: Messages)
+
+    @layout(pageTitle = titleNoForm(messages("paymentsOnAccount.title")), breadcrumbs = Some(PageBreadcrumbs.paymentsOnAccountPage)) {
+
+        @h1(messages("paymentsOnAccount.heading"))
+
+        @paragraph(messages("paymentsOnAccount.paragraph"))
+
+        @h2(messages("paymentsOnAccount.caption"))
+
+        @viewModel.paginationInfo.map(paragraph(_))
+
+        @govukTable(
+            Table(
+                head = Some(Seq(
+                    HeadCell(content = Text(messages("paymentsOnAccount.tableHeader.paymentDate"))),
+                    HeadCell(content = Text(messages("paymentsOnAccount.tableHeader.paymentAllocationDate"))),
+                    HeadCell(content = Text(messages("paymentsOnAccount.tableHeader.description"))),
+                    HeadCell(content = Text(messages("paymentsOnAccount.tableHeader.amount")), classes = "govuk-table__cell govuk-table__cell--numeric")
+                    )),
+                rows = viewModel.paymentsOnAccountRows.map { row =>
+                    Seq(
+                        TableRow(
+                            content = Text(row.paymentDateAsString),
+                            classes = s"govuk-table__cell"
+                        ),
+                        TableRow(
+                            content = Text(row.paymentAllocationDateAsString),
+                            classes = s"govuk-table__cell"
+                        ),
+                        TableRow(
+                            content = Text(row.description),
+                            classes = s"govuk-table__cell"
+                        ),
+                        TableRow(
+                            content = Text(formatCurrency(row.amount)),
+                            classes = "govuk-table__header--numeric"
+                        )
+                    )
+                }
+                )
+            )
+
+            @viewModel.pagination.map(govukPagination(_))
+    }
