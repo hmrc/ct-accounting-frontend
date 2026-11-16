@@ -30,16 +30,8 @@ class ClientDeleteConfirmationController @Inject() (
   view: ClientDeletedView
 ) extends FrontendBaseController
     with I18nSupport {
-  private val ValidClientId = "^[A-Za-z0-9 &'._/-]{1,100}$".r
 
-  // TODO Assumed to get the client id in QS
   def onPageLoad(clientId: String): Action[AnyContent] = identify { implicit request =>
-    clientId.trim match {
-      case id @ ValidClientId() => Ok(view(id))
-      // TODO redirect to client list page
-      // case _ => Redirect(ClientDeletedController.clientListUrl)
-    }
-
+    Ok(view(clientId.trim))
   }
-
 }

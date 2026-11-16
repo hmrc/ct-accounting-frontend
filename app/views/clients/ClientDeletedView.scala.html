@@ -18,10 +18,15 @@
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.{Text, HtmlContent}
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.panel.Panel
 @import viewmodels.PageBreadcrumbs
+@import views.html.components.*
 
 @this(
   layout: views.html.templates.Layout,   // replace with your project's layout template
   govukPanel: GovukPanel,
+  h1: h1,
+  h2: h2,
+  paragraph: Paragraph,
+  link: Link,
   govukBreadcrumbs: GovukBreadcrumbs
 )
 
@@ -31,24 +36,14 @@
 
   @govukBreadcrumbs(PageBreadcrumbs.clientDeleted)
 
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
+  <@govukPanel(Panel(
+    title   = Text(messages("clientDeleted.heading")),
+    content = Text(messages("clientDeleted.panel.body", clientId))
+  ))
+  @h2(messages("clientDeleted.whatHappensNext"))
+  @paragraph(messages("clientDeleted.delay"))
+  <p class="govuk-body">
+  @link(messages("clientDeleted.backToClients"), "/clients/clientList", true, true)
+  </p>
 
-      @govukPanel(Panel(
-        title   = Text(messages("clientDeleted.heading")),
-        content = Text(messages("clientDeleted.panel.body", clientId))
-      ))
-
-      <h2 class="govuk-heading-m">@messages("clientDeleted.whatHappensNext")</h2>
-
-      <p class="govuk-body">@messages("clientDeleted.delay")</p>
-
-      <p class="govuk-body">
-        <a class="govuk-link" href="/clients/clientList">
-          @messages("clientDeleted.backToClients")
-        </a>
-      </p>
-
-    </div>
-  </div>
 }
