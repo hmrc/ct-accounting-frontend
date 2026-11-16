@@ -327,7 +327,7 @@ trait PaymentsOnAccountResponseHelper {
       ),
       PaymentsOnAccountRow(
         accPeriod = 1,
-        effectiveDateOfPayment = LocalDate.of(2026, 9, 1),
+        effectiveDateOfPayment = LocalDate.of(2026, 12, 1),
         apEndDate = Some(LocalDate.of(2026, 10, 1)),
         paymentType = "BAC",
         postingAmount = 9999.99,

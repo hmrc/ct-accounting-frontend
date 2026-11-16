@@ -183,7 +183,7 @@ class PaymentsOnAccountViewSpec extends SpecBase with PaymentsOnAccountResponseH
       val lastRow =
         doc.select("tbody.govuk-table__body tr.govuk-table__row").get(9).getElementsByClass("govuk-table__cell")
 
-      lastRow.get(0).text() mustBe "01 Sept 2026"
+      lastRow.get(0).text() mustBe "01 Dec 2026"
       lastRow.get(1).text() mustBe "01 Oct 2026"
       lastRow.get(2).text() mustBe "Electronic payment"
       lastRow.get(3).text() mustBe "£9,999.99"
