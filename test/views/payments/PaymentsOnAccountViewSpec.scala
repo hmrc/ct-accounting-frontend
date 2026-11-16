@@ -25,6 +25,7 @@ import play.api.i18n.{Lang, Messages, MessagesApi, MessagesImpl}
 import play.api.test.FakeRequest
 import viewmodels.payments.PaymentsOnAccountViewModel
 import views.html.payments.PaymentsOnAccountView
+import play.twirl.api.Html
 import play.api.Application
 
 class PaymentsOnAccountViewSpec extends SpecBase with PaymentsOnAccountResponseHelper {
@@ -107,6 +108,85 @@ class PaymentsOnAccountViewSpec extends SpecBase with PaymentsOnAccountResponseH
       firstRow.get(1).text() mustBe "31 Mar 2026"
       firstRow.get(2).text() mustBe "Electronic payment"
       firstRow.get(3).text() mustBe "£12,500.00"
+    }
+
+    "render the page with pagination for payment on accounts results on page 2" in {
+      val page: Option[Int]      = Some(2);
+      val pageUrl: Int => String = page => s"/ct-accounting/payments-on-account?page=$page"
+
+      val vm: PaymentsOnAccountViewModel =
+        PaymentsOnAccountViewModel.toViewModel(paymentsOnAccountPaginatedList, page, pageUrl)
+      val html: Html                     = view(vm)
+
+      def htmlDoc(html: Html): Document = Jsoup.parse(html.toString)
+      val doc: Document                 = htmlDoc(html)
+
+      val pagination     = doc.select("ul.govuk-pagination__list")
+      val paginationInfo = doc.select("div.govuk-pagination__next a")
+
+      val paragraphs = doc.select("p.govuk-body")
+
+      paragraphs.text() must include(messages("Displaying 11 to 20 of 30 records"))
+
+      // GET FIRST RECORD
+      val firstRow =
+        doc.select("tbody.govuk-table__body tr.govuk-table__row").get(0).getElementsByClass("govuk-table__cell")
+
+      firstRow.get(0).text() mustBe "14 Jul 2025"
+      firstRow.get(1).text() mustBe "31 Mar 2026"
+      firstRow.get(2).text() mustBe "Electronic payment"
+      firstRow.get(3).text() mustBe "£12,500.00"
+
+      // GET LAST RECORD
+      val lastRow =
+        doc.select("tbody.govuk-table__body tr.govuk-table__row").get(9).getElementsByClass("govuk-table__cell")
+
+      lastRow.get(0).text() mustBe "14 Oct 2025"
+      lastRow.get(1).text() mustBe "31 Mar 2026"
+      lastRow.get(2).text() mustBe "Electronic payment"
+      lastRow.get(3).text() mustBe "£6,250.50"
+
+      pagination.size mustBe 1
+      paginationInfo.attr("href") mustBe "/ct-accounting/payments-on-account?page=3"
+    }
+
+    "render the page with pagination for payment on accounts results on page 3" in {
+      val page: Option[Int]      = Some(3);
+      val pageUrl: Int => String = page => s"/ct-accounting/payments-on-account?page=$page"
+
+      val vm: PaymentsOnAccountViewModel =
+        PaymentsOnAccountViewModel.toViewModel(paymentsOnAccountPaginatedList, page, pageUrl)
+      val html: Html                     = view(vm)
+
+      def htmlDoc(html: Html): Document = Jsoup.parse(html.toString)
+
+      val doc: Document = htmlDoc(html)
+
+      val pagination = doc.select("ul.govuk-pagination__list")
+
+      pagination.size mustBe 1
+
+      val paragraphs = doc.select("p.govuk-body")
+
+      paragraphs.text() must include(messages("Displaying 21 to 30 of 30 records"))
+
+      // GET FIRST RECORD
+      val firstRow =
+        doc.select("tbody.govuk-table__body tr.govuk-table__row").get(0).getElementsByClass("govuk-table__cell")
+
+      firstRow.get(0).text() mustBe "09 Nov 2025"
+      firstRow.get(1).text() mustBe "31 Mar 2026"
+      firstRow.get(2).text() mustBe "Electronic payment"
+      firstRow.get(3).text() mustBe "£4,504.00"
+
+      // GET LAST RECORD WHICH IS UNIQUE
+      val lastRow =
+        doc.select("tbody.govuk-table__body tr.govuk-table__row").get(9).getElementsByClass("govuk-table__cell")
+
+      lastRow.get(0).text() mustBe "01 Sept 2026"
+      lastRow.get(1).text() mustBe "01 Oct 2026"
+      lastRow.get(2).text() mustBe "Electronic payment"
+      lastRow.get(3).text() mustBe "£9,999.99"
     }
 
   }
