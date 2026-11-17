@@ -264,7 +264,7 @@ paymentAllocationDetails.title = Taliad wedi’i ddyrannu – Trethi’r grŵp
 paymentAllocationDetails.section = Trefniant Talu Grŵp
 paymentAllocationDetails.heading = Taliad wedi’i ddyrannu
 paymentAllocationDetails.p1 = Arian a ddefnyddir gan y cwmni enwebedig tuag at rwymedigaethau treth y cwmni hwn ar ôl i’r rhwymedigaethau hyn gael eu cadarnhau.
-paymentAllocationDetails.p2 = There is no data for this Group Payment Arrangement.
+paymentAllocationDetails.p2 = Does dim data ar gyfer y Trefniant Talu Grŵp hwn.
 
 paymentAllocationDetails.gpaReference = Group Payment Arrangement reference
 paymentAllocationDetails.participatingCompany = Cwmni sy’n cymryd rhan
@@ -276,11 +276,11 @@ paymentAllocationDetails.paymentAllocatedBy = Dyrannwyd y taliad gan
 paymentAllocationDetails.paymentAllocated = Taliad wedi’i ddyrannu
 paymentAllocationDetails.groupTaxTotal = Cyfanswm treth y grŵp
 
-paymentAllocationDetails.paymentAllocationRecords = Payment allocation records
-paymentAllocationDetails.paymentDate = Payment date
-paymentAllocationDetails.allocatedPaymentAmount = Allocated Payment Amount
+paymentAllocationDetails.paymentAllocationRecords = Cofnodion dyrannu taliadau
+paymentAllocationDetails.paymentDate = Dyddiad talu
+paymentAllocationDetails.allocatedPaymentAmount = Swm y Taliad a Ddyrannwyd
 
-gpa.paginationInfo = Displaying <b>{0}</b> to <b>{1}</b> of <b>{2}</b> records
+gpa.paginationInfo = Yn dangos cofnodion <b>{0}</b> i <b>{1}</b> o <b>{2}</b>
 
 groupTaxCharges.title = Trethi’r grŵp - Trefniant Talu Grŵp
 groupTaxCharges.heading = Trethi’r grŵp
