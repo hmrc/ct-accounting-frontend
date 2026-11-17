@@ -38,7 +38,7 @@ class ClientDeleteConfirmationControllerSpec extends SpecBase {
         page must include("Client deleted")
         page must include("You have deleted the client ACY-001")
         page must include("It may take up to 4 days for the change to appear.")
-        page must include("Delete client")
+        page must include("View clients")
       }
     }
 
