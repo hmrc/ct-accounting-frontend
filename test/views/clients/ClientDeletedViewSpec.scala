@@ -35,7 +35,7 @@ class ClientDeletedViewSpec extends SpecBase {
   implicit val request: FakeRequest[_] = FakeRequest()
 
   private val clientId      = "ACY-001"
-  private val clientListUrl = "/clients/clientList" // placeholder, update when the real route exists
+  private val clientListUrl = "/clients/clientList" // TODO placeholder, update when the real route exists
 
   def render(id: String): Document =
     Jsoup.parse(view(id)(request, messages).toString)
