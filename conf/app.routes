@@ -55,5 +55,5 @@ GET         /find-your-payment/payment-results                              cont
 GET         /find-your-payment/payment-results/payment-allocation           controllers.payments.PaymentAllocationController.onPageLoad(page: Option[Int])
 
 #Manage agent clients
-GET         /view-clients/delete-client/:clientId/client-deleted   controllers.clients.ClientDeleteConfirmationController.onPageLoad(clientId: String)
+GET         /view-clients/delete-client/client-deleted/:clientId   controllers.clients.ClientDeleteConfirmationController.onPageLoad(clientId: String)
 
