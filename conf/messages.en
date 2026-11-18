@@ -343,7 +343,7 @@ paymentResults.dateCol = Date
 paymentResults.descriptionCol= Description
 paymentResults.amountCol = Amount
 
-clientDeleted.title=Client deleted
+clientDeleted.title=Client deleted – View Corporation Tax – GOV.UK
 clientDeleted.heading=Client deleted
 clientDeleted.panel.body=You have deleted the client {0}
 clientDeleted.whatHappensNext=What happens next
