@@ -74,7 +74,7 @@ object GroupTaxChargesViewModel {
           description = formatCurrency(groupTaxCharge.allocatedPayment.getOrElse(0.00)),
           amount = groupTaxCharge.allocatedPayment.getOrElse(0.00),
           isLink = true,
-          href = routes.GroupTaxChargesController.onPageLoad(None)
+          href = routes.PaymentAllocationDetailsController.onPageLoad(Some(1))
         )
       )
     }
@@ -104,9 +104,9 @@ object GroupTaxChargesViewModel {
               LinkViewModel.toHtmlContent(
                 LinkViewModel(
                   text = formatCurrency(gpaGroupTaxCharges.pGppTotalGroupPayment.getOrElse(0.00)),
-                  href = routes.GroupTaxChargesController.onPageLoad(None).url,
+                  href = routes.GpaDetailsGroupPaymentController.onPageLoad(Some(1)).url,
                   classes = "govuk-table__cell govuk-table__cell--numeric",
-                  isLink = true
+                  isLink = isHyperLink(gpaGroupTaxCharges.pGppTotalGroupPayment.getOrElse(0.00))
                 )
               )
             )
@@ -123,4 +123,7 @@ object GroupTaxChargesViewModel {
       paginationInfo = PaginationHelper.paginationText(page)
     )
   }
+
+  private def isHyperLink(amount: BigDecimal): Boolean =
+    amount != BigDecimal(0.00)
 }

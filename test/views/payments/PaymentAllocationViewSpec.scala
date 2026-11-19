@@ -141,8 +141,6 @@ class PaymentAllocationViewSpec
       val html = view(vm)
       val doc  = htmlDoc(html)
 
-      println(doc)
-
       val link = doc.select("td a")
 
       link.attr("href") mustBe s"/ct-accounting/accounting-period-overview"

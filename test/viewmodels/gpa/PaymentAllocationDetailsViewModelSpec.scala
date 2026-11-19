@@ -17,6 +17,7 @@
 package viewmodels.gpa
 
 import helpers.gpa.PaymentAllocationDetailsHelper
+import controllers.gpa.routes
 import org.scalatest.wordspec.AnyWordSpec
 import play.api.i18n.Messages
 import play.api.test.Helpers.stubMessages
@@ -90,7 +91,7 @@ class PaymentAllocationDetailsViewModelSpec extends AnyWordSpec with PaymentAllo
             rowName = messages("paymentAllocationDetails.groupTaxTotal"),
             content = "£10.00",
             isLink = true,
-            href = None
+            href = Some(routes.GroupTaxChargesController.onPageLoad(Some(1)))
           )
         )
 

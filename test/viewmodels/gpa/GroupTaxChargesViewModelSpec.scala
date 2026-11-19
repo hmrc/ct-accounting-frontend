@@ -70,7 +70,7 @@ class GroupTaxChargesViewModelSpec extends AnyWordSpec with Matchers with GroupT
             LinkViewModel.toHtmlContent(
               LinkViewModel(
                 text = formatCurrency(gpaGroupTaxChargesWithTwoParticipators.pGppTotalGroupPayment.getOrElse(0.00)),
-                href = routes.GroupTaxChargesController.onPageLoad(None).url,
+                href = routes.GpaDetailsGroupPaymentController.onPageLoad(Some(1)).url,
                 classes = "govuk-table__cell govuk-table__cell--numeric",
                 isLink = true
               )
@@ -113,7 +113,7 @@ class GroupTaxChargesViewModelSpec extends AnyWordSpec with Matchers with GroupT
             ),
             amount = gpaGroupTaxChargesWithTwoParticipators.pCurGroupTaxCharges(0).allocatedPayment.getOrElse(0.00),
             isLink = true,
-            href = routes.GroupTaxChargesController.onPageLoad(None)
+            href = routes.PaymentAllocationDetailsController.onPageLoad(Some(1))
           )
         ),
         GroupTaxRecordRow(
@@ -135,7 +135,7 @@ class GroupTaxChargesViewModelSpec extends AnyWordSpec with Matchers with GroupT
             ),
             amount = gpaGroupTaxChargesWithTwoParticipators.pCurGroupTaxCharges(1).allocatedPayment.getOrElse(0.00),
             isLink = true,
-            href = routes.GroupTaxChargesController.onPageLoad(None)
+            href = routes.PaymentAllocationDetailsController.onPageLoad(Some(1))
           )
         )
       )
