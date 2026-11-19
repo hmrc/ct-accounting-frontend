@@ -85,6 +85,14 @@ class GroupPaymentArrangementViewSpec extends SpecBase with GroupPaymentArrangem
         .text() contains s"reduce the administration when making many individual payments and might also reduce the group’s overall interest charges"
     }
 
+    "render the third paragraph, GPA reference with correct formatting" in {
+      val doc = render(groupPaymentArrangementViewModel)
+      doc
+        .getElementsByClass("govuk-body")
+        .get(2)
+        .text() mustBe s"Group Payment Arrangement reference 8754000009."
+    }
+
     "render the correct table headers" in {
       val doc     = render(groupPaymentArrangementViewModel)
       val headers = doc.select("th.govuk-table__header").eachText()
