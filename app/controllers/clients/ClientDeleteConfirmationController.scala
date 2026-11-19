@@ -27,11 +27,12 @@ import javax.inject.Inject
 class ClientDeleteConfirmationController @Inject() (
   val controllerComponents: MessagesControllerComponents,
   identify: IdentifierAction,
+  agentGuard: AgentServiceGuard,
   view: ClientDeletedView
 ) extends FrontendBaseController
     with I18nSupport {
 
-  def onPageLoad(clientId: String): Action[AnyContent] = identify { implicit request =>
+  def onPageLoad(clientId: String): Action[AnyContent] = (identify andThen agentGuard) { implicit request =>
     Ok(view(clientId.trim))
   }
 }

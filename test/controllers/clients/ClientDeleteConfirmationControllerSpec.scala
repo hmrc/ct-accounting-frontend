@@ -17,43 +17,65 @@
 package controllers.clients
 
 import base.SpecBase
+import controllers.actions.FakeAgentIdentifierAction
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 
 class ClientDeleteConfirmationControllerSpec extends SpecBase {
 
+  private def agentApplication =
+    applicationBuilder(identifier = classOf[FakeAgentIdentifierAction]).build()
+
   "ClientDeleteConfirmation Controller" - {
 
-    "must return OK and show the client identifier for a GET" in {
-      val application = applicationBuilder().build()
+    "when the user is an agent" - {
 
-      running(application) {
+      "must return OK and show the client identifier for a GET" in {
+        val application = agentApplication
 
-        val request = FakeRequest(GET, routes.ClientDeleteConfirmationController.onPageLoad("ACY-001").url)
+        running(application) {
+          val request = FakeRequest(GET, routes.ClientDeleteConfirmationController.onPageLoad("ACY-001").url)
 
-        val result = route(application, request).value
-        val page   = contentAsString(result)
+          val result = route(application, request).value
+          val page   = contentAsString(result)
 
-        status(result) mustEqual OK
-        page must include("Client deleted")
-        page must include("You have deleted the client ACY-001")
-        page must include("It may take up to 4 days for the change to appear.")
-        page must include("View clients")
+          status(result) mustEqual OK
+          page must include("Client deleted")
+          page must include("You have deleted the client ACY-001")
+          page must include("It may take up to 4 days for the change to appear.")
+          page must include("View clients")
+        }
+      }
+
+      "must HTML-escape the client identifier" in {
+        val application = agentApplication
+
+        running(application) {
+          val request = FakeRequest(GET, routes.ClientDeleteConfirmationController.onPageLoad("ACY & Co").url)
+
+          val result = route(application, request).value
+
+          status(result) mustEqual OK
+          contentAsString(result) must include("ACY &amp; Co")
+        }
       }
     }
 
-    "must HTML-escape the client identifier" in {
-      val application = applicationBuilder().build()
+    "when the user is not an agent" - {
 
-      running(application) {
-        val request = FakeRequest(GET, routes.ClientDeleteConfirmationController.onPageLoad("ACY & Co").url)
+      "must redirect to UnauthorisedController" in {
+        // default FakeIdentifierAction has no agent reference
+        val application = applicationBuilder().build()
 
-        val result = route(application, request).value
+        running(application) {
+          val request = FakeRequest(GET, routes.ClientDeleteConfirmationController.onPageLoad("ACY-001").url)
 
-        status(result) mustEqual OK
-        contentAsString(result) must include("ACY &amp; Co")
+          val result = route(application, request).value
+
+          status(result) mustEqual SEE_OTHER
+          redirectLocation(result).value mustEqual controllers.routes.UnauthorisedController.onPageLoad().url
+        }
       }
     }
-
   }
 }
