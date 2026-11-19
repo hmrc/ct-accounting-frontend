@@ -141,5 +141,23 @@ class GroupPaymentArrangementViewSpec extends SpecBase with GroupPaymentArrangem
         .text() mustBe s"Any changes to the Group Payment Arrangement that have not yet been approved and processed by HMRC will not be shown."
     }
 
+    "render the page with navigation to Group payments page" in {
+      val doc = render(groupPaymentArrangementViewModel)
+
+      val link = doc.select("td a").get(0)
+
+      link.attr("href") mustBe s"/ct-accounting/group-payment-arrangement/group-payments?paginationIndex=1"
+
+    }
+
+    "render the page with navigation to Group taxes page" in {
+      val doc = render(groupPaymentArrangementViewModel)
+
+      val link = doc.select("td a").get(1)
+
+      link.attr("href") mustBe s"/ct-accounting/group-payment-arrangement/group-taxes?page=1"
+
+    }
+
   }
 }

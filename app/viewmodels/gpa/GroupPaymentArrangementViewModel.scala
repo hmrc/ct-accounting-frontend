@@ -54,13 +54,13 @@ object GroupPaymentArrangementViewModel {
             description = formatCurrency(groupSummaryDetailsResponse.groupPayment),
             amount = groupSummaryDetailsResponse.groupPayment,
             isLink = true,
-            href = routes.GroupPaymentArrangementController.onPageLoad()
+            href = routes.GpaDetailsGroupPaymentController.onPageLoad(Some(1))
           ),
           groupTaxes = GroupPaymentArrangementPaymentRow(
             description = formatCurrency(groupSummaryDetailsResponse.groupTaxCharge),
             amount = groupSummaryDetailsResponse.groupTaxCharge,
             isLink = true,
-            href = routes.GroupPaymentArrangementController.onPageLoad()
+            href = routes.GroupTaxChargesController.onPageLoad(Some(1))
           ),
           status = StatusHelper.getStatus(groupSummaryDetailsResponse.contractStatus.toUpperCase())
         )

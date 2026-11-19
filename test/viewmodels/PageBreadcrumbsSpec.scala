@@ -17,7 +17,7 @@
 package viewmodels
 
 import controllers.routes
-import controllers.gpa.routes.GroupPaymentArrangementController
+import controllers.gpa.routes.{GroupPaymentArrangementController, GroupTaxChargesController}
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 import uk.gov.hmrc.govukfrontend.views.viewmodels.breadcrumbs.BreadcrumbsItem
@@ -252,7 +252,10 @@ class PageBreadcrumbsSpec extends AnyWordSpec with Matchers {
           content = Text(messages("breadcrumbs.gpa")),
           href = Some(GroupPaymentArrangementController.onPageLoad().url)
         ),
-        BreadcrumbsItem(content = Text(messages("breadcrumbs.groupTaxes")), href = Some("/"))
+        BreadcrumbsItem(
+          content = Text(messages("breadcrumbs.groupTaxes")),
+          href = Some(GroupTaxChargesController.onPageLoad(Some(1)).url)
+        )
       )
     }
 

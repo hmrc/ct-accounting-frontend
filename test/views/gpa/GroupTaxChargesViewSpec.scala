@@ -118,5 +118,23 @@ class GroupTaxChargesViewSpec extends SpecBase with GroupTaxChargesHelper {
       firstRow.get(4).text() mustBe "£62,500.25"
     }
 
+    "render the page with navigation to Payment Allocation page" in {
+      val doc = render(viewModel)
+
+      val link = doc.select("td a")
+
+      link.attr("href") mustBe s"/ct-accounting/group-payment-arrangement/group-taxes/payment-allocated?page=1"
+
+    }
+
+    "render the page with navigation to Group Payment page" in {
+      val doc = render(viewModel)
+
+      val link = doc.select("dd a")
+
+      link.attr("href") mustBe s"/ct-accounting/group-payment-arrangement/group-payments?paginationIndex=1"
+
+    }
+
   }
 }

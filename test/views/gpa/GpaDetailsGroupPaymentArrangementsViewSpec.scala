@@ -114,5 +114,14 @@ class GpaDetailsGroupPaymentArrangementsViewSpec extends SpecBase with GpaDetail
       doc.select("nav.govuk-pagination").isEmpty mustBe false
     }
 
+    "render the page with navigation to Group Tax page" in {
+      val doc = render(viewModel(Some(1)))
+
+      val link = doc.select("dd a")
+
+      link.attr("href") mustBe s"/ct-accounting/group-payment-arrangement/group-taxes?page=1"
+
+    }
+
   }
 }
