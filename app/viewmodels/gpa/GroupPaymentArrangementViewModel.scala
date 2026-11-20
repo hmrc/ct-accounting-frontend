@@ -28,7 +28,9 @@ import java.time.LocalDate
 case class GroupPaymentArrangementViewModel(
   taxPayerReference: Long,
   rows: Seq[GroupPaymentArrangementViewRow]
-)
+) {
+  val taxPayerReferenceAsString: String = taxPayerReference.toString
+}
 
 case class GroupPaymentArrangementViewRow(
   periodOfAccountEnding: LocalDate,
