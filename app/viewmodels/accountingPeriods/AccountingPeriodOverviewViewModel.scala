@@ -42,6 +42,8 @@ case class AccountingPeriodOverviewViewModel(
   rows: Seq[AccountingPeriodOverviewRow]
 ) {
 
+  val taxReferenceAsString: String = taxReference.toString
+
   def totalRow(label: String): Seq[TableRow] =
     Seq(
       TableRow(content = Text(label), classes = "govuk-!-font-weight-bold"),
