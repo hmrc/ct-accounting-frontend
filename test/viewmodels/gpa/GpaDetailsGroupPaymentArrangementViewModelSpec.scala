@@ -71,7 +71,7 @@ class GpaDetailsGroupPaymentArrangementViewModelSpec
 
       val html = value.asHtml.toString
       html must include(formatCurrency(viewModelResponseRfrReallocation.taxTotal))
-      html must include("href=\"#\"")
+      html must include("href=\"/ct-accounting/group-payment-arrangement/group-taxes?page=1\"")
 
     }
     "create GroupSummaryList containing fifth row with taxTotal key and value without hyperlink if taxTotal = 0" in {

@@ -42,13 +42,13 @@ trait GroupPaymentArrangementHelper {
             description = "£11.01",
             amount = 11.01,
             isLink = true,
-            href = routes.GroupPaymentArrangementController.onPageLoad()
+            href = routes.GpaDetailsGroupPaymentController.onPageLoad(Some(1))
           ),
           groupTaxes = GroupPaymentArrangementPaymentRow(
             description = "£13.01",
             amount = 13.01,
             isLink = true,
-            href = routes.GroupPaymentArrangementController.onPageLoad()
+            href = routes.GroupTaxChargesController.onPageLoad(Some(1))
           ),
           status = "ACTIVE"
         ),
@@ -58,13 +58,13 @@ trait GroupPaymentArrangementHelper {
             description = "-£430.32",
             amount = -430.32,
             isLink = true,
-            href = routes.GroupPaymentArrangementController.onPageLoad()
+            href = routes.GpaDetailsGroupPaymentController.onPageLoad(Some(1))
           ),
           groupTaxes = GroupPaymentArrangementPaymentRow(
             description = "-£700.53",
             amount = -700.53,
             isLink = true,
-            href = routes.GroupPaymentArrangementController.onPageLoad()
+            href = routes.GroupTaxChargesController.onPageLoad(Some(1))
           ),
           status = "CLOSED"
         ),
@@ -74,13 +74,13 @@ trait GroupPaymentArrangementHelper {
             description = "-£952.12",
             amount = -952.12,
             isLink = true,
-            href = routes.GroupPaymentArrangementController.onPageLoad()
+            href = routes.GpaDetailsGroupPaymentController.onPageLoad(Some(1))
           ),
           groupTaxes = GroupPaymentArrangementPaymentRow(
             description = "-£691.76",
             amount = -691.76,
             isLink = true,
-            href = routes.GroupPaymentArrangementController.onPageLoad()
+            href = routes.GroupTaxChargesController.onPageLoad(Some(1))
           ),
           status = "CLOSED"
         )
