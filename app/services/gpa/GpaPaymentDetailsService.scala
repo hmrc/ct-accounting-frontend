@@ -38,7 +38,7 @@ class GpaPaymentDetailsService(
       case Some("Payslip")                                =>
         PaymentsDescriptionHelper.getPaymentsDescription(gpaPayment.paymentType.getOrElse(emptyString))
       case Some("Repayment") | Some("CancelledRepayment") =>
-       RepaymentsDescriptionHelper.getRepaymentsDescription(gpaPayment.repaymentType.getOrElse(emptyString))
+        RepaymentsDescriptionHelper.getRepaymentsDescription(gpaPayment.repaymentType.getOrElse(emptyString))
       case _                                              => emptyString
     }
 

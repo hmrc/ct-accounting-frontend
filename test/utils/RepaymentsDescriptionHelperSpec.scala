@@ -24,7 +24,7 @@ class RepaymentsDescriptionHelperSpec extends SpecBase {
   val application = applicationBuilder().build()
 
   implicit val messagesApi: MessagesApi = application.injector.instanceOf[MessagesApi]
-  implicit val messages: Messages = MessagesImpl(Lang.defaultLang, messagesApi)
+  implicit val messages: Messages       = MessagesImpl(Lang.defaultLang, messagesApi)
 
   "getRepaymentsDescription" - {
 
@@ -83,7 +83,7 @@ class RepaymentsDescriptionHelperSpec extends SpecBase {
 
       val result: String = messages(RepaymentsDescriptionHelper.getRepaymentsDescription(repaymentType))
 
-      val expectedResult = "Reallocation from AP ending ${0}"
+      val expectedResult = "Reallocation from AP ending"
 
       result mustBe expectedResult
     }
@@ -93,7 +93,7 @@ class RepaymentsDescriptionHelperSpec extends SpecBase {
 
       val result: String = messages(RepaymentsDescriptionHelper.getRepaymentsDescription(repaymentType))
 
-      val expectedResult = "Reallocation to AP ending ${0}"
+      val expectedResult = "Reallocation to AP ending"
 
       result mustBe expectedResult
     }

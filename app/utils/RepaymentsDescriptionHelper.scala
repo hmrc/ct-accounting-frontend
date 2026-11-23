@@ -34,9 +34,9 @@ object RepaymentsDescriptionHelper {
       case "P"       =>
         messages("repayments.description.P") // Repayment by payable order
       case "RFR"     =>
-        messages("repayments.description.RFR") // Reallocation from AP ending $(reallocApEndDate)
+        messages("repayments.description.RFR") // Reallocation from AP ending
       case "RTO"     =>
-        messages("repayments.description.RTO") // Reallocation to AP ending $(reallocApEndDate)
+        messages("repayments.description.RTO") // Reallocation to AP ending
       case _         =>
         emptyString
     }
