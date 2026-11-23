@@ -217,18 +217,23 @@ class GpaPaymentDetailsServiceSpec
 
     }
 
-    "Return empty string Repayment or CancelledRepayment" in new BaseSetup {
+    "Return repayments description when tableName is Repayment" in new BaseSetup {
 
       val resultRepayment: String          =
         service.gpaPaymentDescription(gpaPaymentsDefault.copy(tablename = Some("Repayment")), gpaUtr)
-      val resultCancelledRepayment: String =
+
+      resultRepayment shouldBe "repayments.description.B"
+    }
+
+    "Return Cancelled Repayments description when tableName is Cancelled Repayments" in new BaseSetup {
+
+      val resultCancelledRepayment: String = {
         service.gpaPaymentDescription(
-          gpaPaymentsDefault.copy(tablename = Some("CancelledRepayment")),
+          gpaPaymentsDefault.copy(tablename = Some("CancelledRepayment"), repaymentType = Some("CRT")),
           gpaUtr
         )
-
-      resultRepayment          shouldBe ""
-      resultCancelledRepayment shouldBe ""
+      }
+      resultCancelledRepayment shouldBe "repayments.description.CRT"
 
     }
   }

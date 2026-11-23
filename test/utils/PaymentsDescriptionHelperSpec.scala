@@ -112,6 +112,16 @@ class PaymentsDescriptionHelperSpec extends SpecBase {
 
       result mustBe expectedResult
     }
+
+    "when paymentType is CHQ" in {
+      val paymentType = "CHQ"
+
+      val result: String = messages(PaymentsDescriptionHelper.getPaymentsDescription(paymentType))
+
+      val expectedResult = "Cheque payment"
+
+      result mustBe expectedResult
+    }
   }
 
   s"Payment Type is an CP part payment, it should return correct Payments Description" - {

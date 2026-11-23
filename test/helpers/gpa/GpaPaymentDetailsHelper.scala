@@ -28,7 +28,7 @@ trait GpaPaymentDetailsHelper {
       total = 100.00,
       tablename = Some("RFRReallocation"),
       paymentType = Some("DSO"),
-      repaymentType = Some("DSO"),
+      repaymentType = Some("B"),
       targetTaxpayerReference = Some("1"),
       targetApNo = Some(1),
       targetApEndDate = Some(LocalDate.of(2026, 1, 1)),
