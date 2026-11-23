@@ -17,7 +17,7 @@
 package viewmodels
 
 import controllers.routes
-import controllers.gpa.routes.GroupPaymentArrangementController
+import controllers.gpa.routes.{GroupPaymentArrangementController, GroupTaxChargesController}
 import uk.gov.hmrc.govukfrontend.views.viewmodels.breadcrumbs.{Breadcrumbs, BreadcrumbsItem}
 import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 import play.api.i18n.Messages
@@ -223,7 +223,10 @@ object PageBreadcrumbs {
         content = Text(messages("breadcrumbs.gpa")),
         href = Some(GroupPaymentArrangementController.onPageLoad().url)
       ),
-      BreadcrumbsItem(content = Text(messages("breadcrumbs.groupTaxes")), href = Some("/"))
+      BreadcrumbsItem(
+        content = Text(messages("breadcrumbs.groupTaxes")),
+        href = Some(GroupTaxChargesController.onPageLoad(Some(1)).url)
+      )
     )
   )
 

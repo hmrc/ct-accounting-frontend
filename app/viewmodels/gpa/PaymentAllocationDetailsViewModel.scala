@@ -19,6 +19,7 @@ package viewmodels.gpa
 import uk.gov.hmrc.govukfrontend.views.Aliases.Pagination
 import models.AdjustmentTransactionType.*
 import models.gpa.PaymentAllocationDetails
+import controllers.gpa.routes
 import play.api.i18n.Messages
 import play.api.mvc.Call
 import utils.{ApportionmentHelper, PaginationHelper, StatusHelper}
@@ -116,7 +117,7 @@ object PaymentAllocationDetailsViewModel {
           rowName = messages("paymentAllocationDetails.groupTaxTotal"),
           content = formatCurrency(paymentAllocationDetails.gppTotalGroupTax),
           isLink = isHyperLink(paymentAllocationDetails.gppTotalGroupTax),
-          href = None // TODO Change to group taxes when implemented
+          href = Some(routes.GroupTaxChargesController.onPageLoad(Some(1)))
         )
       ),
       allocRows = page.items,

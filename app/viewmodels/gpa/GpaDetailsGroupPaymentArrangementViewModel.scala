@@ -16,7 +16,7 @@
 
 package viewmodels.gpa
 
-import controllers.gpa.routes.*
+import controllers.gpa.routes
 import play.api.i18n.Messages
 import uk.gov.hmrc.govukfrontend.views.Aliases.Text
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryList
@@ -60,7 +60,7 @@ case class GpaDetailsGroupPaymentArrangementViewModel(
           LinkViewModel.toHtmlContent(
             LinkViewModel(
               text = formatCurrency(this.taxTotal),
-              href = "#", // TODO To point this to Group tax total,
+              href = routes.GroupTaxChargesController.onPageLoad(Some(1)).url,
               isLink = isHyperLink(this.taxTotal)
             )
           )

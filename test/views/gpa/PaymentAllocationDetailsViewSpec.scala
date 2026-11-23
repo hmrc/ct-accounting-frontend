@@ -177,5 +177,15 @@ class PaymentAllocationDetailsViewSpec
       banner.text() mustBe messages("service.name")
     }
 
+    "render the page with navigation to Group Taxes page" in new Setup {
+      val vm   = paymentAllocationDetailsToVM(fullPaymentAllocationDetails, pageUrl)
+      val html = view(vm, BigDecimal(1))
+      val doc  = htmlDoc(html)
+
+      val link = doc.select("td a")
+
+      link.attr("href") mustBe s"/ct-accounting/group-payment-arrangement/group-taxes?page=1"
+
+    }
   }
 }
