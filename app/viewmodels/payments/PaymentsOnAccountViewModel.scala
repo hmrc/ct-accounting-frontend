@@ -16,7 +16,7 @@
 
 package viewmodels.payments
 
-import models.payments.PaymentsOnAccountResponse
+import models.payments.PaymentsOnAccount
 import play.api.i18n.Messages
 import uk.gov.hmrc.govukfrontend.views.Aliases.Pagination
 import utils.PaginationHelper
@@ -47,11 +47,11 @@ case class PaymentsOnAccountRow(
 
 object PaymentsOnAccountViewModel {
   def toViewModel(
-    paymentsOnAccountResponse: PaymentsOnAccountResponse,
+    paymentsOnAccountResponse: PaymentsOnAccount,
     requestedPage: Option[Int],
     pageUrl: Int => String
   )(implicit messages: Messages): PaymentsOnAccountViewModel = {
-    val rows = paymentsOnAccountResponse.paymentsOnAccountRows.map { row =>
+    val rows = paymentsOnAccountResponse.paymentsOnAccount.map { row =>
       PaymentsOnAccountRow(
         paymentDate = row.effectiveDateOfPayment,
         paymentAllocationDate = row.apEndDate,

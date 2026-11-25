@@ -16,17 +16,17 @@
 
 package helpers.payments
 
-import models.payments.{PaymentsOnAccountResponse, PaymentsOnAccountRow}
+import models.payments.{PaymentsOnAccount, PaymentsOnAccountRow}
 import java.time.LocalDate
 
 trait PaymentsOnAccountResponseHelper {
 
-  val paymentsOnAccountEmptyList: PaymentsOnAccountResponse = PaymentsOnAccountResponse(
-    paymentsOnAccountRows = List.empty
+  val paymentsOnAccountEmptyList: PaymentsOnAccount = PaymentsOnAccount(
+    paymentsOnAccount = List.empty
   )
 
-  val paymentsOnAccountSingleList: PaymentsOnAccountResponse = PaymentsOnAccountResponse(
-    paymentsOnAccountRows = List(
+  val paymentsOnAccountSingleList: PaymentsOnAccount = PaymentsOnAccount(
+    paymentsOnAccount = List(
       PaymentsOnAccountRow(
         accPeriod = 1,
         effectiveDateOfPayment = LocalDate.of(2025, 7, 14),
@@ -38,8 +38,8 @@ trait PaymentsOnAccountResponseHelper {
     )
   )
 
-  val paymentsOnAccountMultipleList: PaymentsOnAccountResponse = PaymentsOnAccountResponse(
-    paymentsOnAccountRows = List(
+  val paymentsOnAccountMultipleList: PaymentsOnAccount = PaymentsOnAccount(
+    paymentsOnAccount = List(
       PaymentsOnAccountRow(
         accPeriod = 1,
         effectiveDateOfPayment = LocalDate.of(2025, 7, 14),
@@ -91,8 +91,8 @@ trait PaymentsOnAccountResponseHelper {
     )
   )
 
-  val paymentsOnAccountPaginatedList: PaymentsOnAccountResponse = PaymentsOnAccountResponse(
-    paymentsOnAccountRows = List(
+  val paymentsOnAccountPaginatedList: PaymentsOnAccount = PaymentsOnAccount(
+    paymentsOnAccount = List(
       PaymentsOnAccountRow(
         accPeriod = 1,
         effectiveDateOfPayment = LocalDate.of(2025, 7, 14),
