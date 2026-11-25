@@ -42,7 +42,7 @@ class AccountingPeriodOverviewController @Inject() (
   def onPageLoad: Action[AnyContent] = identify.async { implicit request =>
 
     val accountPeriodEndDate = LocalDate.of(2026, 1, 1) // TODO: This needs to comes from sessionDataRepository
-    val taxRef               = 1L
+    val taxRef               = 8754000009L
     val accPeriod            = 1L
 
     // TODO: Get taxRef + accPeriod from sessionDataRepositry
