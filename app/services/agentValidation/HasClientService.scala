@@ -28,12 +28,17 @@ class HasClientService @Inject() (
   connector: HasClientConnector
 ) extends Logging {
 
-  def getHasClient(utr: Long)(implicit
+  def getHasClient(utr: Option[Long])(implicit
     hc: HeaderCarrier
   ): Future[HasClient] = {
     logger.info(
-      s"Calling HasClientConnector for utr: $utr"
+      s"Calling HasClientConnector"
     )
-    connector.hasClient(utr)
+    utr match {
+      case Some(value) => connector.hasClient(value)
+      case None        =>
+        Future.failed(new IllegalArgumentException(s"Invalid format provided for utr:$utr"))
+    }
+
   }
 }

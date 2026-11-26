@@ -19,7 +19,7 @@ package services.agentValidation
 import connectors.agentValidation.HasClientConnector
 import models.agentValidation.HasClient
 import org.mockito.ArgumentMatchers.any
-import org.mockito.Mockito.{times, verify, when}
+import org.mockito.Mockito.{times, verify, verifyNoInteractions, when}
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
@@ -51,7 +51,7 @@ class HasClientServiceSpec extends AnyWordSpec with Matchers with ScalaFutures w
       when(mockConnector.hasClient(any())(any[HeaderCarrier]))
         .thenReturn(Future.successful(hasClient))
 
-      val result: HasClient = service.getHasClient(7363L).futureValue
+      val result: HasClient = service.getHasClient(Some(7363L)).futureValue
 
       result shouldBe hasClient
 
@@ -67,7 +67,7 @@ class HasClientServiceSpec extends AnyWordSpec with Matchers with ScalaFutures w
       when(mockConnector.hasClient(any())(any[HeaderCarrier]))
         .thenReturn(Future.successful(hasClient))
 
-      val result: HasClient = service.getHasClient(363L).futureValue
+      val result: HasClient = service.getHasClient(Some(363L)).futureValue
 
       result shouldBe hasClient
 
@@ -77,13 +77,28 @@ class HasClientServiceSpec extends AnyWordSpec with Matchers with ScalaFutures w
 
     }
 
+    "throw IllegalArgument Exception if the parsing fails for UTR" in new BaseSetup {
+
+      val hasClient: HasClient = HasClient(status = true)
+
+      when(mockConnector.hasClient(any())(any[HeaderCarrier]))
+        .thenReturn(Future.successful(hasClient))
+
+      val ex = service.getHasClient(None).failed.futureValue
+
+      ex.getMessage should include("Invalid format provided")
+
+      verifyNoInteractions(mockConnector)
+
+    }
+
     "propagate any errors or exceptions from connector" in new BaseSetup {
 
       when(mockConnector.hasClient(any())(any[HeaderCarrier]))
         .thenReturn(Future.failed(new RuntimeException("Boom")))
 
       val ex: RuntimeException = intercept[RuntimeException] {
-        service.getHasClient(141351L).futureValue
+        service.getHasClient(Some(141351L)).futureValue
       }
 
       ex.getMessage should include("Boom")

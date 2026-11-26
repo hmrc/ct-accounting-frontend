@@ -41,7 +41,7 @@ class AgentClientAuthorisationGuard @Inject() (
     request.userAnswers.get(UtrQuery) match {
       case Some(utr) =>
         hasClientService
-          .getHasClient(utr.toLong)
+          .getHasClient(utr.toLongOption)
           .flatMap { value =>
             if (value.status) {
               logger.info(s"Agent - Client validation Successful")
