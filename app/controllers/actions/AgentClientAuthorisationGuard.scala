@@ -37,7 +37,7 @@ class AgentClientAuthorisationGuard @Inject() (
 
   def filter[A](request: DataRequest[A]): Future[Option[Result]] = {
     implicit val hc: HeaderCarrier = HeaderCarrierConverter.fromRequestAndSession(request, request.session)
-    
+
     request.userAnswers.get(UtrQuery) match {
       case Some(utr) =>
         hasClientService
@@ -55,7 +55,7 @@ class AgentClientAuthorisationGuard @Inject() (
             logger.error(s"Error response from upstream: $e")
             Some(Redirect(controllers.routes.JourneyRecoveryController.onPageLoad()))
           }
-      case None =>
+      case None      =>
         logger.warn(s"UTR not supplied for userId =${request.userId}")
         Future.successful(Some(Redirect(controllers.routes.UnauthorisedController.onPageLoad())))
     }

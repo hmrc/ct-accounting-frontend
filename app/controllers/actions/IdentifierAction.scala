@@ -117,7 +117,7 @@ class AuthenticatedIdentifierAction @Inject() (
         Future.successful(Redirect(routes.UnauthorisedController.onPageLoad()))
     }
   }
-  
+
   private def validateAgent[A](
     enrolment: Set[Enrolment]
   )(request: Request[A], internalId: String, block: IdentifierRequest[A] => Future[Result])(implicit
@@ -130,31 +130,32 @@ class AuthenticatedIdentifierAction @Inject() (
     } yield identifier.value
     validIRAgentReference match {
       case Some(agentReference) =>
-        commonAgentGuardProcessing.flatMap {
-          case InProgress       =>
-            logger.info(s"Client list download InProgress: Authenticated successful")
-            Future.successful(
-              Redirect(routes.UnauthorisedController.onPageLoad())
-            ) // TODO Change this to InProgres Page
-          case Failed           =>
-            logger.info(s"Client list download Failed")
-            Future.successful(
-              Redirect(routes.UnauthorisedController.onPageLoad())
-            ) // TODO Change this to download failed Page
-          case Succeeded        =>
-            logger.info(s"Client list download Succeeded: Authenticated successful")
-            block(IdentifierRequest(request, internalId, None, validIRAgentReference))
-          case InitiateDownload =>
-            logger.info(s"Client list download initiated : Authenticated successful")
-            Future.successful(
-              Redirect(routes.UnauthorisedController.onPageLoad())
-            ) // TODO Change this to InProgres Page
+        commonAgentGuardProcessing
+          .flatMap {
+            case InProgress       =>
+              logger.info(s"Client list download InProgress: Authenticated successful")
+              Future.successful(
+                Redirect(routes.UnauthorisedController.onPageLoad())
+              ) // TODO Change this to InProgres Page
+            case Failed           =>
+              logger.info(s"Client list download Failed")
+              Future.successful(
+                Redirect(routes.UnauthorisedController.onPageLoad())
+              ) // TODO Change this to download failed Page
+            case Succeeded        =>
+              logger.info(s"Client list download Succeeded: Authenticated successful")
+              block(IdentifierRequest(request, internalId, None, validIRAgentReference))
+            case InitiateDownload =>
+              logger.info(s"Client list download initiated : Authenticated successful")
+              Future.successful(
+                Redirect(routes.UnauthorisedController.onPageLoad())
+              ) // TODO Change this to InProgres Page
 
-        }.recover{
-          case e =>
+          }
+          .recover { case e =>
             logger.error(s"Error response from upstream: error:$e")
             Redirect(routes.JourneyRecoveryController.onPageLoad())
-        }
+          }
       case None                 =>
         logger.info("Authentication failed: Attempted login as an agent")
         Future.successful(Redirect(routes.UnauthorisedController.onPageLoad()))

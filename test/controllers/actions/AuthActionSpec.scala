@@ -397,7 +397,7 @@ class AuthActionSpec extends SpecBase {
 
           val authAction = new AuthenticatedIdentifierAction(mockAuthConnector, mockService, appConfig, bodyParsers)
           val controller = new Harness(authAction)
-          val result = controller.onPageLoad()(FakeRequest())
+          val result     = controller.onPageLoad()(FakeRequest())
 
           status(result) mustBe SEE_OTHER
 
@@ -423,7 +423,7 @@ class AuthActionSpec extends SpecBase {
 
           val authAction = new AuthenticatedIdentifierAction(mockAuthConnector, mockService, appConfig, bodyParsers)
           val controller = new Harness(authAction)
-          val result = controller.onPageLoad()(FakeRequest())
+          val result     = controller.onPageLoad()(FakeRequest())
 
           status(result) mustBe SEE_OTHER
 
@@ -449,7 +449,7 @@ class AuthActionSpec extends SpecBase {
 
           val authAction = new AuthenticatedIdentifierAction(mockAuthConnector, mockService, appConfig, bodyParsers)
           val controller = new Harness(authAction)
-          val result = controller.onPageLoad()(FakeRequest())
+          val result     = controller.onPageLoad()(FakeRequest())
 
           status(result) mustBe OK
 
@@ -473,7 +473,7 @@ class AuthActionSpec extends SpecBase {
 
           val authAction = new AuthenticatedIdentifierAction(mockAuthConnector, mockService, appConfig, bodyParsers)
           val controller = new Harness(authAction)
-          val result = controller.onPageLoad()(FakeRequest())
+          val result     = controller.onPageLoad()(FakeRequest())
 
           status(result) mustBe SEE_OTHER
 
@@ -499,7 +499,7 @@ class AuthActionSpec extends SpecBase {
 
           val authAction = new AuthenticatedIdentifierAction(mockAuthConnector, mockService, appConfig, bodyParsers)
           val controller = new Harness(authAction)
-          val result = controller.onPageLoad()(FakeRequest())
+          val result     = controller.onPageLoad()(FakeRequest())
 
           status(result) mustBe SEE_OTHER
 
