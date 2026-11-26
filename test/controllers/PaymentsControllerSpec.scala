@@ -68,7 +68,7 @@ class PaymentsControllerSpec extends SpecBase with MockitoSugar {
     )
 
   // TODO: hardcoded value in the controller until it's wired up to session data
-  val expectedAccountPeriod: LocalDate = LocalDate.of(2026, 1, 1)
+  val expectedAccountPeriod: LocalDate = LocalDate.of(2007, 12, 31)
 
   val total: BigDecimal = paymentsResponse.paymentTransactions.map(_.amount).sum
 
@@ -76,7 +76,7 @@ class PaymentsControllerSpec extends SpecBase with MockitoSugar {
 
     "must return OK and the correct view for a GET" in {
 
-      when(mockConnector.getPayments(eqTo(1L), eqTo(1L))(any[HeaderCarrier]))
+      when(mockConnector.getPayments(eqTo(8754000009L), eqTo(1L))(any[HeaderCarrier]))
         .thenReturn(Future.successful(paymentsResponse))
 
       running(application) {

@@ -63,7 +63,7 @@ trait RepaymentInterestHelper {
   val interestAccrualWithNoObject: InterestAccrualListWithInterestAccruedDays     =
     InterestAccrualListWithInterestAccruedDays(interestAccruals = List.empty)
 
-  val accountingPeriodEndDate: LocalDate = LocalDate.of(2026, 1, 1)
+  val accountingPeriodEndDate: LocalDate = LocalDate.of(2004, 6, 30)
 
   val eqvViewModelOfInterestAccrualMultipleObjects: RepaymentInterestViewModel =
     RepaymentInterestRow.toViewModel(accountingPeriodEndDate, interestAccrualMultipleObjects)

@@ -44,10 +44,10 @@ class RepaymentsReallocationsController @Inject() (
 
   def onPageLoad: Action[AnyContent] = identify.async { implicit request =>
 
-    val accountPeriod = LocalDate.of(2026, 1, 1) // TODO: This needs to comes from sessionDataRepository
+    val accountPeriod = LocalDate.of(2007, 12, 31) // TODO: This needs to comes from sessionDataRepository
 
     // TODO: Get taxRef + accPeriod from sessionDataRepositry
-    service.getRepayReallocationSummary(1L, 1L).map { summaryResponse =>
+    service.getRepayReallocationSummary(8754000057L, 1L).map { summaryResponse =>
       val viewModel = RepaymentReallocationSummaryViewModel.convertToViewModel(summaryResponse)
       Ok(view(viewModel, accountPeriod))
     } recover { case ex =>

@@ -41,9 +41,9 @@ class RepaymentInterestController @Inject() (
 
   def onPageLoad: Action[AnyContent] = identify.async { implicit request =>
 
-    val accountPeriodEndDate = LocalDate.of(2026, 1, 1) // TODO: This needs to comes from sessionDataRepository
-    val taxRef               = 1L
-    val accPeriod            = 1L
+    val accountPeriodEndDate = LocalDate.of(2004, 6, 30) // TODO: This needs to comes from sessionDataRepository
+    val taxRef               = 8754000133L
+    val accPeriod            = 4L
 
     // TODO: Get taxRef + accPeriod from sessionDataRepositry
     service

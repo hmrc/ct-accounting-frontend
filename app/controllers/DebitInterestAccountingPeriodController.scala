@@ -41,9 +41,9 @@ class DebitInterestAccountingPeriodController @Inject() (
 
   def onPageLoad(): Action[AnyContent] = identify.async { implicit request =>
     // TODO: re-wire next values to the actual in the UserSession
-    val taxRef: Long     = 3L
+    val taxRef: Long     = 1297204858L
     val accPeriod: Long  = 4L
-    val accPeriodEndDate = LocalDate.of(2026, 1, 1)
+    val accPeriodEndDate = LocalDate.of(1004, 4, 5)
 
     service
       .getDebitInterest(taxRef, accPeriod, accPeriodEndDate)

@@ -39,7 +39,7 @@ class AccountingPeriodsController @Inject() (
   def onPageLoad: Action[AnyContent] = identify.async { implicit request =>
 
     // TODO update to retrieve from session
-    val taxRef = 5L
+    val taxRef = 6212811176L
 
     service
       .getAccountPosition(taxRef)

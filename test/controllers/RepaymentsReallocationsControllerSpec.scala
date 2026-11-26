@@ -50,7 +50,7 @@ class RepaymentsReallocationsControllerSpec extends SpecBase with MockitoSugar w
   "RepaymentsReallocationsController" - {
 
     "must return OK, with Reallocations From Summary, summary and correct view" in new Fixture {
-      when(mockService.getRepayReallocationSummary(eqTo(1L), eqTo(1L))(any[HeaderCarrier]))
+      when(mockService.getRepayReallocationSummary(eqTo(8754000057L), eqTo(1L))(any[HeaderCarrier]))
         .thenReturn(Future.successful(reallocationsFromSummary))
 
       running(application) {
@@ -61,7 +61,7 @@ class RepaymentsReallocationsControllerSpec extends SpecBase with MockitoSugar w
 
         status(result) mustEqual OK
         contentAsString(result) mustEqual
-          view(viewModel, LocalDate.of(2026, 1, 1))(
+          view(viewModel, LocalDate.of(2007, 12, 31))(
             request,
             messages(application)
           ).toString
@@ -69,7 +69,7 @@ class RepaymentsReallocationsControllerSpec extends SpecBase with MockitoSugar w
     }
 
     "must return OK,with Reallocations To Summary, and correct view" in new Fixture {
-      when(mockService.getRepayReallocationSummary(eqTo(1L), eqTo(1L))(any[HeaderCarrier]))
+      when(mockService.getRepayReallocationSummary(eqTo(8754000057L), eqTo(1L))(any[HeaderCarrier]))
         .thenReturn(Future.successful(reallocationsToSummary))
 
       running(application) {
@@ -80,7 +80,7 @@ class RepaymentsReallocationsControllerSpec extends SpecBase with MockitoSugar w
 
         status(result) mustEqual OK
         contentAsString(result) mustEqual
-          view(viewModel, LocalDate.of(2026, 1, 1))(
+          view(viewModel, LocalDate.of(2007, 12, 31))(
             request,
             messages(application)
           ).toString
@@ -88,7 +88,7 @@ class RepaymentsReallocationsControllerSpec extends SpecBase with MockitoSugar w
     }
 
     "must return OK, with multiple summaries, showing both Reallocations To and From, and correct view" in new Fixture {
-      when(mockService.getRepayReallocationSummary(eqTo(1L), eqTo(1L))(any[HeaderCarrier]))
+      when(mockService.getRepayReallocationSummary(eqTo(8754000057L), eqTo(1L))(any[HeaderCarrier]))
         .thenReturn(Future.successful(multipleSummaries))
 
       running(application) {
@@ -99,7 +99,7 @@ class RepaymentsReallocationsControllerSpec extends SpecBase with MockitoSugar w
 
         status(result) mustEqual OK
         contentAsString(result) mustEqual
-          view(viewModel, LocalDate.of(2026, 1, 1))(
+          view(viewModel, LocalDate.of(2007, 12, 31))(
             request,
             messages(application)
           ).toString

@@ -39,10 +39,10 @@ class TaxTransactionsController @Inject() (
 
   def onPageLoad: Action[AnyContent] = identify.async { implicit request =>
 
-    val accountPeriod = LocalDate.of(2026, 1, 1) // TODO: This needs to comes from sessionDataRepository
+    val accountPeriod = LocalDate.of(2009, 3, 31) // TODO: This needs to comes from sessionDataRepository
 
     // TODO: Get taxRef + accPeriod from sessionDataRepositry
-    service.getTaxTransactions(1L, 1L).map { taxTransactionsResponse =>
+    service.getTaxTransactions(8851208889L, 4L).map { taxTransactionsResponse =>
       val total: BigDecimal = taxTransactionsResponse.taxTransactions.map(_.currentAmount).sum
       Ok(view(taxTransactionsResponse.taxTransactions, accountPeriod, total))
     }

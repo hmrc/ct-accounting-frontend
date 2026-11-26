@@ -39,8 +39,8 @@ class PenaltiesAccountingPeriodController @Inject() (
 
   def onPageLoad(): Action[AnyContent] = identify.async { implicit request =>
     // TODO: read below data from UserSession data
-    val taxRef: Long         = 1L
-    val accPeriod: Long      = 1L // Also pass accountingPeriodAsLocalDate to construct model
+    val taxRef: Long         = 1012525608L
+    val accPeriod: Long      = 4L // Also pass accountingPeriodAsLocalDate to construct model
     val accountPeriodEndDate = None
     for {
       viewModel <- service.getViewModel(taxRef, accPeriod, accountPeriodEndDate)
