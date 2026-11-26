@@ -48,12 +48,12 @@ class PaymentsOnAccountViewModelSpec extends AnyWordSpec with Matchers with Paym
 
       viewModel.paymentsOnAccountRows mustBe Seq(
         PaymentsOnAccountRow(
-          paymentDate = paymentsOnAccountSingleList.paymentsOnAccountRows(0).effectiveDateOfPayment,
-          paymentAllocationDate = paymentsOnAccountSingleList.paymentsOnAccountRows(0).apEndDate,
+          paymentDate = paymentsOnAccountSingleList.paymentsOnAccount(0).effectiveDateOfPayment,
+          paymentAllocationDate = paymentsOnAccountSingleList.paymentsOnAccount(0).apEndDate,
           description = PaymentsDescriptionHelper.getPaymentsDescription(
-            paymentsOnAccountSingleList.paymentsOnAccountRows(0).paymentType
+            paymentsOnAccountSingleList.paymentsOnAccount(0).paymentType
           ),
-          amount = paymentsOnAccountSingleList.paymentsOnAccountRows(0).postingAmount
+          amount = paymentsOnAccountSingleList.paymentsOnAccount(0).postingAmount
         )
       )
     }
@@ -67,52 +67,52 @@ class PaymentsOnAccountViewModelSpec extends AnyWordSpec with Matchers with Paym
 
       viewModel.paymentsOnAccountRows mustBe Seq(
         PaymentsOnAccountRow(
-          paymentDate = paymentsOnAccountMultipleList.paymentsOnAccountRows(0).effectiveDateOfPayment,
-          paymentAllocationDate = paymentsOnAccountMultipleList.paymentsOnAccountRows(0).apEndDate,
+          paymentDate = paymentsOnAccountMultipleList.paymentsOnAccount(0).effectiveDateOfPayment,
+          paymentAllocationDate = paymentsOnAccountMultipleList.paymentsOnAccount(0).apEndDate,
           description = PaymentsDescriptionHelper.getPaymentsDescription(
-            paymentsOnAccountMultipleList.paymentsOnAccountRows(0).paymentType
+            paymentsOnAccountMultipleList.paymentsOnAccount(0).paymentType
           ),
-          amount = paymentsOnAccountMultipleList.paymentsOnAccountRows(0).postingAmount
+          amount = paymentsOnAccountMultipleList.paymentsOnAccount(0).postingAmount
         ),
         PaymentsOnAccountRow(
-          paymentDate = paymentsOnAccountMultipleList.paymentsOnAccountRows(1).effectiveDateOfPayment,
-          paymentAllocationDate = paymentsOnAccountMultipleList.paymentsOnAccountRows(1).apEndDate,
+          paymentDate = paymentsOnAccountMultipleList.paymentsOnAccount(1).effectiveDateOfPayment,
+          paymentAllocationDate = paymentsOnAccountMultipleList.paymentsOnAccount(1).apEndDate,
           description = PaymentsDescriptionHelper.getPaymentsDescription(
-            paymentsOnAccountMultipleList.paymentsOnAccountRows(1).paymentType
+            paymentsOnAccountMultipleList.paymentsOnAccount(1).paymentType
           ),
-          amount = paymentsOnAccountMultipleList.paymentsOnAccountRows(1).postingAmount
+          amount = paymentsOnAccountMultipleList.paymentsOnAccount(1).postingAmount
         ),
         PaymentsOnAccountRow(
-          paymentDate = paymentsOnAccountMultipleList.paymentsOnAccountRows(2).effectiveDateOfPayment,
-          paymentAllocationDate = paymentsOnAccountMultipleList.paymentsOnAccountRows(2).apEndDate,
+          paymentDate = paymentsOnAccountMultipleList.paymentsOnAccount(2).effectiveDateOfPayment,
+          paymentAllocationDate = paymentsOnAccountMultipleList.paymentsOnAccount(2).apEndDate,
           description = PaymentsDescriptionHelper.getPaymentsDescription(
-            paymentsOnAccountMultipleList.paymentsOnAccountRows(2).paymentType
+            paymentsOnAccountMultipleList.paymentsOnAccount(2).paymentType
           ),
-          amount = paymentsOnAccountMultipleList.paymentsOnAccountRows(2).postingAmount
+          amount = paymentsOnAccountMultipleList.paymentsOnAccount(2).postingAmount
         ),
         PaymentsOnAccountRow(
-          paymentDate = paymentsOnAccountMultipleList.paymentsOnAccountRows(3).effectiveDateOfPayment,
-          paymentAllocationDate = paymentsOnAccountMultipleList.paymentsOnAccountRows(3).apEndDate,
+          paymentDate = paymentsOnAccountMultipleList.paymentsOnAccount(3).effectiveDateOfPayment,
+          paymentAllocationDate = paymentsOnAccountMultipleList.paymentsOnAccount(3).apEndDate,
           description = PaymentsDescriptionHelper.getPaymentsDescription(
-            paymentsOnAccountMultipleList.paymentsOnAccountRows(3).paymentType
+            paymentsOnAccountMultipleList.paymentsOnAccount(3).paymentType
           ),
-          amount = paymentsOnAccountMultipleList.paymentsOnAccountRows(3).postingAmount
+          amount = paymentsOnAccountMultipleList.paymentsOnAccount(3).postingAmount
         ),
         PaymentsOnAccountRow(
-          paymentDate = paymentsOnAccountMultipleList.paymentsOnAccountRows(4).effectiveDateOfPayment,
-          paymentAllocationDate = paymentsOnAccountMultipleList.paymentsOnAccountRows(4).apEndDate,
+          paymentDate = paymentsOnAccountMultipleList.paymentsOnAccount(4).effectiveDateOfPayment,
+          paymentAllocationDate = paymentsOnAccountMultipleList.paymentsOnAccount(4).apEndDate,
           description = PaymentsDescriptionHelper.getPaymentsDescription(
-            paymentsOnAccountMultipleList.paymentsOnAccountRows(4).paymentType
+            paymentsOnAccountMultipleList.paymentsOnAccount(4).paymentType
           ),
-          amount = paymentsOnAccountMultipleList.paymentsOnAccountRows(4).postingAmount
+          amount = paymentsOnAccountMultipleList.paymentsOnAccount(4).postingAmount
         ),
         PaymentsOnAccountRow(
-          paymentDate = paymentsOnAccountMultipleList.paymentsOnAccountRows(5).effectiveDateOfPayment,
-          paymentAllocationDate = paymentsOnAccountMultipleList.paymentsOnAccountRows(5).apEndDate,
+          paymentDate = paymentsOnAccountMultipleList.paymentsOnAccount(5).effectiveDateOfPayment,
+          paymentAllocationDate = paymentsOnAccountMultipleList.paymentsOnAccount(5).apEndDate,
           description = PaymentsDescriptionHelper.getPaymentsDescription(
-            paymentsOnAccountMultipleList.paymentsOnAccountRows(5).paymentType
+            paymentsOnAccountMultipleList.paymentsOnAccount(5).paymentType
           ),
-          amount = paymentsOnAccountMultipleList.paymentsOnAccountRows(5).postingAmount
+          amount = paymentsOnAccountMultipleList.paymentsOnAccount(5).postingAmount
         )
       )
     }

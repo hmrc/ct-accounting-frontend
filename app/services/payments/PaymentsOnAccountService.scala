@@ -17,7 +17,7 @@
 package services.payments
 
 import connectors.payments.PaymentsOnAccountConnector
-import models.payments.PaymentsOnAccountResponse
+import models.payments.PaymentsOnAccount
 import play.api.Logging
 import uk.gov.hmrc.http.HeaderCarrier
 
@@ -30,7 +30,7 @@ class PaymentsOnAccountService @Inject() (
 
   def getPaymentsOnAccount(taxRef: Long)(implicit
     hc: HeaderCarrier
-  ): Future[PaymentsOnAccountResponse] = {
+  ): Future[PaymentsOnAccount] = {
     logger.info(
       s"Calling PaymentsOnAccountConnector for taxRef: $taxRef"
     )

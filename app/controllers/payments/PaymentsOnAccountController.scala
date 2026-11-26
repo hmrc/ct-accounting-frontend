@@ -41,7 +41,7 @@ class PaymentsOnAccountController @Inject() (
   def onPageLoad(page: Option[Int]): Action[AnyContent] = identify.async { implicit request =>
 
     // TODO update to retrieve from session
-    val taxRef = 999999L
+    val taxRef = 4719122863L
 
     service
       .getPaymentsOnAccount(taxRef)

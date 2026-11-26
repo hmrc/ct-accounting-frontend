@@ -20,12 +20,12 @@ import play.api.libs.json.{Json, OFormat}
 
 import java.time.LocalDate
 
-case class PaymentsOnAccountResponse(paymentsOnAccountRows: List[PaymentsOnAccountRow]) {
-  val totalNumOfRecords: Int = paymentsOnAccountRows.size
+case class PaymentsOnAccount(paymentsOnAccount: List[PaymentsOnAccountRow]) {
+  val totalNumOfRecords: Int = paymentsOnAccount.size
 }
 
-object PaymentsOnAccountResponse {
-  implicit val format: OFormat[PaymentsOnAccountResponse] = Json.format[PaymentsOnAccountResponse]
+object PaymentsOnAccount {
+  implicit val format: OFormat[PaymentsOnAccount] = Json.format[PaymentsOnAccount]
 }
 
 case class PaymentsOnAccountRow(

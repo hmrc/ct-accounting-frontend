@@ -16,7 +16,7 @@
 
 package connectors.payments
 
-import models.payments.PaymentsOnAccountResponse
+import models.payments.PaymentsOnAccount
 import play.api.Logging
 import uk.gov.hmrc.http.{HeaderCarrier, StringContextOps}
 import uk.gov.hmrc.http.client.HttpClientV2
@@ -33,14 +33,14 @@ class PaymentsOnAccountConnector @Inject() (http: HttpClientV2, config: Services
 
   def getPaymentsOnAccount(taxRef: Long)(implicit
     hc: HeaderCarrier
-  ): Future[PaymentsOnAccountResponse] = {
+  ): Future[PaymentsOnAccount] = {
     val baseUrl = config.baseUrl("corporation-tax")
 
     val url: URL = url"$baseUrl/corporation-tax/payments-on-account/$taxRef"
 
     http
       .get(url)
-      .execute[PaymentsOnAccountResponse]
+      .execute[PaymentsOnAccount]
       .recover { case e: Throwable =>
         logger.error(s"Calling PaymentsOnAccountConnector $taxRef- ${e.getMessage}")
         throw new RuntimeException(e.getMessage)

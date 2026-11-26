@@ -18,7 +18,7 @@ package services.payments
 
 import connectors.payments.PaymentsOnAccountConnector
 import helpers.payments.PaymentsOnAccountResponseHelper
-import models.payments.PaymentsOnAccountResponse
+import models.payments.PaymentsOnAccount
 import org.mockito.ArgumentMatchers.{any, eq as eqTo}
 import org.mockito.Mockito.{times, verify, when}
 import org.scalatest.concurrent.ScalaFutures
@@ -60,7 +60,7 @@ class PaymentsOnAccountServiceSpec
       )
         .thenReturn(Future.successful(paymentsOnAccountMultipleList))
 
-      val result: PaymentsOnAccountResponse =
+      val result: PaymentsOnAccount =
         service.getPaymentsOnAccount(taxRef).futureValue
 
       result shouldBe paymentsOnAccountMultipleList
