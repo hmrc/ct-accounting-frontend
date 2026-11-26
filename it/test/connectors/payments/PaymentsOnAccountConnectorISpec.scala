@@ -16,12 +16,9 @@
 
 package connectors.payments
 
-
 import com.github.tomakehurst.wiremock.client.WireMock.*
-import connectors.payments.PaymentsOnAccountConnector
 import helpers.payments.PaymentsOnAccountResponseHelper
 import itutils.ApplicationWithWiremock
-import models.payments.PaymentsOnAccountResponse
 import org.scalatest.BeforeAndAfterEach
 import org.scalatest.concurrent.{IntegrationPatience, ScalaFutures}
 import org.scalatest.matchers.must.Matchers
@@ -49,14 +46,14 @@ class PaymentsOnAccountConnectorISpec
 
     "return Payments on Account with status code OK" in {
       stubFor(
-        get(urlPathEqualTo(url(1L)))
+        get(urlPathEqualTo(url(4719122863L)))
           .willReturn(
             aResponse()
               .withStatus(OK)
               .withBody(
                 s"""
                    |  {
-                   |  "paymentsOnAccountRows": [
+                   |  "paymentsOnAccount": [
                    |    {
                    |      "accPeriod": 1,
                    |      "effectiveDateOfPayment": "2025-07-14",
@@ -72,13 +69,13 @@ class PaymentsOnAccountConnectorISpec
           )
       )
 
-      val result = connector.getPaymentsOnAccount(1L).futureValue
+      val result = connector.getPaymentsOnAccount(4719122863L).futureValue
       result mustEqual paymentsOnAccountSingleList
     }
 
     "return INTERNAL_ERROR when BE failed" in {
       stubFor(
-        get(urlPathEqualTo(url(1L)))
+        get(urlPathEqualTo(url(4719122863L)))
           .willReturn(
             aResponse()
               .withStatus(INTERNAL_SERVER_ERROR)
@@ -87,14 +84,14 @@ class PaymentsOnAccountConnectorISpec
       )
 
       val ex = intercept[Exception] {
-        connector.getPaymentsOnAccount(1L).futureValue
+        connector.getPaymentsOnAccount(4719122863L).futureValue
       }
       ex.getMessage.toLowerCase must include("boom")
     }
 
     "return 400 when BE returns BAD_REQUEST " in {
       stubFor(
-        get(urlPathEqualTo(url(1L)))
+        get(urlPathEqualTo(url(4719122863L)))
           .willReturn(
             aResponse()
               .withStatus(BAD_REQUEST)
@@ -103,14 +100,14 @@ class PaymentsOnAccountConnectorISpec
       )
 
       val ex = intercept[Exception] {
-        connector.getPaymentsOnAccount(1L).futureValue
+        connector.getPaymentsOnAccount(4719122863L).futureValue
       }
       ex.getMessage must include("Invalid Request")
     }
 
     "return 404 when BE returns NOT_FOUND " in {
       stubFor(
-        get(urlPathEqualTo(url(1)))
+        get(urlPathEqualTo(url(4719122863L)))
           .willReturn(
             aResponse()
               .withStatus(NOT_FOUND)
@@ -119,7 +116,7 @@ class PaymentsOnAccountConnectorISpec
       )
 
       val ex = intercept[Exception] {
-        connector.getPaymentsOnAccount(1L).futureValue
+        connector.getPaymentsOnAccount(4719122863L).futureValue
       }
       ex.getMessage must include("Not found")
     }
