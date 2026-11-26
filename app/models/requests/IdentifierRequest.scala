@@ -24,3 +24,8 @@ case class IdentifierRequest[A](
   utr: Option[String] = None,
   irAgentReference: Option[String] = None
 ) extends WrappedRequest[A](request)
+
+case class AgentClientAuthorisationRequest[A](
+  identifierRequest: IdentifierRequest[A],
+  utr: Long
+) extends WrappedRequest[A](identifierRequest)
