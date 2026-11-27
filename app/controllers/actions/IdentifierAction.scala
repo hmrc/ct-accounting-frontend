@@ -18,14 +18,14 @@ package controllers.actions
 
 import com.google.inject.Inject
 import config.FrontendAppConfig
-import controllers.actions.AuthenticatedIdentifierAction.{
-  activatedState, agentEnrolment, agentKey, agentKeyValueRegex, orgEnrolment, orgKey, orgKeyValueRegex
-}
 import controllers.routes
+import models.agentValidation.ClientListDownloadStatusTransformed
+import models.agentValidation.ClientListDownloadStatusTransformed.{Failed, InProgress, InitiateDownload, Succeeded}
 import models.requests.IdentifierRequest
 import play.api.Logging
 import play.api.mvc.*
 import play.api.mvc.Results.*
+import services.agentValidation.ClientListDownloadStatusService
 import uk.gov.hmrc.auth.core.*
 import uk.gov.hmrc.auth.core.AffinityGroup.{Agent, Individual, Organisation}
 import uk.gov.hmrc.auth.core.AuthProvider.GovernmentGateway
@@ -43,12 +43,15 @@ trait IdentifierAction
 
 class AuthenticatedIdentifierAction @Inject() (
   override val authConnector: AuthConnector,
+  clientListDownloadStatusService: ClientListDownloadStatusService,
   config: FrontendAppConfig,
   val parser: BodyParsers.Default
 )(implicit val executionContext: ExecutionContext)
     extends IdentifierAction
     with AuthorisedFunctions
     with Logging {
+
+  import controllers.actions.AuthenticatedIdentifierAction.*
 
   override def invokeBlock[A](request: Request[A], block: IdentifierRequest[A] => Future[Result]): Future[Result] = {
 
@@ -71,7 +74,7 @@ class AuthenticatedIdentifierAction @Inject() (
         case Some(internalId) ~ Enrolments(enrolments) ~ Some(Agent) ~ Some(User)
             if enrolments.exists(_.key == agentEnrolment) =>
           logger.info(s"Authorisation requested as Agent")
-          validateAgent(enrolments)(request, internalId, block)
+          validateAgent(enrolments)(request, internalId, block)(hc)
 
         case Some(_) ~ _ ~ Some(Organisation | Agent) ~ Some(Assistant) =>
           logger.error(s"Unauthorised: Assistant login attempt")
@@ -115,26 +118,54 @@ class AuthenticatedIdentifierAction @Inject() (
     }
   }
 
-  // TODO Add Business function F2 - Agent Service Guard
   private def validateAgent[A](
     enrolment: Set[Enrolment]
-  )(request: Request[A], internalId: String, block: IdentifierRequest[A] => Future[Result]) = {
+  )(request: Request[A], internalId: String, block: IdentifierRequest[A] => Future[Result])(implicit
+    hc: HeaderCarrier
+  ) = {
     val validIRAgentReference: Option[String] = for {
       enrolmentValue <- enrolment.find(e => e.key.equals(agentEnrolment) && e.state.equalsIgnoreCase(activatedState))
       identifier     <- enrolmentValue.identifiers.find(_.key.equals(agentKey))
       if identifier.value.matches(agentKeyValueRegex)
     } yield identifier.value
-
     validIRAgentReference match {
       case Some(agentReference) =>
-        logger.info("Authentication successful: Authorised as an agent")
-        block(IdentifierRequest(request, internalId, None, validIRAgentReference))
+        commonAgentGuardProcessing
+          .flatMap {
+            case InProgress       =>
+              logger.info(s"Client list download InProgress: Authenticated successful")
+              Future.successful(
+                Redirect(routes.UnauthorisedController.onPageLoad())
+              ) // TODO Change this to InProgres Page
+            case Failed           =>
+              logger.info(s"Client list download Failed")
+              Future.successful(
+                Redirect(routes.UnauthorisedController.onPageLoad())
+              ) // TODO Change this to download failed Page
+            case Succeeded        =>
+              logger.info(s"Client list download Succeeded: Authenticated successful")
+              block(IdentifierRequest(request, internalId, None, validIRAgentReference))
+            case InitiateDownload =>
+              logger.info(s"Client list download initiated : Authenticated successful")
+              Future.successful(
+                Redirect(routes.UnauthorisedController.onPageLoad())
+              ) // TODO Change this to InProgres Page
+
+          }
+          .recover { case e =>
+            logger.error(s"Error response from upstream: error:$e")
+            Redirect(routes.JourneyRecoveryController.onPageLoad())
+          }
       case None                 =>
         logger.info("Authentication failed: Attempted login as an agent")
         Future.successful(Redirect(routes.UnauthorisedController.onPageLoad()))
     }
   }
 
+  private def commonAgentGuardProcessing(implicit hc: HeaderCarrier): Future[ClientListDownloadStatusTransformed] =
+    for {
+      clientListDownloadStatus <- clientListDownloadStatusService.getClientListDownloadStatus
+    } yield clientListDownloadStatus
 }
 
 object AuthenticatedIdentifierAction {
