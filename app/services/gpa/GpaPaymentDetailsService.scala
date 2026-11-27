@@ -21,6 +21,7 @@ import play.api.Logging
 import play.api.i18n.Messages
 import utils.Constants.{ZERO, emptyString}
 import utils.PaymentsDescriptionHelper
+import utils.RepaymentsDescriptionHelper
 import views.ViewUtils.formatDate
 
 class GpaPaymentDetailsService(
@@ -32,11 +33,12 @@ class GpaPaymentDetailsService(
     gpaPayment.tablename match {
       case Some("RFRReallocation")                        =>
         reallocationDescription(gpaPayment, gpaUtr, isRto = false)
-      case Some("RTOReallocation")                        => reallocationDescription(gpaPayment, gpaUtr, isRto = true)
+      case Some("RTOReallocation")                        =>
+        reallocationDescription(gpaPayment, gpaUtr, isRto = true)
       case Some("Payslip")                                =>
         PaymentsDescriptionHelper.getPaymentsDescription(gpaPayment.paymentType.getOrElse(emptyString))
       case Some("Repayment") | Some("CancelledRepayment") =>
-        emptyString // No mapping in ASIS for repayment/cancelled in gpa journey
+        RepaymentsDescriptionHelper.getRepaymentsDescription(gpaPayment.repaymentType.getOrElse(emptyString))
       case _                                              => emptyString
     }
 

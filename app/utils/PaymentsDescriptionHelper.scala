@@ -27,7 +27,7 @@ object PaymentsDescriptionHelper {
         messages("payments.description.IRC") // HMRC Credit
       case "DSOPP" | "IRPPP"                     =>
         messages("payments.description.IRC.partPayment") // HMRC Credit part payment
-      case "BLP" | "LOP" | "NGP" | "BGT"         =>
+      case "BLP" | "LOP" | "NGP" | "BGT" | "CHQ" =>
         messages("payments.description.CP") // Cheque payment
       case "BLPPP" | "LOPPP" | "NGPPP" | "BGTPP" =>
         messages("payments.description.CP.partPayment") // Cheque part payment

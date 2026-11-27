@@ -221,6 +221,13 @@ gpaPayment.Description.rfr.date = Reallocation TO AP ending {0}
 gpaPayment.Description.rto.taxRef = Reallocation FROM {0}, AP ending {1}
 gpaPayment.Description.rto.date = Reallocation FROM AP ending {0}
 
+repayments.description.B = Repayment by BACS payment
+repayments.description.C = Card repayment
+repayments.description.CRT = Cancelled repayment
+repayments.description.MiscTFR = Miscellaneous transfer
+repayments.description.P = Repayment by payable order
+repayments.description.RFR = Reallocation from AP ending
+repayments.description.RTO = Reallocation to AP ending
 
 accountingPeriods.title = Accounting periods
 accountingPeriods.heading = Accounting periods
